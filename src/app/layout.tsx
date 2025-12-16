@@ -1,7 +1,7 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter_Tight, Roboto_Flex } from "next/font/google";
-import "./globals.css";
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
+import './global.css';
+import { themeClass } from "src/theme/theme.css";
 
 /**
  * Define Metadata, theme, and providers
@@ -18,6 +18,11 @@ const robotoFlex = Roboto_Flex({
   variable: "--font-display",
   subsets: ["latin"] 
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://tannerorourke.dev"),
@@ -78,6 +83,7 @@ export const metadata: Metadata = {
   },
 };
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -85,16 +91,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.jpg" type="image/jpg" sizes="16x16" />
-
-        <meta property="twitter:image:alt" content="About Acme" />
-      </head>
-      <body className={`${interTight.variable} ${robotoFlex.variable}`}>
-        <AppRouterCacheProvider>
-          {children}
-        </AppRouterCacheProvider>
+      <body className={`${themeClass} ${interTight.variable} ${robotoFlex.variable}`}>
+        {children}
       </body>
     </html>
   );
