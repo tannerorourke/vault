@@ -21,7 +21,7 @@ export const mqArray = Object.keys(breakpoints).map(
 );
 
 
-const responsive = defineProperties({
+const sprinkles = defineProperties({
   conditions: {
     xs: {},
     sm: { "@media": `screen and (min-width: ${breakpoints.sm}px)` },
@@ -47,4 +47,4 @@ const responsive = defineProperties({
   },
 });
 
-export const sprinkles = createSprinkles(responsive);
+export const responsive = createSprinkles(sprinkles);
