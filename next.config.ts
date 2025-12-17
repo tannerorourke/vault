@@ -6,6 +6,7 @@ const withVanillaExtract = createVanillaExtractPlugin();
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  transpilePackages: ['@base-ui/react'],
 
   async headers() {
     return [
