@@ -1,8 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { Inter_Tight, Roboto_Flex } from "next/font/google";
 import './global.css';
-import { layoutRoot, layoutShell, layoutMain } from "@/lib/theme/appShell.css"
+import { layoutRoot, layoutShell, layoutMain } from "@/lib/theme/appShell.css";
+import AppProvider from "@/components/navigation/AppProvider";
 import Sidebar from "@/components/navigation/Sidebar";
+import Header from "@/components/navigation/Header";
 
 /**
  * Define Metadata, theme, and providers
@@ -70,10 +72,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${layoutRoot} ${interTight.variable} ${robotoFlex.variable}`}>
-        <div className={layoutShell}>
-          <Sidebar />
-          <main className={layoutMain}>{children}</main>
-        </div>
+        <AppProvider initProjectFilterId="">
+          <div className={layoutShell}>
+            <Sidebar />
+            <main className={layoutMain}>
+              <Header />
+              {children}
+            </main>
+          </div>
+        </AppProvider>
       </body>
     </html>
   );

@@ -1,13 +1,13 @@
-import { Filter, LinkIcon } from "../lib/types/global";
+import { IFilter, ILinkIcon } from "../lib/types/global";
 
-export const NAV_FILTERS: Filter[] = [
+export const NAV_FILTERS: IFilter[] = [
   { id: 'aiml', label: 'AI/ML' },
   { id: 'experience', label: 'Experience' },
   { id: 'research', label: 'Research' },
   { id: 'labs', label: 'Labs' }
 ]
 
-export const SIDEBAR_LINKS: LinkIcon[] = [
+export const SIDEBAR_LINKS: ILinkIcon[] = [
   { 
     src: "public/icons/github.png", 
     alt: "Go to my GitHub",
