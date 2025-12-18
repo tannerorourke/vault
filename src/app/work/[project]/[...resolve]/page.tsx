@@ -9,7 +9,7 @@ import { IPageProps } from "src/lib/types/routes"
 export default async function ResolveToProjectId({ params }: IPageProps) {
   const { project } = await params;
 
-  if (!PROJECTS.some((p) => p.id === project))
+  if (!PROJECTS.some((p) => p.pid === project))
     notFound()
   redirect(`/work/${project}`)
 }
