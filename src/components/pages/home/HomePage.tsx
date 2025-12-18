@@ -45,13 +45,12 @@ export function HomePage({
             scroll={false} 
             // style={{ textDecoration: "none", color: "inherit" }}
           >
-            <Image
+            <img
               // className={sty.logo}
-              src="/favicon.jpg"
-              alt="Personal logo"
-              width={50}
-              height={50}
-              priority
+              src="icons/logo-base.svg"
+              alt="TO"
+              width={100}
+              height={100}
             />
           </Link>
           <span>Tanner O'Rourke</span>
@@ -77,8 +76,7 @@ export function HomePage({
               href: "/profile",
               prefetch: true
             }}
-          >Profile
-          </NavLink>
+          />
         </div>
       </header>
 
