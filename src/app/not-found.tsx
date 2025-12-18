@@ -1,7 +1,6 @@
-import { notFound, redirect } from "next/navigation";
-
-
-export default function ResolveToProjectId({ params }: { params: { project: string }}) {
+export default async function NotFound() {
   console.log("bad url")
-  return notFound()
+  return (
+    <p>Page not Found</p>
+  )
 }

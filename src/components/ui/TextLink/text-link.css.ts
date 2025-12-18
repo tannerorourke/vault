@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css';
-import { vars } from "@/lib/theme/theme.css";
-import { responsive } from "@/lib/theme/responsive"
+import { vars } from 'src/lib/theme/theme.css';
+import { responsive } from "@/lib/theme/responsive.css"
 
 export const buttonBase = style([
   // Uses your sprinkles (responsive.ts)

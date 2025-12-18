@@ -1,25 +1,30 @@
 import { PROJECTS } from "@/content/projects";
-import { AnimatePresence } from "motion/react";
+import { ILayoutProps } from "@/lib/types/routes";
+import { AnimatePresence, motion } from "motion/react";
 import { notFound } from "next/navigation";
 
+export default async function ProjectLayout({ children, params }: ILayoutProps) {
+  const { project } = await params;
 
-export default function ProjectLayout({
-  children, 
-  params
-}: Readonly<{
-  children: React.ReactNode;
-  params: { project: string }
-}>) {
-  const projectConfig = PROJECTS.find(p => p.id === params.project)
-  if (!projectConfig) {
-    console.log("bad id in link")
+  const p = PROJECTS.find(p => p.pid === project)
+  if (!p) {
+    console.log("/[project]/layout ::: bad id in link")
     return notFound()
   }
 
   return (
-    <AnimatePresence>
-      <div>Project Page for {projectConfig.id}</div>
-      {children}
+    <AnimatePresence mode="wait" initial={false}>
+      <motion.div
+        // key={key}
+        initial={{ opacity: 0, y: 6 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -6 }}
+        transition={{ duration: 0.18 }}
+      >
+        <div>Project Page for {p.pid}</div>
+        {children}
+      </motion.div>
+      
     </AnimatePresence>
   );
 }

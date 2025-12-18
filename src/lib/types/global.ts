@@ -1,16 +1,16 @@
-export type Filter = {
+export type IFilter = {
     id: 'aiml' | 'experience' | 'research' | 'labs';
     label: string;
     order?: number;
 };
 
-export type Tag = {
+export type ITag = {
     group: string;
     label: string;
     color: string;
 };
 
-export type LinkIcon = {
+export type ILinkIcon = {
     src: string;
     alt: string;
     href: string;
@@ -19,15 +19,15 @@ export type LinkIcon = {
     prefetchRoute?: boolean;
 }
 
-export type Project = {
-    id: string;
+export type IProject = {
+    pid: string;
     title: string;
-    tags: Tag[];
-    filterIds: Array<Filter['id']>;    
+    tags: ITag[];
+    filterIds: Array<IFilter['id']>;    
     summaryShort: string;
     summaryLong: string;
     year: string;
-    links?: LinkIcon[];
+    links?: ILinkIcon[];
     readTime?: 2 | 5 | 10 | 15 | 30;
     isFeature?: boolean;
     imageUrl?: string;

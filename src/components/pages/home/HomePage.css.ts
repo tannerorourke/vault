@@ -27,10 +27,6 @@ export const headerRight = style({
   gap: 12,
 });
 
-export const logo = style({
-  
-})
-
 // .page {
 //   display: flex;
 //   min-height: 100vh;

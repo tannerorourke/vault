@@ -7,12 +7,12 @@ import Image from "next/image";
 import NavLink from "../../ui/TextLink";
 import * as sty from "./HomePage.css";
 
-import type { Filter, Project } from "@/lib/types/global";
+import type { IFilter, IProject } from "@/lib/types/global";
 import { NAV_FILTERS } from "@/content/nav-links";
 
 
 type HomePageProps = {
-  projects: Project[];
+  projects: IProject[];
   initialFilterId: string; // "" means unfiltered
 };
 
@@ -43,9 +43,10 @@ export function HomePage({
         <div className={sty.headerLeft}>
           <Link href="/" 
             scroll={false} 
-            style={{ textDecoration: "none", color: "inherit" }}>
+            // style={{ textDecoration: "none", color: "inherit" }}
+          >
             <Image
-              className={sty.logo}
+              // className={sty.logo}
               src="/favicon.jpg"
               alt="Personal logo"
               width={50}
@@ -58,7 +59,7 @@ export function HomePage({
 
         {/* <NavButtons activeFilter={activeFilter} onChange={setActiveFilter} /> */}
         <div id="links-main">
-          {
+          {/* {
             NAV_FILTERS.map((cf: Filter) => (
               <NavLink
                 label={cf.label}
@@ -67,7 +68,7 @@ export function HomePage({
                 notifyOnClick={toggleFilter}
               />
             ))
-          }
+          } */}
         </div>
 
         <div className={sty.headerRight}>
@@ -89,8 +90,8 @@ export function HomePage({
   );
 }
 
-function indexProjects(projects: Project[]): Record<string, Project> {
-  const map: Record<string, Project> = {};
-  for (const p of projects) map[p.id] = p;
+function indexProjects(projects: IProject[]): Record<string, IProject> {
+  const map: Record<string, IProject> = {};
+  for (const p of projects) map[p.pid] = p;
   return map;
 }

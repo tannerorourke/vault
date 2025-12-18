@@ -1,7 +1,7 @@
-import { Project, Tag } from "../lib/types/global";
+import { IProject, ITag } from "../lib/types/global";
 
 
-export const TAGS: { [id: string]: Tag } = {
+export const TAGS: { [id: string]: ITag } = {
   "spatiotemporal": {
     group: "area",
     label: "Spatiotemporal Modeling",
@@ -38,10 +38,10 @@ export const TAG_GROUP_COLORS = {
 }
 
 
-export const PROJECTS: Project[] = [
+export const PROJECTS: IProject[] = [
     {
-        id: "fire-fusion",
-        title: "",
+        pid: "fire-fusion",
+        title: "FireFusion",
         tags: [TAGS['spatiotemporal']],
         filterIds: ['aiml', 'research', 'labs'],
         year: "2025",
@@ -64,7 +64,7 @@ export const PROJECTS: Project[] = [
         sections: [],
     },
     {
-        id: "directv",
+        pid: "directv",
         title: "DirecTV",
         filterIds: ['experience'],
         tags: [TAGS['ui-systems']],
@@ -77,8 +77,8 @@ export const PROJECTS: Project[] = [
         sections: [],
     },
     {
-        id: "gpt4",
-        title: "Fact Checking ChatGPT",
+        pid: "gpt4",
+        title: "\"Fact Checking\" ChatGPT",
         filterIds: ['labs'],
         tags: [],
         year: "2025",

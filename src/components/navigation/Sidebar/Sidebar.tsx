@@ -7,8 +7,8 @@ export function Sidebar() {
   return (
     <aside className={sidebarRoot} aria-label="Sidebar">
       <nav className={sidebarNav}>
-        {SIDEBAR_LINKS.map((item) => (
-          <p>LINK</p>
+        {SIDEBAR_LINKS.map((item, ix) => (
+          <p key={ix}>LINK</p>
           // <Link key={item.label} className={sidebarIcon} href={item.href}>
           //   {item.label}
           // </Link>

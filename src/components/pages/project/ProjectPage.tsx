@@ -1,5 +1,10 @@
+import { IProject } from "@/lib/types/global"
+
+
+export type ProjectPageProps = {
+
+}
+
 export function ProjectPage() {
-
-
-  return (<p>Hello from the profile page</p>)
+  return (<p>Project page</p>)
 }
