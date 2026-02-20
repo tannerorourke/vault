@@ -7,28 +7,32 @@ export const NAV_FILTERS: IFilter[] = [
   { id: 'labs', label: 'Labs' }
 ]
 
-export const SIDEBAR_LINKS: ILinkIcon[] = [
-  { 
-    src: "public/icons/github.png", 
-    alt: "Go to my GitHub",
+export const SIDEBAR_LINKS = [
+  {
+    icon: "github",
+    alt: "GitHub",
     href: "https://github.com/torourke14",
     target: "_blank",
+    tooltipText: "GitHub",
   },
   {
-    src: "public/icons/linkedin.png",
-    alt: "Go to my LinkedIn",
+    icon: "linkedin",
+    alt: "LinkedIn",
     href: "https://www.linkedin.com/in/tworourke/",
     target: "_blank",
+    tooltipText: "LinkedIn",
   },
   { 
-    src: "public/icons/download.png",
-    alt: "Download my CV",
+    icon: "download",
+    alt: "Download CV",
     download: 'tanner-orourke-cv',
-    href: "public/content/tanner-orourke-cv.pdf" 
+    href: "content/tanner-orourke-cv.pdf",
+    tooltipText: "Download CV",
   },
   { 
-    src: "public/icons/email.png", 
+    icon: "mail",
     alt: "Email me",
-    href: "mailto:tannero@live.com?subject=Reaching%20out" 
+    href: "mailto:tannero@live.com?subject=Reaching%20out",
+    tooltipText: "Email me",
   },
 ];

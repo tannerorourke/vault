@@ -1,53 +1,61 @@
 'use client';
 
 import React from 'react'
-import { Button, ButtonProps } from '@base-ui/react/button';
-import NextLink, { LinkProps as NextLinkProps } from 'next/link';
-import * as styles from "./icon-button.css";
+import * as sty from "./icon-button.css";
 
-export type IconButtonProps = ButtonProps & {
-  label: string;
-  filterId?: string;
-  onFilterSelect?: (filterId: string) => void;
-  isActive?: boolean;
-  nextProps?: NextLinkProps;
+import { DynamicIcon, IconName } from 'public/icons/icon-registry';
+import { Tooltip } from "@base-ui/react";
+import Text from '../Text';
+import { TooltipPopupStyles } from './customTooltipStyles';
+
+export type IconButtonProps = React.ComponentPropsWithoutRef<'a'> & {
+  icon: IconName;
+  ssr?: boolean;
+  alt?: string;
+  
+  tooltipText?: string;
+  onClick?: () => void;
 }
+
+
 
 export const IconButton: React.FC<IconButtonProps> = ({
   children,
-  onClick,
-  label,
-  filterId,
-  onFilterSelect,
-  isActive = false,
-  nextProps = null,
+  className,
+  icon,
+  ssr = true,
+  alt = '',
+  tooltipText,
+  onClick = () => {},
   ...rest
 }) => {
-  const buttonClass = `${styles.buttonBase} ${isActive ? styles.buttonActive : ""}`;
-
-  const handleClick = (e: any /** Base UI needs better typing here */) => {
-    onClick?.(e);
-
-    if (filterId && onFilterSelect) {
-      onFilterSelect(filterId);
-    }
-  };
   
-  const button = (
-    <Button
-      className={buttonClass}
-      onClick={handleClick}
-      aria-pressed={isActive}
+  
+  const Component = (
+    <a className={[sty.aBase, className].filter(Boolean).join(' ')}
+      onClick={onClick}
       {...rest}
     >
-      {label}
-      {children}
-    </Button>
-  );
+      <DynamicIcon name={icon} ssr={ssr} width={'100%'} height={'100%'} />
+    </a>
+  )
 
-  if (nextProps) {
-    return <NextLink {...nextProps}>{button}</NextLink>;
+  if (tooltipText) {
+    return (
+      <Tooltip.Root>
+        <Tooltip.Trigger render={Component} />
+        <Tooltip.Portal>
+          <Tooltip.Positioner side="right" align="center">
+            <Tooltip.Popup style={{ ...TooltipPopupStyles }}>
+              <Text as='span'>
+                {tooltipText}
+              </Text>
+            </Tooltip.Popup>
+          </Tooltip.Positioner>
+        </Tooltip.Portal>
+      </Tooltip.Root>
+    )
   }
 
-  return button;
+  return Component;
 }

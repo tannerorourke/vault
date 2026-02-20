@@ -1,0 +1,1 @@
+export { RootTransitionProvider as default } from './root-transition-provider';

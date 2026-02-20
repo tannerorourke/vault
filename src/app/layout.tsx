@@ -1,14 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { Inter_Tight, Roboto_Flex } from "next/font/google";
 import './global.css';
-import { layoutRoot, layoutShell, layoutMain } from "@/lib/theme/appShell.css";
 import AppProvider from "@/components/navigation/AppProvider";
-import Sidebar from "@/components/navigation/Sidebar";
-import Header from "@/components/navigation/Header";
-
-/**
- * Define Metadata, theme, and providers
- */
+import LinksList from "@/components/navigation/LinksList";
+import { themeClass } from "@/lib/theme/theme.css";
+import RootTransitionProvider from "@/components/navigation/RootTransitionProvider";
 
 const interTight = Inter_Tight({
   style: "normal",
@@ -70,16 +66,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${layoutRoot} ${interTight.variable} ${robotoFlex.variable}`}>
+    <html lang="en" className={themeClass}>
+      <body className={`${interTight.variable} ${robotoFlex.variable}`}>
         <AppProvider initProjectFilterId="">
-          <div className={layoutShell}>
-            <Sidebar />
-            <main className={layoutMain}>
-              <Header />
-              {children}
-            </main>
-          </div>
+          {/** Links are only content which staticly shows on ALL pages */}
+          <LinksList />
+          <RootTransitionProvider>
+            {children}
+          </RootTransitionProvider>
         </AppProvider>
       </body>
     </html>

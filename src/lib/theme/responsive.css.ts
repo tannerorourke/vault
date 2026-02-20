@@ -1,5 +1,5 @@
 import { defineProperties, createSprinkles } from "@vanilla-extract/sprinkles";
-import { vars } from "./theme.css";
+import { theme } from "./theme.css";
 
 export const breakpoints = {
   xs: 0,
@@ -9,17 +9,18 @@ export const breakpoints = {
   xl: 1200,
 };
 
-export const mq = Object.keys(breakpoints).reduce(
+type BreakpointKey = keyof typeof breakpoints;
+
+export const mq = (Object.keys(breakpoints)  as BreakpointKey[]).reduce(
   (acc: Record<string, string>, key) => {
-    acc[key] = `@media (min-width: ${breakpoints[key as keyof typeof breakpoints]}px)`;
+    acc[key] = `@media (min-width: ${breakpoints[key]}px)`;
     return acc;
-  }, {}
+  }, {} as Record<BreakpointKey, `@media (min-width: ${number}px)`>
 );
 
-export const mqArray = Object.keys(breakpoints).map(
-  key => `@media (min-width: ${breakpoints[key as keyof typeof breakpoints]}px)`
+export const mqArray = (Object.keys(breakpoints)  as BreakpointKey[]).map(
+  key => `@media (min-width: ${breakpoints[key]}px)`
 );
-
 
 const sprinkles = defineProperties({
   conditions: {
@@ -30,7 +31,7 @@ const sprinkles = defineProperties({
     xl: { "@media": `screen and (min-width: ${breakpoints.xl}px)` },
   },
   defaultCondition: "xs",
-	// Add properties when they need to be responsive customized
+  // add properties to do classical { xs: ... } styles in responsive({ ... })
   properties: {
     display: ['none', 'flex', 'block', 'inline'],
     flexDirection: ['row', 'column'],
@@ -39,11 +40,17 @@ const sprinkles = defineProperties({
 			'flex-end', 'space-around', 'space-between'
     ],
     alignItems: ['stretch', 'flex-start', 'center', 'flex-end'],
-    paddingTop: vars.space,
-    paddingBottom: vars.space,
-    paddingLeft: vars.space,
-    paddingRight: vars.space,
-    gap: vars.space,
+    gap: theme.space,
+    padding: theme.space,
+    paddingTop: theme.space,
+    paddingBottom: theme.space,
+    paddingLeft: theme.space,
+    paddingRight: theme.space,
+    margin: theme.space,
+    marginTop: theme.space,
+    marginBottom: theme.space,
+    marginLeft: theme.space,
+    marginRight: theme.space,
   },
 });
 

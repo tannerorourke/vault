@@ -35,6 +35,7 @@ body {
   font-family: var(--font-body), var(--font-display), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  margin: 0;
 }
 
 * {
