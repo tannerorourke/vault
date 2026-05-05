@@ -61,10 +61,16 @@ export const theme = createThemeContract({
 		auto: null,
 		_0: null,
 		_4: null,
+		_8: null,
 		_12: null,
+		_16: null,
+		_20: null,
 		_24: null,
+		_32: null,
 		_36: null,
 		_48: null,
+		_56: null,
+		_80: null,
 	},
 	layout: {
 		sidebarWidth: null,
@@ -94,18 +100,18 @@ export const themeClass = createTheme(theme, {
 					active: '#538D84', /* Deep teal for active states */
 			},
 			secondary: {
-					main: '#E07A5F', /* Copper */
-					hover: '#FFAB8D', /* Lighter Copper */
-					active: '#AA4B34', /* Burnt Clay */
+					main: '#8B7355', /* Bark Brown — sparse accent only */
+					hover: '#A68B6B', /* Golden Bark */
+					active: '#6B5A42', /* Dark Bark */
 			},
 			link: {
-					main: '#5D6D68', // '#2A5F58', /* Spruce Teal */
-					hover: '#E07A5F', /* Copper */
+					main: '#5D6D68', /* Moss Grey */
+					hover: '#538D84', /* Light Teal — stays in the forest palette */
 			},
 			error: '#D32F2F',
 			warning: '#ED6C02',
 			shadow: 'rgba(42, 95, 88, 0.12)',
-			contrast: 'FFFFFF',
+			contrast: '#FFFFFF',
     },
 		typography: {
 			fontSize: {
@@ -141,10 +147,16 @@ export const themeClass = createTheme(theme, {
 			auto: 'auto',
 			_0: '0px',
       _4: '4px',
+			_8: '8px',
 			_12: '12px',
+			_16: '16px',
+			_20: '20px',
 			_24: '24px',
+			_32: '32px',
 			_36: '36px',
 			_48: '48px',
+			_56: '56px',
+			_80: '80px',
     },
 		layout: {
 			sidebarWidth: '80px',
