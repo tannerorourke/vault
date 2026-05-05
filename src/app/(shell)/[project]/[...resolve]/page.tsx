@@ -1,6 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 import { IPageProps } from "src/lib/types/routes"
-import { findProject } from "@/lib/utils/findProject";
+import { getProjectContent } from "@/lib/utils/project-content";
 
 /**
  * Resolve any "/[project-id]/**" URL to /[project-id]
@@ -8,6 +8,7 @@ import { findProject } from "@/lib/utils/findProject";
 export default async function ResolveToProjectId({ params }: IPageProps) {
   const { project } = await params;
 
-  if (!findProject(project)) notFound()
+  const content = await getProjectContent(project)
+  if (!content) notFound()
   redirect(`/${project}`)
 }

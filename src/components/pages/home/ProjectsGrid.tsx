@@ -4,9 +4,8 @@ import { useMemo } from "react";
 import * as sty from "./ProjectsGrid.css";
 
 import { useProjectFilter } from "@/components/navigation/AppProvider/app-provider";
-import { PROJECTS } from "@/content/projects";
 import { NAV_FILTERS } from "@/content/nav-links";
-import type { IFilter, IProject } from "@/lib/types/global";
+import type { ProjectContent, ProjectFilterId } from "@/lib/types/project-content";
 import ProjectCard, { type ProjectCardVariant } from "@/components/ui/ProjectCard";
 
 const FILTER_LABELS: Record<string, string> = NAV_FILTERS.reduce(
@@ -14,31 +13,34 @@ const FILTER_LABELS: Record<string, string> = NAV_FILTERS.reduce(
   {} as Record<string, string>
 );
 
-function projectEyebrow(p: IProject): string {
+function projectEyebrow(p: ProjectContent): string {
+  if (p.eyebrow) return p.eyebrow;
   const lead =
-    p.tags[0]?.label ?? FILTER_LABELS[p.filterIds[0] ?? ""] ?? "";
+    p.tags?.[0]?.label ?? FILTER_LABELS[p.filterIds[0] ?? ""] ?? "";
   return lead ? `${lead} · ${p.year}` : p.year;
 }
 
-function projectVariant(p: IProject): ProjectCardVariant {
+function projectVariant(p: ProjectContent): ProjectCardVariant {
   if (p.isFeature) return "feature";
-  if (!p.imageUrl) return "minimal";
+  if (!p.cardImage && !p.heroImage) return "minimal";
   return "default";
 }
 
-type ProjectsGridProps = {};
+type ProjectsGridProps = {
+  projects: ProjectContent[];
+};
 
-export function ProjectsGrid({}: ProjectsGridProps) {
+export function ProjectsGrid({ projects }: ProjectsGridProps) {
   const { projectFilter } = useProjectFilter();
 
-  const visibleProjects = useMemo<IProject[]>(
+  const visibleProjects = useMemo<ProjectContent[]>(
     () =>
       projectFilter
-        ? PROJECTS.filter((p) =>
-            p.filterIds.includes(projectFilter as IFilter["id"])
+        ? projects.filter((p) =>
+            p.filterIds.includes(projectFilter as ProjectFilterId)
           )
-        : PROJECTS,
-    [projectFilter]
+        : projects,
+    [projects, projectFilter]
   );
 
   const count = visibleProjects.length;

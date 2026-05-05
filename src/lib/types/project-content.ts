@@ -74,15 +74,33 @@ export type ProjectContentTag = {
   color?: TagChipColor;
 };
 
+/** Filter ids the home-page header tabs filter by. */
+export type ProjectFilterId = "aiml" | "experience" | "research" | "labs";
+
 export type ProjectContent = {
+  /** Identity */
   pid: string;
   title: string;
+
+  /** Home-page card */
+  /** One-line description shown on the card. */
+  summary: string;
+  filterIds: ProjectFilterId[];
+  year: string;
+  readTime?: number;
+  isFeature?: boolean;
+  /** Optional thumbnail; falls back to heroImage when omitted. */
+  cardImage?: { src: string; alt?: string };
+
+  /** Detail-page header */
   /** Small uppercase line above the title — e.g. "Labs · 2025". */
   eyebrow?: string;
-  /** One-liner outcome / summary under the title. */
+  /** Longer outcome / summary under the title (defaults to summary). */
   subtitle?: string;
   tags?: ProjectContentTag[];
   links?: ProjectContentLink[];
   heroImage?: { src: string; alt?: string };
+
+  /** Detail-page body */
   sections: ProjectSection[];
 };

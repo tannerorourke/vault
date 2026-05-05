@@ -1,12 +1,11 @@
 import Link from "next/link";
-import type { IProject } from "@/lib/types/global";
+import type { ProjectContent } from "@/lib/types/project-content";
 import TagChip from "@/components/ui/TagChip";
-import { TAG_GROUP_COLORS } from "@/content/projects";
 import * as sty from "./project-card.css";
 import type { ProjectCardVariant } from "./project-card.css";
 
 export type ProjectCardProps = {
-  project: IProject;
+  project: ProjectContent;
   eyebrow: string;
   variant?: ProjectCardVariant;
 };
@@ -33,8 +32,8 @@ export function ProjectCard({
   eyebrow,
   variant = "default",
 }: ProjectCardProps) {
-  const showImage =
-    variant !== "minimal" && Boolean(project.imageUrl);
+  const thumbnail = project.cardImage ?? project.heroImage;
+  const showImage = variant !== "minimal" && Boolean(thumbnail);
   const isFeature = variant === "feature";
 
   return (
@@ -43,13 +42,13 @@ export function ProjectCard({
       prefetch
       className={sty.card({ variant })}
     >
-      {showImage && (
+      {showImage && thumbnail && (
         <img
           className={[sty.image, isFeature ? sty.featureImage : ""]
             .filter(Boolean)
             .join(" ")}
-          src={project.imageUrl}
-          alt={project.title}
+          src={thumbnail.src}
+          alt={thumbnail.alt ?? project.title}
         />
       )}
       <div className={sty.body}>
@@ -61,18 +60,16 @@ export function ProjectCard({
         >
           {project.title}
         </h3>
-        <p className={sty.desc}>{project.summaryShort}</p>
+        <p className={sty.desc}>{project.summary}</p>
       </div>
       <footer className={sty.footer}>
-        <span className={sty.tagsRow}>
-          {project.tags.map((t, i) => (
-            <TagChip
-              key={i}
-              label={t.label}
-              color={TAG_GROUP_COLORS[t.group] ?? "teal"}
-            />
-          ))}
-        </span>
+        {project.tags && project.tags.length > 0 && (
+          <span className={sty.tagsRow}>
+            {project.tags.map((t, i) => (
+              <TagChip key={i} label={t.label} color={t.color} />
+            ))}
+          </span>
+        )}
         {project.readTime !== undefined && (
           <span className={sty.readChip}>
             {project.readTime} min read

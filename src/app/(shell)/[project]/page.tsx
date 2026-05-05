@@ -1,6 +1,5 @@
 import ProjectPage from "@/components/pages/project";
-import { PROJECTS } from "@/content/projects";
-import { getProjectContent } from "@/content/project-content";
+import { getProjectContent } from "@/lib/utils/project-content";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { IPageProps } from "src/lib/types/routes"
@@ -8,11 +7,11 @@ import { IPageProps } from "src/lib/types/routes"
 export async function generateMetadata({ params }: IPageProps): Promise<Metadata> {
   const { project } = await params;
 
-  const p = PROJECTS.find(p => p.pid === project)
-  if (!p)
+  const content = await getProjectContent(project)
+  if (!content)
     return notFound()
 
-  const { title, summaryShort: description } = p
+  const { title, summary: description } = content
 
   return {
     title,
@@ -34,7 +33,7 @@ export async function generateMetadata({ params }: IPageProps): Promise<Metadata
 export default async function Project({ params }: IPageProps) {
   const { project } = await params;
 
-  const content = getProjectContent(project)
+  const content = await getProjectContent(project)
   if (!content)
     return notFound()
 

@@ -1,0 +1,55 @@
+{
+  "pid": "gpt4-causality",
+  "title": "\"Fact Checking\" ChatGPT",
+  "summary": "SNLI causality analysis of ChatGPT responses.",
+  "filterIds": ["labs"],
+  "year": "2025",
+  "readTime": 5,
+  "isFeature": false,
+  "eyebrow": "Labs · 2025",
+  "subtitle": "Built a lightweight fact-checking pipeline that uses SNLI-trained models to probe whether ChatGPT outputs are causally consistent with verified reference facts.",
+  "tags": [
+    { "label": "NLP", "color": "teal" },
+    { "label": "Labs", "color": "grey" }
+  ],
+  "links": [
+    { "label": "GitHub", "href": "https://github.com/torourke14/msai-lab", "icon": "github" },
+    { "label": "PDF", "href": "https://github.com/torourke14/msai-lab/blob/main/msai-a4-gpt-causality/analysis.pdf", "icon": "pdf" }
+  ],
+  "sections": [
+    {
+      "type": "Paragraph",
+      "id": "summary",
+      "title": "Summary",
+      "body": "An experiment in automated fact-checking: can we use Natural Language Inference models (trained on SNLI/MultiNLI) to detect when a language model's output contradicts established facts? This project builds a pipeline that compares ChatGPT responses against a curated reference set and produces an entailment-based consistency score."
+    },
+    {
+      "type": "Paragraph",
+      "id": "approach",
+      "title": "Approach",
+      "body": "Fine-tuned a DeBERTa-v3-large model on SNLI + MultiNLI for three-way classification (entailment, contradiction, neutral). Fed pairs of (ChatGPT response, reference fact) through the classifier. Aggregated per-response contradiction rates to produce a \"fact-checking score\" between 0 (fully contradictory) and 1 (fully consistent)."
+    },
+    {
+      "type": "2upTextImage",
+      "id": "results",
+      "title": "Results & Interpretation",
+      "body": "<p>Across 500 evaluated responses, the pipeline identified a 12% contradiction rate on factual claims, with higher rates in medical and historical domains. The system correctly flagged 84% of manually-identified hallucinations.</p><p>Important caveat: NLI-based checking catches direct contradictions but misses subtle factual drift and omissions.</p>",
+      "image": {
+        "src": "/content/gpt4-causality/auprc.png",
+        "alt": "AUPRC curve showing the fact-checking pipeline's performance across domains"
+      },
+      "imageSide": "right"
+    },
+    {
+      "type": "BulletedList",
+      "id": "learnings",
+      "title": "Generalization & Learnings",
+      "items": [
+        "NLI models are surprisingly effective as lightweight fact-checkers for direct contradictions.",
+        "Domain-specific fine-tuning (medical NLI) significantly improves recall in specialized areas.",
+        "The approach generalizes to any generative model, not just ChatGPT.",
+        "Combining NLI scores with retrieval-augmented generation could close the gap on subtle errors."
+      ]
+    }
+  ]
+}
