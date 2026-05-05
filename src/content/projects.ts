@@ -1,41 +1,41 @@
 import { IProject, ITag } from "../lib/types/global";
+import type { TagChipColor } from "@/components/ui/TagChip";
 
+export const TAG_GROUP_COLORS: Record<string, TagChipColor> = {
+  area: "teal",
+  intent: "copper",
+  theme: "grey",
+  technique: "teal",
+  stack: "grey",
+};
 
 export const TAGS: { [id: string]: ITag } = {
   "spatiotemporal": {
     group: "area",
     label: "Spatiotemporal Modeling",
-    color: ""
+    color: TAG_GROUP_COLORS.area,
   },
   "nlp": {
     group: "area",
     label: "NLP",
-    color: ""
+    color: TAG_GROUP_COLORS.area,
   },
   "comp-vision": {
     group: "area",
     label: "Computer Vision",
-    color: ""
+    color: TAG_GROUP_COLORS.area,
   },
   "ui-systems": {
     group: "area",
     label: "UI Systems",
-    color: ""
+    color: TAG_GROUP_COLORS.area,
   },
   "app-design": {
-    group: "area",
+    group: "intent",
     label: "App Design",
-    color: ""
+    color: TAG_GROUP_COLORS.intent,
   },
 };
-
-export const TAG_GROUP_COLORS = {
-  "area": "",
-  "intent": "",
-  "theme": "",
-  "technique": "",
-  "stack": ""
-}
 
 
 export const PROJECTS: IProject[] = [

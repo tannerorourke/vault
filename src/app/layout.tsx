@@ -4,7 +4,6 @@ import './global.css';
 import AppProvider from "@/components/navigation/AppProvider";
 import LinksList from "@/components/navigation/LinksList";
 import { themeClass } from "@/lib/theme/theme.css";
-import RootTransitionProvider from "@/components/navigation/RootTransitionProvider";
 
 const interTight = Inter_Tight({
   style: "normal",
@@ -71,9 +70,7 @@ export default function RootLayout({
         <AppProvider initProjectFilterId="">
           {/** Links are only content which staticly shows on ALL pages */}
           <LinksList />
-          <RootTransitionProvider>
-            {children}
-          </RootTransitionProvider>
+          {children}
         </AppProvider>
       </body>
     </html>

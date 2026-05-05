@@ -3,97 +3,91 @@
 import * as React from "react";
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { usePathname } from "next/navigation";
+import { FrozenRouter } from "@/lib/utils/FrozenRouter";
 
-type RouteKind = "profile" | "home" | "project";
+type RouteKind = "home" | "profile" | "project";
+
 function getRouteKind(pathname: string): RouteKind {
+  if (pathname === "/") return "home";
   if (pathname.startsWith("/profile")) return "profile";
-  if (pathname.startsWith("/projects/")) return "project";
-  return "home";
+  return "project"; // any other top-level route is treated as a project page
 }
 
-type ContentDirection = "up" | "down";
-type RootDirection = "left" | "right";
+// Direction names describe page motion (where pages move TOWARD).
+// "left"  => incoming enters from right, outgoing exits to left
+// "right" => incoming enters from left,  outgoing exits to right
+// "down"  => incoming enters from top,   outgoing exits to bottom
+// "up"    => incoming enters from bottom, outgoing exits to top
+type Direction = "left" | "right" | "up" | "down" | "none";
 
-type TransitionPlan =
-  | { lane: "root"; dir: RootDirection }
-  | { lane: "content"; dir: ContentDirection }
-  | { lane: "none" };
-
-function getTransitionPlan(fromPath: string | null, toPath: string): TransitionPlan {
-  if (!fromPath) return { lane: "none" };
+function getDirection(fromPath: string | null, toPath: string): Direction {
+  if (!fromPath || fromPath === toPath) return "none";
 
   const from = getRouteKind(fromPath);
   const to = getRouteKind(toPath);
+  if (from === to) return "none";
 
-  // Profile lives to the right of main content stack.
-  // transition to/from Profile slides horizontally
-  if (to === "profile")
-    return { lane: "root", dir: "left" };
-  if (from === "profile")
-    return { lane: "root", dir: "right" };
+  // Home <-> Profile (horizontal carousel: profile lives to the right of home)
+  if (from === "home" && to === "profile") return "left";
+  if (from === "profile" && to === "home") return "right";
 
-  // Home and projects live in a vertical stack.
-  // Transition  slides vertically
-  if (from === "project" && to === "home")
-    return { lane: "content", dir: "up" };
-  if (from === "home" && to === "project")
-    return { lane: "content", dir: "down" };
+  // Project lives "below" the home/profile row: it slides up from beneath
+  if (to === "project") return "up";
+  if (from === "project") return "down";
 
-  // Error pages default to no transition and will render as normal.
-  return { lane: "none" };
+  return "none";
 }
 
-type ContentCustom = { dir: ContentDirection };
-
-const contentVariants: Variants = {
-  initial: (custom: ContentCustom) => ({
-    // "down" => enter from top; "up" => enter from bottom
-    y: custom.dir === "down" ? "-100%" : "100%",
-  }),
-  animate: { y: "0%" },
-  exit: (custom: ContentCustom) => ({
-    y: custom.dir === "down" ? "100%" : "-100%",
-  }),
+const variants: Variants = {
+  initial: (dir: Direction) => {
+    switch (dir) {
+      case "left":  return { x: "100%",  y: 0 };
+      case "right": return { x: "-100%", y: 0 };
+      case "down":  return { x: 0, y: "-100%" };
+      case "up":    return { x: 0, y: "100%"  };
+      default:      return { x: 0, y: 0 };
+    }
+  },
+  animate: { x: 0, y: 0 },
+  exit: (dir: Direction) => {
+    switch (dir) {
+      case "left":  return { x: "-100%", y: 0 };
+      case "right": return { x: "100%",  y: 0 };
+      case "down":  return { x: 0, y: "100%" };
+      case "up":    return { x: 0, y: "-100%" };
+      default:      return { x: 0, y: 0 };
+    }
+  },
 };
-
-function getShellViewKey(pathname: string): "home" | "project" {
-  return pathname.startsWith("/projects/") ? "project" : "home";
-}
 
 export function ContentTransitionProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const viewKey = getShellViewKey(pathname);
-
   const previousPathRef = React.useRef<string | null>(null);
-  const [plan, setPlan] = React.useState<TransitionPlan>({ lane: "none" });
+
+  const direction = React.useMemo(
+    () => getDirection(previousPathRef.current, pathname),
+    [pathname]
+  );
 
   React.useEffect(() => {
-    const fromPath = previousPathRef.current;
-    const toPath = pathname;
-
-    setPlan(getTransitionPlan(fromPath, toPath));
-    previousPathRef.current = toPath;
+    previousPathRef.current = pathname;
   }, [pathname]);
 
-  const shouldAnimateContent = plan.lane === "content";
-  const contentCustom: ContentCustom = {
-    dir: plan.lane === "content" ? plan.dir : "down",
-  };
+  const animate = direction !== "none";
 
   return (
-    <AnimatePresence mode="sync" initial={false} custom={contentCustom}>
+    <AnimatePresence mode="sync" initial={false} custom={direction}>
       <motion.div
-        // key={viewKey}
-        key={viewKey}
-        custom={contentCustom}
-        variants={shouldAnimateContent ? contentVariants : undefined}
-        initial={shouldAnimateContent ? "initial" : false}
-        animate={shouldAnimateContent ? "animate" : false}
-        exit={shouldAnimateContent ? "exit" : undefined}
+        key={pathname}
+        custom={direction}
+        variants={animate ? variants : undefined}
+        initial={animate ? "initial" : false}
+        animate={animate ? "animate" : false}
+        exit={animate ? "exit" : undefined}
         transition={{ duration: 0.32, ease: "easeInOut" }}
         style={{ position: "absolute", inset: 0, overflow: "auto" }}
       >
-        {children}
+        <FrozenRouter>{children}</FrozenRouter>
       </motion.div>
     </AnimatePresence>
   );

@@ -15,7 +15,7 @@ export function LinksList() {
             className={sty.sidebarItemIcon}
             href={item.href}
             target={item.target}
-            //tooltipText={item.tooltipText}
+            tooltipText={item.tooltipText}
           />
         </li>
       ))}

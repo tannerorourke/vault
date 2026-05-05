@@ -29,11 +29,11 @@ export const sidebarItem = style({
 });
 
 export const sidebarItemIcon = style({
-  color: theme.color.canvas,
+  color: 'rgba(244, 246, 245, 0.7)', /* canvas at 70% */
+  transition: 'color 300ms ease',
   selectors: {
     "&:hover": {
-      color: theme.color.text.primary,
-      transition: 'color 300ms ease'
+      color: theme.color.text.primary, /* Deep Obsidian */
     },
   },
 })

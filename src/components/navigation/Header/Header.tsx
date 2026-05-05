@@ -2,6 +2,7 @@
 
 import "./logo.css";
 import { useEffect } from "react";
+import Link from "next/link";
 
 import * as sty from "./Header.css";
 import TextLink from "src/components/ui/TextLink";
@@ -58,7 +59,7 @@ export function Header({}: HeaderProps) {
   return (
     <header className={sty.root}>
         <div className={sty.headerLeft}>
-          <div className={sty.logoContainer} >
+          <Link href="/" prefetch className={sty.logoContainer} aria-label="Home">
             {/* <Text as="h1" variant={"titleLg"} className={sty.logoWord}>
               Tanner<br/>O'Rourke
             </Text> */}
@@ -77,7 +78,7 @@ export function Header({}: HeaderProps) {
               <span>K</span>
               <span>E</span>
             </Text>
-          </div>
+          </Link>
           {
             NAV_FILTERS.map((cf: IFilter) => (
               <TextLink

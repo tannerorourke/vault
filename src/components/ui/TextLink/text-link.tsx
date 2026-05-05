@@ -5,7 +5,7 @@ import { Button, ButtonProps } from '@base-ui/react/button';
 import NextLink, { LinkProps as NextLinkProps } from 'next/link';
 import * as sty from "./text-link.css";
 import { IFilter } from '@/lib/types/global';
-import { Text, TextProps, TextOwnProps } from '../Text/Text';
+import { Text, TextProps } from '../Text/Text';
 
 export type TextLinkProps = ButtonProps & {
   label: string;
@@ -37,7 +37,7 @@ export const TextLink: React.FC<TextLinkProps> = ({
   
   const button = (
     <Button
-      className={[sty.buttonBase, className, isActive].filter(Boolean).join(' ')}
+      className={[sty.buttonBase, className].filter(Boolean).join(' ')}
       onClick={handleClick}
       aria-pressed={isActive}
       {...rest}

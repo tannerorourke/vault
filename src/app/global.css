@@ -1,37 +1,11 @@
-:root {
-  --color-canvas: #F4F6F5; /* Cloud White */
-  --color-card: #FFFFFF; /* Pure White */
-
-  --color-text-primary: #1C2321; /* Deep Obsidian */
-  --color-text-secondary: #5D6D68; /* Moss Grey */
-
-  --color-primary: #2A5F58; /* Spruce Teal */
-  --color-primary-hover: #538D84; /* Lighter Teal for hover states */
-  --color-primary-active: #538D84; /* Deep teal for active states */
-  
-  --color-secondary: #E07A5F; /* Copper */
-  --color-secondary-hover: #FFAB8D; /* Lighter Copper */
-  --color-secondary-active: #AA4B34; /* Burnt Clay */
-  
-  --color-link: #2A5F58; /* color-primary */
-  --color-link-hover: #E07A5F; /* color-secondary */
-  
-  --color-error: #D32F2F;
-  --color-warning: #ED6C02;
-  --color-shadow: rgba(42, 95, 88, 0.12);
-  --color-contrast: #FFF;
-  --spacing-unit: 8px; 
-}
-
-
 html, body {
   max-width: 100vw;
   overflow-x: hidden;
 }
 
 body {
-  color: var(--color-text-primary);
-  background: var(--color-canvas);
+  color: #1C2321; /* Deep Obsidian */
+  background: #F4F6F5; /* Cloud White */
   font-family: var(--font-body), var(--font-display), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -45,31 +19,18 @@ body {
 }
 
 a {
-  color: var(--color-link);
+  color: #5D6D68; /* Moss Grey */
   text-decoration: none;
-  border-radius: '8px'
+  border-radius: 8px;
 }
 
 h1, h2, h3 {
   font-family: var(--font-display), system-ui, sans-serif;
   font-weight: 700;
-  color: var(--color-primary);
+  color: #2A5F58; /* Spruce Teal */
 }
 h4, h5, h6 {
   font-family: var(--font-display), system-ui, sans-serif;
   font-weight: 700;
-  color: var(--color-text-primary);
+  color: #1C2321; /* Deep Obsidian */
 }
-
-
-/** MOVE --- */
-.card-base {
-  box-shadow: 0 4px 20px -2px var(--color-shadow);
-  border-radius: 12px;
-  background-color: var(--color-card);
-  color: var(--color-text-primary);
-}
-
-
-
-

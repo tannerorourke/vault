@@ -12,7 +12,7 @@ export const root = style({
   alignItems: "flex-start",
   justifyContent: "space-between",
   // paddingTop: '56px',
-  height: "118px",
+  height: theme.layout.headerHeight,
   
   padding: '32px 16px 0 16px',
   [mq.sm]: { padding: '48px 40px 0 40px' },
@@ -47,9 +47,15 @@ export const headerLeft = style({
 
         export const linkStyles = style({
           color: `${theme.color.canvas} !important`,
+          paddingBottom: '2px',
+          borderBottom: '2px solid transparent',
           selectors: {
             "&:hover": {
-              color: `${theme.color.primary.main} !important`,
+              color: `${theme.color.secondary.main} !important`,
+            },
+            '&[aria-pressed="true"]': {
+              color: `${theme.color.secondary.main} !important`,
+              borderBottomColor: theme.color.secondary.main,
             },
           },
         });

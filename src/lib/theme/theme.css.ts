@@ -160,7 +160,7 @@ export const themeClass = createTheme(theme, {
     },
 		layout: {
 			sidebarWidth: '80px',
-			headerHeight: '180px',
+			headerHeight: '118px',
 			contentMaxWidth: '1600px',
 			zIndex: {
 				sidebar: '11',

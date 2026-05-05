@@ -1,8 +1,10 @@
+# Portfolio
+
 [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app). Vanilla Extract SSR styling and BaseUI components.
 
 ## Getting Started
 
-First, run the development server:
+Run the development server:
 
 ```bash
 npm run dev
@@ -14,8 +16,12 @@ pnpm dev
 bun dev
 ```
 
-## Deploy on Vercel
+## Transitions
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Page transitions are SSR'd using Next14 Framer Motion page transitions, with custom routing layered on top. A simpler demo can be found on [StackBlitz](https://stackblitz.com/edit/nextjs-framer-motion-template-p2cr5m?file=app%2FPageTransitionEffect.tsx&utm_source=chatgpt.com).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deployment
+
+Deployed using the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme).
+
+See [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
