@@ -17,6 +17,7 @@ import {
   easeOutCubic,
   drawFrame
 } from 'src/lib/utils/diffusion-utils';
+import { useTheme } from '@/components/navigation/ThemeProvider';
 
 interface Props {
   palette?: CanvasPalette;
@@ -24,13 +25,14 @@ interface Props {
   children?: React.ReactNode;
 }
 
-export function DiffusionCanvas({ 
-  palette = PALETTES.brandTeal,
+export function DiffusionCanvas({
+  palette,
   options = defaultOptions,
-  children 
+  children
 }: Props) {
-  // Sentinel div - sits in normal flow so IntersectionObserver fires correctly
-  // even though the canvas itself is fixed.
+  const { theme: activeTheme } = useTheme();
+  const resolvedPalette = palette ?? (activeTheme === 'dark' ? PALETTES.brandTeal : PALETTES.brandTealLight);
+
   const sentinelRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -75,7 +77,7 @@ export function DiffusionCanvas({
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reducedMotion) {
       const ctx = canvas.getContext('2d');
-      if (ctx) drawFrame(ctx, vpW, vpH, dotData, palette, options, 1, 0);
+      if (ctx) drawFrame(ctx, vpW, vpH, dotData, resolvedPalette, options, 1, 0);
       return;
     }
 
@@ -100,7 +102,7 @@ export function DiffusionCanvas({
         emergeT = 1;
       }
 
-      drawFrame(ctx, vpW, vpH, dotData, palette, options, emergeT, state.scrollY);
+      drawFrame(ctx, vpW, vpH, dotData, resolvedPalette, options, emergeT, state.scrollY);
       state.rafId = requestAnimationFrame(tick);
     };
 
@@ -141,7 +143,7 @@ export function DiffusionCanvas({
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onResize);
     };
-  }, [palette]);
+  }, [resolvedPalette]);
 
   return (
     <>

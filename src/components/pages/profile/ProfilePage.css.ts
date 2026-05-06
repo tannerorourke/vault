@@ -3,7 +3,6 @@ import { theme } from "@/lib/theme/theme.css";
 import { mq } from "@/lib/theme/responsive.css";
 
 const HEADER_OFFSET = `calc(${theme.layout.headerHeight} + ${theme.space._48})`;
-const DIVIDER = "1px solid rgba(0,0,0,0.08)";
 const CHIP_BG = "rgba(42,95,88,0.09)";
 const PHOTO_PLACEHOLDER_BG = "rgba(42,95,88,0.06)";
 
@@ -98,7 +97,7 @@ export const skills = style({
   gap: theme.space._8,
   marginTop: theme.space._24,
   paddingTop: theme.space._24,
-  borderTop: DIVIDER,
+  borderTop: `1px solid ${theme.color.divider}`,
 });
 
 export const skillChip = style({

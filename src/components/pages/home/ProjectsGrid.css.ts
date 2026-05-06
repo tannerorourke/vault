@@ -2,15 +2,13 @@ import { style } from "@vanilla-extract/css";
 import { theme } from "@/lib/theme/theme.css";
 import { mq } from "@/lib/theme/responsive.css";
 
-const DIVIDER = "1px solid rgba(0,0,0,0.08)";
-
 export const section = style({
   display: "flex",
   flexDirection: "column",
-  padding: `${theme.space._36} ${theme.space._24} ${theme.space._48}`,
-  [mq.md]: {
-    padding: `${theme.space._36} ${theme.space._48} ${theme.space._48}`,
-  },
+  marginTop: theme.layout.headerHeight,
+  padding: '32px 16px 0 16px',
+  [mq.sm]: { padding: '48px 40px 0 40px' },
+  [mq.md]: { padding: '56px 80px 0 80px' }
 });
 
 export const sectionHeader = style({
@@ -18,7 +16,7 @@ export const sectionHeader = style({
   alignItems: "center",
   justifyContent: "space-between",
   gap: theme.space._16,
-  borderBottom: DIVIDER,
+  borderBottom: `1px solid ${theme.color.divider}`,
   paddingBottom: theme.space._12,
   marginBottom: theme.space._24,
 });

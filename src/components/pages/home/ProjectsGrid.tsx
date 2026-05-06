@@ -47,12 +47,12 @@ export function ProjectsGrid({ projects }: ProjectsGridProps) {
 
   return (
     <section className={sty.section}>
-      <header className={sty.sectionHeader}>
+      {/* <header className={sty.sectionHeader}>
         <h2 className={sty.sectionTitle}>Projects</h2>
         <span className={sty.sectionCount}>
           {count} project{count !== 1 ? "s" : ""}
         </span>
-      </header>
+      </header> */}
 
       <div className={sty.grid}>
         {visibleProjects.map((p) => (

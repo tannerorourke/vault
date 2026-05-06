@@ -3,8 +3,6 @@ import { recipe } from "@vanilla-extract/recipes";
 import { theme } from "@/lib/theme/theme.css";
 import { mq } from "@/lib/theme/responsive.css";
 
-const DIVIDER = "1px solid rgba(0,0,0,0.08)";
-const CHIP_BG = "rgba(0, 0, 0, 0.04)";
 const CARD_HOVER_SHADOW = "0 8px 32px -4px rgba(42, 95, 88, 0.20)";
 
 const cardBase = style({
@@ -105,7 +103,7 @@ export const desc = style({
 });
 
 export const footer = style({
-  borderTop: DIVIDER,
+  borderTop: `1px solid ${theme.color.divider}`,
   padding: `${theme.space._8} ${theme.space._16}`,
   display: "flex",
   alignItems: "center",
@@ -128,7 +126,7 @@ export const readChip = style({
   fontSize: theme.typography.fontSize.micro,
   fontWeight: theme.typography.fontWeight.medium,
   color: theme.color.text.secondary,
-  background: CHIP_BG,
+  background: theme.color.divider,
   borderRadius: "20px",
   padding: "3px 10px",
   transition: "color 200ms ease, background-color 200ms ease",

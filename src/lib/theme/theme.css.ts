@@ -19,13 +19,14 @@ export const theme = createThemeContract({
 				active: null
 		},
 		link: {
-				main: null, /* Spruce Teal */
-				hover: null, /* Copper */
+				main: null,
+				hover: null,
 		},
 		error: null,
 		warning: null,
 		shadow: null,
 		contrast: null,
+		divider: null,
   },
 	typography: {
 		fontSize: {
@@ -82,49 +83,49 @@ export const theme = createThemeContract({
 			heroImg: null,
 		}
 	},
-	
+
 });
 
-export const themeClass = createTheme(theme, {
-    /* --- Backgrounds --- */
+export const lightTheme = createTheme(theme, {
     color: {
 			canvas: '#F4F6F5',
 			card: '#FFFFFF',
 			text: {
-					primary: '#1C2321', /* Deep Obsidian */
-					secondary: '#5D6D68', /* Moss Grey */
+					primary: '#1C2321',
+					secondary: '#5D6D68',
 			},
 			primary: {
-					main: '#2A5F58', /* Spruce Teal */
-					hover: '#538D84', /* Lighter Teal */
-					active: '#538D84', /* Deep teal for active states */
+					main: '#2A5F58',
+					hover: '#538D84',
+					active: '#538D84',
 			},
 			secondary: {
-					main: '#8B7355', /* Bark Brown */
-					hover: '#A68B6B', /* Golden Bark */
-					active: '#6B5A42', /* Dark Bark */
+					main: '#8B7355',
+					hover: '#A68B6B',
+					active: '#6B5A42',
 			},
 			link: {
-					main: '#5D6D68', /* Moss Grey */
-					hover: '#538D84', /* Light Teal */
+					main: '#5D6D68',
+					hover: '#538D84',
 			},
 			error: '#D32F2F',
 			warning: '#ED6C02',
 			shadow: 'rgba(42, 95, 88, 0.12)',
 			contrast: '#FFFFFF',
+			divider: 'rgba(0, 0, 0, 0.08)',
     },
 		typography: {
 			fontSize: {
-				display: '36px',	// hero numbers, landing headers
-				titleLg: '32px',	// page title
-				titleMd: '28px',	// section header
-				titleSm: '24px',	// subsection header
-				bodyLg: '18px',		// long-form reading
-				body: '16px',			// default body text
-				bodySm: '14px',		// secondary body / dense UI
-				ui: '14px',				// buttons, nav, labels
-				caption: '12px',	// helper text
-				micro: '10px',		// timestamps, legal, badges
+				display: '36px',
+				titleLg: '32px',
+				titleMd: '28px',
+				titleSm: '24px',
+				bodyLg: '18px',
+				body: '16px',
+				bodySm: '14px',
+				ui: '14px',
+				caption: '12px',
+				micro: '10px',
 			},
 			lineHeight: {
 				tight: "1.15",
@@ -169,3 +170,91 @@ export const themeClass = createTheme(theme, {
 			}
 		},
 });
+
+export const darkTheme = createTheme(theme, {
+    color: {
+			canvas: '#0e1a18',
+			card: '#162822',
+			text: {
+					primary: '#E0EDEA',
+					secondary: '#7A9E98',
+			},
+			primary: {
+					main: '#4DB8AC',
+					hover: '#6ECFC5',
+					active: '#3A9087',
+			},
+			secondary: {
+					main: '#C4A87A',
+					hover: '#D4BA8E',
+					active: '#A08A62',
+			},
+			link: {
+					main: '#7A9E98',
+					hover: '#4DB8AC',
+			},
+			error: '#EF5350',
+			warning: '#FFA726',
+			shadow: 'rgba(0, 10, 8, 0.5)',
+			contrast: '#0e1a18',
+			divider: 'rgba(255, 255, 255, 0.08)',
+    },
+		typography: {
+			fontSize: {
+				display: '36px',
+				titleLg: '32px',
+				titleMd: '28px',
+				titleSm: '24px',
+				bodyLg: '18px',
+				body: '16px',
+				bodySm: '14px',
+				ui: '14px',
+				caption: '12px',
+				micro: '10px',
+			},
+			lineHeight: {
+				tight: "1.15",
+				snug: "1.25",
+				normal: "1.4",
+				relaxed: "1.6",
+			},
+			fontWeight: {
+				regular: "400",
+				medium: "500",
+				semibold: "600",
+				bold: "700",
+			},
+			letterSpacing: {
+				normal: "0",
+				tight: "-0.01em",
+			},
+		},
+    space: {
+			auto: 'auto',
+			_0: '0px',
+      _4: '4px',
+			_8: '8px',
+			_12: '12px',
+			_16: '16px',
+			_20: '20px',
+			_24: '24px',
+			_32: '32px',
+			_36: '36px',
+			_48: '48px',
+			_56: '56px',
+			_80: '80px',
+    },
+		layout: {
+			sidebarWidth: '80px',
+			headerHeight: '140px',
+			contentMaxWidth: '1600px',
+			zIndex: {
+				sidebar: '11',
+				header: '12',
+				heroImg: '5',
+			}
+		},
+});
+
+// Backwards-compat alias - remove after layout.tsx is updated
+export const themeClass = lightTheme;

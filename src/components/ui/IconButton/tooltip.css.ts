@@ -11,7 +11,7 @@ export const tooltipPopup = style({
   padding: "6px 10px",
   borderRadius: "6px",
   boxShadow: `0 4px 20px -2px ${theme.color.shadow}`,
-  border: "1px solid rgba(0,0,0,0.06)",
+  border: `1px solid ${theme.color.divider}`,
   transformOrigin: "left center",
   transition: "opacity 150ms ease, transform 150ms ease",
 

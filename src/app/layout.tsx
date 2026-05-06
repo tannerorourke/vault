@@ -1,20 +1,23 @@
 import type { Metadata, Viewport } from "next";
 import { Inter_Tight, Roboto_Flex } from "next/font/google";
 import './global.css';
+import './global.styles.css';
 import AppProvider from "@/components/navigation/AppProvider";
 import LinksList from "@/components/navigation/LinksList";
-import { themeClass } from "@/lib/theme/theme.css";
+import { ThemeProvider } from "@/components/navigation/ThemeProvider";
+import { ThemeToggle } from "@/components/navigation/ThemeToggle";
+import { lightTheme } from "@/lib/theme/theme.css";
 
 const interTight = Inter_Tight({
   style: "normal",
   variable: "--font-body",
-  subsets: ["latin"] 
+  subsets: ["latin"]
 });
 
 const robotoFlex = Roboto_Flex({
   style: "normal",
   variable: "--font-display",
-  subsets: ["latin"] 
+  subsets: ["latin"]
 });
 
 export const viewport: Viewport = {
@@ -65,13 +68,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={themeClass}>
+    <html lang="en" className={lightTheme}>
       <body className={`${interTight.variable} ${robotoFlex.variable}`}>
-        <AppProvider initProjectFilterId="">
-          {/** Links are only content which staticly shows on ALL pages */}
-          <LinksList />
-          {children}
-        </AppProvider>
+        <ThemeProvider>
+          <AppProvider initProjectFilterId="">
+            <LinksList />
+            <ThemeToggle />
+            {children}
+          </AppProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

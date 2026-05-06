@@ -1,13 +1,12 @@
 import { style, globalStyle } from "@vanilla-extract/css";
 import { theme } from "@/lib/theme/theme.css";
 
-const SECTION_DIVIDER = "1px solid rgba(0,0,0,0.06)";
 const MEDIA_RADIUS = "10px";
 
 export const section = style({
   paddingTop: theme.space._24,
   paddingBottom: theme.space._24,
-  borderBottom: SECTION_DIVIDER,
+  borderBottom: `1px solid ${theme.color.divider}`,
   scrollMarginTop: `calc(${theme.layout.headerHeight} + ${theme.space._24})`,
   selectors: {
     "&:last-child": {
@@ -121,7 +120,7 @@ export const videoWrap = style({
   borderRadius: MEDIA_RADIUS,
   overflow: "hidden",
   boxShadow: `0 3px 14px -2px ${theme.color.shadow}`,
-  background: "#000",
+  background: theme.color.canvas,
   aspectRatio: "16 / 9",
   display: "flex",
   alignItems: "center",

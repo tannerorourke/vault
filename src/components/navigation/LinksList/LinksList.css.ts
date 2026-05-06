@@ -29,7 +29,7 @@ export const sidebarItem = style({
 });
 
 export const sidebarItemIcon = style({
-  color: 'rgba(244, 246, 245, 0.7)', /* canvas at 70% */
+  color: theme.color.text.secondary,
   transition: 'color 300ms ease',
   selectors: {
     "&:hover": {
