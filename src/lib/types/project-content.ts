@@ -1,7 +1,7 @@
 import type { TagChipColor } from "@/components/ui/TagChip";
 
 /**
- * Section types — each `type` discriminator is a simple key.
+ * Section types - each `type` discriminator is a simple key.
  * Add new section variants by extending the union and adding a renderer
  * in components/pages/project/sections.tsx.
  */
@@ -93,7 +93,7 @@ export type ProjectContent = {
   cardImage?: { src: string; alt?: string };
 
   /** Detail-page header */
-  /** Small uppercase line above the title — e.g. "Labs · 2025". */
+  /** Small uppercase line above the title - e.g. "Labs · 2025". */
   eyebrow?: string;
   /** Longer outcome / summary under the title (defaults to summary). */
   subtitle?: string;

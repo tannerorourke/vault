@@ -44,7 +44,7 @@ export function Header({}: HeaderProps) {
       // Initial staggered animation
       window.setTimeout(() => {
         span.classList.add("active");
-      }, 750 * (index + 1));
+      }, 500 * (index + 1));
     });
 
     return () => {

@@ -100,13 +100,13 @@ export const themeClass = createTheme(theme, {
 					active: '#538D84', /* Deep teal for active states */
 			},
 			secondary: {
-					main: '#8B7355', /* Bark Brown — sparse accent only */
+					main: '#8B7355', /* Bark Brown */
 					hover: '#A68B6B', /* Golden Bark */
 					active: '#6B5A42', /* Dark Bark */
 			},
 			link: {
 					main: '#5D6D68', /* Moss Grey */
-					hover: '#538D84', /* Light Teal — stays in the forest palette */
+					hover: '#538D84', /* Light Teal */
 			},
 			error: '#D32F2F',
 			warning: '#ED6C02',
@@ -160,7 +160,7 @@ export const themeClass = createTheme(theme, {
     },
 		layout: {
 			sidebarWidth: '80px',
-			headerHeight: '118px',
+			headerHeight: '140px',
 			contentMaxWidth: '1600px',
 			zIndex: {
 				sidebar: '11',

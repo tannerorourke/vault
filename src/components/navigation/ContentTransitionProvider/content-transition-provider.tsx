@@ -85,7 +85,12 @@ export function ContentTransitionProvider({ children }: { children: React.ReactN
         animate={animate ? "animate" : false}
         exit={animate ? "exit" : undefined}
         transition={{ duration: 0.32, ease: "easeInOut" }}
-        style={{ position: "absolute", inset: 0, overflow: "auto" }}
+        style={{
+          position: "absolute",
+          inset: 0,
+          overflow: "auto",
+          scrollBehavior: "smooth",
+        }}
       >
         <FrozenRouter>{children}</FrozenRouter>
       </motion.div>

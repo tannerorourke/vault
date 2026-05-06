@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 
   title: {
     default: "Tanner O'Rourke",
-    template: "%s — Tanner O",
+    template: "%s - Tanner O",
   },
   description: "Portfolio of Tanner O'Rourke. Applied Software Engineer focused on AI/ML, web, and systems design.",
   applicationName: "Tanner O'Rourke Portfolio",
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tanner — AI Engineer & Software Engineer",
+    title: "Tanner - AI Engineer & Software Engineer",
     description: "Tanner O\'Rourke | AI/ML, web and systems engineer.",
     images: ["./favicon.png"],
   },
