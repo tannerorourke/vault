@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import * as sty from "./ProjectsGrid.css";
 
 import { useProjectFilter } from "@/components/navigation/AppProvider/app-provider";
-import { NAV_FILTERS } from "@/content/nav-links";
+import { NAV_FILTERS } from "public/content/nav-links";
 import type { ProjectContent, ProjectFilterId } from "@/lib/types/project-content";
 import ProjectCard, { type ProjectCardVariant } from "@/components/ui/ProjectCard";
 
@@ -43,17 +43,10 @@ export function ProjectsGrid({ projects }: ProjectsGridProps) {
     [projects, projectFilter]
   );
 
-  const count = visibleProjects.length;
+  // const count = visibleProjects.length;
 
   return (
     <section className={sty.section}>
-      {/* <header className={sty.sectionHeader}>
-        <h2 className={sty.sectionTitle}>Projects</h2>
-        <span className={sty.sectionCount}>
-          {count} project{count !== 1 ? "s" : ""}
-        </span>
-      </header> */}
-
       <div className={sty.grid}>
         {visibleProjects.map((p) => (
           <ProjectCard

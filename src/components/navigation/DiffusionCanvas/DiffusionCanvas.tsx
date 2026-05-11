@@ -61,14 +61,15 @@ export function DiffusionCanvas({
     const dotData: DotData[][] = generateDotData(42, options.WORLD_W, options.WORLD_H);
 
     // -------------------------------------------------------------------------
-    // Mutable animation state - in a ref-like object to avoid closure staleness
+    // animation state
     // -------------------------------------------------------------------------
     const state = {
       phase: 'idle' as 'idle' | 'emerging' | 'settled',
       emergeStartTime: 0,
       scrollY: 0,
+      smoothScrollY: 0,
       rafId: 0,
-      lastScrollMs: 0,
+      lastTs: 0,
     };
 
     // -------------------------------------------------------------------------
@@ -102,7 +103,14 @@ export function DiffusionCanvas({
         emergeT = 1;
       }
 
-      drawFrame(ctx, vpW, vpH, dotData, resolvedPalette, options, emergeT, state.scrollY);
+      // Exponential lerp - frame-rate-independent via delta time.
+      // Equivalent to SCROLL_LERP per frame at 60 Hz regardless of actual Hz.
+      const deltaMs = state.lastTs > 0 ? ts - state.lastTs : 16.667;
+      state.lastTs = ts;
+      const lerpAlpha = 1 - Math.pow(1 - options.SCROLL_LERP, deltaMs / 16.667);
+      state.smoothScrollY += (state.scrollY - state.smoothScrollY) * lerpAlpha;
+
+      drawFrame(ctx, vpW, vpH, dotData, resolvedPalette, options, emergeT, state.smoothScrollY);
       state.rafId = requestAnimationFrame(tick);
     };
 

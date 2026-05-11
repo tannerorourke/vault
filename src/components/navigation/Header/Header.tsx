@@ -7,7 +7,7 @@ import Link from "next/link";
 import * as sty from "./Header.css";
 import TextLink from "src/components/ui/TextLink";
 
-import { NAV_FILTERS } from "src/content/nav-links";
+import { NAV_FILTERS } from "public/content/nav-links";
 import { IFilter } from "src/lib/types/global";
 import { useProjectFilter } from "../AppProvider/app-provider";
 import Text from "@/components/ui/Text";
@@ -15,10 +15,14 @@ import Text from "@/components/ui/Text";
 
 
 type HeaderProps = {
-  
+  enableLoadAnimation?: boolean;
+  enableClickAnimation?: boolean;
 };
 
-export function Header({}: HeaderProps) {
+export function Header({
+  enableLoadAnimation = false,
+  enableClickAnimation = true,
+}: HeaderProps) {
   const { projectFilter, setProjectFilter } = useProjectFilter();
 
   const toggleFilter = (id: IFilter['id']) => {
@@ -37,15 +41,20 @@ export function Header({}: HeaderProps) {
       target?.classList.remove("active");
     };
 
-    spans.forEach((span, index) => {
-      span.addEventListener("click", handleClick);
-      span.addEventListener("animationend", handleAnimationEnd);
+    if (enableClickAnimation) {
+      spans.forEach((span) => {
+        span.addEventListener("click", handleClick);
+        span.addEventListener("animationend", handleAnimationEnd);
+      });
+    }
 
-      // Initial staggered animation
-      window.setTimeout(() => {
-        span.classList.add("active");
-      }, 500 * (index + 1));
-    });
+    if (enableLoadAnimation) {
+      spans.forEach((span, index) => {
+        window.setTimeout(() => {
+          span.classList.add("active");
+        }, 500 * (index + 1));
+      });
+    }
 
     return () => {
       spans.forEach((span) => {
@@ -53,8 +62,7 @@ export function Header({}: HeaderProps) {
         span.removeEventListener("animationend", handleAnimationEnd);
       });
     };
-    
-  }, [])
+  }, [enableLoadAnimation, enableClickAnimation])
 
   return (
     <header className={sty.root}>
@@ -86,7 +94,7 @@ export function Header({}: HeaderProps) {
                 key={cf.id}
                 label={cf.label}
                 textProps={{
-                  variant: "body",
+                  variant: "uiLg",
                 }}
                 filterId={cf.id}
                 isActive={projectFilter === cf.id}
@@ -103,6 +111,7 @@ export function Header({}: HeaderProps) {
               href: "/profile",
               prefetch: true
             }}
+            textProps={{ variant: "ui" }}
           />
         </div>
       </header>

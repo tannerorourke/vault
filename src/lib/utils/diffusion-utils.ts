@@ -11,6 +11,7 @@ export type CanvasOptions = {
   MAX_VIEWPORT_W: number;
   PARALLAX_WS_PER_SCROLL_PX: number;
   PARALLAX_MAX_WS: number;
+  SCROLL_LERP: number;
 }
 
 export type CanvasPalette = {
@@ -57,6 +58,8 @@ export const options: CanvasOptions = {
   PARALLAX_WS_PER_SCROLL_PX: 0.06,
   // Hard clamp (in WS px's) - prevents edge clusters drifting out of frame
   PARALLAX_MAX_WS: 80,
+  // lower = heavier/cinematic, higher = snappier
+  SCROLL_LERP: 0.035
 }
 
 export const PALETTES = {

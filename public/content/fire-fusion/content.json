@@ -1,5 +1,6 @@
 {
   "pid": "firefusion",
+  "order": 1,
   "title": "FireFusion",
   "summary": "ConvFormer-based spatiotemporal model for next-day wildfire ignition and cause forecasting in Washington State.",
   "filterIds": [

@@ -46,5 +46,7 @@ export async function getProjectContent(
 export async function getAllProjects(): Promise<ProjectContent[]> {
   const slugs = await getAllProjectSlugs();
   const contents = await Promise.all(slugs.map(getProjectContent));
-  return contents.filter((c): c is ProjectContent => c !== null);
+  return contents
+    .filter((c): c is ProjectContent => c !== null)
+    .sort((a, b) => (a.order ?? 99) - (b.order ?? 99));
 }

@@ -6,7 +6,6 @@ import * as sty from "./icon-button.css";
 import { DynamicIcon, IconName } from 'public/icons/icon-registry';
 import { Tooltip } from "@base-ui/react";
 import Text from '../Text';
-import { tooltipPopup } from './tooltip.css';
 
 export type IconButtonProps = React.ComponentPropsWithoutRef<'a'> & {
   icon: IconName;
@@ -45,8 +44,8 @@ export const IconButton: React.FC<IconButtonProps> = ({
       <Tooltip.Root>
         <Tooltip.Trigger render={Component} />
         <Tooltip.Portal>
-          <Tooltip.Positioner side="right" align="center">
-            <Tooltip.Popup className={tooltipPopup}>
+          <Tooltip.Positioner side="right" align="center" sideOffset={10} className={sty.tooltipPositioner}>
+            <Tooltip.Popup className={sty.tooltipPopup}>
               <Text as='span'>
                 {tooltipText}
               </Text>

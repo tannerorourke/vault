@@ -84,6 +84,7 @@ export const theme = createThemeContract({
     footerHeight: null,
 		contentMaxWidth: null,
 		zIndex: {
+			tooltip: null,
 			sidebar: null,
 			header: null,
 			canvas: null,
@@ -177,6 +178,7 @@ export const lightTheme = createTheme(theme, {
       footerHeight: '120px',
 			contentMaxWidth: '1600px',
 			zIndex: {
+				tooltip: '9999',
 				sidebar: '12',
 				header: '11',
 				canvas: '1',
@@ -269,6 +271,7 @@ export const darkTheme = createTheme(theme, {
       footerHeight: '120px',
 			contentMaxWidth: '1600px',
 			zIndex: {
+				tooltip: '9999',
 				sidebar: '12',
 				header: '11',
 				canvas: '1',

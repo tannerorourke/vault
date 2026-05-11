@@ -82,6 +82,9 @@ export type ProjectContent = {
   pid: string;
   title: string;
 
+  /** Display order on the home page grid (ascending). */
+  order?: number;
+
   /** Home-page card */
   /** One-line description shown on the card. */
   summary: string;

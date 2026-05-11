@@ -1,4 +1,4 @@
-import { IFilter } from "../lib/types/global";
+import { IFilter } from "src/lib/types/global";
 
 export const NAV_FILTERS: IFilter[] = [
   { id: 'aiml', label: 'AI/ML' },

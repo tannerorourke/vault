@@ -1,5 +1,6 @@
 {
   "pid": "negation-snli",
+  "order": 2,
   "title": "Negation is Not Enough",
   "summary": "A deeper look at premise-negation artifacts in SNLI - and why slice-aware augmentation only goes so far.",
   "filterIds": ["aiml", "research", "labs"],

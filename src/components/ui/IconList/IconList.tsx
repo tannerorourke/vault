@@ -1,7 +1,7 @@
 import * as sty from "./IconList.css";
-import { SIDEBAR_LINKS } from "@/content/nav-links";
-import { IconButton } from "@/components/ui/IconButton/icon-button";
+import { SIDEBAR_LINKS } from "public/content/nav-links";
 import { IconName } from "public/icons/icon-registry";
+import { IconButton } from "@/components/ui/IconButton/icon-button";
 
 export function IconList() {
   return (

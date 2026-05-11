@@ -48,6 +48,11 @@ export const textRecipe = recipe({
         lineHeight: theme.typography.lineHeight.relaxed,
         fontWeight: theme.typography.fontWeight.regular,
       },
+      uiLg: {
+        fontSize: theme.typography.fontSize.body,
+        lineHeight: theme.typography.lineHeight.normal,
+        fontWeight: theme.typography.fontWeight.semibold,
+      },
       ui: {
         fontSize: theme.typography.fontSize.ui,
         lineHeight: theme.typography.lineHeight.normal,

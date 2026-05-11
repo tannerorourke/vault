@@ -70,12 +70,6 @@ export function ProjectCard({
             ))}
           </span>
         )}
-        {project.readTime !== undefined && (
-          <span className={sty.readChip}>
-            {project.readTime} min read
-            <ArrowRightIcon className={sty.readChipIcon} />
-          </span>
-        )}
       </footer>
     </Link>
   );

@@ -28,7 +28,7 @@ export const sidebarItem = style({
 });
 
 export const sidebarItemIcon = style({
-  color: theme.color.text.primary,
+  color: theme.color.text.secondary,
   transition: 'color 300ms ease',
   selectors: {
     "&:hover": {

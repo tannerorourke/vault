@@ -1,5 +1,6 @@
 {
   "pid": "gpt-factuality",
+  "order": 3,
   "title": "Fact-Checking GPT-4 Outputs",
   "summary": "Atomic fact verification on ChatGPT biographies using TF-IDF retrieval and DeBERTa-MNLI entailment. 85.5% accuracy.",
   "filterIds": [
