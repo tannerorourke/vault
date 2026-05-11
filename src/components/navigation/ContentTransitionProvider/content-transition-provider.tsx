@@ -84,12 +84,19 @@ export function ContentTransitionProvider({ children }: { children: React.ReactN
         initial={animate ? "initial" : false}
         animate={animate ? "animate" : false}
         exit={animate ? "exit" : undefined}
-        transition={{ duration: 0.32, ease: "easeInOut" }}
+        transition={{ duration: 0.4, ease: "easeInOut" }}
         style={{
           position: "absolute",
           inset: 0,
           overflow: "auto",
           scrollBehavior: "smooth",
+        }}
+        onScroll={(e) => {
+          // dispatch for
+          const scrollTop = (e.currentTarget as HTMLElement).scrollTop;
+          window.dispatchEvent(
+            new CustomEvent('app-scroll', { detail: { scrollTop } })
+          );
         }}
       >
         <FrozenRouter>{children}</FrozenRouter>

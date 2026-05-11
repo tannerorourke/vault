@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css';
 import { theme } from "@/lib/theme/theme.css";
-import { responsive } from "@/lib/theme/responsive.css"
+import { mq } from "@/lib/theme/responsive.css";
 
 export const aBase = style({
   display: "inline-block",
@@ -8,7 +8,9 @@ export const aBase = style({
   cursor: "pointer",
   textDecoration: "none",
   fontWeight: 600,
-  height: "25px", width: "25px",
+
+  height: "25px", 
+  width: "25px",
 
   selectors: {
     "&:hover": {

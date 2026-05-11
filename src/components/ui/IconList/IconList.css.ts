@@ -2,34 +2,33 @@ import { mq } from "@/lib/theme/responsive.css";
 import { theme } from "@/lib/theme/theme.css";
 import { style } from "@vanilla-extract/css";
 
-export const sidebarRoot = style({
-  position: "fixed",
-  width: '80px',
-  marginTop: "156px",
-  top: 0,
-  left: 0,
-  bottom: 0,
-  zIndex: theme.layout.zIndex.sidebar
-});
-
-export const sidebarList = style({
+export const iconList = style({
   display: "flex",
-  flexDirection: "row",
-  margin: '0 36px 0 0',
+  flexDirection: "column",
+  alignItems: "center",
+  margin: '0',
   [mq.md]: {
+    // flexDirection: "column",
+    margin: '0 36px 0 0',
     width: "48px",
-    flexDirection: "column",
-  },
+    
+  }
 });
 
 export const sidebarItem = style({
   display: "flex",
   justifyContent: "center",
-  margin: `0 0 ${theme.space._24} 0`,
+  alignItems: "center",
+  margin: `0`,
+  height: theme.space._48,
+  [mq.md]: {
+    margin: `0 0 ${theme.space._24} 0`,
+    height: theme.space._36,
+  }
 });
 
 export const sidebarItemIcon = style({
-  color: theme.color.text.secondary,
+  color: theme.color.text.primary,
   transition: 'color 300ms ease',
   selectors: {
     "&:hover": {

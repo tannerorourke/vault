@@ -1,12 +1,11 @@
-import * as sty from "./LinksList.css";
+import * as sty from "./IconList.css";
 import { SIDEBAR_LINKS } from "@/content/nav-links";
 import { IconButton } from "@/components/ui/IconButton/icon-button";
 import { IconName } from "public/icons/icon-registry";
 
-export function LinksList() {
+export function IconList() {
   return (
-    <nav className={sty.sidebarRoot} aria-label="Sidebar">
-      <ul className={sty.sidebarList}>
+    <ul className={sty.iconList}>
       {SIDEBAR_LINKS.map((item, ix) => (
         <li key={ix} className={sty.sidebarItem}>
           <IconButton
@@ -19,7 +18,6 @@ export function LinksList() {
           />
         </li>
       ))}
-      </ul>
-    </nav>
+    </ul>
   );
 }

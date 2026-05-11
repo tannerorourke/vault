@@ -2,8 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Inter_Tight, Roboto_Flex } from "next/font/google";
 import './global.css';
 import './global.styles.css';
+
 import AppProvider from "@/components/navigation/AppProvider";
-import LinksList from "@/components/navigation/LinksList";
 import { ThemeProvider } from "@/components/navigation/ThemeProvider";
 import { ThemeToggle } from "@/components/navigation/ThemeToggle";
 import { lightTheme } from "@/lib/theme/theme.css";
@@ -72,7 +72,6 @@ export default function RootLayout({
       <body className={`${interTight.variable} ${robotoFlex.variable}`}>
         <ThemeProvider>
           <AppProvider initProjectFilterId="">
-            <LinksList />
             <ThemeToggle />
             {children}
           </AppProvider>

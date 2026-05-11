@@ -12,8 +12,8 @@ export const root = style({
   alignItems: "flex-start",
   justifyContent: "space-between",
   height: theme.layout.headerHeight,
-  backdropFilter: "blur(1px)",
-  WebkitBackdropFilter: "blur(1px)",
+  backdropFilter: "blur(0.5px)",
+  WebkitBackdropFilter: "blur(0.5px)",
 
   padding: '32px 16px 0 16px',
   [mq.sm]: { padding: '48px 40px 0 40px' },

@@ -123,24 +123,25 @@ export function DiffusionCanvas({
     if (sentinel) io.observe(sentinel);
 
     // -------------------------------------------------------------------------
-    // Persistent animation events
+    // listen for custom event dispatched by ContentTransitionProvider
+    // since the window doesn't scroll (the content div does)
     // -------------------------------------------------------------------------
-    const onScroll = () => {
-      const now = Date.now();
-      if (now - state.lastScrollMs < 25) return;
-      state.lastScrollMs = now;
-      state.scrollY = window.scrollY;
+    const onAppScroll = (e: Event) => {
+      state.scrollY = (e as CustomEvent<{ scrollTop: number }>).detail.scrollTop;
     };
+    window.addEventListener('app-scroll', onAppScroll);
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-
+    // -------------------------------------------------------------------------
+    // reinit canvas dimensions; cover transform recomputes each frame
+    // so no redraw is needed here beyond updating vpW/vpH
+    // -------------------------------------------------------------------------
     const onResize = () => initCanvas();
     window.addEventListener('resize', onResize);
 
     return () => {
       cancelAnimationFrame(state.rafId);
       io.disconnect();
-      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('app-scroll', onAppScroll);
       window.removeEventListener('resize', onResize);
     };
   }, [resolvedPalette]);

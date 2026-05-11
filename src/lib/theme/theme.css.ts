@@ -72,15 +72,22 @@ export const theme = createThemeContract({
 		_48: null,
 		_56: null,
 		_80: null,
+    _96: null,
+    _112: null,
+    _144: null,
+    _160: null,
+    _192: null,
 	},
 	layout: {
-		sidebarWidth: null,
+		gutterWidth: null,
 		headerHeight: null,
+    footerHeight: null,
 		contentMaxWidth: null,
 		zIndex: {
 			sidebar: null,
 			header: null,
-			heroImg: null,
+			canvas: null,
+      content: null,
 		}
 	},
 
@@ -158,15 +165,22 @@ export const lightTheme = createTheme(theme, {
 			_48: '48px',
 			_56: '56px',
 			_80: '80px',
+      _96: '96px',
+      _112: '112px',
+      _144: '144px',
+      _160: '160px',
+      _192: '192px',
     },
 		layout: {
-			sidebarWidth: '80px',
+			gutterWidth: '80px',
 			headerHeight: '140px',
+      footerHeight: '120px',
 			contentMaxWidth: '1600px',
 			zIndex: {
-				sidebar: '11',
-				header: '12',
-				heroImg: '5',
+				sidebar: '12',
+				header: '11',
+				canvas: '1',
+        content: '2',
 			}
 		},
 });
@@ -243,15 +257,22 @@ export const darkTheme = createTheme(theme, {
 			_48: '48px',
 			_56: '56px',
 			_80: '80px',
+      _96: '96px',
+      _112: '112px',
+      _144: '144px',
+      _160: '160px',
+      _192: '192px',
     },
 		layout: {
-			sidebarWidth: '80px',
+			gutterWidth: '80px',
 			headerHeight: '140px',
+      footerHeight: '120px',
 			contentMaxWidth: '1600px',
 			zIndex: {
-				sidebar: '11',
-				header: '12',
-				heroImg: '5',
+				sidebar: '12',
+				header: '11',
+				canvas: '1',
+        content: '2',
 			}
 		},
 });

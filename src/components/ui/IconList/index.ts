@@ -1,0 +1,1 @@
+export { IconList as default } from "./IconList";

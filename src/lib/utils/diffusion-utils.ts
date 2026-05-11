@@ -196,7 +196,7 @@ function seededRand(seed: number = 42) {
 //  1. Pick a sub-centroid (weighted)
 //  2. Sample around it in local (major, minor) axis space
 //  3. Rotate by cluster.angle into world-axis space
-//  4. Scale by (rx×WORLD_W, ryxWORLD_H) to get world-space px offsets
+//  4. Scale by (rx x WORLD_W, ryxWORLD_H) to get world-space px offsets
 //  5. Outlier dots escape far along the major axis with a tight minor spread
 // ---------------------------------------------------------------------------
 export function generateDotData(seed = 42, world_w: number, world_h: number): DotData[][] {
