@@ -4,29 +4,25 @@ import React, { createContext, useContext, useMemo, useState } from "react";
 import { IFilter } from "@/lib/types/global";
 
 export type AppContext = {
-  projectFilter: string;
-  setProjectFilter: React.Dispatch<React.SetStateAction<IFilter['id']>> 
+  activeFilters: IFilter['id'][];
+  setActiveFilters: React.Dispatch<React.SetStateAction<IFilter['id'][]>>;
 };
 
 
-const FilterContext = 
+const FilterContext =
   createContext<AppContext | null>(null);
 
 
-export function AppProvider({ 
+export function AppProvider({
   children,
-  initProjectFilterId
-}: { 
+}: {
   children: React.ReactNode,
-  initProjectFilterId: IFilter['id']
 }) {
-  const [projectFilter, setProjectFilter] = useState<IFilter['id']>(
-    initProjectFilterId
-  );
+  const [activeFilters, setActiveFilters] = useState<IFilter['id'][]>([]);
 
   const data = useMemo(
-    () => ({ projectFilter, setProjectFilter }),
-    [projectFilter]
+    () => ({ activeFilters, setActiveFilters }),
+    [activeFilters]
   );
 
   return <FilterContext.Provider value={data}>
@@ -37,7 +33,7 @@ export function AppProvider({
 
 export function useProjectFilter() {
   const cntx = useContext(FilterContext);
-  if (!cntx) 
+  if (!cntx)
     throw new Error("Can't call hook on the server-side silly");
   return cntx;
 }

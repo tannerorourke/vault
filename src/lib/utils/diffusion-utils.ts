@@ -12,6 +12,7 @@ export type CanvasOptions = {
   PARALLAX_WS_PER_SCROLL_PX: number;
   PARALLAX_MAX_WS: number;
   SCROLL_LERP: number;
+  DRIFT_AMP_PX: number;
 }
 
 export type CanvasPalette = {
@@ -29,6 +30,8 @@ export interface ClusterDef {
   n: number;
   subs: Sub[];
   outlierFrac?: number;
+  driftAngle: number;
+  driftPeriodMs: number;
 }
 
 export interface DotData {
@@ -38,6 +41,9 @@ export interface DotData {
   ny: number;   // normalized noise position y           (0 -> 1)
   alpha: number;
   size: number;
+  driftCosDir: number;
+  driftSinDir: number;
+  driftPhase: number;
 }
 
 /** --------------------------------------------------------------------------
@@ -48,18 +54,19 @@ export const options: CanvasOptions = {
   EMERGE_DURATION_MS: 1800,
   CONN_THRESHOLD_RATIO: 0.55,
   CONN_ALPHA_MAX: 0.13,
-  // 1920 x 1080 - cluster divisions propto world size. Clusters are distributed 
-  // with portrait crops in mind - pushing cy values toward 0.05 and 0.95 so 
+  // 1920 x 1080 - cluster divisions propto world size. Clusters are distributed
+  // with portrait crops in mind - pushing cy values toward 0.05 and 0.95 so
   // tall viewports reveal content rather than empty bands.
   WORLD_W: 1280, WORLD_H: 800,
-  // Also defines max viewport size for app  
+  // Also defines max viewport size for app
   MAX_VIEWPORT_W: 2200,
   // Parallax applied in world-space
   PARALLAX_WS_PER_SCROLL_PX: 0.06,
   // Hard clamp (in WS px's) - prevents edge clusters drifting out of frame
   PARALLAX_MAX_WS: 80,
   // lower = heavier/cinematic, higher = snappier
-  SCROLL_LERP: 0.035
+  SCROLL_LERP: 0.035,
+  DRIFT_AMP_PX: 3.2,
 }
 
 export const PALETTES = {
@@ -111,23 +118,25 @@ export const CLUSTERS: ClusterDef[] = [
   { cx: 0.15, cy: 0.05, rx: 0.10, ry: 0.025, angle: Math.PI * 0.3,
     depth: 1.6, n: 42,
     subs: [{ ox: -0.4, oy: 0.1, w: 0.55 }, { ox: 0.5, oy: -0.1, w: 0.45 }],
-    outlierFrac: 0.14 },
+    outlierFrac: 0.14, driftAngle: 0.52, driftPeriodMs: 10800 },
 
   // Two lobes with a gap, top-centre
   { cx: 0.38, cy: 0.16, rx: 0.065, ry: 0.032, angle: -Math.PI * 1.5,
     depth: 0.5, n: 32,
-    subs: [{ ox: -0.55, oy: 0.2, w: 0.5 }, { ox: 0.55, oy: -0.2, w: 0.5 }] },
+    subs: [{ ox: -0.55, oy: 0.2, w: 0.5 }, { ox: 0.55, oy: -0.2, w: 0.5 }],
+    driftAngle: 1.87, driftPeriodMs: 9200 },
 
   // Flat horizontal, top-right
   { cx: 0.725, cy: 0.14, rx: 0.09, ry: 0.040, angle: Math.PI * 0.04,
     depth: 1.3, n: 36,
     subs: [{ ox: 0, oy: 0, w: 1 }],
-    outlierFrac: 0.20 },
+    outlierFrac: 0.20, driftAngle: 3.14, driftPeriodMs: 12500 },
 
   // Compact upright blob, far right - isolated cluster
   { cx: 0.90, cy: 0.20, rx: 0.030, ry: 0.060, angle: Math.PI * 0.12,
     depth: 0.4, n: 22,
-    subs: [{ ox: 0, oy: -0.3, w: 0.6 }, { ox: 0, oy: 0.4, w: 0.4 }] },
+    subs: [{ ox: 0, oy: -0.3, w: 0.6 }, { ox: 0, oy: 0.4, w: 0.4 }],
+    driftAngle: 0.94, driftPeriodMs: 8700 },
 
   // -- Middle band ---------------------------------------------------------
   // Three-lobe irregular - semantic cluster with sub-topics
@@ -137,48 +146,50 @@ export const CLUSTERS: ClusterDef[] = [
       { ox:  0.1, oy: -0.45, w: 0.40 },
       { ox: -0.2, oy:  0.25, w: 0.35 },
       { ox:  0.3, oy:  0.30, w: 0.25 },
-    ] },
+    ], driftAngle: 4.71, driftPeriodMs: 13200 },
 
   // Long horizontal split - two nearby populations almost merged
   { cx: 0.50, cy: 0.33, rx: 0.13, ry: 0.056, angle: -Math.PI * 0.1,
     depth: 1.1, n: 50,
     subs: [{ ox: -0.50, oy: 0.1, w: 0.48 }, { ox: 0.48, oy: -0.1, w: 0.52 }],
-    outlierFrac: 0.2 },
+    outlierFrac: 0.2, driftAngle: 2.36, driftPeriodMs: 11000 },
 
   // Tilted oval with trailing tendril, right-mid
   { cx: 0.83, cy: 0.40, rx: 0.040, ry: 0.072, angle: Math.PI * 0.28,
     depth: 0.6, n: 40,
     subs: [{ ox: 0, oy: 0, w: 1 }],
-    outlierFrac: 0.22 },
+    outlierFrac: 0.22, driftAngle: 5.50, driftPeriodMs: 9500 },
 
   // Crescent / arc shape - two offset lobes at an angle
   { cx: 0.29, cy: 0.63, rx: 0.090, ry: 0.032, angle: -Math.PI * 0.22,
     depth: 1.4, n: 52,
     subs: [{ ox: -0.42, oy: -0.2, w: 0.55 }, { ox: 0.45, oy:  0.2, w: 0.45 }],
-    outlierFrac: 0.08 },
+    outlierFrac: 0.08, driftAngle: 1.26, driftPeriodMs: 14000 },
 
   // Vertical two-lobe, centre-right
   { cx: 0.65, cy: 0.64, rx: 0.028, ry: 0.068, angle: Math.PI * 0.10,
     depth: 0.9, n: 44,
-    subs: [{ ox: 0.1, oy: -0.40, w: 0.58 }, { ox: -0.1, oy: 0.40, w: 0.42 }] },
+    subs: [{ ox: 0.1, oy: -0.40, w: 0.58 }, { ox: -0.1, oy: 0.40, w: 0.42 }],
+    driftAngle: 3.77, driftPeriodMs: 11800 },
 
   // -- Bottom band ---------------------------------------------------------
   // Diagonal with long tendril, bottom-left
   { cx: 0.11, cy: 0.89, rx: 0.082, ry: 0.022, angle: Math.PI * 0.14,
     depth: 1.2, n: 34,
     subs: [{ ox: 0, oy: 0, w: 1 }],
-    outlierFrac: 0.18 },
+    outlierFrac: 0.18, driftAngle: 0.21, driftPeriodMs: 8200 },
 
   // Upright two-lobe, bottom-centre
   { cx: 0.46, cy: 0.92, rx: 0.030, ry: 0.058, angle: -Math.PI * 0.07,
     depth: 0.5, n: 28,
-    subs: [{ ox: 0.1, oy: -0.35, w: 0.6 }, { ox: -0.1, oy: 0.38, w: 0.4 }] },
+    subs: [{ ox: 0.1, oy: -0.35, w: 0.6 }, { ox: -0.1, oy: 0.38, w: 0.4 }],
+    driftAngle: 5.03, driftPeriodMs: 12000 },
 
   // Tilted smear with outliers, bottom-right
   { cx: 0.79, cy: 0.90, rx: 0.075, ry: 0.025, angle: Math.PI * 0.22,
     depth: 1.0, n: 32,
     subs: [{ ox: -0.3, oy: 0.1, w: 0.5 }, { ox: 0.4, oy: -0.1, w: 0.5 }],
-    outlierFrac: 0.16 },
+    outlierFrac: 0.16, driftAngle: 2.72, driftPeriodMs: 10200 },
 ];
 
 /** --------------------------------------------------------------------------
@@ -251,13 +262,24 @@ export function generateDotData(seed = 42, world_w: number, world_h: number): Do
       const ox = (localMajor * cos - localMinor * sin) * majorPx;
       const oy = (localMajor * sin + localMinor * cos) * minorPx;
 
+      const nx = rand();
+      const ny = rand();
+      const alpha = 0.30 + rand() * 0.70;
+      const size = 1.0 + rand() * 5.0;
+      const perDotOffset = rand() * (Math.PI / 2) - Math.PI / 4;
+      const driftDir = c.driftAngle + perDotOffset;
+      const driftPhase = rand() * Math.PI * 2;
+
       dots.push({
         ox,
         oy,
-        nx: rand(),
-        ny: rand(),
-        alpha: 0.30 + rand() * 0.70,
-        size: 1.0 + rand() * 5.0,
+        nx,
+        ny,
+        alpha,
+        size,
+        driftCosDir: Math.cos(driftDir),
+        driftSinDir: Math.sin(driftDir),
+        driftPhase,
       });
     }
 
@@ -308,13 +330,16 @@ export function drawFrame(
   options: CanvasOptions,
   emergeT: number,          // emergeT  - 0 = noise scatter, 1 = settled. Must be ALREADY EASED.
   scrollY: number,          // scrollY  - raw window.scrollY at call time
+  tMs: number,              // current RAF timestamp in ms, for drift animation
+  driftEnabled: boolean,    // false on low-end devices / reduced-motion
 ): void {
   ctx.clearRect(0, 0, vpW, vpH);
 
-  const { 
-    WORLD_W: wrldW, WORLD_H: wrldH, MAX_VIEWPORT_W: maxW, 
+  const {
+    WORLD_W: wrldW, WORLD_H: wrldH, MAX_VIEWPORT_W: maxW,
     CONN_THRESHOLD_RATIO: conn_th_ratio, CONN_ALPHA_MAX: conn_alpha_max,
     PARALLAX_WS_PER_SCROLL_PX: plx_scroll_pp, PARALLAX_MAX_WS: plx_max_ws,
+    DRIFT_AMP_PX: driftAmp,
   } = options;
 
   const { scale, ox, oy } = computeCoverTransform(vpW, vpH, wrldW, wrldH, maxW);
@@ -346,13 +371,22 @@ export function drawFrame(
     const threshold = Math.sqrt(c.rx * wrldW * c.ry * wrldH) * conn_th_ratio;
 
     // ox/oy are world-space px offsets - resolve directly, no axis scaling needed
+    const driftOmega = driftEnabled ? (2 * Math.PI) / c.driftPeriodMs : 0;
+
+    // dot position
     const pos = dots.map(dot => {
-      const hx = cX + dot.ox;
-      const hy = cY + dot.oy;
-      return {
-        x: hx + (dot.nx * wrldW - hx) * (1 - emergeT),
-        y: hy + (dot.ny * wrldH - hy) * (1 - emergeT),
-      };
+      // base dot position
+      let hx = cX + dot.ox;
+      let hy = cY + dot.oy;
+      // apply initial drift to dot positions to avoid shift
+      if (driftEnabled) {
+        const s = Math.sin(driftOmega * tMs + dot.driftPhase);
+        hx += driftAmp * dot.driftCosDir * s;
+        hy += driftAmp * dot.driftSinDir * s;
+      }
+      let x = hx + (dot.nx * wrldW - hx) * (1 - emergeT);
+      let y = hy + (dot.ny * wrldH - hy) * (1 - emergeT);
+      return { x, y };
     });
 
     // Connection lines - fade in quadratically so they're invisible during scatter

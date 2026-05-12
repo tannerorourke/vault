@@ -71,7 +71,7 @@ export default function RootLayout({
     <html lang="en" className={lightTheme}>
       <body className={`${interTight.variable} ${robotoFlex.variable}`}>
         <ThemeProvider>
-          <AppProvider initProjectFilterId="">
+          <AppProvider>
             <ThemeToggle />
             {children}
           </AppProvider>

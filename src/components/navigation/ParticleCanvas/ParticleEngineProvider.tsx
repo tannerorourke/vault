@@ -50,6 +50,7 @@ export function ParticleCanvasProvider({
   const canvasesRef = useRef<Set<HTMLCanvasElement>>(new Set());
   const vpWRef = useRef(0);
   const vpHRef = useRef(0);
+  const driftEnabledRef = useRef(false);
 
   const animStateRef = useRef({
     phase: 'idle' as 'idle' | 'emerging' | 'settled',
@@ -90,13 +91,10 @@ export function ParticleCanvasProvider({
         if (ctx) {
           drawFrame(
             ctx,
-            vpWRef.current,
-            vpHRef.current,
-            dotDataRef.current,
-            paletteRef.current,
-            optionsRef.current,
-            1,
-            0,
+            vpWRef.current, vpHRef.current,
+            dotDataRef.current, paletteRef.current, optionsRef.current,
+            1, 0, 0,
+            false,
           );
         }
         return () => {};
@@ -128,6 +126,12 @@ export function ParticleCanvasProvider({
 
     const state = animStateRef.current;
 
+    driftEnabledRef.current =
+      typeof window !== 'undefined' &&
+      (navigator.hardwareConcurrency ?? 2) >= 4 &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
+      !(navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
+
     const tick = (ts: DOMHighResTimeStamp) => {
       const opts = optionsRef.current;
 
@@ -154,13 +158,10 @@ export function ParticleCanvasProvider({
         if (ctx) {
           drawFrame(
             ctx,
-            vpWRef.current,
-            vpHRef.current,
-            dotDataRef.current,
-            paletteRef.current,
-            opts,
-            emergeT,
-            state.smoothScrollY,
+            vpWRef.current, vpHRef.current,
+            dotDataRef.current, paletteRef.current, opts,
+            emergeT, state.smoothScrollY, ts,
+            driftEnabledRef.current,
           );
         }
       });

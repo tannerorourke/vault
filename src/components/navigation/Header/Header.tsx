@@ -24,10 +24,12 @@ export function Header({
   enableLoadAnimation = false,
   enableClickAnimation = true,
 }: HeaderProps) {
-  const { projectFilter, setProjectFilter } = useProjectFilter();
+  const { activeFilters, setActiveFilters } = useProjectFilter();
 
   const toggleFilter = (id: IFilter['id']) => {
-    setProjectFilter((current) => (current === id ? "" : id));
+    setActiveFilters((current) =>
+      current.includes(id) ? current.filter((f) => f !== id) : [...current, id]
+    );
   };
 
   useEffect(() => {
@@ -94,7 +96,7 @@ export function Header({
                 key={cf.id}
                 label={cf.label}
                 filterId={cf.id}
-                isActive={projectFilter === cf.id}
+                isActive={activeFilters.includes(cf.id)}
                 notifyOnClick={toggleFilter}
               />
             ))}

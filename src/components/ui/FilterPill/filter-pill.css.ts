@@ -8,35 +8,38 @@ export const pill = style({
   fontWeight: theme.typography.fontWeight.medium,
   letterSpacing: "-0.005em",
   color: theme.color.text.secondary,
-  padding: "9px 16px",
-  borderRadius: "999px",
+  padding: "6px 2px",
   border: "none",
   background: "transparent",
   cursor: "pointer",
   whiteSpace: "nowrap",
   lineHeight: 1,
-  transition: "color 200ms ease, background 200ms ease",
+
+  backgroundImage: `linear-gradient(${theme.color.primary.hover}, ${theme.color.primary.hover})`,
+  backgroundSize: "0% 2px",
+  backgroundPosition: "bottom left",
+  backgroundRepeat: "no-repeat",
+  transition: "color 200ms ease, background-size 300ms ease",
 
   selectors: {
     "&:hover": {
-      color: theme.color.text.primary,
-      background: "rgba(42, 95, 88, 0.06)",
+      color: theme.color.primary.main,
+    },
+    "&:hover, &[aria-pressed='true']": {
+      backgroundSize: "100% 2px",
     },
     '&[aria-pressed="true"]': {
-      color: theme.color.contrast,
-      background: theme.color.primary.main,
-      boxShadow: "0 2px 8px -2px rgba(42, 95, 88, 0.35)",
-    },
-    '&[aria-pressed="true"]:hover': {
-      background: theme.color.primary.hover,
+      color: theme.color.secondary.active,
+      backgroundImage: `linear-gradient(${theme.color.secondary.main}, ${theme.color.secondary.main})`,
     },
   },
 });
 
-globalStyle(`:where(.${darkTheme}) ${pill}:hover`, {
-  background: "rgba(77, 184, 172, 0.10)",
+globalStyle(`:where(.${darkTheme}) .${pill}:hover`, {
+  color: theme.color.primary.hover,
 });
 
-globalStyle(`:where(.${darkTheme}) ${pill}[aria-pressed="true"]`, {
-  boxShadow: "0 2px 8px -2px rgba(0, 0, 0, 0.4)",
+globalStyle(`:where(.${darkTheme}) .${pill}[aria-pressed="true"]`, {
+  color: theme.color.secondary.hover,
+  backgroundImage: `linear-gradient(${theme.color.secondary.main}, ${theme.color.secondary.main})`,
 });

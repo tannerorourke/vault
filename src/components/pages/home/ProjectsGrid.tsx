@@ -23,16 +23,16 @@ type ProjectsGridProps = {
 };
 
 export function ProjectsGrid({ projects }: ProjectsGridProps) {
-  const { projectFilter } = useProjectFilter();
+  const { activeFilters } = useProjectFilter();
 
   const visibleProjects = useMemo<ProjectContent[]>(
     () =>
-      projectFilter
+      activeFilters.length > 0
         ? projects.filter((p) =>
-            p.filterIds.includes(projectFilter as ProjectFilterId)
+            activeFilters.some((f) => p.filterIds.includes(f as ProjectFilterId))
           )
         : projects,
-    [projects, projectFilter]
+    [projects, activeFilters]
   );
 
   return (
