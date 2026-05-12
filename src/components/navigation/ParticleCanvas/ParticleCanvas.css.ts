@@ -56,3 +56,16 @@ export const content = style({
     },
   },
 });
+
+// BackdropCanvas - fixed surface rendered inside the motion.div stacking
+// context so that cards' backdrop-filter: blur() has dot content to sample.
+// No background color; drawFrame fills its own bg each frame.
+export const backdropCanvas = style({
+  position: 'fixed',
+  inset: 0,
+  width: '100vw',
+  height: '100vh',
+  display: 'block',
+  zIndex: 0,
+  pointerEvents: 'none',
+});

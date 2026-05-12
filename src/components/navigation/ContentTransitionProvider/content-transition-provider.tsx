@@ -4,6 +4,7 @@ import * as React from "react";
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { FrozenRouter } from "@/lib/utils/FrozenRouter";
+import { ParticleCanvasBackdrop } from "@/components/navigation/ParticleCanvas";
 
 type RouteKind = "home" | "profile" | "project";
 
@@ -99,6 +100,7 @@ export function ContentTransitionProvider({ children }: { children: React.ReactN
           );
         }}
       >
+        <ParticleCanvasBackdrop />
         <FrozenRouter>{children}</FrozenRouter>
       </motion.div>
     </AnimatePresence>

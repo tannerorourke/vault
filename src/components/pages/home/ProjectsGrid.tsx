@@ -6,7 +6,7 @@ import * as sty from "./ProjectsGrid.css";
 import { useProjectFilter } from "@/components/navigation/AppProvider/app-provider";
 import { NAV_FILTERS } from "public/content/nav-links";
 import type { ProjectContent, ProjectFilterId } from "@/lib/types/project-content";
-import ProjectCard, { type ProjectCardVariant } from "@/components/ui/ProjectCard";
+import ProjectCard from "@/components/ui/ProjectCard";
 
 const FILTER_LABELS: Record<string, string> = NAV_FILTERS.reduce(
   (acc, f) => ({ ...acc, [f.id]: f.label }),
@@ -15,15 +15,7 @@ const FILTER_LABELS: Record<string, string> = NAV_FILTERS.reduce(
 
 function projectEyebrow(p: ProjectContent): string {
   if (p.eyebrow) return p.eyebrow;
-  const lead =
-    p.tags?.[0]?.label ?? FILTER_LABELS[p.filterIds[0] ?? ""] ?? "";
-  return lead ? `${lead} · ${p.year}` : p.year;
-}
-
-function projectVariant(p: ProjectContent): ProjectCardVariant {
-  if (p.isFeature) return "feature";
-  if (!p.cardImage && !p.heroImage) return "minimal";
-  return "default";
+  return p.tags?.[0]?.label ?? FILTER_LABELS[p.filterIds[0] ?? ""] ?? "";
 }
 
 type ProjectsGridProps = {
@@ -43,8 +35,6 @@ export function ProjectsGrid({ projects }: ProjectsGridProps) {
     [projects, projectFilter]
   );
 
-  // const count = visibleProjects.length;
-
   return (
     <section className={sty.section}>
       <div className={sty.grid}>
@@ -53,7 +43,8 @@ export function ProjectsGrid({ projects }: ProjectsGridProps) {
             key={p.pid}
             project={p}
             eyebrow={projectEyebrow(p)}
-            variant={projectVariant(p)}
+            year={p.year ?? ""}
+            isFeature={p.isFeature}
           />
         ))}
       </div>

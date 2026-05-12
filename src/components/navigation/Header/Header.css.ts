@@ -1,5 +1,5 @@
 import { mq } from "@/lib/theme/responsive.css";
-import { theme } from "@/lib/theme/theme.css";
+import { theme, darkTheme } from "@/lib/theme/theme.css";
 import { style, globalStyle } from "@vanilla-extract/css";
 
 export const root = style({
@@ -32,27 +32,24 @@ export const logoContainer = style({
   flexDirection: "column",
 });
 
-export const linkStyles = style({
-  paddingBottom: '2px',
-  borderBottom: '2px solid transparent',
-  transition: 'border-color 200ms ease',
+export const filterRow = style({
+  display: "inline-flex",
+  alignItems: "center",
+  gap: "6px",
+  padding: "4px",
+  borderRadius: "999px",
+  background: "rgba(255, 255, 255, 0.55)",
+  backdropFilter: "blur(8px)",
+  WebkitBackdropFilter: "blur(8px)",
+  border: "1px solid rgba(0, 0, 0, 0.04)",
+  boxShadow: "0 2px 12px -4px rgba(42, 95, 88, 0.08)",
+  marginTop: "2px",
 });
 
-globalStyle(`${linkStyles} *`, {
-  color: theme.color.text.secondary, /* Moss Grey */
-  transition: 'color 200ms ease',
-});
-
-globalStyle(`${linkStyles}:hover *`, {
-  color: theme.color.primary.hover, /* Light Teal */
-});
-
-globalStyle(`${linkStyles}[aria-pressed="true"] *`, {
-  color: theme.color.secondary.main, /* Bark Brown */
-});
-
-globalStyle(`${linkStyles}[aria-pressed="true"]`, {
-  borderBottomColor: theme.color.secondary.main,
+globalStyle(`:where(.${darkTheme}) ${filterRow}`, {
+  background: "rgba(22, 40, 34, 0.55)",
+  border: "1px solid rgba(255, 255, 255, 0.04)",
+  boxShadow: "0 2px 12px -4px rgba(0, 0, 0, 0.3)",
 });
 
 export const headerRight = style({

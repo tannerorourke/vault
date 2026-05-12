@@ -72,7 +72,7 @@ export const PALETTES = {
     ],
   },
   brandTealLight: {
-    bg: '#eef4f2',
+    bg: '#F4F6F5',
     colors: [
       [22, 88, 74],  [35, 110, 92],  [18, 78, 65],
       [42, 120, 100], [28, 95, 80],  [15, 72, 60],

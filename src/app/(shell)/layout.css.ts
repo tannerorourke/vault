@@ -13,18 +13,20 @@ export const content = style({
   position: 'fixed',
   inset: 0,
   zIndex: theme.layout.zIndex.content,
+});
 
-  // fade content to transparent in header zone
-  maskImage: `linear-gradient(to bottom, 
-    transparent 0px, 
-    transparent calc(${theme.layout.headerHeight} - 32px),
-    black ${theme.layout.headerHeight}
-  )`,
-  WebkitMaskImage: `linear-gradient(to bottom, 
-    transparent 0px, 
-    transparent calc(${theme.layout.headerHeight} - 32px),
-    black ${theme.layout.headerHeight}
-  )`,
+// Replaces the old maskImage: fades content under the header zone.
+// Lives inside .content (same stacking context as cards) so it doesn't
+// create an isolated compositor group the way maskImage would.
+export const headerFade = style({
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  right: 0,
+  height: `calc(${theme.layout.headerHeight} + 16px)`,
+  background: `linear-gradient(to bottom, ${theme.color.canvas} 40%, transparent)`,
+  pointerEvents: 'none',
+  zIndex: 9,
 });
 
 export const sidebarRoot = style({

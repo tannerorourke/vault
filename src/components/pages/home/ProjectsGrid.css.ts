@@ -39,6 +39,14 @@ export const sectionCount = style({
 
 export const grid = style({
   display: "grid",
-  gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-  gap: theme.space._20,
+  gridTemplateColumns: "1fr",
+  gap: theme.space._16,
+  [mq.sm]: {
+    gridTemplateColumns: "repeat(2, 1fr)",
+    gap: theme.space._20,
+  },
+  [mq.lg]: {
+    gridTemplateColumns: "repeat(3, 1fr)",
+    gap: theme.space._36,
+  },
 });

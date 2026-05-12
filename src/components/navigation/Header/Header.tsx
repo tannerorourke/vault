@@ -6,6 +6,7 @@ import Link from "next/link";
 
 import * as sty from "./Header.css";
 import TextLink from "src/components/ui/TextLink";
+import FilterPill from "@/components/ui/FilterPill";
 
 import { NAV_FILTERS } from "public/content/nav-links";
 import { IFilter } from "src/lib/types/global";
@@ -87,21 +88,17 @@ export function Header({
               <span>E</span>
             </Text>
           </Link>
-          {
-            NAV_FILTERS.map((cf: IFilter) => (
-              <TextLink
-                className={sty.linkStyles}
+          <nav className={sty.filterRow} aria-label="Filter projects">
+            {NAV_FILTERS.map((cf: IFilter) => (
+              <FilterPill
                 key={cf.id}
                 label={cf.label}
-                textProps={{
-                  variant: "uiLg",
-                }}
                 filterId={cf.id}
                 isActive={projectFilter === cf.id}
                 notifyOnClick={toggleFilter}
               />
-            ))
-          }
+            ))}
+          </nav>
         </div>
         <div className={sty.headerRight}>
           <TextLink

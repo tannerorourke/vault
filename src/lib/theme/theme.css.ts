@@ -108,9 +108,9 @@ export const lightTheme = createTheme(theme, {
 					active: '#538D84',
 			},
 			secondary: {
-					main: '#8B7355',
-					hover: '#A68B6B',
-					active: '#6B5A42',
+					main: '#E07A5F',
+					hover: '#FFAB8D',
+					active: '#AA4B34',
 			},
 			link: {
 					main: '#5D6D68',

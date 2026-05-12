@@ -2,13 +2,32 @@ import Link from "next/link";
 import type { ProjectContent } from "@/lib/types/project-content";
 import TagChip from "@/components/ui/TagChip";
 import * as sty from "./project-card.css";
-import type { ProjectCardVariant } from "./project-card.css";
 
 export type ProjectCardProps = {
   project: ProjectContent;
   eyebrow: string;
-  variant?: ProjectCardVariant;
+  year: string;
+  isFeature?: boolean;
 };
+
+const MAX_VISIBLE_TAG_CHARS = 28;
+
+function getVisibleTags(tags: ProjectContent["tags"]) {
+  if (!tags || tags.length === 0) return { visible: [], overflow: 0 };
+  let total = 0;
+  let cutoff = tags.length;
+  for (let i = 0; i < tags.length; i++) {
+    total += tags[i].label.length + 2;
+    if (total > MAX_VISIBLE_TAG_CHARS && i > 0) {
+      cutoff = i;
+      break;
+    }
+  }
+  return {
+    visible: tags.slice(0, cutoff),
+    overflow: tags.length - cutoff,
+  };
+}
 
 function ArrowRightIcon({ className }: { className?: string }) {
   return (
@@ -30,47 +49,48 @@ function ArrowRightIcon({ className }: { className?: string }) {
 export function ProjectCard({
   project,
   eyebrow,
-  variant = "default",
+  year,
+  isFeature = false,
 }: ProjectCardProps) {
-  const thumbnail = project.cardImage ?? project.heroImage;
-  const showImage = variant !== "minimal" && Boolean(thumbnail);
-  const isFeature = variant === "feature";
+  const { visible: visibleTags, overflow } = getVisibleTags(project.tags);
 
   return (
     <Link
       href={`/${project.pid}`}
       prefetch
-      className={sty.card({ variant })}
+      className={sty.card({ isFeature })}
+      data-feature={isFeature ? "true" : undefined}
     >
-      {showImage && thumbnail && (
-        <img
-          className={[sty.image, isFeature ? sty.featureImage : ""]
-            .filter(Boolean)
-            .join(" ")}
-          src={thumbnail.src}
-          alt={thumbnail.alt ?? project.title}
-        />
-      )}
-      <div className={sty.body}>
-        <span className={sty.eyebrow}>{eyebrow}</span>
-        <h3
-          className={[sty.title, isFeature ? sty.featureTitle : ""]
-            .filter(Boolean)
-            .join(" ")}
-        >
-          {project.title}
-        </h3>
-        <p className={sty.desc}>{project.summary}</p>
+      <div className={sty.eyebrow}>
+        {isFeature && (
+          <span className={sty.featureDot} aria-label="Featured" />
+        )}
+        <span>{eyebrow}</span>
+        <span className={sty.year}>{year}</span>
       </div>
-      <footer className={sty.footer}>
-        {project.tags && project.tags.length > 0 && (
-          <span className={sty.tagsRow}>
-            {project.tags.map((t, i) => (
+
+      <h3 className={sty.title}>{project.title}</h3>
+
+      {project.summary && (
+        <p className={sty.summary}>{project.summary}</p>
+      )}
+
+      <div className={sty.reveal}>
+        {visibleTags.length > 0 && (
+          <div className={sty.tagsRow}>
+            {visibleTags.map((t, i) => (
               <TagChip key={i} label={t.label} color={t.color} />
             ))}
-          </span>
+            {overflow > 0 && (
+              <TagChip color="grey" label={`+${overflow}`} />
+            )}
+          </div>
         )}
-      </footer>
+        <span className={sty.cta}>
+          View case study
+          <ArrowRightIcon className={sty.ctaIcon} />
+        </span>
+      </div>
     </Link>
   );
 }

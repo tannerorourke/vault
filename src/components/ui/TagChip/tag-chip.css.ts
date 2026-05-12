@@ -17,15 +17,15 @@ export const tagChip = recipe({
   variants: {
     color: {
       teal: {
-        color: theme.color.primary.main, /* Spruce Teal */
+        color: theme.color.primary.main,
         background: "rgba(42, 95, 88, 0.10)",
       },
       copper: {
-        color: theme.color.secondary.active, /* Dark Bark */
-        background: "rgba(139, 115, 85, 0.12)",
+        color: theme.color.secondary.active,
+        background: "rgba(224, 122, 95, 0.10)",
       },
       grey: {
-        color: theme.color.text.secondary, /* Moss Grey */
+        color: theme.color.text.secondary,
         background: "rgba(93, 109, 104, 0.10)",
       },
     },
