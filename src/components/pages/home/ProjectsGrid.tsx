@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import * as sty from "./ProjectsGrid.css";
 
 import { useProjectFilter } from "@/components/navigation/AppProvider/app-provider";
-import { NAV_FILTERS } from "public/content/nav-links";
+import { NAV_FILTERS } from "src/content/nav-links";
 import type { ProjectContent, ProjectFilterId } from "@/lib/types/project-content";
 import ProjectCard from "@/components/ui/ProjectCard";
 

@@ -1,0 +1,164 @@
+{
+  "pid": "fire-fusion",
+  "order": 1,
+  "title": "FireFusion",
+  "summary": "ConvFormer-based spatiotemporal model for next-day wildfire ignition and cause forecasting in Washington State.",
+  "filterIds": [
+    "aiml",
+    "research"
+  ],
+  "year": "2025",
+  "readTime": 10,
+  "isFeature": true,
+  "eyebrow": "Research · 2025",
+  "subtitle": "A multi-modal spatiotemporal deep learning framework that integrates meteorology, fuels, topography, and human-pressure signals to forecast next-day wildfire ignition probability and ignition cause across Washington State.",
+  "cardImage": {
+    "src": "/content/fire-fusion/ignition_heatmap.png",
+    "alt": "Predicted next-day wildfire ignition probability map over Washington State"
+  },
+  "heroImage": {
+    "src": "/content/fire-fusion/ignition_heatmap.png",
+    "alt": "Predicted next-day wildfire ignition probability map over Washington State, with elevated risk concentrated along the eastern Cascades"
+  },
+  "tags": [
+    {
+      "label": "Research",
+      "color": "copper"
+    },
+    {
+      "label": "Paper",
+      "color": "copper"
+    },
+    {
+      "label": "PyTorch"
+    },
+    {
+      "label": "ConvFormer"
+    },
+    {
+      "label": "Spatiotemporal"
+    },
+    {
+      "label": "Multi-Modal"
+    },
+    {
+      "label": "Geospatial ML"
+    },
+    {
+      "label": "UT Austin",
+      "color": "grey"
+    }
+  ],
+  "links": [
+    {
+      "label": "Paper (PDF)",
+      "href": "/content/fire-fusion/firefusion-paper.pdf",
+      "icon": "pdf",
+      "download": "firefusion-paper.pdf"
+    },
+    {
+      "label": "GitHub",
+      "href": "https://github.com/torourke14/FireFusionNet",
+      "icon": "github"
+    }
+  ],
+  "sections": [
+    {
+      "type": "Paragraph",
+      "id": "overview",
+      "title": "Overview",
+      "body": "<p>Wildfire ignition is one of the harder problems in physics-aware modeling: ignitions are extremely rare relative to the number of candidate pixels and days, and roughly <strong>85–90% of recent Washington wildfires are human-caused</strong>, which means meteorology and fuels alone aren't enough to explain where fires start. <em>FireFusion</em> tackles this with a ConvFormer-based spatiotemporal architecture that fuses meteorological, topographic, vegetation, and human-pressure signals into a unified next-day ignition forecast.</p><p>The model jointly predicts (i) the probability of a new ignition at every grid cell on day <code>T+1</code>, and (ii) the most likely ignition cause class (lightning, human, industrial, debris/burning), trained end-to-end with physics-aware masking that excludes water, non-burnable terrain, and currently-burning cells from the loss.</p><p>This was a personal research project completed during my MS in AI at UT Austin.</p>"
+    },
+    {
+      "type": "BulletedList",
+      "id": "contributions",
+      "title": "Key contributions",
+      "intro": "<p>FireFusion makes four contributions targeting the gaps in existing wildfire ignition models - most of which lean on either static fire-weather indices or low-modality CNN baselines.</p>",
+      "items": [
+        "<strong>ConvFormer spatiotemporal backbone.</strong> A convolutional encoder followed by windowed spatial attention, channel-mixing attention, and temporal attention - explicitly modeling space, cross-feature interaction, and multi-day temporal evolution as separate axes.",
+        "<strong>Bi-head decoder.</strong> Ignition probability and ignition cause are predicted on the same fine-resolution grid as a coupled multi-class problem, rather than collapsing to a single hazard score.",
+        "<strong>Physics-aware masking.</strong> Water, non-burnable terrain, missing-data regions, and active fires are masked out of the loss and output space, preventing the model from learning non-causal correlations or treating ongoing fires as repeated ignitions.",
+        "<strong>Multi-modal learned representations.</strong> Domain-engineered features (Fosberg FWI, multi-day precipitation, decomposed wind/aspect vectors, distance-to-WUI, KDE priors) are mixed with raw inputs and learned shared representations across feature classes - rather than relying on either raw rasters or hand-crafted indices alone."
+      ]
+    },
+    {
+      "type": "Image",
+      "id": "study-area",
+      "title": "Study area",
+      "src": "/content/fire-fusion/wa-topo-map.png",
+      "alt": "Topographic map of Washington State showing elevation and major roadways",
+      "caption": "Washington State features a strong east-west polarity in climate, fuels, and human pressure - making it a hotbed for dynamic fire-weather modeling. Source: YellowMaps."
+    },
+    {
+      "type": "Paragraph",
+      "id": "feature-engineering",
+      "title": "Feature engineering",
+      "body": "<p>Rather than feeding raw gridded products directly into the model, FireFusion builds a compact, derived feature set organized around five categories: <strong>fuels and vegetation, weather and climate, topography, human presence, and historical fire activity</strong>. Inputs are organized as a unified spatiotemporal datacube with explicit <code>(time, y, x)</code> coordinates so that all sources - point ignitions, vector perimeters, and gridded rasters - can be masked, interpolated, and stacked through a shared pipeline.</p><p>The acquisition pipeline runs five steps per source: <em>aggregation</em> (clip to study area), <em>reprojection</em> (equal-area, nearest-neighbor for categoricals), <em>time interpolation</em> to a daily index, <em>derivation</em> of features like rolling precipitation, distance-to-road, and decomposed wind/aspect vectors, and <em>normalization</em> (z-score with <code>log1p</code> for long-tail variables like population density). Sinusoidal features are decomposed into component vectors so the model never has to learn the 360°→0° wrap.</p>"
+    },
+    {
+      "type": "Image",
+      "id": "data-sources",
+      "title": "Data sources",
+      "src": "/content/fire-fusion/data-sources-table.png",
+      "alt": "Table summarizing the ten geospatial data sources used by FireFusion, including NLCD, gridMET, NASA GPW, MODIS products, USDA WUI, USFS occurrence and perimeter layers, and Census TIGER/Line roads",
+      "caption": "Ten complementary sources span land cover, daily meteorology, vegetation indices, population, wildland–urban interface, road networks, and multi-source fire labels."
+    },
+    {
+      "type": "Paragraph",
+      "id": "labels-masks",
+      "title": "Labels and masking",
+      "body": "<p>The ignition label for day <code>T+1</code> is defined as a <strong>transition event</strong> - a cell labeled positive only if it is not burning at <code>T</code> and is burning at <code>T+1</code>. Cells already on fire at <code>T</code> are masked from the loss entirely. This framing is critical: it forces the model to predict the <em>onset</em> of fire rather than its continued spread, and it guarantees that reported ignition probabilities at inference are confined to physically plausible, currently-burnable landscapes.</p><p>Cause labels are defined only on newly-ignited pixels and mapped to four classes (lightning, human, industrial, debris/burning), with ambiguous codes routed to an <em>unknown</em> bucket that is excluded from the cause head's loss.</p>"
+    },
+    {
+      "type": "Paragraph",
+      "id": "architecture",
+      "title": "Architecture",
+      "body": "<p>FireFusion processes inputs of shape <code>(B, T, C, H, W)</code> through four stages before a two-head decoder:</p><p><strong>1. Spatial Encoder.</strong> A residual CNN (ResNet-style stem + two downsampling stages) compresses each daily grid to <code>(B, T, embed_dim, H', W')</code>, expanding the receptive field for downstream attention while preserving fine-scale geography through skip connections.</p><p><strong>2. Windowed Spatial Attention.</strong> Each <code>(H', W')</code> grid is partitioned into <code>P x P</code> non-overlapping windows, with multi-head self-attention applied within each window. Window size is chosen to match characteristic topographic scales - keeping complexity roughly linear in the number of pixels rather than quadratic.</p><p><strong>3. Channel-Mixing Attention.</strong> For each spatial-temporal location, feature channels are treated as tokens and attended over. This is where the model explicitly learns synergy between, say, dry-fuel signals and wind exposure - the kind of cross-feature interaction that pixel-CNN baselines tend to miss.</p><p><strong>4. Temporal Attention.</strong> Applied <em>last</em>, so that order and identity of individual days are preserved. The model can attend across the full lookback window, learning multi-day drying sequences, wind buildup, and longer-horizon population pressure.</p><p><strong>5. Bi-head decoder.</strong> A shared upsampling path feeds two <code>1x1</code> conv heads - one for ignition probability, one for the four-way cause distribution - both at full resolution.</p>"
+    },
+    {
+      "type": "Paragraph",
+      "id": "training",
+      "title": "Training approach",
+      "body": "<p>Training had to reconcile three pressures: extreme class imbalance, the need to learn from temporally-coherent sequences rather than isolated snapshots, and a multi-task objective. Sliding spatiotemporal windows of <code>T</code> past days are sampled with stride, and windows whose target day contains at least one ignition are <strong>oversampled</strong>; the BCE loss additionally carries a positive weight on the order of <strong>6,000:1</strong> to prevent collapse to a trivial 'no fire' prediction.</p><p>Optimization uses AdamW with a cosine-annealed schedule and warmup, gradient clipping for outlier robustness, and PR-AUC on a held-out validation set as the early-stopping criterion - chosen over ROC because the dataset is dominated by negatives and ROC is misleading at this prevalence.</p>"
+    },
+    {
+      "type": "2upTextImage",
+      "id": "results-pr",
+      "title": "Results - ignition head",
+      "body": "<p>On the held-out test set, FireFusion achieves an <strong>AUPRC of ~0.62</strong>, against a no-skill baseline of <strong>~0.08</strong> set by the empirical positive rate. That ~8x gap means the model concentrates a large fraction of true ignitions into a small fraction of high-scoring cells.</p><p>At the F1-optimal threshold, the binary confusion matrix shows the model correctly rejecting the overwhelming majority of non-ignition cells while recovering a substantial fraction of true ignitions. Most errors are false positives - a deliberate consequence of choosing a threshold that prioritizes recall, since missing an event costs far more than over-flagging in an early-warning context.</p>",
+      "image": {
+        "src": "/content/fire-fusion/auprc.png",
+        "alt": "Precision-recall curve for FireFusion vs. no-skill baseline; FireFusion AUPRC = 0.62, baseline = 0.08"
+      },
+      "imageSide": "right"
+    },
+    {
+      "type": "Image",
+      "id": "results-cause-cm",
+      "title": "Results - cause head",
+      "src": "/content/fire-fusion/cause-cm.png",
+      "alt": "Multi-class confusion matrix for ignition cause prediction across no-ignition, lightning, human, and other classes",
+      "caption": "Cause-head confusion matrix evaluated only on cells with valid ignition labels. Most error mass falls on the lightning/human boundary - cases where convective activity and human exposure overlap - and on the heterogeneous 'other' class."
+    },
+    {
+      "type": "Image",
+      "id": "results-spatial",
+      "title": "Spatial probability map",
+      "src": "/content/fire-fusion/ignition_heatmap.png",
+      "alt": "Predicted next-day ignition probability map for a test day over Washington, with elevated risk along the eastern slopes of the Cascades and selected interior basins",
+      "caption": "Predicted next-day ignition probability for a test day. Risk concentrates along the Puget Sound corridor, the eastern slopes of the Cascades, and selected interior basins - where fuel availability, human access, and dry-lightning regimes overlap. Water bodies, glaciated terrain, and irrigated valleys are correctly suppressed."
+    },
+    {
+      "type": "BulletedList",
+      "id": "takeaways",
+      "title": "Takeaways and limitations",
+      "intro": "<p>The qualitative behavior is consistent with known fire climatology: the model assigns elevated probabilities along convective bands and high-elevation ridges while suppressing urban cores and irrigated valleys. Conditioning experiments - same instantaneous temperature and humidity, different antecedent precipitation - confirm the temporal attention block is genuinely using multi-day context rather than collapsing to same-day conditions.</p>",
+      "items": [
+        "<strong>Resolution ceiling.</strong> All experiments use a 2 km grid. Many fine-scale ignition drivers (fuel breaks, narrow canyons, small road networks) operate at tens of meters - but attention scales quadratically in window cell count, and the project trained on a single RTX 3070, which forces a real trade-off between resolution and training stability.",
+        "<strong>Latency-affected inputs.</strong> Vegetation composites (NDVI, LAI) arrive on multi-day cadences and fire history layers lag by weeks to months. Even with temporal interpolation and forward-fill, inputs reflect a smoothed view of the landscape - a likely source of systematic bias.",
+        "<strong>Single-region training.</strong> Learned relationships reflect Washington-specific fuels, climate regimes, and reporting practices. The framework should generalize, but cross-region transfer would require retraining and careful validation.",
+        "<strong>What worked.</strong> Decomposing sinusoidal features (wind, aspect, day-of-year) into component vectors materially helped - it removed the 360°→0° wrap as something the model had to learn. Treating ignition as a <em>transition</em> event and masking active fires from the loss was the single most important framing decision."
+      ]
+    }
+  ]
+}

@@ -6,9 +6,8 @@ import Link from "next/link";
 
 import * as sty from "./Header.css";
 import TextLink from "src/components/ui/TextLink";
-import FilterPill from "@/components/ui/FilterPill";
 
-import { NAV_FILTERS } from "public/content/nav-links";
+import { NAV_FILTERS } from "@/content/nav-links";
 import { IFilter } from "src/lib/types/global";
 import { useProjectFilter } from "../AppProvider/app-provider";
 import Text from "@/components/ui/Text";
@@ -30,6 +29,14 @@ export function Header({
     setActiveFilters((current) =>
       current.includes(id) ? current.filter((f) => f !== id) : [...current, id]
     );
+  };
+
+  const onShiftWheel: React.WheelEventHandler<HTMLDivElement> = (e) => {
+    if (!e.shiftKey) return;
+    const el = e.currentTarget;
+    if (el.scrollWidth <= el.clientWidth) return;
+    e.preventDefault();
+    el.scrollLeft += e.deltaY;
   };
 
   useEffect(() => {
@@ -69,48 +76,55 @@ export function Header({
 
   return (
     <header className={sty.root}>
-        <div className={sty.headerLeft}>
-          <Link href="/" prefetch className={sty.logoContainer} aria-label="Home">
-            {/* <Text as="h1" variant={"titleLg"} className={sty.logoWord}>
-              Tanner<br/>O'Rourke
-            </Text> */}
-            <Text as="span" variant={"titleLg"} className={"word"}>
-              <span>T</span>
-              <span>A</span>
-              <span>N</span>
-              <span>N</span>
-              <span>E</span>
-              <span>R</span><br/>
-              <span>O'</span>
-              <span>R</span>
-              <span>O</span>
-              <span>U</span>
-              <span>R</span>
-              <span>K</span>
-              <span>E</span>
-            </Text>
-          </Link>
-          <nav className={sty.filterRow} aria-label="Filter projects">
+        <Link href="/" prefetch className={sty.logoContainer} aria-label="Home">
+          <Text as="span" variant={"titleLg"} className={"word1"}>
+            <span>T</span>
+            <span>A</span>
+            <span>N</span>
+            <span>N</span>
+            <span>E</span>
+            <span>R</span>
+            &nbsp;&nbsp;
+          </Text>
+          <Text as="span" variant={"titleLg"} className={"word2"}>
+            <span>O</span>
+            <span>'</span>
+            <span>R</span>
+            <span>O</span>
+            <span>U</span>
+            <span>R</span>
+            <span>K</span>
+            <span>E</span>
+          </Text>
+        </Link>
+        <div className={sty.navScrollWrap} onWheel={onShiftWheel}>
+          <nav className={sty.navMain} aria-label="Filter projects">
             {NAV_FILTERS.map((cf: IFilter) => (
-              <FilterPill
+              <TextLink
                 key={cf.id}
                 label={cf.label}
                 filterId={cf.id}
                 isActive={activeFilters.includes(cf.id)}
                 notifyOnClick={toggleFilter}
+                textProps={{
+                  variant: "bodyLg", 
+                  tone: "primary"
+                }}
               />
             ))}
           </nav>
         </div>
-        <div className={sty.headerRight}>
+        <div className={sty.navRight}>
           <TextLink
-            className={sty.profileLinkStyles}
             label="Profile"
             nextProps={{
               href: "/profile",
-              prefetch: true
+              prefetch: true,
             }}
-            textProps={{ variant: "ui" }}
+            textProps={{
+              variant: "bodyLg", 
+              tone: "primary" 
+            }}
           />
         </div>
       </header>

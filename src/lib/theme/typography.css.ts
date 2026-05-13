@@ -46,7 +46,7 @@ export const textRecipe = recipe({
       bodySm: {
         fontSize: theme.typography.fontSize.bodySm,
         lineHeight: theme.typography.lineHeight.relaxed,
-        fontWeight: theme.typography.fontWeight.regular,
+        fontWeight: theme.typography.fontWeight.medium,
       },
       uiLg: {
         fontSize: theme.typography.fontSize.body,

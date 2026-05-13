@@ -20,6 +20,10 @@ bun dev
 
 Page transitions are SSR'd using Next14 Framer Motion page transitions, with custom routing layered on top. A simpler demo can be found on [StackBlitz](https://stackblitz.com/edit/nextjs-framer-motion-template-p2cr5m?file=app%2FPageTransitionEffect.tsx&utm_source=chatgpt.com).
 
+## Icons
+
+Core set from [Phosphor Icons](https://icon-sets.iconify.design/ph/) and Brands from [Boxicon Brands](https://icon-sets.iconify.design/bxl/) on Iconify.
+
 ## Deployment
 
 Deployed using the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme).

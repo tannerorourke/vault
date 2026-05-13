@@ -1,5 +1,5 @@
 import { mq } from "@/lib/theme/responsive.css";
-import { theme, darkTheme } from "@/lib/theme/theme.css";
+import { theme } from "@/lib/theme/theme.css";
 import { style, globalStyle } from "@vanilla-extract/css";
 
 export const root = style({
@@ -9,72 +9,70 @@ export const root = style({
   zIndex: theme.layout.zIndex.header,
 
   display: "flex",
+  flexWrap: "wrap",
   alignItems: "flex-start",
-  justifyContent: "space-between",
+  rowGap: 8,
+  columnGap: 12,
   height: theme.layout.headerHeight,
-  backdropFilter: "blur(1px)",
-  WebkitBackdropFilter: "blur(1px)",
+  backdropFilter: "blur(3px)",
+  WebkitBackdropFilter: "blur(3px)",
 
   padding: '32px 16px 0 16px',
-  [mq.sm]: { padding: '48px 40px 0 40px' },
-  [mq.md]: { padding: '56px 80px 0 80px' }
-});
-
-export const headerLeft = style({
-  display: "flex",
-  alignItems: "flex-start",
-  gap: 12,
-});
-
-export const logoContainer = style({
-  width: "300px",
-  display: "flex",
-  flexDirection: "column",
-});
-
-export const filterRow = style({
-  display: "inline-flex",
-  alignItems: "center",
-  gap: "24px",
-  marginTop: "6px",
-});
-
-export const headerRight = style({
-  display: "flex",
-  alignItems: "center",
-  gap: 12,
-});
-
-const underlineLinkBase = {
-  fontFamily: "var(--font-body)",
-  fontSize: "14px",
-  fontWeight: theme.typography.fontWeight.medium,
-  letterSpacing: "-0.005em",
-  padding: "6px 2px",
-  border: "none",
-  background: "transparent",
-  cursor: "pointer",
-  backgroundImage: `linear-gradient(${theme.color.primary.hover}, ${theme.color.primary.hover})`,
-  backgroundSize: "0% 2px",
-  backgroundPosition: "bottom left",
-  backgroundRepeat: "no-repeat",
-  transition: "color 200ms ease, background-size 300ms ease",
-} as const;
-
-export const profileLinkStyles = style({
-  ...underlineLinkBase,
-  selectors: {
-    "&:hover": {
-      backgroundSize: "100% 2px",
-    },
+  [mq.sm]: { 
+    padding: '48px 40px 0 40px' 
+  },
+  [mq.lg]: { 
+    padding: '56px 80px 0 80px'
   },
 });
 
-globalStyle(`${profileLinkStyles} *`, {
-  color: theme.color.text.secondary,
-  transition: "color 200ms ease",
-});
+  export const logoContainer = style({
+    flex: "0 0 100%",
+    display: "flex",
+    flexWrap: "wrap",
+    cursor: "text",
+    [mq.md]: { 
+      flex: "0 0 300px"
+    },
+    selectors: {
+      "&:span": { lineHeight: '0.1em !important' }
+    }
+  });
 
-globalStyle(`${profileLinkStyles}:hover *`, {
-  color: theme.color.primary.main,
-});
+  export const navScrollWrap = style({
+    flex: "1 1 0",
+    minWidth: 0,
+    overflowX: "auto",
+    overflowY: "hidden",
+    WebkitOverflowScrolling: "touch",
+    scrollbarWidth: "none",
+    maskImage:
+      "linear-gradient(to right, #000 0, #000 calc(100% - 32px), transparent 100%)",
+    WebkitMaskImage:
+      "linear-gradient(to right, #000 0, #000 calc(100% - 32px), transparent 100%)",
+    [mq.lg]: {
+      flex: "0 1 auto",
+      overflowX: "visible",
+      maskImage: "none",
+      WebkitMaskImage: "none",
+    },
+  });
+
+  globalStyle(`.${navScrollWrap}::-webkit-scrollbar`, { display: "none" });
+
+    export const navMain = style({
+      display: "inline-flex",
+      alignItems: "center",
+      gap: "24px",
+      marginTop: "6px",
+      padding: "2px"
+    });
+
+  export const navRight = style({
+    display: "flex",
+    alignItems: "center",
+    gap: 12,
+    marginLeft: "auto",
+    flex: "0 0 auto",
+    padding: "2px"
+  });

@@ -1,0 +1,1 @@
+export { MorphIcon as default } from "./morph-icon";

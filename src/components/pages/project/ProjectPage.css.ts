@@ -2,15 +2,15 @@ import { style } from "@vanilla-extract/css";
 import { theme } from "@/lib/theme/theme.css";
 import { mq } from "@/lib/theme/responsive.css";
 
-const HEADER_OFFSET = `calc(${theme.layout.headerHeight} + ${theme.space._24})`;
+
 
 export const root = style({
   width: "100%",
   maxWidth: "860px",
   margin: "0 auto",
-  padding: `${HEADER_OFFSET} ${theme.space._24} ${theme.space._80}`,
+  padding: `${theme.layout.headerOffset.xs} ${theme.space._24} ${theme.space._80}`,
   [mq.md]: {
-    padding: `${HEADER_OFFSET} ${theme.space._80} ${theme.space._80}`,
+    padding: `${theme.layout.headerOffset} ${theme.space._80} ${theme.space._80}`,
   },
 });
 

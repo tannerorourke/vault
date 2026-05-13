@@ -2,10 +2,11 @@ import type { Metadata, Viewport } from "next";
 import { Inter_Tight, Roboto_Flex } from "next/font/google";
 import './global.css';
 import './global.styles.css';
+import * as sty from "./layout.css";
 
 import AppProvider from "@/components/navigation/AppProvider";
 import { ThemeProvider } from "@/components/navigation/ThemeProvider";
-import { ThemeToggle } from "@/components/navigation/ThemeToggle";
+import FloatingToolbar from "@/components/ui/FloatingToolbar";
 import { lightTheme } from "@/lib/theme/theme.css";
 
 const interTight = Inter_Tight({
@@ -62,18 +63,18 @@ export const metadata: Metadata = {
 };
 
 
-export default function RootLayout({
+export default function RootLayout({ 
   children,
-}: Readonly<{
-  children: React.ReactNode;
+}: Readonly<{ 
+  children: React.ReactNode; 
 }>) {
   return (
     <html lang="en" className={lightTheme}>
       <body className={`${interTight.variable} ${robotoFlex.variable}`}>
         <ThemeProvider>
           <AppProvider>
-            <ThemeToggle />
-            {children}
+              {children}
+              <FloatingToolbar />
           </AppProvider>
         </ThemeProvider>
       </body>

@@ -80,8 +80,13 @@ export const theme = createThemeContract({
 	},
 	layout: {
 		gutterWidth: null,
-		headerHeight: null,
     footerHeight: null,
+		headerHeight: null,
+    headerOffset: {
+      xs: null,
+      sm: null,
+      md: null
+    },
 		contentMaxWidth: null,
 		zIndex: {
 			tooltip: null,
@@ -114,7 +119,7 @@ export const lightTheme = createTheme(theme, {
 			},
 			link: {
 					main: '#5D6D68',
-					hover: '#538D84',
+					hover: '#E07A5F', // '#538D84',
 			},
 			error: '#D32F2F',
 			warning: '#ED6C02',
@@ -174,8 +179,13 @@ export const lightTheme = createTheme(theme, {
     },
 		layout: {
 			gutterWidth: '80px',
-			headerHeight: '140px',
       footerHeight: '120px',
+			headerHeight: '140px',
+      headerOffset: {
+        xs: '188px', // 140 + 48
+        sm: '196px', // 140 + 56
+        md: '220px' // 140 + 80
+      },
 			contentMaxWidth: '1600px',
 			zIndex: {
 				tooltip: '9999',
@@ -207,7 +217,7 @@ export const darkTheme = createTheme(theme, {
 			},
 			link: {
 					main: '#7A9E98',
-					hover: '#4DB8AC',
+					hover: '#C4A87A', // '#4DB8AC',
 			},
 			error: '#EF5350',
 			warning: '#FFA726',
@@ -267,8 +277,13 @@ export const darkTheme = createTheme(theme, {
     },
 		layout: {
 			gutterWidth: '80px',
-			headerHeight: '140px',
-      footerHeight: '120px',
+			footerHeight: '120px',
+			headerHeight: '120px',
+      headerOffset: {
+        xs: '228px', // 180 + 48
+        sm: '236px', // 180 + 56
+        md: '212px' // 132 + 80
+      },
 			contentMaxWidth: '1600px',
 			zIndex: {
 				tooltip: '9999',

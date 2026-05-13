@@ -1,6 +1,6 @@
 'use client';
 
-import React, { ElementType } from 'react'
+import { ElementType } from 'react'
 import { Button, ButtonProps } from '@base-ui/react/button';
 import NextLink, { LinkProps as NextLinkProps } from 'next/link';
 import * as sty from "./text-link.css";
@@ -12,8 +12,8 @@ export type TextLinkProps = ButtonProps & {
   filterId?: IFilter['id'];
   notifyOnClick?: (filterId: IFilter['id']) => void;
   isActive?: boolean;
-  textProps?: TextProps<ElementType>
-  nextProps?: NextLinkProps;
+  nextProps?: NextLinkProps & { className?: string };
+  textProps?: TextProps<ElementType>;
 }
 
 export const TextLink: React.FC<TextLinkProps> = ({
@@ -37,17 +37,24 @@ export const TextLink: React.FC<TextLinkProps> = ({
   
   const button = (
     <Button
-      className={[sty.buttonBase, className].filter(Boolean).join(' ')}
-      onClick={handleClick}
       aria-pressed={isActive}
+      className={[sty.linkBtnBase, className].filter(Boolean).join(' ')}
+      onClick={handleClick}
       {...rest}
     >
-      <Text as="p" variant="body" {...textProps}>{label}</Text>
+      <Text
+        className={[sty.linkTextBase, textProps.className].filter(Boolean).join(' ')}
+        {...textProps}
+       >{label}</Text>
+      
     </Button>
   );
 
   if (nextProps) {
-    return <NextLink {...nextProps}>{button}</NextLink>;
+    return <NextLink
+      className={[sty.linkWrapBase, nextProps.className].filter(Boolean).join(' ')}
+      {...nextProps}
+    >{button}</NextLink>;
   }
 
   return button;

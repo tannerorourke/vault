@@ -5,10 +5,17 @@ import { mq } from "@/lib/theme/responsive.css";
 export const section = style({
   display: "flex",
   flexDirection: "column",
-  marginTop: theme.layout.headerHeight,
-  padding: '32px 16px 0 16px',
-  [mq.sm]: { padding: '48px 40px 0 40px' },
-  [mq.md]: { padding: '56px 80px 0 80px' }
+  marginTop: theme.layout.headerOffset.xs,
+  padding: `0 ${theme.space._24}`,
+  [mq.sm]: { 
+    padding: `0 ${theme.space._48}`,
+    marginTop: theme.layout.headerOffset.sm,
+  },
+  [mq.md]: { 
+    padding: `0 ${theme.space._80}`,
+    marginTop: theme.layout.headerOffset.md, 
+  },
+  transition: "margin-top 220ms ease 80ms, padding 220ms ease"
 });
 
 export const sectionHeader = style({
@@ -48,5 +55,8 @@ export const grid = style({
   [mq.lg]: {
     gridTemplateColumns: "repeat(3, 1fr)",
     gap: theme.space._36,
+  },
+  [mq.xl]: {
+    gridTemplateColumns: "repeat(4, 1fr)",
   },
 });
