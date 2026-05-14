@@ -15,7 +15,7 @@ export const section = style({
     padding: `0 ${theme.space._80}`,
     marginTop: theme.layout.headerOffset.md, 
   },
-  transition: "margin-top 220ms ease 80ms, padding 220ms ease"
+  transition: "margin-top 220ms ease 80ms, padding 2000ms ease"
 });
 
 export const sectionHeader = style({
