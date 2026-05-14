@@ -36,7 +36,7 @@ export function ProjectsGrid({ projects }: ProjectsGridProps) {
   );
 
   return (
-    <section className={sty.section}>
+    <main className={sty.section}>
       <div className={sty.grid}>
         {visibleProjects.map((p) => (
           <ProjectCard
@@ -48,6 +48,6 @@ export function ProjectsGrid({ projects }: ProjectsGridProps) {
           />
         ))}
       </div>
-    </section>
+    </main>
   );
 }

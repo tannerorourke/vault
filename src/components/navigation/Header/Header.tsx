@@ -6,12 +6,12 @@ import Link from "next/link";
 
 import * as sty from "./Header.css";
 import TextLink from "src/components/ui/TextLink";
+import { ProfileNavLink } from "@/components/navigation/ProfileNavLink/profile-nav-link";
 
 import { NAV_FILTERS } from "@/content/nav-links";
 import { IFilter } from "src/lib/types/global";
 import { useProjectFilter } from "../AppProvider/app-provider";
 import Text from "@/components/ui/Text";
-
 
 
 type HeaderProps = {
@@ -75,7 +75,7 @@ export function Header({
   }, [enableLoadAnimation, enableClickAnimation])
 
   return (
-    <header className={sty.root}>
+    <header className={`${sty.root}`}>
         <Link href="/" prefetch className={sty.logoContainer} aria-label="Home">
           <Text as="span" variant={"titleLg"} className={"word1"}>
             <span>T</span>
@@ -115,17 +115,7 @@ export function Header({
           </nav>
         </div>
         <div className={sty.navRight}>
-          <TextLink
-            label="Profile"
-            nextProps={{
-              href: "/profile",
-              prefetch: true,
-            }}
-            textProps={{
-              variant: "bodyLg", 
-              tone: "primary" 
-            }}
-          />
+          <ProfileNavLink />
         </div>
       </header>
   )

@@ -85,7 +85,7 @@ export function ContentTransitionProvider({ children }: { children: React.ReactN
         initial={animate ? "initial" : false}
         animate={animate ? "animate" : false}
         exit={animate ? "exit" : undefined}
-        transition={{ duration: 0.4, ease: "easeInOut" }}
+        transition={{ duration: 0.35, ease: "easeInOut" }}
         style={{
           position: "absolute",
           inset: 0,
@@ -100,7 +100,7 @@ export function ContentTransitionProvider({ children }: { children: React.ReactN
           );
         }}
       >
-        <ParticleCanvasBackdrop />
+        <ParticleCanvasBackdrop outT={0.15} inD={0.35} inT={0.15}   />
         <FrozenRouter>{children}</FrozenRouter>
       </motion.div>
     </AnimatePresence>

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import * as sty from "./floating-toolbar.css";
 
 import { useTheme } from '@/components/navigation/ThemeProvider';
-import { SIDEBAR_LINKS } from "@/content/nav-links";
+import { LINKS, NavLink } from "@/content/nav-links";
 
 import MorphIcon from "@/components/ui/MorphIcon";
 import { IconButton, IconLink } from "@/components/ui/Icon";
@@ -44,7 +44,7 @@ export function FloatingToolbar() {
           id={LIST_ID}
           className={[sty.list, !isDesktop && isOpen ? sty.listOpen : ""].filter(Boolean).join(" ")}
         >
-          {SIDEBAR_LINKS.map((item, ix) => (
+          {LINKS.map((item: NavLink, ix: number) => (
             <li key={ix} className={sty.item}>
               <IconLink
                 variant='flat'

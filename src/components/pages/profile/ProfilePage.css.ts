@@ -1,152 +1,189 @@
-import { style } from "@vanilla-extract/css";
+import { style, globalStyle } from "@vanilla-extract/css";
 import { theme } from "@/lib/theme/theme.css";
 import { mq } from "@/lib/theme/responsive.css";
 
-const HEADER_OFFSET = `calc(${theme.layout.headerHeight} + ${theme.space._48})`;
-const CHIP_BG = "rgba(42,95,88,0.09)";
-const PHOTO_PLACEHOLDER_BG = "rgba(42,95,88,0.06)";
+const PHOTO_BG = "rgba(42, 95, 88, 0.06)";
+const DIVIDER_TEAL = "rgba(42, 95, 88, 0.16)";
+const DIVIDER_TEAL_SOFT = "rgba(42, 95, 88, 0.10)";
+
 
 export const profileRoot = style({
+  position: "relative",
+  zIndex: theme.layout.zIndex.content,
   width: "100%",
   maxWidth: "1100px",
   margin: "0 auto",
-  padding: `${HEADER_OFFSET} ${theme.space._24} ${theme.space._80}`,
+  marginTop: theme.layout.headerOffset.xs,
+  padding: `0 ${theme.space._24} ${theme.space._96}`,
+  [mq.sm]: { 
+    padding: `0 ${theme.space._48}`,
+    marginTop: theme.layout.headerOffset.sm,
+  },
   [mq.md]: {
-    padding: `${HEADER_OFFSET} ${theme.space._80} ${theme.space._80}`,
+    padding: `0 ${theme.space._80} ${theme.space._96}`,
+    marginTop: theme.layout.headerOffset.md, 
   },
 });
 
-export const grid = style({
-  display: "grid",
-  gridTemplateColumns: "1fr",
-  gap: theme.space._32,
-  alignItems: "start",
+export const stDisplay = style({
+  marginBottom: theme.space._32,
   [mq.md]: {
-    gridTemplateColumns: "320px 1fr",
-    gap: theme.space._56,
+    marginBottom: theme.space._56,
   },
 });
+  export const textDisplay = style({
+    margin: 0,
+    fontFamily: "var(--font-display)",
+    color: theme.color.text.primary,
+    width: 'fit-content',
+    maxWidth: "16ch",
+    textWrap: "balance",
+    [mq.md]: {
+      maxWidth: "18ch",
+    },
+  });
+  globalStyle(`${textDisplay} strong`, {
+    fontWeight: theme.typography.fontWeight.bold,
+    color: theme.color.primary.main,
+    letterSpacing: theme.typography.letterSpacing.tight,
+  });
 
-export const photoColumn = style({
-  position: "relative",
-  maxWidth: "280px",
-  width: "100%",
-  [mq.md]: {
-    maxWidth: "none",
-    position: "sticky",
-    top: HEADER_OFFSET,
-  },
-});
-
-export const photoPlaceholder = style({
-  width: "100%",
-  aspectRatio: "3 / 4",
-  borderRadius: "12px",
-  background: PHOTO_PLACEHOLDER_BG,
-  boxShadow: `0 4px 20px -2px ${theme.color.shadow}`,
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  color: theme.color.text.secondary,
-  fontSize: theme.typography.fontSize.bodySm,
-  fontWeight: theme.typography.fontWeight.medium,
-});
-
-export const photo = style({
-  width: "100%",
-  aspectRatio: "3 / 4",
-  borderRadius: "12px",
-  objectFit: "cover",
-  display: "block",
-  background: PHOTO_PLACEHOLDER_BG,
-  boxShadow: `0 4px 20px -2px ${theme.color.shadow}`,
-});
 
 export const body = style({
-  display: "flex",
-  flexDirection: "column",
-});
-
-export const name = style({
-  fontFamily: "var(--font-display)",
-  fontSize: theme.typography.fontSize.display,
-  lineHeight: "1.1",
-  fontWeight: theme.typography.fontWeight.bold,
-  letterSpacing: theme.typography.letterSpacing.tight,
-  color: theme.color.primary.main,
-  margin: `0 0 ${theme.space._4}`,
-});
-
-export const subtitle = style({
-  fontSize: theme.typography.fontSize.body,
-  color: theme.color.text.secondary,
-  marginBottom: theme.space._32,
-});
-
-export const paragraph = style({
-  fontSize: "15px",
-  lineHeight: "1.75",
-  color: theme.color.text.primary,
-  margin: `0 0 ${theme.space._20}`,
-  textWrap: "pretty",
-});
-
-export const skills = style({
-  display: "flex",
-  flexWrap: "wrap",
-  gap: theme.space._8,
-  marginTop: theme.space._24,
-  paddingTop: theme.space._24,
-  borderTop: `1px solid ${theme.color.divider}`,
-});
-
-export const skillChip = style({
-  fontSize: theme.typography.fontSize.caption,
-  fontWeight: theme.typography.fontWeight.semibold,
-  borderRadius: "20px",
-  padding: "5px 14px",
-  background: CHIP_BG,
-  color: theme.color.primary.main,
-  whiteSpace: "nowrap",
-});
-
-export const links = style({
-  display: "flex",
-  flexWrap: "wrap",
-  gap: theme.space._12,
-  marginTop: theme.space._24,
-});
-
-export const linkButton = style({
-  display: "inline-flex",
-  alignItems: "center",
-  gap: "7px",
-  padding: "9px 18px",
-  borderRadius: "8px",
-  fontSize: "13px",
-  fontWeight: theme.typography.fontWeight.semibold,
-  border: `1.5px solid ${theme.color.primary.main}`,
-  color: theme.color.primary.main,
-  background: "transparent",
-  textDecoration: "none",
-  cursor: "pointer",
-  transition: "background-color 200ms ease, color 200ms ease",
-
-  selectors: {
-    "&:hover": {
-      background: theme.color.primary.main,
-      color: theme.color.contrast,
-    },
-    "&:focus-visible": {
-      outline: `2px solid ${theme.color.primary.hover}`,
-      outlineOffset: 2,
-    },
+  display: "grid",
+  gridTemplateColumns: "1fr",
+  gap: theme.space._48,
+  alignItems: "start",
+  marginBottom: theme.space._56,
+  [mq.md]: {
+    gridTemplateColumns: "minmax(260px, 4fr) minmax(0, 7fr)",
+    gap: theme.space._80,
   },
 });
 
-export const linkButtonIcon = style({
-  width: "15px",
-  height: "15px",
-  fill: "currentColor",
-  flexShrink: 0,
+// -- Photo Column ----------------------------------------------
+  export const photoColumn = style({
+    position: "relative",
+    display: "flex",
+    flexDirection: "column",
+    gap: theme.space._32,
+    maxWidth: "380px",
+    width: "100%",
+    [mq.md]: {
+      position: "sticky",
+      top: `calc(${theme.layout.headerHeight} + ${theme.space._32})`,
+      paddingTop: theme.space._12,
+      maxWidth: "none",
+    },
+  });
+    export const photoFigure = style({
+      margin: 0,
+      transform: "rotate(-1.4deg)",
+      transformOrigin: "top left",
+      transition: "transform 600ms cubic-bezier(.2,.8,.2,1)",
+      selectors: {
+        "&:hover": {
+          transform: "rotate(0deg) translateY(-2px)",
+        },
+      },
+    });
+      export const photo = style({
+        display: "block",
+        width: "100%",
+        maxWidth: "380px",
+        aspectRatio: "1 / 1",
+        borderRadius: "10px",
+        objectFit: "cover",
+        background: PHOTO_BG,
+        boxShadow: `0 4px 20px -2px ${theme.color.shadow}`,
+      });
+
+// -- Prose Column ----------------------------------------------
+  export const bodyProse = style({
+    maxWidth: "620px",
+    [mq.md]: {
+      paddingTop: theme.space._4,
+    },
+  });
+    export const prose = style({
+      margin: `0 0 ${theme.space._32}`,
+      selectors: {
+        "&:last-of-type": { marginBottom: 0 },
+      },
+    });
+      export const pDivider = style({
+        border: 0,
+        height: "1px",
+        margin: `0 0 ${theme.space._20}`,
+        background: DIVIDER_TEAL,
+      });
+      export const par = style({
+        margin: `0 0 ${theme.space._20}`,
+        color: theme.color.text.primary,
+        textWrap: "pretty",
+      });
+      globalStyle(`${par} strong`, {
+        fontWeight: theme.typography.fontWeight.semibold,
+        color: theme.color.primary.main,
+      });
+      globalStyle(`${par} em`, {
+        fontStyle: "italic",
+        color: theme.color.text.primary,
+      });
+
+// -- Get In Touch ----------------------------------------------
+
+export const contact = style({
+  marginTop: theme.space._56,
+  // paddingTop: theme.space._24,
+  borderTop: `1px solid ${DIVIDER_TEAL_SOFT}`,
+  display: "flex",
+  flexWrap: "wrap",
+  alignItems: "center",
+  gap: `${theme.space._12} ${theme.space._24}`,
 });
+
+  export const contactLabel = style({
+    letterSpacing: "0.18em",
+    textTransform: "uppercase",
+  });
+
+  export const contactList = style({
+    listStyle: "none",
+    margin: 0,
+    padding: 0,
+    display: "flex",
+    flexWrap: "wrap",
+    alignItems: "center",
+    gap: `${theme.space._4} ${theme.space._16}`,
+  });
+    export const contactItem = style({
+      display: "inline-flex",
+    });
+      export const contactLink = style({
+        display: "inline-flex",
+        alignItems: "center",
+        gap: theme.space._8,
+        padding: `${theme.space._8} ${theme.space._12}`,
+        borderRadius: "8px",
+        color: theme.color.text.primary,
+        textDecoration: "none",
+        transition: "color 200ms ease, background-color 200ms ease",
+
+        selectors: {
+          "&:hover": {
+            color: theme.color.secondary.active,
+          },
+          "&:focus-visible": {
+            outline: `2px solid ${theme.color.primary.hover}`,
+            outlineOffset: 2,
+          },
+        },
+      });
+
+      export const contactIcon = style({
+        width: "16px",
+        height: "16px",
+        flexShrink: 0,
+        fill: "currentColor",
+      });

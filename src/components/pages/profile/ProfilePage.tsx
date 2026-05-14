@@ -1,112 +1,76 @@
-import type { ComponentType, SVGProps } from "react";
-import { GithubIcon } from "public/icons/github";
-import { LinkedinIcon } from "public/icons/linkedin";
-import { MailIcon } from "public/icons/mail";
 import * as sty from "./ProfilePage.css";
+import Text from "@/components/ui/Text";
+import { blurFade } from "@/lib/styles/blur-fade.css";
+import {
+  HOOK,
+  PARAGRAPHS,
+} from "@/content/profile-content";
+import { ABOUT_LINKS, NavLink } from "@/content/nav-links";
 
-const SKILLS = [
-  "Python",
-  "TypeScript",
-  "Next.js",
-  "React",
-  "PyTorch",
-  "Transformer Models",
-  "Computer Vision",
-  "Cloudflare",
-  "Systems Design",
-];
-
-type SvgIcon = ComponentType<SVGProps<SVGSVGElement>>;
-
-type ProfileLink = {
-  key: string;
-  Icon: SvgIcon;
-  label: string;
-  href: string;
-  target?: string;
-};
-
-const LINKS: ProfileLink[] = [
-  {
-    key: "github",
-    Icon: GithubIcon,
-    label: "GitHub",
-    href: "https://github.com/torourke14",
-    target: "_blank",
-  },
-  {
-    key: "linkedin",
-    Icon: LinkedinIcon,
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/in/tworourke/",
-    target: "_blank",
-  },
-  {
-    key: "mail",
-    Icon: MailIcon,
-    label: "Email",
-    href: "mailto:tannero@live.com?subject=Reaching%20out",
-  },
-];
 
 export function ProfilePage() {
   return (
-    <main className={sty.profileRoot} aria-label="Profile">
-      <div className={sty.grid}>
-        <div className={sty.photoColumn}>
-          <div className={sty.photoPlaceholder}>
-            <span>Photo placeholder</span>
-          </div>
-        </div>
+    <main className={sty.profileRoot}>
 
-        <div className={sty.body}>
-          <h1 className={sty.name}>Tanner O&apos;Rourke</h1>
-          <div className={sty.subtitle}>
-            Applied Software Engineer · AI/ML, Web &amp; Systems
-          </div>
+      <section className={sty.stDisplay}>
+        <Text 
+          as="h1" 
+          variant="display" 
+          className={`${sty.textDisplay} ${blurFade({ direction: 'all', rounded: 'sm' })}`}
+        >
+          {HOOK}
+        </Text>
+      </section>
 
-          <p className={sty.paragraph}>
-            I&apos;m a software engineer with a focus on applied AI/ML
-            systems, full-stack web, and systems design. Currently pursuing
-            an MS in AI at UT Austin while working on research at the
-            intersection of deep learning and real-world applications.
-          </p>
+      <section className={sty.body}>
+        <aside className={sty.photoColumn} aria-label="At a glance">
+          <figure className={sty.photoFigure}>
+            {/* Empty src placeholder — populate src + alt when image is added */}
+            <img className={sty.photo} src="" alt="" />
+          </figure>
+        </aside>
 
-          <p className={sty.paragraph}>
-            Previously at DirecTV leading Next.js development on the
-            directv.com platform. I enjoy building things that are both
-            technically rigorous and carefully considered in their design.
-          </p>
-
-          <p className={sty.paragraph}>
-            Based in the Pacific Northwest. When not at the keyboard,
-            usually somewhere in the mountains.
-          </p>
-
-          <div className={sty.skills}>
-            {SKILLS.map((s) => (
-              <span key={s} className={sty.skillChip}>
-                {s}
-              </span>
-            ))}
-          </div>
-
-          <div className={sty.links}>
-            {LINKS.map(({ key, Icon, label, href, target }) => (
-              <a
-                key={key}
-                className={sty.linkButton}
-                href={href}
-                target={target}
-                rel={target === "_blank" ? "noopener noreferrer" : undefined}
+        <div className={`${sty.bodyProse} ${blurFade({ direction: 'all', rounded: 'sm' })}`}>
+          {PARAGRAPHS.map((p, i) => (
+            <article className={sty.prose}>
+              {i !== 0 && <hr className={sty.pDivider} aria-hidden="true" />}
+              <Text 
+                as="p" 
+                variant="bodyLg" 
+                className={sty.par}
               >
-                <Icon className={sty.linkButtonIcon} />
-                {label}
-              </a>
-            ))}
-          </div>
+                {p}
+              </Text>
+            </article>
+          ))}
         </div>
-      </div>
+      </section>
+
+      <section 
+        className={`${sty.contact} ${blurFade({ direction: 'all', rounded: 'sm' })}`} 
+        aria-label="Contact links"
+      >
+        <Text as="span" variant="bodySm" tone="primary" className={sty.contactLabel}>
+          I'm open to Work! Let's get in touch
+        </Text>
+        <ul className={sty.contactList}>
+          {ABOUT_LINKS.map((l: NavLink) => (
+            <li key={l.href} className={sty.contactItem}>
+              <a
+                href={l.href}
+                target={l.target}
+                rel={l.target === "_blank" ? "noopener noreferrer" : undefined}
+                download={l.download}
+                aria-label={l.alt}
+                className={sty.contactLink}
+              >
+                <l.Icon className={sty.contactIcon} duopacity={0} aria-hidden="true" />
+                <Text as="span" variant="ui">{l.text}</Text>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
     </main>
   );
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { motion } from 'motion/react';
 import * as sty from './ParticleCanvas.css';
 import { useCanvasEngine } from './ParticleEngineProvider';
 
@@ -11,27 +12,15 @@ import { useCanvasEngine } from './ParticleEngineProvider';
 export function ParticleCanvasWallpaper({ children }: { children?: React.ReactNode }) {
   const { registerCanvas, startEmergence } = useCanvasEngine();
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const sentinelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const sentinel = sentinelRef.current;
     if (!canvas) return;
 
     const unregister = registerCanvas(canvas);
+    startEmergence();
 
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) startEmergence();
-      },
-      { threshold: 0.05 },
-    );
-    if (sentinel) io.observe(sentinel);
-
-    return () => {
-      unregister();
-      io.disconnect();
-    };
+    return () => unregister();
   }, [registerCanvas, startEmergence]);
 
   return (
@@ -43,10 +32,7 @@ export function ParticleCanvasWallpaper({ children }: { children?: React.ReactNo
       <div className={sty.fadeBottom} aria-hidden="true" />
       <div className={sty.fadeVignette} aria-hidden="true" />
 
-      {/* Sentinel triggers emergence; content slot for hero text etc. */}
-      <div ref={sentinelRef} className={sty.sentinel} style={{ height: '100vh' }}>
-        <div className={sty.content}>{children}</div>
-      </div>
+      {children && <div className={sty.content}>{children}</div>}
     </>
   );
 }
@@ -56,7 +42,10 @@ export function ParticleCanvasWallpaper({ children }: { children?: React.ReactNo
 //    - Required so that backdrop-filter: blur() has dots to sample (e.g, blurred cards)
 //    - NO fades, NO sentinel, NO children.
 // ---------------------------------------------------------------------------
-export function ParticleCanvasBackdrop() {
+export function ParticleCanvasBackdrop(
+  { outT, inD, inT }:
+  { outT: number, inD: number, inT: number }
+) {
   const { registerCanvas } = useCanvasEngine();
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -66,5 +55,17 @@ export function ParticleCanvasBackdrop() {
     return registerCanvas(canvas);
   }, [registerCanvas]);
 
-  return <canvas ref={canvasRef} className={sty.backdropCanvas} aria-hidden="true" />;
+  // return <canvas ref={canvasRef} className={sty.backdropCanvas} aria-hidden="true" />;
+  return (
+    <motion.canvas
+      ref={canvasRef}
+      className={sty.backdropCanvas}
+      aria-hidden="true"
+      initial={{ opacity: 0 }}
+      // outgoing backdrop on page switch
+      exit={{ opacity: 0, transition: { duration: outT } }}
+      // incoming backdrop
+      animate={{ opacity: 1, transition: { delay: inD, duration: inT }}}
+    />
+  );
 }
