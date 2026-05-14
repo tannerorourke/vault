@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import * as sty from "./floating-toolbar.css";
 
 import { useTheme } from '@/components/navigation/ThemeProvider';
-import { LINKS, NavLink } from "@/content/nav-links";
+import { LINKS } from "@/content/nav-links";
+import type { NavLink } from "@/lib/types/nav";
 
 import MorphIcon from "@/components/ui/MorphIcon";
 import { IconButton, IconLink } from "@/components/ui/Icon";

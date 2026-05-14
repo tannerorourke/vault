@@ -4,13 +4,13 @@ import { ElementType } from 'react'
 import { Button, ButtonProps } from '@base-ui/react/button';
 import NextLink, { LinkProps as NextLinkProps } from 'next/link';
 import * as sty from "./text-link.css";
-import { IFilter } from '@/lib/types/global';
+import { NavFilter } from '@/lib/types/nav';
 import { Text, TextProps } from '../Text/Text';
 
 export type TextLinkProps = ButtonProps & {
   label: string;
-  filterId?: IFilter['id'];
-  notifyOnClick?: (filterId: IFilter['id']) => void;
+  filterId?: NavFilter['id'];
+  notifyOnClick?: (filterId: NavFilter['id']) => void;
   isActive?: boolean;
   nextProps?: NextLinkProps & { className?: string };
   textProps?: TextProps<ElementType>;

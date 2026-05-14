@@ -1,6 +1,6 @@
 import { notFound, redirect } from "next/navigation";
-import { IPageProps } from "src/lib/types/routes"
-import { getProjectContent } from "@/lib/utils/project-content";
+import { IPageProps } from "@/lib/types/routes"
+import { getProjectContent } from "@/content/projects";
 
 /**
  * Resolve any "/[project-id]/**" URL to /[project-id]

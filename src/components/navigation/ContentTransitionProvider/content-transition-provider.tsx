@@ -3,8 +3,10 @@
 import * as React from "react";
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { usePathname } from "next/navigation";
-import { FrozenRouter } from "@/lib/utils/FrozenRouter";
+
+import { FrozenRouter } from "./frozen-router";
 import { ParticleCanvasBackdrop } from "@/components/navigation/ParticleCanvas";
+
 
 type RouteKind = "home" | "profile" | "project";
 

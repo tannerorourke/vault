@@ -5,12 +5,21 @@ import { mq } from "@/lib/theme/responsive.css";
 
 
 export const root = style({
+  position: "relative",
+  zIndex: theme.layout.zIndex.content,
   width: "100%",
-  maxWidth: "860px",
+  // maxWidth: "860px",
+  maxWidth: "1100px",
   margin: "0 auto",
-  padding: `${theme.layout.headerOffset.xs} ${theme.space._24} ${theme.space._80}`,
+  marginTop: theme.layout.headerOffset.xs,
+  padding: `0 ${theme.space._24} ${theme.space._96}`,
+  [mq.sm]: { 
+    padding: `0 ${theme.space._48}`,
+    marginTop: theme.layout.headerOffset.sm,
+  },
   [mq.md]: {
-    padding: `${theme.layout.headerOffset} ${theme.space._80} ${theme.space._80}`,
+    padding: `0 ${theme.space._80} ${theme.space._96}`,
+    marginTop: theme.layout.headerOffset.md, 
   },
 });
 

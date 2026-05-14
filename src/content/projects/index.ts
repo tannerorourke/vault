@@ -1,8 +1,3 @@
-/**
- * Thin wrapper around project content.
- * src/lib/utils/project-content.ts picks up and loads to homepage
- */
-
 import type { ProjectContent } from "@/lib/types/project-content";
 import firefusion from "./fire-fusion/content.json";
 import gpt4Causality from "./gpt4-causality/content.json";
@@ -24,3 +19,15 @@ export const PROJECTS: ProjectContent[] = [...ALL].sort(
 
 export const PROJECTS_BY_PID: Record<string, ProjectContent> =
   Object.fromEntries(PROJECTS.map((p) => [p.pid, p]));
+
+export function getAllProjects(): ProjectContent[] {
+  return PROJECTS;
+}
+
+export function getProjectContent(slug: string): ProjectContent | null {
+  return PROJECTS_BY_PID[slug] ?? null;
+}
+
+export function getAllProjectSlugs(): string[] {
+  return PROJECTS.map((p) => p.pid);
+}

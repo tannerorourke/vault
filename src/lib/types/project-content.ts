@@ -1,16 +1,17 @@
 import type { TagChipColor } from "@/components/ui/TagChip";
+import { ContentNavLink } from "./nav";
 
-/**
- * Section types - each `type` discriminator is a simple key.
- * Add new section variants by extending the union and adding a renderer
- * in components/pages/project/sections.tsx.
- */
 
+/** Governs home-page header tabs filter by. */
+export type ProjectFilterId = "aiml" | "experience" | "research" | "labs";
+
+// --------------------------------------------------------------------
+// Section types - discriminated by key
+// --------------------------------------------------------------------
 export type SectionParagraph = {
   type: "Paragraph";
   id: string;
   title?: string;
-  /** Plain text or limited HTML (rendered via dangerouslySetInnerHTML). */
   body: string;
 };
 
@@ -18,7 +19,6 @@ export type SectionBulletedList = {
   type: "BulletedList";
   id: string;
   title?: string;
-  /** Optional intro paragraph rendered above the list. */
   intro?: string;
   items: string[];
 };
@@ -60,22 +60,12 @@ export type ProjectSection =
   | SectionTwoUpTextImage
   | SectionImage
   | SectionVideo;
-
-export type ProjectContentLink = {
-  label: string;
-  href: string;
-  /** Icon name from public/icons. */
-  icon?: "github" | "pdf" | "globe" | "demo";
-  download?: string;
-};
+// --------------------------------------------------------------------
 
 export type ProjectContentTag = {
   label: string;
   color?: TagChipColor;
 };
-
-/** Filter ids the home-page header tabs filter by. */
-export type ProjectFilterId = "aiml" | "experience" | "research" | "labs";
 
 export type ProjectContent = {
   /** Identity */
@@ -94,14 +84,13 @@ export type ProjectContent = {
   isFeature?: boolean;
   /** Optional thumbnail; falls back to heroImage when omitted. */
   cardImage?: { src: string; alt?: string };
-
   /** Detail-page header */
   /** Small uppercase line above the title - e.g. "Labs · 2025". */
   eyebrow?: string;
   /** Longer outcome / summary under the title (defaults to summary). */
   subtitle?: string;
   tags?: ProjectContentTag[];
-  links?: ProjectContentLink[];
+  links?: ContentNavLink[];
   heroImage?: { src: string; alt?: string };
 
   /** Detail-page body */

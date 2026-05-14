@@ -1,11 +1,11 @@
 "use client";
 
 import React, { createContext, useContext, useMemo, useState } from "react";
-import { IFilter } from "@/lib/types/global";
+import { NavFilter } from "@/lib/types/nav";
 
 export type AppContext = {
-  activeFilters: IFilter['id'][];
-  setActiveFilters: React.Dispatch<React.SetStateAction<IFilter['id'][]>>;
+  activeFilters: NavFilter['id'][];
+  setActiveFilters: React.Dispatch<React.SetStateAction<NavFilter['id'][]>>;
 };
 
 
@@ -18,7 +18,7 @@ export function AppProvider({
 }: {
   children: React.ReactNode,
 }) {
-  const [activeFilters, setActiveFilters] = useState<IFilter['id'][]>([]);
+  const [activeFilters, setActiveFilters] = useState<NavFilter['id'][]>([]);
 
   const data = useMemo(
     () => ({ activeFilters, setActiveFilters }),

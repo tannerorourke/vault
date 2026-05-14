@@ -10,7 +10,7 @@ import {
   generateDotData,
   easeOutCubic,
   drawFrame,
-} from '@/lib/utils/diffusion-utils';
+} from './diffusion-utils';
 import { useTheme } from '@/components/navigation/ThemeProvider';
 
 interface CanvasEngineContextValue {

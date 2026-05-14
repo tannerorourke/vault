@@ -1,23 +1,13 @@
 import Link from "next/link";
-import type { ComponentType, SVGProps } from "react";
-import type { ProjectContent, ProjectContentLink } from "@/lib/types/project-content";
+import type { ProjectContent } from "@/lib/types/project-content";
 import TagChip from "@/components/ui/TagChip";
-import { GithubIcon } from "public/icons/github";
-import { PdfIcon } from "public/icons/pdf";
-import { GlobeIcon } from "public/icons/globe";
-import { DemoIcon } from "public/icons/demo";
-import { ArrowLeftIcon } from "public/icons/arrow-left";
+import { Markdown } from "@/components/ui/Markdown";
 import { renderSection } from "./sections";
 import * as sty from "./ProjectPage.css";
-
-type SvgIcon = ComponentType<SVGProps<SVGSVGElement>>;
-
-const LINK_ICONS: Record<NonNullable<ProjectContentLink["icon"]>, SvgIcon> = {
-  github: GithubIcon,
-  pdf: PdfIcon,
-  globe: GlobeIcon,
-  demo: DemoIcon,
-};
+import { iconRegistry } from "@/content/icons/registry";
+import { ArrowLeft } from "@/content/icons/arrow-left";
+import { blurFade } from "@/lib/styles/blur-fade.css";
+import { ContentNavLink } from "@/lib/types/nav";
 
 export type ProjectPageProps = {
   content: ProjectContent;
@@ -29,17 +19,19 @@ export function ProjectPage({ content }: ProjectPageProps) {
   return (
     <main className={sty.root} aria-label={content.title}>
       <Link href="/" className={sty.backBtn}>
-        <ArrowLeftIcon className={sty.backIcon} />
+        <ArrowLeft className={sty.backIcon} />
         All projects
       </Link>
 
-      <header className={sty.header}>
+      <header className={`${sty.header} ${blurFade({ direction: 'all', rounded: 'sm' })}`}>
         {content.eyebrow && (
           <div className={sty.eyebrow}>{content.eyebrow}</div>
         )}
         <h1 className={sty.title}>{content.title}</h1>
         {content.subtitle && (
-          <p className={sty.subtitle}>{content.subtitle}</p>
+          <p className={sty.subtitle}>
+            <Markdown value={content.subtitle} inline />
+          </p>
         )}
 
         {content.tags && content.tags.length > 0 && (
@@ -52,19 +44,19 @@ export function ProjectPage({ content }: ProjectPageProps) {
 
         {content.links && content.links.length > 0 && (
           <div className={sty.links}>
-            {content.links.map((l, i) => {
-              const Icon = l.icon ? LINK_ICONS[l.icon] : null;
+            {content.links.map((l: ContentNavLink, i) => {
+              const Icon = l.icon ? iconRegistry[l.icon] : null;
               return (
                 <a
                   key={i}
                   className={sty.linkBtn}
                   href={l.href}
-                  target="_blank"
+                  target={l.target ? l.target : "_blank"}
                   rel="noopener noreferrer"
-                  download={l.download}
+                  download={l.download ? l.download : undefined}
                 >
                   {Icon && <Icon className={sty.linkBtnIcon} />}
-                  {l.label}
+                  {l.text && l.text}
                 </a>
               );
             })}
@@ -74,7 +66,7 @@ export function ProjectPage({ content }: ProjectPageProps) {
 
       {content.heroImage && (
         <img
-          className={sty.heroImage}
+          className={`${sty.heroImage} ${blurFade({ direction: 'all', rounded: 'sm' })}`}
           src={content.heroImage.src}
           alt={content.heroImage.alt ?? ""}
         />
@@ -82,7 +74,7 @@ export function ProjectPage({ content }: ProjectPageProps) {
 
       <div className={sty.layout}>
         {tocSections.length > 0 ? (
-          <nav className={sty.toc} aria-label="Sections">
+          <nav className={`${sty.toc} ${blurFade({ direction: 'all', rounded: 'sm' })}`} aria-label="Sections">
             {tocSections.map((s) => (
               <a
                 key={s.id}
@@ -97,7 +89,7 @@ export function ProjectPage({ content }: ProjectPageProps) {
           <div />
         )}
 
-        <div className={sty.sections}>
+        <div className={`${sty.sections} ${blurFade({ direction: 'all', rounded: 'sm' })}`}>
           {content.sections.map((s) => renderSection(s))}
         </div>
       </div>

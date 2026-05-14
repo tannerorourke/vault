@@ -3,13 +3,14 @@
 import "./logo.css";
 import { useEffect } from "react";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 
 import * as sty from "./Header.css";
-import TextLink from "src/components/ui/TextLink";
+import TextLink from "@/components/ui/TextLink";
 import { ProfileNavLink } from "@/components/navigation/ProfileNavLink/profile-nav-link";
 
 import { NAV_FILTERS } from "@/content/nav-links";
-import { IFilter } from "src/lib/types/global";
+import { NavFilter } from "@/lib/types/nav";
 import { useProjectFilter } from "../AppProvider/app-provider";
 import Text from "@/components/ui/Text";
 
@@ -24,11 +25,22 @@ export function Header({
   enableClickAnimation = true,
 }: HeaderProps) {
   const { activeFilters, setActiveFilters } = useProjectFilter();
+  const pathname = usePathname();
+  const router = useRouter();
 
-  const toggleFilter = (id: IFilter['id']) => {
-    setActiveFilters((current) =>
-      current.includes(id) ? current.filter((f) => f !== id) : [...current, id]
-    );
+  const toggleFilter = (id: NavFilter['id']) => {
+    const apply = () =>
+      setActiveFilters((current) =>
+        current.includes(id) ? current.filter((f) => f !== id) : [...current, id]
+      );
+
+    if (pathname === "/") {
+      apply();
+      return;
+    }
+
+    router.push("/");
+    setTimeout(apply, 500);
   };
 
   const onShiftWheel: React.WheelEventHandler<HTMLDivElement> = (e) => {
@@ -99,7 +111,7 @@ export function Header({
         </Link>
         <div className={sty.navScrollWrap} onWheel={onShiftWheel}>
           <nav className={sty.navMain} aria-label="Filter projects">
-            {NAV_FILTERS.map((cf: IFilter) => (
+            {NAV_FILTERS.map((cf: NavFilter) => (
               <TextLink
                 key={cf.id}
                 label={cf.label}

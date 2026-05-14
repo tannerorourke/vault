@@ -198,21 +198,20 @@ export const tagsRow = style({
   flexWrap: "nowrap",
 });
 
-export const cta = style({
+const ctaBase = {
+  width: "28px", 
+  height: "28px",
   display: "inline-flex",
   alignItems: "center",
   justifyContent: "center",
-  width: "28px",
-  height: "28px",
-  borderRadius: "50%",
-  background: theme.color.primary.main,
-  flexShrink: 0,
-});
+};
 
-export const ctaIcon = style({
-  width: "12px",
-  height: "12px",
-  color: theme.color.card,
-  fill: "currentColor",
-  flexShrink: 0,
+export const cta = style({
+  ...ctaBase,
+  color: theme.color.primary.main,
+})
+
+export const ctaFeature = style({
+  ...ctaBase,
+  color: theme.color.link.hover,
 });

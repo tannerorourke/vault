@@ -1,28 +1,16 @@
-import type { ComponentType } from "react";
-import { IFilter } from "src/lib/types/global";
-import type { IconProps } from "@/lib/types/icons";
+import type { NavFilter, NavLink } from "@/lib/types/nav";
 import { Envelope } from "@/content/icons/envelope";
 import { Linkedin } from "@/content/icons/linkedin";
 import { Github } from "@/content/icons/github";
 // import { Medium } from "@/content/icons/medium";
 import { FileText } from "./icons/file-text";
 
-export const NAV_FILTERS: IFilter[] = [
+export const NAV_FILTERS: NavFilter[] = [
   { id: 'aiml', label: 'AI/ML' },
   { id: 'experience', label: 'Experience' },
   { id: 'research', label: 'Research' },
   { id: 'labs', label: 'Labs' }
 ]
-
-export type NavLink = {
-  Icon: ComponentType<IconProps>;
-  text: string;
-  alt: string;
-  href: string;
-  tooltipText: string;
-  target?: string;
-  download?: string;
-};
 
 export const LINKS: NavLink[] = [
   {

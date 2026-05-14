@@ -6,6 +6,7 @@ import type {
   SectionImage,
   SectionVideo,
 } from "@/lib/types/project-content";
+import { Markdown } from "@/components/ui/Markdown";
 import * as sty from "./sections.css";
 
 function SectionShell({
@@ -28,10 +29,9 @@ function SectionShell({
 function Paragraph({ s }: { s: SectionParagraph }) {
   return (
     <SectionShell id={s.id} title={s.title}>
-      <div
-        className={sty.prose}
-        dangerouslySetInnerHTML={{ __html: s.body }}
-      />
+      <div className={sty.prose}>
+        <Markdown value={s.body} />
+      </div>
     </SectionShell>
   );
 }
@@ -40,14 +40,15 @@ function BulletedList({ s }: { s: SectionBulletedList }) {
   return (
     <SectionShell id={s.id} title={s.title}>
       {s.intro && (
-        <div
-          className={[sty.prose, sty.intro].join(" ")}
-          dangerouslySetInnerHTML={{ __html: s.intro }}
-        />
+        <div className={[sty.prose, sty.intro].join(" ")}>
+          <Markdown value={s.intro} />
+        </div>
       )}
       <ul className={sty.list}>
         {s.items.map((item, i) => (
-          <li key={i} dangerouslySetInnerHTML={{ __html: item }} />
+          <li key={i}>
+            <Markdown value={item} inline />
+          </li>
         ))}
       </ul>
     </SectionShell>
@@ -63,10 +64,9 @@ function TwoUpTextImage({ s }: { s: SectionTwoUpTextImage }) {
           .filter(Boolean)
           .join(" ")}
       >
-        <div
-          className={sty.prose}
-          dangerouslySetInnerHTML={{ __html: s.body }}
-        />
+        <div className={sty.prose}>
+          <Markdown value={s.body} />
+        </div>
         <img
           className={sty.inlineImage}
           src={s.image.src}
