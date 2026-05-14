@@ -18,7 +18,7 @@ bun dev
 
 ## Transitions
 
-Page transitions are SSR'd using Next14 Framer Motion page transitions, with custom routing layered on top. A simpler demo can be found on [StackBlitz](https://stackblitz.com/edit/nextjs-framer-motion-template-p2cr5m?file=app%2FPageTransitionEffect.tsx&utm_source=chatgpt.com).
+Page transitions are SSR'd using Next16 + motion v12 page transitions, with custom routing layered on top. A simpler demo can be found on [StackBlitz](https://stackblitz.com/edit/nextjs-framer-motion-template-p2cr5m?file=app%2FPageTransitionEffect.tsx&utm_source=chatgpt.com).
 
 ## Icons
 
