@@ -7,7 +7,7 @@ import { usePathname, useRouter } from "next/navigation";
 
 import * as sty from "./Header.css";
 import TextLink from "@/components/ui/TextLink";
-import { ProfileNavLink } from "@/components/navigation/ProfileNavLink/profile-nav-link";
+import { ProfileNavLink } from "@/components/ui/ProfileNavLink/profile-nav-link";
 
 import { NAV_FILTERS } from "@/content/nav-links";
 import { NavFilter } from "@/lib/types/nav";

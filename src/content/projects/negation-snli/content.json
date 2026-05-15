@@ -29,7 +29,7 @@
   ],
   "links": [
     { "label": "Paper (PDF)", "href": "/content/negation-snli/paper.pdf", "icon": "pdf", "download": "negation-is-not-enough.pdf" },
-    { "label": "GitHub", "href": "https://github.com/torourke14/aug-lexical-negation", "icon": "github" }
+    { "label": "GitHub", "href": "https://github.com/tannerorourke/aug-lexical-negation", "icon": "github" }
   ],
   "sections": [
     {

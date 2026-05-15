@@ -16,7 +16,7 @@ export const LINKS: NavLink[] = [
   {
     Icon: Github, text: "GitHub",
     alt: "GitHub",
-    href: "https://github.com/torourke14",
+    href: "https://github.com/tannerorourke/",
     target: "_blank",
     tooltipText: "GitHub"
   },
@@ -29,7 +29,7 @@ export const LINKS: NavLink[] = [
   {
     Icon: Linkedin, text: "LinkedIn",
     alt: "LinkedIn",
-    href: "https://www.linkedin.com/in/tworourke/",
+    href: "https://www.linkedin.com/in/tannerorourke/",
     target: "_blank",
     tooltipText: "LinkedIn"
   },
@@ -48,6 +48,6 @@ export const LINKS: NavLink[] = [
   },
 ];
 
-export const ABOUT_LINKS = LINKS.filter(l =>
-  ["LinkedIn", "Download CV", "Email me"].includes(l.alt)
+export const ABOUT_LINKS = LINKS.filter((l: NavLink) =>
+  ["LinkedIn", "Download CV", "Email me"].includes(l.alt ?? "")
 )
