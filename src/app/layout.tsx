@@ -30,19 +30,19 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://tannerorourke.dev"),
 
   title: {
-    default: "Tanner O'Rourke",
+    default: "Tanner O\'Rourke",
     template: "%s - Tanner O",
   },
-  description: "Portfolio of Tanner O'Rourke. Applied Software Engineer focused on AI/ML, web, and systems design.",
-  applicationName: "Tanner O'Rourke Portfolio",
+  description: "Tanner O\'Rourke | selected ML and web Engineering work.",
+  applicationName: "Tanner O\'Rourke Portfolio",
   creator: "Tanner O\'Rourke",
   publisher: "Tanner O\'Rourke",
 
   alternates: { canonical: "https://tannerorourke.dev" },
-  // manifest: "/site.webmanifest",
+  manifest: "/manifest.webmanifest",
 
   openGraph: {
-    title: "Tanner O'Rourke - AI/ML, Web and Software Engineer",
+    title: "Tanner O'Rourke",
     description: "Tanner O\'Rourke | AI/ML, web and systems engineer.",
     url: "https://tannerorourke.dev",
     siteName: "Tanner O'Rourke",
@@ -50,15 +50,20 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tanner - AI Engineer & Software Engineer",
+    title: "Tanner O\'Rourke",
     description: "Tanner O\'Rourke | AI/ML, web and systems engineer.",
-    images: ["./favicon.png"],
+    images: ["./opengraph-image.png"],
   },
   robots: {
     index: true,
     follow: true,
-    "max-snippet": -1,
-    "max-video-preview": 60
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-snippet": -1,
+      "max-video-preview": 60,
+      "max-image-preview": "large",
+    },
   },
 };
 

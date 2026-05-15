@@ -43,7 +43,25 @@ const nextConfig: NextConfig = {
           { key: "Cross-Origin-Resource-Policy", value: "same-origin" },
         ],
       },
+      // Long chaching pdf/images
+      {
+        source: "/content/:path*",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+        ],
+      },
     ];
+  },
+
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.tannerorourke.dev" }],
+        destination: "https://tannerorourke.dev/:path*",
+        permanent: true,
+      }
+    ]
   },
   
   webpack: (webpackConfig, { dev }) => {
