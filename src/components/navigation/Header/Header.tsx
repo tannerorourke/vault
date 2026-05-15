@@ -1,18 +1,18 @@
 'use client'
 
-import "./logo.css";
 import { useEffect } from "react";
-import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useProjectFilter } from "@/components/navigation/AppProvider";
+import { NavFilter } from "@/lib/types/nav";
 
-import * as sty from "./Header.css";
+import Link from "next/link";
 import TextLink from "@/components/ui/TextLink";
-import { ProfileNavLink } from "@/components/ui/ProfileNavLink/profile-nav-link";
+import ProfileNavLink from "@/components/ui/ProfileNavLink";
+import Text from "@/components/ui/Text";
 
 import { NAV_FILTERS } from "@/content/nav-links";
-import { NavFilter } from "@/lib/types/nav";
-import { useProjectFilter } from "../AppProvider/app-provider";
-import Text from "@/components/ui/Text";
+import * as sty from "./header.css";
+import "./logo.css";
 
 
 type HeaderProps = {

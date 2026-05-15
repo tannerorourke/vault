@@ -1,7 +1,9 @@
 import type { MetadataRoute } from 'next';
-import { getAllProjectSlugs } from '@/lib/utils/project-content';
+import { getAllProjectSlugs } from '@/lib/content/projects';
 
-const BASE_URL = 'https://tannerorourke.dev';
+const BASE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -15,7 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
                                   priority: 0.8 },
   ];
 
-  const projectRoutes: MetadataRoute.Sitemap = getAllProjectSlugs().map((slug) => ({
+  const projectRoutes: MetadataRoute.Sitemap = getAllProjectSlugs().map((slug: string) => ({
     url: `${BASE_URL}/${slug}`,
     lastModified: now,
     changeFrequency: 'monthly',

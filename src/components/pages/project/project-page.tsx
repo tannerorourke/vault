@@ -1,13 +1,16 @@
-import Link from "next/link";
 import type { ProjectContent } from "@/lib/types/project-content";
-import TagChip from "@/components/ui/TagChip";
-import { Markdown } from "@/components/ui/Markdown";
-import { renderSection } from "./sections";
-import * as sty from "./ProjectPage.css";
-import { iconRegistry } from "@/content/icons/registry";
-import { ArrowLeft } from "@/content/icons/arrow-left";
-import { blurFade } from "@/lib/styles/blur-fade.css";
 import { ContentNavLink } from "@/lib/types/nav";
+
+import Markdown from "@/components/ui/Markdown";
+import Link from "next/link";
+import TagChip from "@/components/ui/TagChip";
+import { renderSection } from "./sections";
+import { ArrowLeft } from "@/content/icons/arrow-left";
+
+import { iconRegistry } from "@/content/icons/registry";
+import * as sty from "./project-page.css";
+import { blurFade } from "@/lib/styles/blur-fade.css";
+
 
 export type ProjectPageProps = {
   content: ProjectContent;

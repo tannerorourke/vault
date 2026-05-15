@@ -8,9 +8,11 @@
  * Paragraph breaks via `\n\n`. 
 */
 
+import type { ComponentProps } from 'react';
+
 import ReactMarkdown, { type Components } from 'react-markdown';
 import NextLink from 'next/link';
-import type { ComponentProps } from 'react';
+
 
 export type MarkdownProps = {
   value: string;

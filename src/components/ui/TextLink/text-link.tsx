@@ -1,11 +1,14 @@
 'use client';
 
 import { ElementType } from 'react'
+import { NavFilter } from '@/lib/types/nav';
+
 import { Button, ButtonProps } from '@base-ui/react/button';
 import NextLink, { LinkProps as NextLinkProps } from 'next/link';
+import Text, { type TextProps } from '../Text';
+
 import * as sty from "./text-link.css";
-import { NavFilter } from '@/lib/types/nav';
-import { Text, TextProps } from '../Text/Text';
+
 
 export type TextLinkProps = ButtonProps & {
   label: string;

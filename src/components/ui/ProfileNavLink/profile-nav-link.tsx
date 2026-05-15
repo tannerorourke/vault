@@ -1,12 +1,15 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
+
 import NextLink from 'next/link';
+import Text from '@/components/ui/Text';
 import { Button } from '@base-ui/react/button';
-import { Text } from '@/components/ui/Text/Text';
 import { CaretLeft } from '@/content/icons/caret-left';
 import { CaretRight } from '@/content/icons/caret-right';
+
 import * as sty from './profile-nav-link.css';
+
 
 export function ProfileNavLink() {
   const pathname = usePathname();

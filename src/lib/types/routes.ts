@@ -1,3 +1,3 @@
-export type IPageProps = {
+export type PageProps = {
   params: Promise<{ project: string }>;
 };

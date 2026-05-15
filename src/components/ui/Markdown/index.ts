@@ -1,2 +1,2 @@
-export { Markdown } from './Markdown';
-export type { MarkdownProps } from './Markdown';
+export { Markdown as default } from './markdown';
+export type { MarkdownProps } from './markdown';

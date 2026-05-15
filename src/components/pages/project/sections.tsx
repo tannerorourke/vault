@@ -6,8 +6,11 @@ import type {
   SectionImage,
   SectionVideo,
 } from "@/lib/types/project-content";
-import { Markdown } from "@/components/ui/Markdown";
+
+import Markdown from "@/components/ui/Markdown";
+
 import * as sty from "./sections.css";
+
 
 function SectionShell({
   id,

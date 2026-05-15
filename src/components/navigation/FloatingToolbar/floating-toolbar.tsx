@@ -1,19 +1,20 @@
 'use client';
 
 import { useState, useEffect } from "react";
-import * as sty from "./floating-toolbar.css";
-
+import { usePathname } from "next/navigation";
 import { useTheme } from '@/components/navigation/ThemeProvider';
-import { LINKS } from "@/content/nav-links";
+
 import type { NavLink } from "@/lib/types/nav";
-
-import MorphIcon from "@/components/ui/MorphIcon";
 import { IconButton, IconLink } from "@/components/ui/Icon";
-
+import MorphIcon from "@/components/ui/MorphIcon";
 import { Sun } from '@/content/icons/sun';
 import { Moon } from '@/content/icons/moon';
 import { Network } from '@/content/icons/network';
 import { Times } from '@/content/icons/times';
+
+import { LINKS } from "@/content/nav-links";
+import * as sty from "./floating-toolbar.css";
+
 
 const LIST_ID = "icon-list-items";
 
@@ -23,6 +24,12 @@ export function FloatingToolbar() {
 
   const { theme, toggleTheme } = useTheme();
   const isDark = theme === 'dark';
+
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     const mql = window.matchMedia("(min-width: 768px)");

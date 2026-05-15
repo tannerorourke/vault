@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useMemo, useState } from "react";
 import { NavFilter } from "@/lib/types/nav";
 
+
 export type AppContext = {
   activeFilters: NavFilter['id'][];
   setActiveFilters: React.Dispatch<React.SetStateAction<NavFilter['id'][]>>;

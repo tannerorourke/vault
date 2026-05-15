@@ -1,14 +1,12 @@
-import * as sty from "./ProfilePage.css";
-import Text from "@/components/ui/Text";
-import { Markdown } from "@/components/ui/Markdown";
-import { blurFade } from "@/lib/styles/blur-fade.css";
-import {
-  HOOK,
-  PARAGRAPHS,
-} from "@/content/profile-content";
 import { NavLink } from "@/lib/types/nav";
-import { ABOUT_LINKS } from "@/content/nav-links";
 
+import Text from "@/components/ui/Text";
+import Markdown from "@/components/ui/Markdown";
+
+import { HOOK, PARAGRAPHS } from "@/content/profile-content";
+import { ABOUT_LINKS } from "@/content/nav-links";
+import * as sty from "./profile-page.css";
+import { blurFade } from "@/lib/styles/blur-fade.css";
 
 
 export function ProfilePage() {
@@ -28,7 +26,7 @@ export function ProfilePage() {
       <section className={sty.body}>
         <aside className={sty.photoColumn} aria-label="At a glance">
           <figure className={sty.photoFigure}>
-            {/* Empty src placeholder — populate src + alt when image is added */}
+            {/* Empty src placeholder - populate src + alt when image is added */}
             <img className={sty.photo} src="" alt="" />
           </figure>
         </aside>

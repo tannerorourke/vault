@@ -13,6 +13,7 @@ import {
 } from './diffusion-utils';
 import { useTheme } from '@/components/navigation/ThemeProvider';
 
+
 interface CanvasEngineContextValue {
   registerCanvas: (canvas: HTMLCanvasElement) => () => void;
   startEmergence: () => void;

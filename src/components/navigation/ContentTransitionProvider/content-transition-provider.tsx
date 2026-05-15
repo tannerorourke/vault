@@ -4,8 +4,8 @@ import * as React from "react";
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { usePathname } from "next/navigation";
 
-import { FrozenRouter } from "./frozen-router";
 import { ParticleCanvasBackdrop } from "@/components/navigation/ParticleCanvas";
+import { FrozenRouter } from "./frozen-router";
 
 
 type RouteKind = "home" | "profile" | "project";

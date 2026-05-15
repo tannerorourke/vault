@@ -1,12 +1,11 @@
-import Header from "@/components/navigation/Header";
-import * as sty from "./layout.css";
 import {
   ParticleCanvasProvider,
   ParticleCanvasWallpaper,
 } from "@/components/navigation/ParticleCanvas";
-
-
+import Header from "@/components/navigation/Header";
 import ContentTransitionProvider from "@/components/navigation/ContentTransitionProvider";
+
+import * as sty from "./layout.css";
 
 
 export default function ShellLayout({ children }: { children: React.ReactNode }) {

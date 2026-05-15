@@ -1,9 +1,10 @@
 import { cloneElement, isValidElement, ReactElement } from 'react';
 import type { IconProps } from "src/lib/types/icons";
+
 import * as sty from './morph-icon.css';
 
 
-type Props = {
+export type MorphIconProps = {
   active: boolean;
   from: ReactElement<IconProps>;
   to: ReactElement<IconProps>;
@@ -19,7 +20,7 @@ export function MorphIcon({
   shownClass = sty.shown,
   hiddenClass = sty.hidden,
   className,
-}: Props) {
+}: MorphIconProps) {
   const layer = (el: ReactElement<IconProps>, visible: boolean) =>
     isValidElement(el)
       ? cloneElement(el, {

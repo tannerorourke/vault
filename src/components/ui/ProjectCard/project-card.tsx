@@ -1,11 +1,14 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useRef, useState, type MouseEvent } from "react";
 import type { ProjectContent } from "@/lib/types/project-content";
+
+import Link from "next/link";
 import TagChip from "@/components/ui/TagChip";
-import * as sty from "./project-card.css";
 import { CaretCircleDown } from "@/content/icons/caret-circle-down";
+
+import * as sty from "./project-card.css";
+
 
 export type ProjectCardProps = {
   project: ProjectContent;
@@ -57,8 +60,7 @@ export function ProjectCard({
   useEffect(() => {
     if (!revealed) return;
     const onPointerDown = (e: PointerEvent) => {
-      if (
-        cardRef.current &&
+      if (cardRef.current &&
         !cardRef.current.contains(e.target as Node)
       ) {
         setRevealed(false);

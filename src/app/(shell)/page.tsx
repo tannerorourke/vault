@@ -1,6 +1,8 @@
-import ProjectsGrid from "@/components/pages/home";
-import { getAllProjects } from "@/content/projects";
+import { getAllProjects } from "@/lib/content/projects";
+
+import HomePage from "@/components/pages/home";
+
 
 export default async function Index() {
-  return <ProjectsGrid projects={getAllProjects()} />;
+  return <HomePage projects={getAllProjects()} />;
 }
