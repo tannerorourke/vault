@@ -1,1 +1,1 @@
-export { ProjectsGrid as default } from "./ProjectsGrid";
+export { HomePage as default } from "./home-page";

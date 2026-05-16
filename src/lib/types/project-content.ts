@@ -13,6 +13,7 @@ export type SectionParagraph = {
   id: string;
   title?: string;
   body: string;
+  accent?: "copper";
 };
 
 export type SectionBulletedList = {
@@ -21,6 +22,7 @@ export type SectionBulletedList = {
   title?: string;
   intro?: string;
   items: string[];
+  accent?: "copper";
 };
 
 export type SectionTwoUpTextImage = {
@@ -31,6 +33,7 @@ export type SectionTwoUpTextImage = {
   image: { src: string; alt?: string };
   /** Which side the image sits on. Defaults to "right". */
   imageSide?: "left" | "right";
+  accent?: "copper";
 };
 
 export type SectionImage = {
@@ -40,6 +43,7 @@ export type SectionImage = {
   src: string;
   alt?: string;
   caption?: string;
+  accent?: "copper";
 };
 
 export type SectionVideo = {
@@ -52,6 +56,15 @@ export type SectionVideo = {
   kind?: "mp4" | "youtube";
   poster?: string;
   caption?: string;
+  accent?: "copper";
+};
+
+export type SectionStats = {
+  type: "Stats";
+  id: string;
+  title?: string;
+  stats: Array<{ value: string; label: string }>;
+  accent?: "copper";
 };
 
 export type ProjectSection =
@@ -59,12 +72,23 @@ export type ProjectSection =
   | SectionBulletedList
   | SectionTwoUpTextImage
   | SectionImage
-  | SectionVideo;
+  | SectionVideo
+  | SectionStats;
 // --------------------------------------------------------------------
 
 export type ProjectContentTag = {
   label: string;
   color?: TagChipColor;
+};
+
+/** Optional "headline finding" callout in the hero. */
+export type FindingCard = {
+  /** Inline markdown supported. */
+  body: string;
+  /** Section id to scroll to when the jump link is clicked. */
+  jumpToId?: string;
+  /** Display label for the jump link. Defaults to the matching section's title, then to jumpToId. */
+  jumpToLabel?: string;
 };
 
 export type ProjectContent = {
@@ -92,6 +116,8 @@ export type ProjectContent = {
   tags?: ProjectContentTag[];
   links?: ContentNavLink[];
   heroImage?: { src: string; alt?: string };
+  /** Optional headline-finding callout next to the hero title. */
+  finding?: FindingCard;
 
   /** Detail-page body */
   sections: ProjectSection[];

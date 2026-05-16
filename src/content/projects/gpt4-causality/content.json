@@ -20,6 +20,11 @@
     "src": "/content/gpt4-causality/hero-alignment-matrix.png",
     "alt": "Cross-abstractive alignment matrix: fact vs. support compression axes with example facts in each cell"
   },
+  "finding": {
+    "body": "The hard cases aren't *\"the NLI model isn't smart enough.\"* They're cases where the fact and the passage live at different levels of abstraction — and need to be aligned before they can be compared.",
+    "jumpToId": "cross-abstractive",
+    "jumpToLabel": "Cross-abstractive alignment"
+  },
   "tags": [
     {
       "label": "NLP",
@@ -92,6 +97,16 @@
       "imageSide": "right"
     },
     {
+      "type": "Stats",
+      "id": "stats",
+      "stats": [
+        { "value": "85.5%", "label": "accuracy" },
+        { "value": "0.852 / 0.858", "label": "F1 (S / NS)" },
+        { "value": "221", "label": "dev-set facts" },
+        { "value": "20", "label": "false negatives — entailment-floored" }
+      ]
+    },
+    {
       "type": "Paragraph",
       "id": "error-analysis",
       "title": "Error analysis",
@@ -101,6 +116,7 @@
       "type": "2upTextImage",
       "id": "cross-abstractive",
       "title": "Cross-abstractive alignment",
+      "accent": "copper",
       "body": "Plotting the failure cases on two axes - does the *fact* need compression to a few salient tokens, or to a summarized concept? does the *support*? - produces a 2x2 with an example failure in each cell.\n\nThe pattern I'd call **cross-abstractive alignment**: an accurate fact-checker has to compress both the fact and the support to comparable levels of abstraction before comparing them. When fact and passage live at different abstraction levels - a token-pivot fact against a summarized passage, or vice versa - the entailment model's surface-level features stop carrying the signal that decides the label.\n\nThis reframes \"why entailment fails\" away from \"the model isn't smart enough\" and toward something more architectural: the comparison step needs to operate on representations that have already been aligned to the right granularity. That's a much more tractable problem to design around than \"build a better NLI model.\"",
       "image": {
         "src": "/content/gpt4-causality/error-categories.png",

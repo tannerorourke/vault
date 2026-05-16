@@ -7,12 +7,10 @@ import { NavFilter } from "@/lib/types/nav";
 
 import Link from "next/link";
 import TextLink from "@/components/ui/TextLink";
-import ProfileNavLink from "@/components/ui/ProfileNavLink";
 import Text from "@/components/ui/Text";
 
 import { NAV_FILTERS } from "@/content/nav-links";
 import * as sty from "./header.css";
-import "./logo.css";
 
 
 type HeaderProps = {
@@ -27,6 +25,11 @@ export function Header({
   const { activeFilters, setActiveFilters } = useProjectFilter();
   const pathname = usePathname();
   const router = useRouter();
+
+  const isOnProfile = pathname === "/profile";
+  const profileNav = isOnProfile
+    ? { href: "/", label: "Projects", leftArrow: { dir: "left" as const }, rightArrow: undefined }
+    : { href: "/profile", label: "Profile", leftArrow: undefined, rightArrow: { dir: "right" as const } };
 
   const toggleFilter = (id: NavFilter['id']) => {
     const apply = () =>
@@ -52,15 +55,15 @@ export function Header({
   };
 
   useEffect(() => {
-    const spans: NodeListOf<HTMLSpanElement> = document.querySelectorAll('.word span');
+    const spans: NodeListOf<HTMLSpanElement> = document.querySelectorAll('[data-logo-span]');
 
     const handleClick = (e: MouseEvent): void => {
       const target = e.target as HTMLSpanElement | null;
-      target?.classList.add("active");
+      if (target) target.dataset.active = '';
     };
     const handleAnimationEnd = (e: AnimationEvent): void => {
       const target = e.target as HTMLSpanElement | null;
-      target?.classList.remove("active");
+      if (target) delete target.dataset.active;
     };
 
     if (enableClickAnimation) {
@@ -70,12 +73,10 @@ export function Header({
       });
     }
 
-    if (enableLoadAnimation) {
-      spans.forEach((span, index) => {
-        window.setTimeout(() => {
-          span.classList.add("active");
-        }, 500 * (index + 1));
-      });
+    if (enableLoadAnimation && spans.length > 0) {
+      window.setTimeout(() => {
+        spans[0].dataset.active = '';
+      }, 500);
     }
 
     return () => {
@@ -89,24 +90,25 @@ export function Header({
   return (
     <header className={`${sty.root}`}>
         <Link href="/" prefetch className={sty.logoContainer} aria-label="Home">
-          <Text as="span" variant={"titleLg"} className={"word1"}>
-            <span>T</span>
-            <span>A</span>
-            <span>N</span>
-            <span>N</span>
-            <span>E</span>
-            <span>R</span>
+          <Text as="span" variant={"titleLg"} className={sty.word} id="w2">
+            <span data-logo-span id="logo-T">T</span>
+            <span data-logo-span>A</span>
+            <span data-logo-span>N</span>
+            <span data-logo-span id="logo-N2">N</span>
+            <span data-logo-span>E</span>
+            <span data-logo-span>R</span>
             &nbsp;&nbsp;
           </Text>
-          <Text as="span" variant={"titleLg"} className={"word2"}>
-            <span>O</span>
-            <span>'</span>
-            <span>R</span>
-            <span>O</span>
-            <span>U</span>
-            <span>R</span>
-            <span>K</span>
-            <span>E</span>
+          <Text as="span" variant={"titleLg"} className={sty.word} id="w1">
+            <br/>
+            <span data-logo-span id="logo-O1">O</span>
+            <span data-logo-span>'</span>
+            <span data-logo-span>R</span>
+            <span data-logo-span>O</span>
+            <span data-logo-span id="logo-U">U</span>
+            <span data-logo-span>R</span>
+            <span data-logo-span id="logo-K">K</span>
+            <span data-logo-span>E</span>
           </Text>
         </Link>
         <div className={sty.navScrollWrap} onWheel={onShiftWheel}>
@@ -120,14 +122,22 @@ export function Header({
                 notifyOnClick={toggleFilter}
                 textProps={{
                   variant: "bodyLg", 
-                  tone: "primary"
+                  tone: "primary",
+                  className: sty.navFilters
                 }}
               />
             ))}
           </nav>
         </div>
         <div className={sty.navRight}>
-          <ProfileNavLink />
+          <TextLink
+            label={profileNav.label}
+            leftArrow={profileNav.leftArrow}
+            rightArrow={profileNav.rightArrow}
+            nextProps={{ href: profileNav.href, prefetch: true }}
+            textProps={{ variant: "bodyLg", tone: "primary", className: sty.navFilters }}
+            aria-current={isOnProfile ? "page" : undefined}
+          />
         </div>
       </header>
   )

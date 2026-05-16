@@ -1,1 +1,0 @@
-export { ProfileNavLink as default } from "./profile-nav-link";

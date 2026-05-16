@@ -96,6 +96,13 @@ export const theme = createThemeContract({
       content: null,
 		}
 	},
+	sheet: {
+		bg: null,
+		blur: null,
+		border: null,
+		radius: null,
+		shadow: null,
+	},
 
 });
 
@@ -195,6 +202,13 @@ export const lightTheme = createTheme(theme, {
         content: '2',
 			}
 		},
+		sheet: {
+			bg: 'rgba(244, 246, 245, 0.86)',
+			blur: '8px',
+			border: '1px solid rgba(42, 95, 88, 0.08)',
+			radius: '8px',
+			shadow: '0 6px 16px -10px rgba(42, 95, 88, 0.18)',
+		},
 });
 
 export const darkTheme = createTheme(theme, {
@@ -292,6 +306,13 @@ export const darkTheme = createTheme(theme, {
 				canvas: '1',
         content: '2',
 			}
+		},
+		sheet: {
+			bg: 'rgba(14, 26, 24, 0.86)',
+			blur: '8px',
+			border: '1px solid rgba(77, 184, 172, 0.10)',
+			radius: '8px',
+			shadow: '0 6px 16px -10px rgba(0, 0, 0, 0.40)',
 		},
 });
 

@@ -61,7 +61,7 @@ export function ProjectCard({
     if (!revealed) return;
     const onPointerDown = (e: PointerEvent) => {
       if (cardRef.current &&
-        !cardRef.current.contains(e.target as Node)
+          !cardRef.current.contains(e.target as Node)
       ) {
         setRevealed(false);
       }
