@@ -2,11 +2,10 @@ import { defineProperties, createSprinkles } from "@vanilla-extract/sprinkles";
 import { theme } from "./theme.css";
 
 export const breakpoints = {
-  xs: 0,
-  sm: 576,
-  md: 768,
-  lg: 992,
-  xl: 1200,
+  xs: 0, // phones (default)
+  sm: 560, // phone landscape / small tablet portrait — multi-col becomes viable
+  md: 900, // tablet landscape / standard laptop — comfortable two-up
+  lg: 1600, // large desktop — start using the extra space
 };
 
 type BreakpointKey = keyof typeof breakpoints;
@@ -28,7 +27,6 @@ const sprinkles = defineProperties({
     sm: { "@media": `screen and (min-width: ${breakpoints.sm}px)` },
     md: { "@media": `screen and (min-width: ${breakpoints.md}px)` },
     lg: { "@media": `screen and (min-width: ${breakpoints.lg}px)` },
-    xl: { "@media": `screen and (min-width: ${breakpoints.xl}px)` },
   },
   defaultCondition: "xs",
   // add properties to do classical { xs: ... } styles in responsive({ ... })
