@@ -1,6 +1,5 @@
 import { globalStyle, style } from "@vanilla-extract/css";
-import { recipe } from "@vanilla-extract/recipes";
-import { theme, darkTheme } from "@/lib/theme/theme.css";
+import { theme } from "@/lib/theme/theme.css";
 
 const EASE = "cubic-bezier(.2,.1,.2,1)";
 
@@ -12,11 +11,11 @@ export const cardBase = style({
   height: "100%",
   padding: "22px 22px 20px 22px",
   
-  background: "rgba(255, 255, 255, 0.72)",
+  background: theme.color.cardFrosted,
   backdropFilter: "blur(6px)",
   WebkitBackdropFilter: "blur(6px)",
   borderRadius: "14px",
-  border: "1px solid rgba(255, 255, 255, 0.6)",
+  border: `1px solid ${theme.color.cardFrostedBorder}`,
   boxShadow: "none",
   overflow: "hidden",
   textDecoration: "none",
@@ -28,7 +27,7 @@ export const cardBase = style({
     '&:hover, &:focus-visible, &[data-revealed="true"]': {
       background: theme.color.card,
       transform: "translateY(-3px)",
-      boxShadow: "0 16px 40px -10px rgba(42, 95, 88, 0.22)",
+      boxShadow: `0 16px 40px -10px ${theme.color.shadowStrong}`,
       borderColor: "transparent",
       outline: "none",
     },
@@ -53,18 +52,6 @@ export const cardBase = style({
     globalStyle(`${cardBase}[data-feature="true"]::before`, {
       opacity: 1,
       transform: "scaleY(1)",
-    });
-
-    // dark mode card
-    globalStyle(`:where(.${darkTheme}) ${cardBase}`, {
-      background: "rgba(22, 40, 34, 0.65)",
-      border: "1px solid rgba(255, 255, 255, 0.06)",
-    });
-
-    globalStyle(`:where(.${darkTheme}) ${cardBase}:hover, :where(.${darkTheme}) ${cardBase}:focus-visible, :where(.${darkTheme}) ${cardBase}[data-revealed="true"]`, {
-      background: "#162822",
-      boxShadow: "0 16px 40px -10px rgba(0, 0, 0, 0.5)",
-      borderColor: "transparent",
     });
 
 
@@ -93,7 +80,7 @@ export const cardBase = style({
     borderRadius: "50%",
     background: theme.color.secondary.main,
     flexShrink: 0,
-    boxShadow: "0 0 0 3px rgba(224, 122, 95, 0.12)",
+    boxShadow: `0 0 0 3px ${theme.color.tint.secondarySoft}`,
   });
       export const year = style({
         marginLeft: "auto",
@@ -103,7 +90,7 @@ export const cardBase = style({
   // swap area for title and summary
   export const swap = style({
     position: "relative",
-    minHeight: "52px", // ~2 lines @ 24px — prevents title overflow when summary is 1 line
+    minHeight: "2.5lh",
     overflow: "hidden",
     marginBottom: "14px",
   });
@@ -115,7 +102,7 @@ export const cardBase = style({
       opacity: 1,
 
       fontFamily: "var(--font-display)",
-      fontSize: "24px",
+      fontSize: theme.typography.fontSize.titleSm,
       fontWeight: theme.typography.fontWeight.bold,
       lineHeight: theme.typography.lineHeight.tight,
       letterSpacing: "-0.015em",
@@ -144,7 +131,7 @@ export const cardBase = style({
       transform: "translateY(100%)",
       pointerEvents: "none",
 
-      fontSize: "14px",
+      fontSize: theme.typography.fontSize.bodySm,
       lineHeight: "1.5",
       color: theme.color.text.primary,
       display: "-webkit-box",
@@ -166,10 +153,6 @@ export const cardBase = style({
 
   // (tags + cta)
   export const reveal = style({
-    // position: "absolute",
-    // left: "22px",
-    // right: "22px",
-    // bottom: "18px",
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",

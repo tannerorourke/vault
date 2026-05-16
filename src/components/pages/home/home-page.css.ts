@@ -22,7 +22,7 @@ export const root = style([
 
     export const sectionTitle = style({
       fontFamily: "var(--font-display)",
-      fontSize: "13px",
+      fontSize: theme.typography.fontSize.bodySm,
       fontWeight: theme.typography.fontWeight.semibold,
       textTransform: "uppercase",
       letterSpacing: "0.08em",
