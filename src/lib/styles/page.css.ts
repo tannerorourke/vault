@@ -22,12 +22,16 @@ export const page = {
   marginTop: theme.layout.headerOffset.xs,
   padding: `0 ${theme.space._24} ${theme.space._96}`,
   [mq.sm]: { 
-    padding: `0 ${theme.space._48}`,
+    padding: `0 ${theme.space._24} ${theme.space._96}`,
     marginTop: theme.layout.headerOffset.sm,
   },
   [mq.md]: {
     padding: `0 ${theme.space._80} ${theme.space._96}`,
     marginTop: theme.layout.headerOffset.md, 
+  },
+  [mq.lg]: {
+    padding: `0 ${theme.space._96} ${theme.space._96}`,
+    marginTop: theme.layout.headerOffset.md,
   },
   transition: `margin-top 220ms ${SLOW_SNAP} 80ms, padding 1000ms ${SLOW_SNAP}`
 } satisfies ComplexStyleRule;
