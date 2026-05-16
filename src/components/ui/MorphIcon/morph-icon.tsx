@@ -1,5 +1,5 @@
 import { cloneElement, isValidElement, ReactElement } from 'react';
-import type { IconProps } from "src/lib/types/icons";
+import type { IconProps } from "@/lib/types/icons";
 
 import * as sty from './morph-icon.css';
 
