@@ -39,14 +39,24 @@ export const root = style([
 export const grid = style({
   display: "grid",
   marginInline: "auto",
-  // maxWidth: "1400px",
-  // gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-  // gridAutoRows: "1fr", // every row equal-height to the tallest in row
-  gap: `${theme.space._16} ${theme.space._24}`, // theme.space._16,
+
+  // xs: full width single col, v gap only
+  gridTemplateColumns: "minmax(0, 1fr)",
+  rowGap: theme.space._16,
+  columnGap: 0,
+
   [mq.sm]: {
-    gap: `${theme.space._24} ${theme.space._36}`, // theme.space._24,
+    gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+    rowGap: theme.space._24,
+    columnGap: theme.space._36,
+  },
+  [mq.md]: {
+    gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
+    rowGap: theme.space._36,
+    columnGap: theme.space._48,
   },
   [mq.lg]: {
-    gap: `${theme.space._36} ${theme.space._48}`, // theme.space._36,
+    gridTemplateColumns: "repeat(auto-fill, minmax(280px, 360px))",
+    maxWidth: `${5 * 360 + 4 * 48}px`, // ~1992px, caps growth on ultrawide
   },
 });

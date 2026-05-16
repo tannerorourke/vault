@@ -71,6 +71,7 @@ export const theme = createThemeContract({
 		_36: null,
 		_48: null,
 		_56: null,
+    _64: null,
 		_80: null,
     _96: null,
     _112: null,
@@ -85,7 +86,7 @@ export const theme = createThemeContract({
     headerOffset: {
       xs: null,
       sm: null,
-      md: null
+      md: null,
     },
 		contentMaxWidth: null,
 		zIndex: {
@@ -177,6 +178,7 @@ export const lightTheme = createTheme(theme, {
 			_36: '36px',
 			_48: '48px',
 			_56: '56px',
+      _64: '64px',
 			_80: '80px',
       _96: '96px',
       _112: '112px',
@@ -282,6 +284,7 @@ export const darkTheme = createTheme(theme, {
 			_36: '36px',
 			_48: '48px',
 			_56: '56px',
+      _64: '64px',
 			_80: '80px',
       _96: '96px',
       _112: '112px',
