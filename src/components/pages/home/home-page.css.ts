@@ -58,5 +58,6 @@ export const grid = style({
   [mq.lg]: {
     gridTemplateColumns: "repeat(auto-fill, minmax(280px, 360px))",
     maxWidth: `${5 * 360 + 4 * 48}px`, // ~1992px, caps growth on ultrawide
+    marginInline: "0"
   },
 });

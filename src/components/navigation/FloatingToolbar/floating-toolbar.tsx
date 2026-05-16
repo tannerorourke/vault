@@ -65,7 +65,7 @@ export function FloatingToolbar() {
                 tabIndex={itemsFocusable ? 0 : -1}
                 aria-hidden={itemsFocusable ? undefined : true}
               >
-                <item.Icon duopacity={0} />
+                {item.Icon && <item.Icon duopacity={0.05} />}
               </IconLink>
             </li>
           ))}
