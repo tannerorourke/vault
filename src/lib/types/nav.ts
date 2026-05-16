@@ -10,7 +10,7 @@ export type NavFilter = {
 
 // code-side definition
 export type NavLink = {
-  Icon: IconComponent;
+  Icon?: IconComponent;
   text?: string;
   alt?: string;
   href?: string;

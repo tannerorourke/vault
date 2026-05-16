@@ -1,13 +1,6 @@
 import { style } from "@vanilla-extract/css";
 import { theme } from "@/lib/theme/theme.css";
 
-export const linkWrapBase = style({
-  padding: 0,
-  selectors: {
-    "&:focus-visible": { outline: "none" }, // Button owns the focus ring
-  },
-});
-
 export const linkBtnBase = style({
   letterSpacing: "-0.005em",
   padding: "6px 2px 2px 2px",
@@ -45,6 +38,10 @@ export const linkBtnBase = style({
       backgroundSize: "100% 2px",
     },
   },
+});
+
+export const linkBtnAlwaysUnderlined = style({
+  backgroundSize: "100% 2px",
 });
 
 export const linkTextBase = style({

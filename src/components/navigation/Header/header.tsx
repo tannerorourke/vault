@@ -46,6 +46,15 @@ export function Header({
     setTimeout(apply, 500);
   };
 
+  const resetOrNavigate = () => {
+    console.log("logo clicked")
+    if (pathname === "/") {
+      setActiveFilters([]);
+      return;
+    }
+    router.push("/");
+  }
+
   const onShiftWheel: React.WheelEventHandler<HTMLDivElement> = (e) => {
     if (!e.shiftKey) return;
     const el = e.currentTarget;
@@ -89,7 +98,7 @@ export function Header({
 
   return (
     <header className={`${sty.root}`}>
-        <Link href="/" prefetch className={sty.logoContainer} aria-label="Home">
+        <Link prefetch href="/" onNavigate={resetOrNavigate} className={sty.logoContainer} aria-label="Home">
           <Text as="span" variant={"titleLg"} className={sty.word} id="w2">
             <span data-logo-span id="logo-T">T</span>
             <span data-logo-span>A</span>
@@ -134,7 +143,7 @@ export function Header({
             label={profileNav.label}
             leftArrow={profileNav.leftArrow}
             rightArrow={profileNav.rightArrow}
-            nextProps={{ href: profileNav.href, prefetch: true }}
+            nextProps={{ href: profileNav.href, prefetch: true, className: sty.navProfLink }}
             textProps={{ variant: "bodyLg", tone: "primary", className: sty.navFilters }}
             aria-current={isOnProfile ? "page" : undefined}
           />
