@@ -29,7 +29,7 @@ export const linkBtnBase = style({
 
   selectors: {
     "&:focus-visible": {
-      outline: `2px solid ${theme.color.primary.hover}`,
+      outline: `2px solid ${theme.color.focus}`,
       outlineOffset: 2,
     },
     "&:disabled": {

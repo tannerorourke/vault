@@ -18,7 +18,7 @@ export const iconButton = recipe({
         color: theme.color.secondary.main,
       },
       "&:focus-visible": {
-        outline: `2px solid ${theme.color.link.main}`,
+        outline: `2px solid ${theme.color.focus}`,
         outlineOffset: 2,
       },
       "&:disabled": { 

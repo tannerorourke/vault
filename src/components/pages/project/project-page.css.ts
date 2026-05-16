@@ -26,7 +26,7 @@ export const backBtn = style({
   display: "inline-flex",
   alignItems: "center",
   gap: "6px",
-  fontSize: "13px",
+  fontSize: theme.typography.fontSize.bodySm,
   fontWeight: theme.typography.fontWeight.semibold,
   color: theme.color.text.secondary,
   background: "none",
@@ -71,7 +71,7 @@ export const heroSheet = style({
 });
 
 export const eyebrow = style({
-  fontSize: "11px",
+  fontSize: theme.typography.fontSize.eyebrow,
   fontWeight: theme.typography.fontWeight.semibold,
   textTransform: "uppercase",
   letterSpacing: "0.08em",
@@ -81,7 +81,7 @@ export const eyebrow = style({
 
 export const title = style({
   fontFamily: "var(--font-display)",
-  fontSize: "36px",
+  fontSize: theme.typography.fontSize.displayLg,
   fontWeight: theme.typography.fontWeight.bold,
   lineHeight: "1.08",
   letterSpacing: "-0.02em",
@@ -89,14 +89,13 @@ export const title = style({
   margin: `0 0 ${theme.space._12}`,
   textWrap: "balance",
   [mq.md]: {
-    fontSize: "52px",
     letterSpacing: "-0.024em",
     lineHeight: "1.05",
   },
 });
 
 export const subtitle = style({
-  fontSize: "17px",
+  fontSize: theme.typography.fontSize.bodyLg,
   lineHeight: 1.55,
   color: theme.color.text.primary,
   margin: `0 0 ${theme.space._16}`,
@@ -123,7 +122,7 @@ export const linkBtn = style({
   gap: "7px",
   padding: "8px 16px",
   borderRadius: "8px",
-  fontSize: "12px",
+  fontSize: theme.typography.fontSize.caption,
   fontWeight: theme.typography.fontWeight.semibold,
   border: `1.5px solid ${theme.color.primary.main}`,
   color: theme.color.primary.main,
@@ -138,7 +137,7 @@ export const linkBtn = style({
       color: theme.color.contrast,
     },
     "&:focus-visible": {
-      outline: `2px solid ${theme.color.primary.hover}`,
+      outline: `2px solid ${theme.color.focus}`,
       outlineOffset: 2,
     },
   },
@@ -155,7 +154,7 @@ export const findingCard = style({
   padding: "20px 24px",
 });
   export const findingEyebrow = style({
-    fontSize: "11px",
+    fontSize: theme.typography.fontSize.eyebrow,
     fontWeight: theme.typography.fontWeight.semibold,
     letterSpacing: "0.08em",
     textTransform: "uppercase",
@@ -164,7 +163,7 @@ export const findingCard = style({
   });
   export const findingBody = style({
     fontFamily: "var(--font-body)",
-    fontSize: "14.5px",
+    fontSize: theme.typography.fontSize.bodySm,
     lineHeight: 1.55,
     color: theme.color.text.primary,
     margin: 0,
@@ -177,7 +176,7 @@ export const findingCard = style({
     display: "flex",
     justifyContent: "space-between", alignItems: "center",
     // fontFamily: "var(--font-mono)",
-    fontSize: "11px",
+    fontSize: theme.typography.fontSize.eyebrow,
     letterSpacing: "0.04em",
     textDecoration: "none",
     transition: "color 200ms ease",
@@ -228,7 +227,7 @@ export const layout = style({
     },
   });
       export const tocLabel = style({
-        fontSize: "10px",
+        fontSize: theme.typography.fontSize.micro,
         fontWeight: theme.typography.fontWeight.semibold,
         letterSpacing: "0.08em",
         textTransform: "uppercase",
@@ -237,7 +236,7 @@ export const layout = style({
       });
       export const tocLink = style({
         display: "block",
-        fontSize: "12px",
+        fontSize: theme.typography.fontSize.caption,
         fontWeight: theme.typography.fontWeight.medium,
         color: theme.color.text.secondary,
         padding: "4px 0 4px 12px",

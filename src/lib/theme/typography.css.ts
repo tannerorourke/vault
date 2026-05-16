@@ -33,6 +33,12 @@ export const textRecipe = recipe({
         lineHeight: theme.typography.lineHeight.normal,
         fontWeight: theme.typography.fontWeight.semibold,
       },
+      titleXs: {
+        fontSize: theme.typography.fontSize.titleXs,
+        lineHeight: theme.typography.lineHeight.snug,
+        fontWeight: theme.typography.fontWeight.semibold,
+        letterSpacing: theme.typography.letterSpacing.tight,
+      },
       bodyLg: {
         fontSize: theme.typography.fontSize.bodyLg,
         lineHeight: theme.typography.lineHeight.relaxed,
@@ -47,11 +53,6 @@ export const textRecipe = recipe({
         fontSize: theme.typography.fontSize.bodySm,
         lineHeight: theme.typography.lineHeight.relaxed,
         fontWeight: theme.typography.fontWeight.medium,
-      },
-      uiLg: {
-        fontSize: theme.typography.fontSize.body,
-        lineHeight: theme.typography.lineHeight.normal,
-        fontWeight: theme.typography.fontWeight.semibold,
       },
       ui: {
         fontSize: theme.typography.fontSize.ui,

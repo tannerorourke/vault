@@ -2,10 +2,6 @@ import { style, globalStyle } from "@vanilla-extract/css";
 import { theme } from "@/lib/theme/theme.css";
 import { mq } from "@/lib/theme/responsive.css";
 
-const PHOTO_BG = "rgba(42, 95, 88, 0.06)";
-const DIVIDER_TEAL = "rgba(42, 95, 88, 0.16)";
-const DIVIDER_TEAL_SOFT = "rgba(42, 95, 88, 0.10)";
-
 
 export const profileRoot = style({
   position: "relative",
@@ -78,7 +74,7 @@ export const body = style({
   });
     export const photoFigure = style({
       margin: 0,
-      transform: "rotate(-1.4deg)",
+      transform: "rotate(-1deg)",
       transformOrigin: "top left",
       transition: "transform 600ms cubic-bezier(.2,.8,.2,1)",
       selectors: {
@@ -91,10 +87,10 @@ export const body = style({
         display: "block",
         width: "100%",
         maxWidth: "380px",
-        aspectRatio: "1 / 1",
+        aspectRatio: "4 / 5",
         borderRadius: "10px",
         objectFit: "cover",
-        background: PHOTO_BG,
+        background: theme.color.tint.primaryWeak,
         boxShadow: `0 4px 20px -2px ${theme.color.shadow}`,
       });
 
@@ -115,7 +111,7 @@ export const body = style({
         border: 0,
         height: "1px",
         margin: `0 0 ${theme.space._20}`,
-        background: DIVIDER_TEAL,
+        background: theme.color.tint.primary,
       });
       export const par = style({
         margin: `0 0 ${theme.space._20}`,
@@ -136,7 +132,7 @@ export const body = style({
 export const contact = style({
   marginTop: theme.space._56,
   // paddingTop: theme.space._24,
-  borderTop: `1px solid ${DIVIDER_TEAL_SOFT}`,
+  borderTop: `1px solid ${theme.color.tint.primarySoft}`,
   display: "flex",
   flexWrap: "wrap",
   alignItems: "center",
@@ -175,7 +171,7 @@ export const contact = style({
             color: theme.color.secondary.active,
           },
           "&:focus-visible": {
-            outline: `2px solid ${theme.color.primary.hover}`,
+            outline: `2px solid ${theme.color.focus}`,
             outlineOffset: 2,
           },
         },

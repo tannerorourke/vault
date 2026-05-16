@@ -26,8 +26,7 @@ export function ProfilePage() {
       <section className={sty.body}>
         <aside className={sty.photoColumn} aria-label="At a glance">
           <figure className={sty.photoFigure}>
-            {/* Empty src placeholder - populate src + alt when image is added */}
-            <img className={sty.photo} src="" alt="" />
+            <img className={sty.photo} src="/me_4-5.png" alt="Tanner O\'Rourke, headshot" />
           </figure>
         </aside>
 

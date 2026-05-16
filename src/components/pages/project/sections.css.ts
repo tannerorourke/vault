@@ -11,7 +11,7 @@ export const sectionSheet = style({
   export const sectionTitle = style({
     fontFamily: "var(--font-display)",
     fontWeight: theme.typography.fontWeight.bold,
-    fontSize: "22px",
+    fontSize: theme.typography.fontSize.titleXs,
     letterSpacing: "-0.012em",
     color: theme.color.primary.main,
     margin: `0 0 ${theme.space._12} 0`,
@@ -28,7 +28,7 @@ export const sectionSheet = style({
 // --- Prose ---
 
 export const prose = style({
-  fontSize: "14px",
+  fontSize: theme.typography.fontSize.bodySm,
   lineHeight: "1.7",
   color: theme.color.text.primary,
 });
@@ -42,7 +42,7 @@ export const prose = style({
     globalStyle(`${prose} a`, {
       color: theme.color.link.main,
       textDecoration: "underline",
-      textDecorationColor: "rgba(83, 141, 132, 0.4)",
+      textDecorationColor: theme.color.tint.primaryHoverSoft,
     });
     globalStyle(`${prose} a:hover`, {
       color: theme.color.link.hover,
@@ -55,7 +55,7 @@ export const prose = style({
 
 export const list = style({
   margin: `${theme.space._8} 0 0 ${theme.space._20}`,
-  fontSize: "14px",
+  fontSize: theme.typography.fontSize.bodySm,
   lineHeight: "1.7",
   color: theme.color.text.primary,
 });
@@ -170,13 +170,13 @@ const valueBase = {
 };
 
 export const value = styleVariants({
-  default: { ...valueBase, fontSize: "20px" },
-  headline: { ...valueBase, fontSize: "32px" },
+  default: { ...valueBase, fontSize: theme.typography.fontSize.titleXs },
+  headline: { ...valueBase, fontSize: theme.typography.fontSize.titleLg },
 });
 
 export const label = style({
   fontFamily: "var(--font-mono)",
-  fontSize: "10px",
+  fontSize: theme.typography.fontSize.micro,
   letterSpacing: "0.06em",
   textTransform: "uppercase",
   lineHeight: 1.4,

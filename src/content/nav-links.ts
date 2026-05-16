@@ -4,6 +4,7 @@ import { Linkedin } from "@/components/icons/linkedin";
 import { Github } from "@/components/icons/github";
 // import { Medium } from "@//components/icons/medium";
 import { FileText } from "../components/icons/file-text";
+import { GradCap } from "@/components/icons/grad-cap";
 
 export const NAV_FILTERS: NavFilter[] = [
   { id: 'aiml', label: 'AI/ML' },
@@ -20,12 +21,6 @@ export const LINKS: NavLink[] = [
     target: "_blank",
     tooltipText: "GitHub"
   },
-  // {
-  //   Icon: Medium, alt: "Medium",
-  //   href: "https://medium.com/@tannerorourke",
-  //   target: "_blank",
-  //   tooltipText: "Medium"
-  // }
   {
     Icon: Linkedin, text: "LinkedIn",
     alt: "LinkedIn",
@@ -46,6 +41,19 @@ export const LINKS: NavLink[] = [
     target: "_blank",
     tooltipText: "Download CV"
   },
+  // {
+  //   Icon: Medium, alt: "Medium",
+  //   href: "https://medium.com/@tannerorourke",
+  //   target: "_blank",
+  //   tooltipText: "Medium"
+  // }
+  {
+    Icon: GradCap, text: "Google Scholar",
+    alt: "Google Scholar",
+    href: "https://scholar.google.com/citations?user=RwfFBoEAAAAJ&hl=en",
+    target: "_blank",
+    tooltipText: "Google Scholar"
+  }
 ];
 
 export const ABOUT_LINKS = LINKS.filter((l: NavLink) =>

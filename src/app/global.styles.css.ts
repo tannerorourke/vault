@@ -4,6 +4,7 @@ import { theme } from '@/lib/theme/theme.css';
 globalStyle('body', {
   color: theme.color.text.primary,
   background: theme.color.canvas,
+  fontOpticalSizing: 'auto',
 });
 
 globalStyle('a', {
