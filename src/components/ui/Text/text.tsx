@@ -1,6 +1,6 @@
 import type { ElementType, ComponentPropsWithoutRef } from "react";
 
-import { textRecipe, type TextTone, type TextVariant } from "src/lib/theme/typography.css";
+import { textRecipe, type TextTone, type TextVariant } from "@/lib/theme/typography.css";
 
 
 export type TextOwnProps<TAs extends ElementType> = {
