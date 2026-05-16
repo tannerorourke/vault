@@ -1,4 +1,4 @@
-import { IconName } from "@/content/icons/registry";
+import { IconName } from "@/components/icons/registry";
 import type { IconComponent } from "@/lib/types/icons";
 import type { ProjectFilterId } from "@/lib/types/project-content";
 

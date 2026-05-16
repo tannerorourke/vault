@@ -1,9 +1,9 @@
 import type { NavFilter, NavLink } from "@/lib/types/nav";
-import { Envelope } from "@/content/icons/envelope";
-import { Linkedin } from "@/content/icons/linkedin";
-import { Github } from "@/content/icons/github";
-// import { Medium } from "@/content/icons/medium";
-import { FileText } from "./icons/file-text";
+import { Envelope } from "@/components/icons/envelope";
+import { Linkedin } from "@/components/icons/linkedin";
+import { Github } from "@/components/icons/github";
+// import { Medium } from "@//components/icons/medium";
+import { FileText } from "../components/icons/file-text";
 
 export const NAV_FILTERS: NavFilter[] = [
   { id: 'aiml', label: 'AI/ML' },

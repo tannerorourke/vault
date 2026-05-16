@@ -5,7 +5,7 @@ import type { ProjectContent } from "@/lib/types/project-content";
 
 import Link from "next/link";
 import TagChip from "@/components/ui/TagChip";
-import { CaretCircleDown } from "@/content/icons/caret-circle-down";
+import { CaretCircleDown } from "@/components/icons/caret-circle-down";
 
 import * as sty from "./project-card.css";
 

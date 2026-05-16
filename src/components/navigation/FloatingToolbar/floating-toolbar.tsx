@@ -7,10 +7,10 @@ import { useTheme } from '@/components/navigation/ThemeProvider';
 import type { NavLink } from "@/lib/types/nav";
 import { IconButton, IconLink } from "@/components/ui/Icon";
 import MorphIcon from "@/components/ui/MorphIcon";
-import { Sun } from '@/content/icons/sun';
-import { Moon } from '@/content/icons/moon';
-import { Network } from '@/content/icons/network';
-import { Times } from '@/content/icons/times';
+import { Sun } from '@/components/icons/sun';
+import { Moon } from '@/components/icons/moon';
+import { Network } from '@/components/icons/network';
+import { Times } from '@/components/icons/times';
 
 import { LINKS } from "@/content/nav-links";
 import * as sty from "./floating-toolbar.css";

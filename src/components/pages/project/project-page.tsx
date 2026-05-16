@@ -6,9 +6,9 @@ import Link from "next/link";
 import TagChip from "@/components/ui/TagChip";
 import Sheet from "@/components/ui/Sheet";
 import { renderSection } from "./sections";
-import { ArrowLeft } from "@/content/icons/arrow-left";
+import { ArrowLeft } from "@/components/icons/arrow-left";
 
-import { iconRegistry } from "@/content/icons/registry";
+import { iconRegistry } from "@/components/icons/registry";
 import * as sty from "./project-page.css";
 
 

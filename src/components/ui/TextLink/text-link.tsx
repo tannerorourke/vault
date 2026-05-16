@@ -6,10 +6,10 @@ import { NavFilter } from '@/lib/types/nav';
 import { Button, ButtonProps } from '@base-ui/react/button';
 import NextLink, { LinkProps as NextLinkProps } from 'next/link';
 import Text, { type TextProps } from '../Text';
-import { ArrowLeft } from '@/content/icons/arrow-left';
-import { ArrowRight } from '@/content/icons/arrow-right';
-import { ArrowUp } from '@/content/icons/arrow-up';
-import { ArrowDown } from '@/content/icons/arrow-down';
+import { ArrowLeft } from '@/components/icons/arrow-left';
+import { ArrowRight } from '@/components/icons/arrow-right';
+import { ArrowUp } from '@/components/icons/arrow-up';
+import { ArrowDown } from '@/components/icons/arrow-down';
 
 
 import * as sty from "./text-link.css";
