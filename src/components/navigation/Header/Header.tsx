@@ -1,17 +1,16 @@
 'use client'
 
-import "./logo.css";
 import { useEffect } from "react";
-import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useProjectFilter } from "@/components/navigation/AppProvider";
+import { NavFilter } from "@/lib/types/nav";
 
-import * as sty from "./Header.css";
-import TextLink from "src/components/ui/TextLink";
-import { ProfileNavLink } from "@/components/navigation/ProfileNavLink/profile-nav-link";
+import Link from "next/link";
+import TextLink from "@/components/ui/TextLink";
+import Text from "@/components/ui/Text";
 
 import { NAV_FILTERS } from "@/content/nav-links";
-import { IFilter } from "src/lib/types/global";
-import { useProjectFilter } from "../AppProvider/app-provider";
-import Text from "@/components/ui/Text";
+import * as sty from "./header.css";
 
 
 type HeaderProps = {
@@ -24,11 +23,27 @@ export function Header({
   enableClickAnimation = true,
 }: HeaderProps) {
   const { activeFilters, setActiveFilters } = useProjectFilter();
+  const pathname = usePathname();
+  const router = useRouter();
 
-  const toggleFilter = (id: IFilter['id']) => {
-    setActiveFilters((current) =>
-      current.includes(id) ? current.filter((f) => f !== id) : [...current, id]
-    );
+  const isOnProfile = pathname === "/profile";
+  const profileNav = isOnProfile
+    ? { href: "/", label: "Projects", leftArrow: { dir: "left" as const }, rightArrow: undefined }
+    : { href: "/profile", label: "Profile", leftArrow: undefined, rightArrow: { dir: "right" as const } };
+
+  const toggleFilter = (id: NavFilter['id']) => {
+    const apply = () =>
+      setActiveFilters((current) =>
+        current.includes(id) ? current.filter((f) => f !== id) : [...current, id]
+      );
+
+    if (pathname === "/") {
+      apply();
+      return;
+    }
+
+    router.push("/");
+    setTimeout(apply, 500);
   };
 
   const onShiftWheel: React.WheelEventHandler<HTMLDivElement> = (e) => {
@@ -40,15 +55,15 @@ export function Header({
   };
 
   useEffect(() => {
-    const spans: NodeListOf<HTMLSpanElement> = document.querySelectorAll('.word span');
+    const spans: NodeListOf<HTMLSpanElement> = document.querySelectorAll('[data-logo-span]');
 
     const handleClick = (e: MouseEvent): void => {
       const target = e.target as HTMLSpanElement | null;
-      target?.classList.add("active");
+      if (target) target.dataset.active = '';
     };
     const handleAnimationEnd = (e: AnimationEvent): void => {
       const target = e.target as HTMLSpanElement | null;
-      target?.classList.remove("active");
+      if (target) delete target.dataset.active;
     };
 
     if (enableClickAnimation) {
@@ -58,12 +73,10 @@ export function Header({
       });
     }
 
-    if (enableLoadAnimation) {
-      spans.forEach((span, index) => {
-        window.setTimeout(() => {
-          span.classList.add("active");
-        }, 500 * (index + 1));
-      });
+    if (enableLoadAnimation && spans.length > 0) {
+      window.setTimeout(() => {
+        spans[0].dataset.active = '';
+      }, 500);
     }
 
     return () => {
@@ -77,29 +90,30 @@ export function Header({
   return (
     <header className={`${sty.root}`}>
         <Link href="/" prefetch className={sty.logoContainer} aria-label="Home">
-          <Text as="span" variant={"titleLg"} className={"word1"}>
-            <span>T</span>
-            <span>A</span>
-            <span>N</span>
-            <span>N</span>
-            <span>E</span>
-            <span>R</span>
+          <Text as="span" variant={"titleLg"} className={sty.word} id="w2">
+            <span data-logo-span id="logo-T">T</span>
+            <span data-logo-span>A</span>
+            <span data-logo-span>N</span>
+            <span data-logo-span id="logo-N2">N</span>
+            <span data-logo-span>E</span>
+            <span data-logo-span>R</span>
             &nbsp;&nbsp;
           </Text>
-          <Text as="span" variant={"titleLg"} className={"word2"}>
-            <span>O</span>
-            <span>'</span>
-            <span>R</span>
-            <span>O</span>
-            <span>U</span>
-            <span>R</span>
-            <span>K</span>
-            <span>E</span>
+          <Text as="span" variant={"titleLg"} className={sty.word} id="w1">
+            <br/>
+            <span data-logo-span id="logo-O1">O</span>
+            <span data-logo-span>'</span>
+            <span data-logo-span>R</span>
+            <span data-logo-span>O</span>
+            <span data-logo-span id="logo-U">U</span>
+            <span data-logo-span>R</span>
+            <span data-logo-span id="logo-K">K</span>
+            <span data-logo-span>E</span>
           </Text>
         </Link>
         <div className={sty.navScrollWrap} onWheel={onShiftWheel}>
           <nav className={sty.navMain} aria-label="Filter projects">
-            {NAV_FILTERS.map((cf: IFilter) => (
+            {NAV_FILTERS.map((cf: NavFilter) => (
               <TextLink
                 key={cf.id}
                 label={cf.label}
@@ -108,14 +122,22 @@ export function Header({
                 notifyOnClick={toggleFilter}
                 textProps={{
                   variant: "bodyLg", 
-                  tone: "primary"
+                  tone: "primary",
+                  className: sty.navFilters
                 }}
               />
             ))}
           </nav>
         </div>
         <div className={sty.navRight}>
-          <ProfileNavLink />
+          <TextLink
+            label={profileNav.label}
+            leftArrow={profileNav.leftArrow}
+            rightArrow={profileNav.rightArrow}
+            nextProps={{ href: profileNav.href, prefetch: true }}
+            textProps={{ variant: "bodyLg", tone: "primary", className: sty.navFilters }}
+            aria-current={isOnProfile ? "page" : undefined}
+          />
         </div>
       </header>
   )

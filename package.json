@@ -6,8 +6,8 @@
     "node": "24.12"
   },
   "scripts": {
+    "start": "next start",
     "dev":    "next dev --webpack",
-    "start":  "next start",
     "dev-lh": "",
     "start-lh":    "npm run start & npx --yes lighthouse http://localhost:3000 --view",
     "start-lh-dt": "npm run start & npx --yes lighthouse http://localhost:3000 --view --preset=desktop",
@@ -23,7 +23,8 @@
     "motion": "^12.23.26",
     "next": "16.0.10",
     "react": "19.2.1",
-    "react-dom": "19.2.1"
+    "react-dom": "19.2.1",
+    "react-markdown": "^10.1.0"
   },
   "devDependencies": {
     "@types/node": "^20",

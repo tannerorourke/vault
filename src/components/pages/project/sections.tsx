@@ -5,49 +5,62 @@ import type {
   SectionTwoUpTextImage,
   SectionImage,
   SectionVideo,
+  SectionStats,
 } from "@/lib/types/project-content";
+
+import Markdown from "@/components/ui/Markdown";
+import Sheet from "@/components/ui/Sheet";
+
 import * as sty from "./sections.css";
+
 
 function SectionShell({
   id,
   title,
+  accent,
   children,
 }: {
   id: string;
   title?: string;
+  accent?: "copper";
   children: React.ReactNode;
 }) {
+  const titleCls = [sty.sectionTitle, accent === "copper" && sty.sectionTitleCopper]
+    .filter(Boolean)
+    .join(" ");
   return (
-    <section id={`section-${id}`} className={sty.section}>
-      {title && <h2 className={sty.sectionTitle}>{title}</h2>}
-      {children}
-    </section>
+    <Sheet accent={accent} className={sty.sectionSheet}>
+      <section id={`section-${id}`} className={sty.section}>
+        {title && <h2 className={titleCls}>{title}</h2>}
+        {children}
+      </section>
+    </Sheet>
   );
 }
 
 function Paragraph({ s }: { s: SectionParagraph }) {
   return (
-    <SectionShell id={s.id} title={s.title}>
-      <div
-        className={sty.prose}
-        dangerouslySetInnerHTML={{ __html: s.body }}
-      />
+    <SectionShell id={s.id} title={s.title} accent={s.accent}>
+      <div className={sty.prose}>
+        <Markdown value={s.body} />
+      </div>
     </SectionShell>
   );
 }
 
 function BulletedList({ s }: { s: SectionBulletedList }) {
   return (
-    <SectionShell id={s.id} title={s.title}>
+    <SectionShell id={s.id} title={s.title} accent={s.accent}>
       {s.intro && (
-        <div
-          className={[sty.prose, sty.intro].join(" ")}
-          dangerouslySetInnerHTML={{ __html: s.intro }}
-        />
+        <div className={[sty.prose, sty.intro].join(" ")}>
+          <Markdown value={s.intro} />
+        </div>
       )}
       <ul className={sty.list}>
         {s.items.map((item, i) => (
-          <li key={i} dangerouslySetInnerHTML={{ __html: item }} />
+          <li key={i}>
+            <Markdown value={item} inline />
+          </li>
         ))}
       </ul>
     </SectionShell>
@@ -57,16 +70,15 @@ function BulletedList({ s }: { s: SectionBulletedList }) {
 function TwoUpTextImage({ s }: { s: SectionTwoUpTextImage }) {
   const reverse = s.imageSide === "left";
   return (
-    <SectionShell id={s.id} title={s.title}>
+    <SectionShell id={s.id} title={s.title} accent={s.accent}>
       <div
         className={[sty.twoUp, reverse ? sty.twoUpReverse : ""]
           .filter(Boolean)
           .join(" ")}
       >
-        <div
-          className={sty.prose}
-          dangerouslySetInnerHTML={{ __html: s.body }}
-        />
+        <div className={sty.prose}>
+          <Markdown value={s.body} />
+        </div>
         <img
           className={sty.inlineImage}
           src={s.image.src}
@@ -79,7 +91,7 @@ function TwoUpTextImage({ s }: { s: SectionTwoUpTextImage }) {
 
 function ImageSection({ s }: { s: SectionImage }) {
   return (
-    <SectionShell id={s.id} title={s.title}>
+    <SectionShell id={s.id} title={s.title} accent={s.accent}>
       <img
         className={sty.standaloneImage}
         src={s.src}
@@ -94,7 +106,7 @@ function VideoSection({ s }: { s: SectionVideo }) {
   const isYoutube =
     s.kind === "youtube" || /youtube\.com|youtu\.be/.test(s.src);
   return (
-    <SectionShell id={s.id} title={s.title}>
+    <SectionShell id={s.id} title={s.title} accent={s.accent}>
       <div className={sty.videoWrap}>
         {isYoutube ? (
           <iframe
@@ -119,6 +131,25 @@ function VideoSection({ s }: { s: SectionVideo }) {
   );
 }
 
+function StatsSection({ s }: { s: SectionStats }) {
+  const isHeadlineMode = s.stats.length > 4;
+  return (
+    <SectionShell id={s.id} title={s.title} accent={s.accent}>
+      {/* <StatStrip stats={s.stats} /> */}
+      <div className={sty.strip} role="list">
+        {s.stats.map((s, i) => (
+          <div key={i} className={sty.cell} role="listitem">
+            <div className={i === 0 && isHeadlineMode ? sty.value.headline : sty.value.default}>
+              {s.value}
+            </div>
+            <div className={sty.label}>{s.label}</div>
+          </div>
+        ))}
+      </div>
+    </SectionShell>
+  );
+}
+
 export function renderSection(s: ProjectSection) {
   switch (s.type) {
     case "Paragraph":
@@ -131,5 +162,7 @@ export function renderSection(s: ProjectSection) {
       return <ImageSection key={s.id} s={s} />;
     case "Video":
       return <VideoSection key={s.id} s={s} />;
+    case "Stats":
+      return <StatsSection key={s.id} s={s} />;
   }
 }

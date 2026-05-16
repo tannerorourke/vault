@@ -1,8 +1,3 @@
-export type ILayoutProps = {
-  children: React.ReactNode;
-  params: Promise<{ project: string }>
-};
-
-export type IPageProps = {
+export type PageProps = {
   params: Promise<{ project: string }>;
 };

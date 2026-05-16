@@ -1,34 +1,22 @@
-import type { ComponentType } from "react";
-import { IFilter } from "src/lib/types/global";
-import type { IconProps } from "@/lib/types/icons";
-import { Envelope } from "@/content/icons/envelope";
-import { Linkedin } from "@/content/icons/linkedin";
-import { Github } from "@/content/icons/github";
-// import { Medium } from "@/content/icons/medium";
-import { FileText } from "./icons/file-text";
+import type { NavFilter, NavLink } from "@/lib/types/nav";
+import { Envelope } from "@/components/icons/envelope";
+import { Linkedin } from "@/components/icons/linkedin";
+import { Github } from "@/components/icons/github";
+// import { Medium } from "@//components/icons/medium";
+import { FileText } from "../components/icons/file-text";
 
-export const NAV_FILTERS: IFilter[] = [
+export const NAV_FILTERS: NavFilter[] = [
   { id: 'aiml', label: 'AI/ML' },
   { id: 'experience', label: 'Experience' },
   { id: 'research', label: 'Research' },
   { id: 'labs', label: 'Labs' }
 ]
 
-export type NavLink = {
-  Icon: ComponentType<IconProps>;
-  text: string;
-  alt: string;
-  href: string;
-  tooltipText: string;
-  target?: string;
-  download?: string;
-};
-
 export const LINKS: NavLink[] = [
   {
     Icon: Github, text: "GitHub",
     alt: "GitHub",
-    href: "https://github.com/torourke14",
+    href: "https://github.com/tannerorourke/",
     target: "_blank",
     tooltipText: "GitHub"
   },
@@ -41,7 +29,7 @@ export const LINKS: NavLink[] = [
   {
     Icon: Linkedin, text: "LinkedIn",
     alt: "LinkedIn",
-    href: "https://www.linkedin.com/in/tworourke/",
+    href: "https://www.linkedin.com/in/tannerorourke/",
     target: "_blank",
     tooltipText: "LinkedIn"
   },
@@ -60,6 +48,6 @@ export const LINKS: NavLink[] = [
   },
 ];
 
-export const ABOUT_LINKS = LINKS.filter(l =>
-  ["LinkedIn", "Download CV", "Email me"].includes(l.alt)
+export const ABOUT_LINKS = LINKS.filter((l: NavLink) =>
+  ["LinkedIn", "Download CV", "Email me"].includes(l.alt ?? "")
 )

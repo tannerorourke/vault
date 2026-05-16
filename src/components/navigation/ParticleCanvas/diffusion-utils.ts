@@ -63,10 +63,10 @@ export const options: CanvasOptions = {
   // Parallax applied in world-space
   PARALLAX_WS_PER_SCROLL_PX: 0.06,
   // Hard clamp (in WS px's) - prevents edge clusters drifting out of frame
-  PARALLAX_MAX_WS: 80,
+  PARALLAX_MAX_WS: 120,
   // lower = heavier/cinematic, higher = snappier
-  SCROLL_LERP: 0.035,
-  DRIFT_AMP_PX: 3.2,
+  SCROLL_LERP: 0.045,
+  DRIFT_AMP_PX: 2.8,
 }
 
 export const PALETTES = {

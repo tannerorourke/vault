@@ -1,9 +1,11 @@
 'use client';
 
 import { ComponentPropsWithoutRef, ReactElement, ReactNode } from 'react';
+
 import { Tooltip } from "@base-ui/react";
-import * as sty from "./icon.css";
 import Text from '../Text';
+
+import * as sty from "./icon.css";
 
 
 type Side = "top" | "right" | "bottom" | "left";

@@ -1,2 +1,8 @@
-export { ParticleCanvasProvider, useCanvasEngine } from './ParticleEngineProvider';
-export { ParticleCanvasWallpaper, ParticleCanvasBackdrop } from './ParticleCanvas';
+export { 
+  ParticleCanvasProvider, 
+  useCanvasEngine 
+} from './particle-engine-provider';
+export { 
+  ParticleCanvasWallpaper, 
+  ParticleCanvasBackdrop 
+} from './particle-canvas';

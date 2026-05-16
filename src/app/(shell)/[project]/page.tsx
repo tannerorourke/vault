@@ -1,10 +1,12 @@
-import ProjectPage from "@/components/pages/project";
-import { getProjectContent } from "@/lib/utils/project-content";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { IPageProps } from "src/lib/types/routes"
+import { getAllProjectSlugs, getProjectContent } from "@/lib/content/projects";
+import { PageProps } from "@/lib/types/routes"
 
-export async function generateMetadata({ params }: IPageProps): Promise<Metadata> {
+import ProjectPage from "@/components/pages/project";
+
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { project } = await params;
 
   const content = await getProjectContent(project)
@@ -30,7 +32,11 @@ export async function generateMetadata({ params }: IPageProps): Promise<Metadata
   };
 }
 
-export default async function Project({ params }: IPageProps) {
+export async function generateStaticParams() {
+  return getAllProjectSlugs().map((project) => ({ project }));
+}
+
+export default async function Project({ params }: PageProps) {
   const { project } = await params;
 
   const content = await getProjectContent(project)

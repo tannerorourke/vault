@@ -1,5 +1,7 @@
 import type { ElementType, ComponentPropsWithoutRef } from "react";
+
 import { textRecipe, type TextTone, type TextVariant } from "src/lib/theme/typography.css";
+
 
 export type TextOwnProps<TAs extends ElementType> = {
   as?: TAs; // By extending element type, we can list the HTML element as a string

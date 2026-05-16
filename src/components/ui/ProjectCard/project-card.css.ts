@@ -6,11 +6,13 @@ const EASE = "cubic-bezier(.2,.1,.2,1)";
 
 export const cardBase = style({
   position: "relative",
-  display: "block",
-  height: "176px",
+  display: "flex",
+  flexDirection: "column",
+  minHeight: "176px",
+  height: "100%",
   padding: "22px 22px 20px 22px",
+  
   background: "rgba(255, 255, 255, 0.72)",
-  // Controls blur intensity
   backdropFilter: "blur(6px)",
   WebkitBackdropFilter: "blur(6px)",
   borderRadius: "14px",
@@ -32,7 +34,6 @@ export const cardBase = style({
     },
   },
 });
-
     // copper feature rail pseudo-element
     globalStyle(`${cardBase}::before`, {
       content: '""',
@@ -67,152 +68,141 @@ export const cardBase = style({
     });
 
 
-// eyebrow row
-export const eyebrow = style({
-  display: "flex",
-  alignItems: "center",
-  gap: "8px",
-  fontSize: theme.typography.fontSize.micro,
-  fontWeight: theme.typography.fontWeight.semibold,
-  textTransform: "uppercase",
-  letterSpacing: "0.12em",
-  color: theme.color.text.secondary,
-  marginBottom: "14px",
-  transition: `margin-bottom 320ms ${EASE}, transform 320ms ${EASE}`,
+  export const eyebrow = style({
+    display: "flex",
+    alignItems: "center",
+    gap: "8px",
+    fontSize: theme.typography.fontSize.micro,
+    fontWeight: theme.typography.fontWeight.semibold,
+    textTransform: "uppercase",
+    letterSpacing: "0.12em",
+    color: theme.color.text.secondary,
+    marginBottom: "14px",
+    transition: `margin-bottom 320ms ${EASE}, transform 320ms ${EASE}`,
 
-  selectors: {
-    [`${cardBase}:hover &, ${cardBase}:focus-visible &, ${cardBase}[data-revealed="true"] &`]: {
-      marginBottom: "8px",
-      transform: "translateY(-2px)",
+    selectors: {
+      [`${cardBase}:hover &, ${cardBase}:focus-visible &, ${cardBase}[data-revealed="true"] &`]: {
+        marginBottom: "8px",
+        transform: "translateY(-2px)",
+      },
     },
-  },
-});
+  });
+  export const featureDot = style({
+    width: "5px",
+    height: "5px",
+    borderRadius: "50%",
+    background: theme.color.secondary.main,
+    flexShrink: 0,
+    boxShadow: "0 0 0 3px rgba(224, 122, 95, 0.12)",
+  });
+      export const year = style({
+        marginLeft: "auto",
+        opacity: 0.7,
+      });
 
-export const featureDot = style({
-  width: "5px",
-  height: "5px",
-  borderRadius: "50%",
-  background: theme.color.secondary.main,
-  flexShrink: 0,
-  boxShadow: "0 0 0 3px rgba(224, 122, 95, 0.12)",
-});
-
-export const year = style({
-  marginLeft: "auto",
-  opacity: 0.7,
-});
-
-// swap area - title and summary share the same vertical slot
-export const swap = style({
-  position: "relative",
-  minHeight: "64px",
-});
-
-// title
-export const title = style({
-  fontFamily: "var(--font-display)",
-  fontSize: "24px",
-  fontWeight: theme.typography.fontWeight.bold,
-  lineHeight: theme.typography.lineHeight.tight,
-  letterSpacing: "-0.015em",
-  color: theme.color.primary.main,
-  margin: 0,
-  display: "-webkit-box",
-  WebkitLineClamp: 2,
-  WebkitBoxOrient: "vertical",
-  overflow: "hidden",
-  opacity: 1,
-  transform: "translateY(0)",
-  transition: `opacity 240ms ease, transform 320ms ${EASE}, color 250ms ease`,
-
-  selectors: {
-    [`${cardBase}:hover &, ${cardBase}:focus-visible &, ${cardBase}[data-revealed="true"] &`]: {
-      opacity: 0,
-      transform: "translateY(-8px)",
-      pointerEvents: "none",
-    },
-  },
-});
-
-// summary
-export const summary = style({
-  position: "absolute",
-  top: 0,
-  left: 0,
-  right: 0,
-  fontSize: "14px",
-  lineHeight: "1.5",
-  color: theme.color.text.primary,
-  margin: 0,
-  opacity: 0,
-  display: "-webkit-box",
-  WebkitLineClamp: 3,
-  WebkitBoxOrient: "vertical",
-  overflow: "hidden",
-  transform: "translateY(8px)",
-  pointerEvents: "none",
-  transition: `opacity 240ms ease, transform 320ms ${EASE}`,
-  transitionDelay: "0ms",
-
-  selectors: {
-    [`${cardBase}:hover &, ${cardBase}:focus-visible &, ${cardBase}[data-revealed="true"] &`]: {
-      opacity: 0.82,
-      transform: "translateY(0)",
-      pointerEvents: "auto",
-      transitionDelay: "80ms",
-    },
-  },
-});
-
-// reveal block (tags + cta) - absolutely positioned at card bottom
-export const reveal = style({
-  position: "absolute",
-  left: "22px",
-  right: "22px",
-  bottom: "18px",
-  display: "flex",
-  flexDirection: "row",
-  justifyContent: "space-between",
-  gap: "10px",
-  opacity: 0,
-  transform: "translateY(8px)",
-  pointerEvents: "none",
-  transition: `opacity 280ms ease, transform 340ms ${EASE}`,
-
-  selectors: {
-    [`${cardBase}:hover &, ${cardBase}:focus-visible &, ${cardBase}[data-revealed="true"] &`]: {
+  // swap area for title and summary
+  export const swap = style({
+    position: "relative",
+    minHeight: "52px", // ~2 lines @ 24px — prevents title overflow when summary is 1 line
+    overflow: "hidden",
+    marginBottom: "14px",
+  });
+    export const title = style({
+      position: "absolute",
+      top: 0, left: 0, right: 0,
+      margin: 0,
+      overflow: "hidden",
       opacity: 1,
+
+      fontFamily: "var(--font-display)",
+      fontSize: "24px",
+      fontWeight: theme.typography.fontWeight.bold,
+      lineHeight: theme.typography.lineHeight.tight,
+      letterSpacing: "-0.015em",
+      color: theme.color.primary.main,
+      display: "-webkit-box",
+      WebkitLineClamp: 2,
+      WebkitBoxOrient: "vertical",
+      
       transform: "translateY(0)",
-      pointerEvents: "auto",
-      transitionDelay: "120ms",
+      transition: `opacity 240ms ease, transform 360ms ${EASE} 40ms`,
+
+      selectors: {
+        [`${cardBase}:hover &, ${cardBase}:focus-visible &, ${cardBase}[data-revealed="true"] &`]: {
+          // transform: "translateY(-8px)",
+          transform: "translateY(-110%)",
+          opacity: 0,
+          pointerEvents: "none",
+        },
+      },
+    });
+    export const summary = style({
+      position: "relative",
+      margin: 0,
+      overflow: "hidden",
+      opacity: 0,
+      transform: "translateY(100%)",
+      pointerEvents: "none",
+
+      fontSize: "14px",
+      lineHeight: "1.5",
+      color: theme.color.text.primary,
+      display: "-webkit-box",
+      WebkitLineClamp: 3,
+      WebkitBoxOrient: "vertical",
+      
+      transition: `transform 360ms ${EASE}, opacity 280ms ease`,
+      transitionDelay: "0ms",
+
+      selectors: {
+        [`${cardBase}:hover &, ${cardBase}:focus-visible &, ${cardBase}[data-revealed="true"] &`]: {
+          opacity: 0.82,
+          transform: "translateY(0)",
+          pointerEvents: "auto",
+          transitionDelay: "60ms",
+        },
+      },
+    });
+
+  // (tags + cta)
+  export const reveal = style({
+    // position: "absolute",
+    // left: "22px",
+    // right: "22px",
+    // bottom: "18px",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    gap: "10px",
+    marginTop: "auto", // push to bottom of flex column
+
+    opacity: 0,
+    transform: "translateY(8px)",
+    pointerEvents: "none",
+    transition: `transform 400ms ${EASE}, opacity 280ms ease`,
+
+    selectors: {
+      [`${cardBase}:hover &, ${cardBase}:focus-visible &, ${cardBase}[data-revealed="true"] &`]: {
+        opacity: 1,
+        transform: "translateY(0)",
+        pointerEvents: "auto",
+        transitionDelay: "120ms",
+      },
     },
-  },
-});
-
-export const tagsRow = style({
-  display: "flex",
-  alignItems: "center",
-  gap: "6px",
-  maxHeight: "22px",
-  overflow: "hidden",
-  flexWrap: "nowrap",
-});
-
-export const cta = style({
-  display: "inline-flex",
-  alignItems: "center",
-  justifyContent: "center",
-  width: "28px",
-  height: "28px",
-  borderRadius: "50%",
-  background: theme.color.primary.main,
-  flexShrink: 0,
-});
-
-export const ctaIcon = style({
-  width: "12px",
-  height: "12px",
-  color: theme.color.card,
-  fill: "currentColor",
-  flexShrink: 0,
-});
+  });
+    export const tagsRow = style({
+      display: "flex",
+      alignItems: "center",
+      gap: "6px",
+      maxHeight: "22px",
+      overflow: "hidden",
+      flexWrap: "nowrap",
+    });
+    export const cta = style({
+      width: "28px", 
+      height: "28px",
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      color: theme.color.primary.main,
+    })

@@ -1,9 +1,6 @@
 import { recipe } from '@vanilla-extract/recipes';
 import type { ComplexStyleRule } from '@vanilla-extract/css';
 
-const BLUR_W = 16
-
-
 // Shared pseudo-element base - everything except position/mask
 const pseudoBase: ComplexStyleRule = {
   content: '""',

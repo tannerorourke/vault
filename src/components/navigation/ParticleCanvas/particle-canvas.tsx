@@ -2,8 +2,10 @@
 
 import { useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
-import * as sty from './ParticleCanvas.css';
-import { useCanvasEngine } from './ParticleEngineProvider';
+import { useCanvasEngine } from './particle-engine-provider';
+
+import * as sty from './particle-canvas.css';
+
 
 // ---------------------------------------------------------------------------
 // ParticleCanvasWallpaper - rendered in shell/layout.tsx, outside .content. 

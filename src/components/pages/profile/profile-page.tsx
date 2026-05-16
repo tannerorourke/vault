@@ -1,11 +1,12 @@
-import * as sty from "./ProfilePage.css";
+import { NavLink } from "@/lib/types/nav";
+
 import Text from "@/components/ui/Text";
+import Markdown from "@/components/ui/Markdown";
+
+import { HOOK, PARAGRAPHS } from "@/content/profile-content";
+import { ABOUT_LINKS } from "@/content/nav-links";
+import * as sty from "./profile-page.css";
 import { blurFade } from "@/lib/styles/blur-fade.css";
-import {
-  HOOK,
-  PARAGRAPHS,
-} from "@/content/profile-content";
-import { ABOUT_LINKS, NavLink } from "@/content/nav-links";
 
 
 export function ProfilePage() {
@@ -13,33 +14,33 @@ export function ProfilePage() {
     <main className={sty.profileRoot}>
 
       <section className={sty.stDisplay}>
-        <Text 
-          as="h1" 
-          variant="display" 
+        <Text
+          as="h1"
+          variant="display"
           className={`${sty.textDisplay} ${blurFade({ direction: 'all', rounded: 'sm' })}`}
         >
-          {HOOK}
+          <Markdown value={HOOK} inline />
         </Text>
       </section>
 
       <section className={sty.body}>
         <aside className={sty.photoColumn} aria-label="At a glance">
           <figure className={sty.photoFigure}>
-            {/* Empty src placeholder — populate src + alt when image is added */}
+            {/* Empty src placeholder - populate src + alt when image is added */}
             <img className={sty.photo} src="" alt="" />
           </figure>
         </aside>
 
         <div className={`${sty.bodyProse} ${blurFade({ direction: 'all', rounded: 'sm' })}`}>
           {PARAGRAPHS.map((p, i) => (
-            <article className={sty.prose}>
+            <article key={i} className={sty.prose}>
               {i !== 0 && <hr className={sty.pDivider} aria-hidden="true" />}
-              <Text 
-                as="p" 
-                variant="bodyLg" 
+              <Text
+                as="p"
+                variant="bodyLg"
                 className={sty.par}
               >
-                {p}
+                <Markdown value={p} inline />
               </Text>
             </article>
           ))}

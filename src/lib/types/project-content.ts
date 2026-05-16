@@ -1,26 +1,28 @@
 import type { TagChipColor } from "@/components/ui/TagChip";
+import { ContentNavLink } from "./nav";
 
-/**
- * Section types - each `type` discriminator is a simple key.
- * Add new section variants by extending the union and adding a renderer
- * in components/pages/project/sections.tsx.
- */
 
+/** Governs home-page header tabs filter by. */
+export type ProjectFilterId = "aiml" | "experience" | "research" | "labs";
+
+// --------------------------------------------------------------------
+// Section types - discriminated by key
+// --------------------------------------------------------------------
 export type SectionParagraph = {
   type: "Paragraph";
   id: string;
   title?: string;
-  /** Plain text or limited HTML (rendered via dangerouslySetInnerHTML). */
   body: string;
+  accent?: "copper";
 };
 
 export type SectionBulletedList = {
   type: "BulletedList";
   id: string;
   title?: string;
-  /** Optional intro paragraph rendered above the list. */
   intro?: string;
   items: string[];
+  accent?: "copper";
 };
 
 export type SectionTwoUpTextImage = {
@@ -31,6 +33,7 @@ export type SectionTwoUpTextImage = {
   image: { src: string; alt?: string };
   /** Which side the image sits on. Defaults to "right". */
   imageSide?: "left" | "right";
+  accent?: "copper";
 };
 
 export type SectionImage = {
@@ -40,6 +43,7 @@ export type SectionImage = {
   src: string;
   alt?: string;
   caption?: string;
+  accent?: "copper";
 };
 
 export type SectionVideo = {
@@ -52,6 +56,15 @@ export type SectionVideo = {
   kind?: "mp4" | "youtube";
   poster?: string;
   caption?: string;
+  accent?: "copper";
+};
+
+export type SectionStats = {
+  type: "Stats";
+  id: string;
+  title?: string;
+  stats: Array<{ value: string; label: string }>;
+  accent?: "copper";
 };
 
 export type ProjectSection =
@@ -59,23 +72,24 @@ export type ProjectSection =
   | SectionBulletedList
   | SectionTwoUpTextImage
   | SectionImage
-  | SectionVideo;
-
-export type ProjectContentLink = {
-  label: string;
-  href: string;
-  /** Icon name from public/icons. */
-  icon?: "github" | "pdf" | "globe" | "demo";
-  download?: string;
-};
+  | SectionVideo
+  | SectionStats;
+// --------------------------------------------------------------------
 
 export type ProjectContentTag = {
   label: string;
   color?: TagChipColor;
 };
 
-/** Filter ids the home-page header tabs filter by. */
-export type ProjectFilterId = "aiml" | "experience" | "research" | "labs";
+/** Optional "headline finding" callout in the hero. */
+export type FindingCard = {
+  /** Inline markdown supported. */
+  body: string;
+  /** Section id to scroll to when the jump link is clicked. */
+  jumpToId?: string;
+  /** Display label for the jump link. Defaults to the matching section's title, then to jumpToId. */
+  jumpToLabel?: string;
+};
 
 export type ProjectContent = {
   /** Identity */
@@ -94,15 +108,16 @@ export type ProjectContent = {
   isFeature?: boolean;
   /** Optional thumbnail; falls back to heroImage when omitted. */
   cardImage?: { src: string; alt?: string };
-
   /** Detail-page header */
   /** Small uppercase line above the title - e.g. "Labs · 2025". */
   eyebrow?: string;
   /** Longer outcome / summary under the title (defaults to summary). */
   subtitle?: string;
   tags?: ProjectContentTag[];
-  links?: ProjectContentLink[];
+  links?: ContentNavLink[];
   heroImage?: { src: string; alt?: string };
+  /** Optional headline-finding callout next to the hero title. */
+  finding?: FindingCard;
 
   /** Detail-page body */
   sections: ProjectSection[];

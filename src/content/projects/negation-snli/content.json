@@ -29,31 +29,31 @@
   ],
   "links": [
     { "label": "Paper (PDF)", "href": "/content/negation-snli/paper.pdf", "icon": "pdf", "download": "negation-is-not-enough.pdf" },
-    { "label": "GitHub", "href": "https://github.com/torourke14/aug-lexical-negation", "icon": "github" }
+    { "label": "GitHub", "href": "https://github.com/tannerorourke/aug-lexical-negation", "icon": "github" }
   ],
   "sections": [
     {
       "type": "Paragraph",
       "id": "overview",
       "title": "Overview",
-      "body": "<p>State-of-the-art NLI models routinely lean on shallow lexical heuristics - antonyms, bag-of-words overlap, and the presence of a single negation word - to clear benchmarks like SNLI. This project asks a narrower question: <em>where</em> in a sentence does negation appear, and does that location change how the model behaves?</p><p>I fine-tuned a baseline <code>ELECTRA-small</code> discriminator on SNLI, then sliced its predictions along three axes: (i) part-of-speech region of the negation cue, (ii) lexical overlap between premise and hypothesis, and (iii) whether negation appears in the premise, hypothesis, both, or neither. The findings motivated a two-stage intervention - contrast-set augmentation plus slice-aware loss reweighting - explicitly designed to keep the model architecture frozen and probe how far data-side fixes can take you.</p>"
+      "body": "State-of-the-art NLI models routinely lean on shallow lexical heuristics - antonyms, bag-of-words overlap, and the presence of a single negation word - to clear benchmarks like SNLI. This project asks a narrower question: *where* in a sentence does negation appear, and does that location change how the model behaves?\n\nI fine-tuned a baseline `ELECTRA-small` discriminator on SNLI, then sliced its predictions along three axes: (i) part-of-speech region of the negation cue, (ii) lexical overlap between premise and hypothesis, and (iii) whether negation appears in the premise, hypothesis, both, or neither. The findings motivated a two-stage intervention - contrast-set augmentation plus slice-aware loss reweighting - explicitly designed to keep the model architecture frozen and probe how far data-side fixes can take you."
     },
     {
       "type": "BulletedList",
       "id": "headline",
       "title": "Headline findings",
-      "intro": "<p>Three results drove the rest of the project:</p>",
+      "intro": "Three results drove the rest of the project:",
       "items": [
-        "<strong>Premise negation is vanishingly rare in SNLI.</strong> Only ~0.6% of validation examples contain a negation cue in the premise - captions from Flickr30k almost never assert what is <em>not</em> happening.",
-        "<strong>The model overgeneralizes 'negation → contradiction', but only on the premise side.</strong> Hypothesis-negation reflects a real dataset prior (NRI ≈ 0.025); premise-negation injects an unwarranted bias (NRI ≈ 0.099) where gold labels don't actually skew toward contradiction.",
-        "<strong>Augmentation helps coverage but not the core artifact.</strong> Adding contrast examples and reweighting slices improved overall accuracy modestly (85.4% → 86.2%) and lifted rare slices, yet premise-negation NRI for contradiction <em>increased</em> to 0.147 - the shortcut is structural, not just under-sampled."
+        "**Premise negation is vanishingly rare in SNLI.** Only ~0.6% of validation examples contain a negation cue in the premise - captions from Flickr30k almost never assert what is *not* happening.",
+        "**The model overgeneralizes 'negation → contradiction', but only on the premise side.** Hypothesis-negation reflects a real dataset prior (NRI ≈ 0.025); premise-negation injects an unwarranted bias (NRI ≈ 0.099) where gold labels don't actually skew toward contradiction.",
+        "**Augmentation helps coverage but not the core artifact.** Adding contrast examples and reweighting slices improved overall accuracy modestly (85.4% → 86.2%) and lifted rare slices, yet premise-negation NRI for contradiction *increased* to 0.147 - the shortcut is structural, not just under-sampled."
       ]
     },
     {
       "type": "Paragraph",
       "id": "npas",
       "title": "NPAS: locating negation in the dependency tree",
-      "body": "<p>To analyze where negation operates, I built a small pipeline I call <strong>NPAS</strong> (Negation-Perturbation Analysis with Slices). For each premise/hypothesis it runs a spaCy parse, detects cues using a layered approach - single-token cues (<code>not</code>, <code>n't</code>, <code>never</code>, <code>no</code>), negative pronouns (<code>nobody</code>, <code>nothing</code>), negative verbs (<code>deny</code>, <code>refuse</code>, <code>lack</code>, <code>fail</code>), the <code>without</code> preposition, the <code>rule out</code> particle verb, and multi-token Matcher patterns like <code>never ever</code> and <code>in no way</code>, plus a <code>neither&hellip;nor</code> sentence-level rule - and then walks each cue's anchor token to classify it into one of seven syntactic regions.</p><p>The regions are <code>root</code> (main predicate), <code>subject</code>, <code>object</code>, <code>locative</code>, <code>attribute</code>, <code>modal</code>, and <code>quantifier</code>. Each cue gets a scope span via the anchor's subtree, and pair-level features encode which regions are negated in the premise vs. hypothesis. This is what made it possible to ask questions like 'how does the model do when negation modifies the subject of the premise?' rather than just 'is there a <code>not</code> somewhere?'.</p>"
+      "body": "To analyze where negation operates, I built a small pipeline I call **NPAS** (Negation-Perturbation Analysis with Slices). For each premise/hypothesis it runs a spaCy parse, detects cues using a layered approach - single-token cues (`not`, `n't`, `never`, `no`), negative pronouns (`nobody`, `nothing`), negative verbs (`deny`, `refuse`, `lack`, `fail`), the `without` preposition, the `rule out` particle verb, and multi-token Matcher patterns like `never ever` and `in no way`, plus a `neither…nor` sentence-level rule - and then walks each cue's anchor token to classify it into one of seven syntactic regions.\n\nThe regions are `root` (main predicate), `subject`, `object`, `locative`, `attribute`, `modal`, and `quantifier`. Each cue gets a scope span via the anchor's subtree, and pair-level features encode which regions are negated in the premise vs. hypothesis. This is what made it possible to ask questions like 'how does the model do when negation modifies the subject of the premise?' rather than just 'is there a `not` somewhere?'."
     },
     {
       "type": "Image",
@@ -67,7 +67,7 @@
       "type": "Paragraph",
       "id": "nri",
       "title": "Negation Reliance Index",
-      "body": "<p>To quantify <em>how much</em> the model overuses negation as a cue, I defined a <strong>Negation Reliance Index</strong> (NRI):</p><p><code>NRI(ℓ) = Δ_pred(ℓ) - Δ_gold(ℓ)</code></p><p>where <code>Δ</code> is the change in label probability conditioned on negation being present vs. absent. NRI &gt; 0 means the model leans on negation as evidence for label ℓ <em>more strongly than the dataset itself does</em>. It separates real dataset bias (which the model is supposed to learn) from spurious model bias (which it shouldn't).</p>"
+      "body": "To quantify *how much* the model overuses negation as a cue, I defined a **Negation Reliance Index** (NRI):\n\n`NRI(ℓ) = Δ_pred(ℓ) - Δ_gold(ℓ)`\n\nwhere `Δ` is the change in label probability conditioned on negation being present vs. absent. NRI > 0 means the model leans on negation as evidence for label ℓ *more strongly than the dataset itself does*. It separates real dataset bias (which the model is supposed to learn) from spurious model bias (which it shouldn't)."
     },
     {
       "type": "Image",
@@ -81,7 +81,7 @@
       "type": "Paragraph",
       "id": "intervention",
       "title": "Intervention: contrast sets + slice-aware reweighting",
-      "body": "<p>The intervention had two stages. First, I hand-built ~150 contrastive examples seeded from SNLI premises with explicit negation, generating hypotheses that (i) preserve the core event, (ii) cover under-represented region patterns, and (iii) deliberately produce <code>NEUTRAL</code> or <code>ENTAILMENT</code> labels - directly attacking the 'premise negation = contradiction' shortcut. Examples were split 70/30 into train and validation after a deterministic shuffle.</p><p>Second, after a dry training run to recompute slice error rates, I applied a margin-dependent reweighting in the cross-entropy loss: examples in slices where the baseline performed worse than overall accuracy (premise root, premise subject, premise quantifier) were upweighted; slices the baseline already handled well were not. Architecture, optimizer, and hyperparameters stayed identical to the baseline.</p>"
+      "body": "The intervention had two stages. First, I hand-built ~150 contrastive examples seeded from SNLI premises with explicit negation, generating hypotheses that (i) preserve the core event, (ii) cover under-represented region patterns, and (iii) deliberately produce `NEUTRAL` or `ENTAILMENT` labels - directly attacking the 'premise negation = contradiction' shortcut. Examples were split 70/30 into train and validation after a deterministic shuffle.\n\nSecond, after a dry training run to recompute slice error rates, I applied a margin-dependent reweighting in the cross-entropy loss: examples in slices where the baseline performed worse than overall accuracy (premise root, premise subject, premise quantifier) were upweighted; slices the baseline already handled well were not. Architecture, optimizer, and hyperparameters stayed identical to the baseline."
     },
     {
       "type": "Image",
@@ -96,18 +96,18 @@
       "id": "takeaways",
       "title": "Takeaways",
       "items": [
-        "<strong>Slice-aware augmentation can stabilize aggregate accuracy while exposing rare patterns</strong> - the augmented model didn't regress on the easy majority slice, which isn't guaranteed.",
-        "<strong>Lexical overlap is not where the model fails most.</strong> The baseline handled high-overlap examples (92%) better than low-overlap (85%). The interesting failure mode is structural, not surface.",
-        "<strong>'Hypothesis-negation → contradiction' is mostly a real dataset prior.</strong> The model isn't inventing it; it's learning what SNLI teaches. NRI is a useful tool for telling those cases apart from genuinely spurious shortcuts.",
-        "<strong>Premise-negation is the spurious one - and dataset-side fixes don't fully resolve it.</strong> Even after augmentation and reweighting, premise-root and premise-subject negation accuracy stayed in the 58–59% range. Architectural interventions (residual debiasing heads, ensemble-based artifact experts) are likely needed for real movement here.",
-        "<strong>Building NPAS was 60% of the value.</strong> Once you can ask 'where does negation live?' as a structured query rather than a regex, every other diagnostic in the project comes nearly free."
+        "**Slice-aware augmentation can stabilize aggregate accuracy while exposing rare patterns** - the augmented model didn't regress on the easy majority slice, which isn't guaranteed.",
+        "**Lexical overlap is not where the model fails most.** The baseline handled high-overlap examples (92%) better than low-overlap (85%). The interesting failure mode is structural, not surface.",
+        "**'Hypothesis-negation → contradiction' is mostly a real dataset prior.** The model isn't inventing it; it's learning what SNLI teaches. NRI is a useful tool for telling those cases apart from genuinely spurious shortcuts.",
+        "**Premise-negation is the spurious one - and dataset-side fixes don't fully resolve it.** Even after augmentation and reweighting, premise-root and premise-subject negation accuracy stayed in the 58–59% range. Architectural interventions (residual debiasing heads, ensemble-based artifact experts) are likely needed for real movement here.",
+        "**Building NPAS was 60% of the value.** Once you can ask 'where does negation live?' as a structured query rather than a regex, every other diagnostic in the project comes nearly free."
       ]
     },
     {
       "type": "Paragraph",
       "id": "limitations",
       "title": "Limitations and what I'd do next",
-      "body": "<p>Three honest caveats. First, every result is tied to SNLI; the contrast sets are small and adversarial by construction, not a sample of natural premise-negation. Second, NPAS region assignment relies on spaCy's parser plus hand-written rules - parser errors and dependency-vs-semantic-scope mismatches are the dominant noise source, and complex sentences are likely mis-categorized at non-trivial rates. Third, the project deliberately froze the model architecture to isolate dataset-side effects; prior work (residual correction heads, artifact-expert ensembles, debiased fine-tuning) suggests the ceiling on premise-negation slices is much higher with model-side interventions.</p><p>If I picked this up again I'd swap the rule-based scope detection for a learned negation-scope model, scale the contrast set with templated generation rather than hand-editing, and pair the reweighting scheme with a small residual debiasing head - partly to test whether NRI on premise-negation can actually be driven to zero, and partly because the diagnostic toolkit deserves a stronger model to evaluate.</p>"
+      "body": "Three honest caveats. First, every result is tied to SNLI; the contrast sets are small and adversarial by construction, not a sample of natural premise-negation. Second, NPAS region assignment relies on spaCy's parser plus hand-written rules - parser errors and dependency-vs-semantic-scope mismatches are the dominant noise source, and complex sentences are likely mis-categorized at non-trivial rates. Third, the project deliberately froze the model architecture to isolate dataset-side effects; prior work (residual correction heads, artifact-expert ensembles, debiased fine-tuning) suggests the ceiling on premise-negation slices is much higher with model-side interventions.\n\nIf I picked this up again I'd swap the rule-based scope detection for a learned negation-scope model, scale the contrast set with templated generation rather than hand-editing, and pair the reweighting scheme with a small residual debiasing head - partly to test whether NRI on premise-negation can actually be driven to zero, and partly because the diagnostic toolkit deserves a stronger model to evaluate."
     }
   ]
 }
