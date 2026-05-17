@@ -80,6 +80,7 @@ export default function RootLayout({
           <AppProvider>
               {children}
               <FloatingToolbar />
+              <Analytics />
           </AppProvider>
         </ThemeProvider>
       </body>

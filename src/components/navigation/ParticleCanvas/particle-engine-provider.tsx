@@ -1,6 +1,9 @@
 'use client';
 
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef } from 'react';
+import { 
+  createContext, useContext, 
+  useCallback, useEffect, useMemo, useRef, ReactNode
+ } from 'react';
 import {
   CanvasPalette,
   CanvasOptions,
@@ -32,7 +35,7 @@ export function ParticleCanvasProvider({
   children,
 }: {
   options?: CanvasOptions;
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   const { theme: activeTheme } = useTheme();
 
@@ -48,7 +51,11 @@ export function ParticleCanvasProvider({
   const optionsRef = useRef<CanvasOptions>(options);
   optionsRef.current = options;
 
+  // Animated canvases, redraws on every frame
   const canvasesRef = useRef<Set<HTMLCanvasElement>>(new Set());
+  // Static canvas (reduced motion), redraws only on theme change
+  const staticCanvasesRef = useRef<Set<HTMLCanvasElement>>(new Set());
+
   const vpWRef = useRef(0);
   const vpHRef = useRef(0);
   const driftEnabledRef = useRef(false);
@@ -88,15 +95,17 @@ export function ParticleCanvasProvider({
 
       const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (reducedMotion) {
+        // Bug Fix: Track this canvas so the theme-watcher effect can redraw on
+        // light/dark mode switch. Without this, iOS Low Power Mode (forces
+        // prefers-reduced-motion: reduce) leaves the canvas frozen on whatever
+        // palette was active at first draw
+        staticCanvasesRef.current.add(canvas);
         const ctx = canvas.getContext('2d');
         if (ctx) {
-          drawFrame(
-            ctx,
-            vpWRef.current, vpHRef.current,
-            dotDataRef.current, paletteRef.current, optionsRef.current,
-            1, 0, 0,
-            false,
-          );
+          drawFrame(ctx, vpWRef.current, vpHRef.current,
+                    dotDataRef.current, paletteRef.current, optionsRef.current,
+                    1, 0, 0, // emergeT, scrollY, t (ms)
+                    false); // driftEnabled
         }
         return () => {};
       }
@@ -117,6 +126,23 @@ export function ParticleCanvasProvider({
       s.phase = 'emerging';
     }
   }, []);
+
+  // Redraw static (reduced-motion) canvases when the theme changes.
+  // Animated canvases pick up palette changes automatically on the next RAF tick,
+  // so they don't need a separate trigger.
+  useEffect(() => {
+    if (staticCanvasesRef.current.size === 0) 
+      return;
+    staticCanvasesRef.current.forEach(canvas => {
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        drawFrame(ctx, vpWRef.current, vpHRef.current,
+                  dotDataRef.current, paletteRef.current, optionsRef.current,
+                  1, 0, performance.now(), // emergeT, scrollY, t (ms)
+                  false); // driftEnabled
+      }
+    });
+  }, [activeTheme]);
 
   useEffect(() => {
     vpWRef.current = window.innerWidth;
@@ -157,13 +183,10 @@ export function ParticleCanvasProvider({
       canvasesRef.current.forEach(canvas => {
         const ctx = canvas.getContext('2d');
         if (ctx) {
-          drawFrame(
-            ctx,
-            vpWRef.current, vpHRef.current,
-            dotDataRef.current, paletteRef.current, opts,
-            emergeT, state.smoothScrollY, ts,
-            driftEnabledRef.current,
-          );
+          drawFrame(ctx, vpWRef.current, vpHRef.current,
+                    dotDataRef.current, paletteRef.current, opts,
+                    emergeT, state.smoothScrollY, ts, // emergeT, scrollY, t (ms)
+                    driftEnabledRef.current); // driftEnabled
         }
       });
 
