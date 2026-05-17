@@ -7,11 +7,11 @@
   },
   "scripts": {
     "start": "next start",
-    "dev":    "next dev --webpack",
+    "dev": "next dev --webpack",
     "dev-lh": "",
-    "start-lh":    "npm run start & npx --yes lighthouse http://localhost:3000 --view",
+    "start-lh": "npm run start & npx --yes lighthouse http://localhost:3000 --view",
     "start-lh-dt": "npm run start & npx --yes lighthouse http://localhost:3000 --view --preset=desktop",
-    "build":  "next build --webpack",
+    "build": "next build --webpack",
     "lint": "eslint"
   },
   "dependencies": {
@@ -20,6 +20,7 @@
     "@vanilla-extract/next-plugin": "^2.4.16",
     "@vanilla-extract/recipes": "^0.5.7",
     "@vanilla-extract/sprinkles": "^1.6.5",
+    "@vercel/analytics": "^2.0.1",
     "motion": "^12.23.26",
     "next": "16.0.10",
     "react": "19.2.1",

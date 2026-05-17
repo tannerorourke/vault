@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter_Tight, Roboto_Flex } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next"
 
 import AppProvider from "@/components/navigation/AppProvider";
 import { ThemeProvider } from "@/components/navigation/ThemeProvider";
@@ -52,12 +53,6 @@ export const metadata: Metadata = {
     url: SITE_URL,
     siteName: "Tanner O'Rourke",
     type: "website"
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Tanner O\'Rourke",
-    description: "Tanner O\'Rourke | AI/ML, web and systems engineer.",
-    images: ["./opengraph-image.png"],
   },
   robots: {
     index: true,
