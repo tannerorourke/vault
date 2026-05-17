@@ -3,6 +3,7 @@
 import { ComponentType, ElementType } from 'react'
 import { NavFilter } from '@/lib/types/nav';
 
+import type { AnchorHTMLAttributes } from 'react';
 import { Button, ButtonProps } from '@base-ui/react/button';
 import NextLink, { LinkProps as NextLinkProps } from 'next/link';
 import Text, { type TextProps } from '../Text';
@@ -30,8 +31,9 @@ export type TextLinkProps = ButtonProps & {
   filterId?: NavFilter['id'];
   notifyOnClick?: (filterId: NavFilter['id']) => void;
   isActive?: boolean;
-  nextProps?: NextLinkProps & { className?: string };
+  nextProps?: NextLinkProps & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, keyof NextLinkProps> & { className?: string };
   textProps?: TextProps<ElementType>;
+  underline?: 'hover' | 'always';
   leftArrow?: {
     hold?: boolean;
     dir: direction
@@ -51,6 +53,7 @@ export const TextLink: React.FC<TextLinkProps> = ({
   isActive,
   nextProps = null,
   textProps = {},
+  underline = 'hover',
   leftArrow = {},
   rightArrow = {},
   ...rest
@@ -68,14 +71,8 @@ export const TextLink: React.FC<TextLinkProps> = ({
 
   const { className: textClassName, ...restTextProps } = textProps;
 
-  const button = (
-    <Button
-      aria-pressed={isActive}
-      className={[sty.linkBtnBase, className].filter(Boolean).join(' ')}
-      onClick={handleClick}
-      {...rest}
-    >
-
+  const innerChildren = (
+    <>
       {leftArrow?.dir && (
         <span
           className={leftArrow?.hold === true ? sty.leftSlotHold : sty.leftSlotEnabled} aria-hidden>
@@ -93,16 +90,37 @@ export const TextLink: React.FC<TextLinkProps> = ({
           {RightIcon && <RightIcon />}
         </span>
       )}
-    </Button>
+    </>
   );
+
+  const rootCls = [
+    sty.linkBtnBase,
+    underline === 'always' && sty.linkBtnAlwaysUnderlined,
+    className,
+  ].filter(Boolean).join(' ');
 
   if (nextProps) {
     const { className: nextClassName, ...restNextProps } = nextProps;
-    return <NextLink
-      {...restNextProps}
-      className={[sty.linkWrapBase, nextClassName].filter(Boolean).join(' ')}
-    >{button}</NextLink>;
+    return (
+      <NextLink
+        {...restNextProps}
+        {...(rest as Record<string, unknown>)}
+        onClick={handleClick}
+        className={[rootCls, nextClassName].filter(Boolean).join(' ')}
+      >
+        {innerChildren}
+      </NextLink>
+    );
   }
 
-  return button;
+  return (
+    <Button
+      aria-pressed={isActive}
+      className={rootCls}
+      onClick={handleClick}
+      {...rest}
+    >
+      {innerChildren}
+    </Button>
+  );
 }

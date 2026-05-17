@@ -7,7 +7,7 @@ export const profileRoot = style({
   position: "relative",
   zIndex: theme.layout.zIndex.content,
   width: "100%",
-  maxWidth: "1100px",
+  maxWidth: "1240px",
   margin: "0 auto",
   marginTop: theme.layout.headerOffset.xs,
   padding: `0 ${theme.space._24} ${theme.space._96}`,
@@ -21,40 +21,24 @@ export const profileRoot = style({
   },
 });
 
-export const stDisplay = style({
-  marginBottom: theme.space._32,
-  [mq.md]: {
-    marginBottom: theme.space._56,
-  },
-});
-  export const textDisplay = style({
-    margin: 0,
-    fontFamily: "var(--font-display)",
-    color: theme.color.text.primary,
-    width: 'fit-content',
-    maxWidth: "16ch",
-    textWrap: "balance",
-    [mq.md]: {
-      maxWidth: "18ch",
-    },
-  });
-  globalStyle(`${textDisplay} strong`, {
-    fontWeight: theme.typography.fontWeight.bold,
-    color: theme.color.primary.main,
-    letterSpacing: theme.typography.letterSpacing.tight,
-  });
-
-
 export const body = style({
   display: "grid",
   gridTemplateColumns: "1fr",
   gap: theme.space._48,
   alignItems: "start",
-  marginBottom: theme.space._56,
+  marginBottom: theme.space._24,
   [mq.md]: {
     gridTemplateColumns: "minmax(260px, 4fr) minmax(0, 7fr)",
     gap: theme.space._80,
   },
+});
+
+// --- Snips ----------------------------------------------
+export const pDivider = style({
+  border: 0,
+  height: "1px",
+  // margin: `0 0 ${theme.space._20}`,
+  background: theme.color.tint.primary,
 });
 
 // -- Photo Column ----------------------------------------------
@@ -94,27 +78,24 @@ export const body = style({
         boxShadow: `0 4px 20px -2px ${theme.color.shadow}`,
       });
 
-// -- Prose Column ----------------------------------------------
-  export const bodyProse = style({
+// -- Body ----------------------------------------------
+  export const bodySheet = style({
+    padding: `${theme.space._24} 28px`,
     maxWidth: "620px",
     [mq.md]: {
       paddingTop: theme.space._4,
     },
   });
-    export const prose = style({
-      margin: `0 0 ${theme.space._32}`,
+    export const article = style({
+      margin: `${theme.space._20} 0 ${theme.space._16}`,
+      scrollMarginTop: `calc(${theme.layout.headerHeight} + ${theme.space._24})`,
       selectors: {
         "&:last-of-type": { marginBottom: 0 },
       },
     });
-      export const pDivider = style({
-        border: 0,
-        height: "1px",
-        margin: `0 0 ${theme.space._20}`,
-        background: theme.color.tint.primary,
-      });
+      
       export const par = style({
-        margin: `0 0 ${theme.space._20}`,
+        // margin: `0 0 ${theme.space._20}`,
         color: theme.color.text.primary,
         textWrap: "pretty",
       });
@@ -127,59 +108,55 @@ export const body = style({
         color: theme.color.text.primary,
       });
 
-// -- Get In Touch ----------------------------------------------
+// -- Contact Sheet ----------------------------------------------
 
-export const contact = style({
-  marginTop: theme.space._56,
-  // paddingTop: theme.space._24,
-  borderTop: `1px solid ${theme.color.tint.primarySoft}`,
+export const contactSheet = style({
+  marginTop: theme.space._32,
+  padding: `${theme.space._16} ${theme.space._24}`,
   display: "flex",
-  flexWrap: "wrap",
-  alignItems: "center",
-  gap: `${theme.space._12} ${theme.space._24}`,
+  flexDirection: "column",
+  gap: theme.space._8,
 });
 
-  export const contactLabel = style({
-    letterSpacing: "0.18em",
-    textTransform: "uppercase",
+  export const contactRow = style({
+    display: "grid",
+    gridTemplateColumns: "1fr",
+    columnGap: theme.space._24,
+    rowGap: theme.space._4,
+    alignItems: "baseline",
+    [mq.sm]: {
+      gridTemplateColumns: "minmax(96px, max-content) 1fr",
+    },
   });
 
-  export const contactList = style({
-    listStyle: "none",
-    margin: 0,
-    padding: 0,
-    display: "flex",
-    flexWrap: "wrap",
-    alignItems: "center",
-    gap: `${theme.space._4} ${theme.space._16}`,
-  });
-    export const contactItem = style({
-      display: "inline-flex",
+    export const contactRowLabel = style({
+      fontFamily: "var(--font-mono)",
+      letterSpacing: "0.18em",
+      textTransform: "uppercase",
+      whiteSpace: "nowrap",
     });
-      export const contactLink = style({
-        display: "inline-flex",
-        alignItems: "center",
-        gap: theme.space._8,
-        padding: `${theme.space._8} ${theme.space._12}`,
-        borderRadius: "8px",
-        color: theme.color.text.primary,
-        textDecoration: "none",
-        transition: "color 200ms ease, background-color 200ms ease",
 
+    export const contactRowList = style({
+      listStyle: "none",
+      margin: 0,
+      padding: 0,
+      display: "flex",
+      flexWrap: "wrap",
+      alignItems: "baseline",
+      rowGap: theme.space._4,
+    });
+
+      export const contactRowItem = style({
+        display: "inline-flex",
+        alignItems: "baseline",
+        listStyleType: "none",
         selectors: {
-          "&:hover": {
-            color: theme.color.secondary.active,
-          },
-          "&:focus-visible": {
-            outline: `2px solid ${theme.color.focus}`,
-            outlineOffset: 2,
+          "&:not(:first-child)::before": {
+            content: '"\\00B7"',
+            color: theme.color.text.secondary,
+            margin: `0 ${theme.space._12}`,
+            fontWeight: theme.typography.fontWeight.bold,
           },
         },
       });
 
-      export const contactIcon = style({
-        width: "16px",
-        height: "16px",
-        flexShrink: 0,
-        fill: "currentColor",
-      });

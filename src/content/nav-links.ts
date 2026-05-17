@@ -55,7 +55,3 @@ export const LINKS: NavLink[] = [
     tooltipText: "Google Scholar"
   }
 ];
-
-export const ABOUT_LINKS = LINKS.filter((l: NavLink) =>
-  ["LinkedIn", "Download CV", "Email me"].includes(l.alt ?? "")
-)

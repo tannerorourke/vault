@@ -2,7 +2,7 @@
 
 import { useMemo, useRef, useEffect, useState } from "react";
 import { motion, AnimatePresence, LayoutGroup } from "motion/react";
-import { useProjectFilter } from "@/components/navigation/AppProvider";
+import { useAppContext } from "@/components/navigation/AppProvider";
 import type { ProjectContent, ProjectFilterId } from "@/lib/types/project-content";
 
 import ProjectCard from "@/components/ui/ProjectCard";
@@ -30,7 +30,7 @@ type HomePageProps = {
 };
 
 export function HomePage({ projects }: HomePageProps) {
-  const { activeFilters } = useProjectFilter();
+  const { activeFilters } = useAppContext();
 
   const visibleProjects = useMemo<ProjectContent[]>( () => (
     activeFilters.length > 0

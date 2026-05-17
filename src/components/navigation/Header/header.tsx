@@ -1,8 +1,8 @@
 'use client'
 
 import { useEffect } from "react";
-import { usePathname, useRouter } from "next/navigation";
-import { useProjectFilter } from "@/components/navigation/AppProvider";
+import { useRouter } from "next/navigation";
+import { useAppContext } from "@/components/navigation/AppProvider";
 import { NavFilter } from "@/lib/types/nav";
 
 import Link from "next/link";
@@ -22,31 +22,49 @@ export function Header({
   enableLoadAnimation = false,
   enableClickAnimation = true,
 }: HeaderProps) {
-  const { activeFilters, setActiveFilters } = useProjectFilter();
-  const pathname = usePathname();
+  const { pathname, hasAppHistory, activeFilters, setActiveFilters } = useAppContext()
   const router = useRouter();
 
-  const isOnProfile = pathname === "/profile";
-  const profileNav = isOnProfile
-    ? { href: "/", label: "Projects", leftArrow: { dir: "left" as const }, rightArrow: undefined }
-    : { href: "/profile", label: "Profile", leftArrow: undefined, rightArrow: { dir: "right" as const } };
+  /** Logo: Go home, or reset filters */
+  const onLogoClick = () => {
+    console.log("logo clicked")
+    if (pathname === "/") {
+      setActiveFilters([]);
+      return;
+    }
+    router.push("/");
+  }
 
+  /** Profile Icon: Go back, or go to profile */
+  const onProfileClick = (href: string) => {
+    if (href === "back") {
+      if (hasAppHistory) 
+        router.back(); 
+      else
+        router.push("/");
+    } else {
+      router.push(href);
+    }
+  };
+
+  const isOnProfile = pathname === "/profile";
+  const profileBtnProps = isOnProfile 
+    ? { hrefOp: "back", label: "Back", leftArrow: { dir: "left" as const }, rightArrow: undefined } 
+    : { hrefOp: "/profile", label: "About", leftArrow: undefined, rightArrow: { dir: "right" as const } };
+
+  /** Filter links: Apply always, conditionally wait for reroute */
   const toggleFilter = (id: NavFilter['id']) => {
     const apply = () =>
-      setActiveFilters((current) =>
-        current.includes(id) ? current.filter((f) => f !== id) : [...current, id]
-      );
-
+      setActiveFilters((current) => current.includes(id) ? current.filter((f) => f !== id) : [...current, id]);
     if (pathname === "/") {
       apply();
       return;
     }
-
     router.push("/");
     setTimeout(apply, 500);
   };
 
-  const onShiftWheel: React.WheelEventHandler<HTMLDivElement> = (e) => {
+  const onNavShiftWheel: React.WheelEventHandler<HTMLDivElement> = (e) => {
     if (!e.shiftKey) return;
     const el = e.currentTarget;
     if (el.scrollWidth <= el.clientWidth) return;
@@ -89,7 +107,7 @@ export function Header({
 
   return (
     <header className={`${sty.root}`}>
-        <Link href="/" prefetch className={sty.logoContainer} aria-label="Home">
+        <Link prefetch href="/" onNavigate={onLogoClick} className={sty.logoContainer} aria-label="Home">
           <Text as="span" variant={"titleLg"} className={sty.word} id="w2">
             <span data-logo-span id="logo-T">T</span>
             <span data-logo-span>A</span>
@@ -111,7 +129,7 @@ export function Header({
             <span data-logo-span>E</span>
           </Text>
         </Link>
-        <div className={sty.navScrollWrap} onWheel={onShiftWheel}>
+        <div className={sty.navScrollWrap} onWheel={onNavShiftWheel}>
           <nav className={sty.navMain} aria-label="Filter projects">
             {NAV_FILTERS.map((cf: NavFilter) => (
               <TextLink
@@ -131,12 +149,13 @@ export function Header({
         </div>
         <div className={sty.navRight}>
           <TextLink
-            label={profileNav.label}
-            leftArrow={profileNav.leftArrow}
-            rightArrow={profileNav.rightArrow}
-            nextProps={{ href: profileNav.href, prefetch: true }}
+            label={profileBtnProps.label}
+            leftArrow={profileBtnProps.leftArrow}
+            rightArrow={profileBtnProps.rightArrow}
+            nextProps={{ href: profileBtnProps.hrefOp, prefetch: true, className: sty.navProfLink }}
             textProps={{ variant: "bodyLg", tone: "primary", className: sty.navFilters }}
             aria-current={isOnProfile ? "page" : undefined}
+            onClick={() => onProfileClick(profileBtnProps.hrefOp)}
           />
         </div>
       </header>

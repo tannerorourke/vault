@@ -23,18 +23,18 @@ function getRouteKind(pathname: string): RouteKind {
 // "up"    => incoming enters from bottom, outgoing exits to top
 type Direction = "left" | "right" | "up" | "down" | "none";
 
-function getDirection(fromPath: string | null, toPath: string): Direction {
+export function getDirection(fromPath: string | null, toPath: string): Direction {
   if (!fromPath || fromPath === toPath) return "none";
 
   const from = getRouteKind(fromPath);
   const to = getRouteKind(toPath);
   if (from === to) return "none";
 
-  // Home <-> Profile (horizontal carousel: profile lives to the right of home)
-  if (from === "home" && to === "profile") return "left";
-  if (from === "profile" && to === "home") return "right";
+  // Horizontal transitions
+  if (to === "profile") return "left";
+  if (from === "profile") return "right";
 
-  // Project lives "below" the home/profile row: it slides up from beneath
+  // Vertical transitions
   if (to === "project") return "up";
   if (from === "project") return "down";
 

@@ -17,9 +17,10 @@ export const root = style({
   height: theme.layout.headerHeight,
   isolation: "isolate", // contains the ::before z-index: -1
 
-  padding: '32px 16px 0 16px',
-  [mq.sm]: {  padding: '48px 40px 0 40px' },
-  [mq.lg]: {  padding: '56px 80px 0 80px' },
+  padding: `32px ${theme.space._24} 0`,
+  [mq.sm]: {  padding: `48px ${theme.space._24} 0` },
+  [mq.md]: {  padding: `48px ${theme.space._80} 0` },
+  [mq.lg]: {  padding: `56px ${theme.space._96}` },
 
   selectors: {
     '&::before': {
@@ -61,9 +62,9 @@ export const root = style({
     WebkitOverflowScrolling: "touch",
     scrollbarWidth: "none",
     maskImage:
-      "linear-gradient(to right, #000 0, #000 calc(100% - 32px), transparent 100%)",
+      "linear-gradient(to right, #000 0, #000 calc(100% - 24px), transparent 100%)",
     WebkitMaskImage:
-      "linear-gradient(to right, #000 0, #000 calc(100% - 32px), transparent 100%)",
+      "linear-gradient(to right, #000 0, #000 calc(100% - 24px), transparent 100%)",
     [mq.lg]: {
       flex: "0 1 auto",
       overflowX: "visible",
@@ -94,6 +95,10 @@ export const root = style({
     flex: "0 0 auto",
     padding: "2px"
   });
+
+    export const navProfLink = style({
+      marginTop: "6px"
+    });
 
 // --- Logo ---------------------------------------
 

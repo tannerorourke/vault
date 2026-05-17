@@ -16,6 +16,7 @@ export const iconButton = recipe({
     selectors: {
       "&:hover": {
         color: theme.color.secondary.main,
+        // TODO(palette-pass-2): nav-vs-CTA hover convention misalignment
       },
       "&:focus-visible": {
         outline: `2px solid ${theme.color.focus}`,
