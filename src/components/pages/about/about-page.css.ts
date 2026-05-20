@@ -1,25 +1,15 @@
 import { style, globalStyle } from "@vanilla-extract/css";
 import { theme } from "@/lib/theme/theme.css";
 import { mq } from "@/lib/theme/responsive.css";
+import { page } from "@/lib/styles/page.css";
 
 
-export const profileRoot = style({
-  position: "relative",
-  zIndex: theme.layout.zIndex.content,
-  width: "100%",
-  maxWidth: "1240px",
-  margin: "0 auto",
-  marginTop: theme.layout.headerOffset.xs,
-  padding: `0 ${theme.space._24} ${theme.space._96}`,
-  [mq.sm]: { 
-    padding: `0 ${theme.space._48}`,
-    marginTop: theme.layout.headerOffset.sm,
-  },
-  [mq.md]: {
-    padding: `0 ${theme.space._80} ${theme.space._96}`,
-    marginTop: theme.layout.headerOffset.md, 
-  },
-});
+export const profileRoot = style([
+  page, 
+  {
+    maxWidth: "1240px",
+  }
+]);
 
 export const body = style({
   display: "grid",
@@ -81,8 +71,8 @@ export const pDivider = style({
 // -- Body ----------------------------------------------
   export const bodySheet = style({
     padding: `${theme.space._24} 28px`,
-    maxWidth: "620px",
     [mq.md]: {
+      maxWidth: "620px",
       paddingTop: theme.space._4,
     },
   });
@@ -111,7 +101,7 @@ export const pDivider = style({
 // -- Contact Sheet ----------------------------------------------
 
 export const contactSheet = style({
-  marginTop: theme.space._32,
+  margin: `${theme.space._32} 0`,
   padding: `${theme.space._16} ${theme.space._24}`,
   display: "flex",
   flexDirection: "column",
@@ -159,4 +149,6 @@ export const contactSheet = style({
           },
         },
       });
+
+
 

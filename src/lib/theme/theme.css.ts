@@ -6,6 +6,7 @@ export const theme = createThemeContract({
 		card: null,
 		cardFrosted: null,
 		cardFrostedBorder: null,
+    cardFrostedShadow: null,
 		text: {
 				primary: null,
 				secondary: null
@@ -210,8 +211,12 @@ const layout = {
 const lightThemeColors = {
   canvas: '#F4F6F5',
   card: '#FFFFFF',
-  cardFrosted: 'rgba(255, 255, 255, 0.72)',
-  cardFrostedBorder: 'rgba(255, 255, 255, 0.6)',
+  cardFrosted: 'rgba(244, 246, 245, 0.06)', // sheet.bg w/lower opacity
+  cardFrostedBorder: 'rgba(255, 255, 255, 0)',
+  cardFrostedShadow: `0 8px 32px rgba(31, 38, 135, 0.2),
+                inset 0 4px 20px rgba(255, 255, 255, 0.3),
+                inset 0 -8px 16px -10px rgba(255, 255, 255, 0.55),
+                inset -10px -10px 16px -12px rgba(255, 255, 255, 0.45)`,
   text: {
       primary: '#1C2321',
       secondary: '#5D6D68',
@@ -251,8 +256,12 @@ const lightThemeColors = {
 const darkThemeColors = {
   canvas: '#0e1a18',
   card: '#162822',
-  cardFrosted: 'rgba(22, 40, 34, 0.65)',
+  cardFrosted: 'rgba(14, 26, 24, 0.30)', // sheet.bg w/lower opacity
   cardFrostedBorder: 'rgba(255, 255, 255, 0.06)',
+  cardFrostedShadow: `0 8px 32px rgba(0, 0, 0, 0.4),
+                inset 0 4px 20px rgba(255, 255, 255, 0.08),
+                inset 0 -8px 16px -10px rgba(255, 255, 255, 0.10),
+                inset -10px -10px 16px -12px rgba(255, 255, 255, 0.06)`,
   text: {
       primary: '#E0EDEA',
       secondary: '#7A9E98',

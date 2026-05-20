@@ -1,7 +1,7 @@
 import { style } from "@vanilla-extract/css";
 import { theme } from "@/lib/theme/theme.css";
 import { mq } from "@/lib/theme/responsive.css";
-import { page } from "@/lib/styles/page.css";
+import { page, SLOW_SNAP } from "@/lib/styles/page.css";
 
 export const root = style([
   page,
@@ -60,4 +60,41 @@ export const grid = style({
     maxWidth: `${5 * 360 + 4 * 48}px`, // ~1992px, caps growth on ultrawide
     marginInline: "0"
   },
+});
+
+export const footer = style({
+  position: "absolute",
+  width: "100%",
+  bottom: 0,   left: 0,
+  padding: `0 ${theme.space._24}`,
+  [mq.sm]: { 
+    padding: `0 ${theme.space._24}`,
+  },
+  [mq.md]: {
+    padding: `0 ${theme.space._80}`,
+  },
+  [mq.lg]: {
+    padding: `0 ${theme.space._96}`,
+  },
+  transition: `padding 500ms ${SLOW_SNAP}`,
+
+  selectors: {
+    '&::before': {
+      content: '""',
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      // extend ~40px below the header for overhang
+      top: '-20px',
+      backdropFilter: 'blur(3px)',
+      WebkitBackdropFilter: 'blur(3px)',
+      maskImage:
+        'linear-gradient(to bottom, black 0%, black 55%, transparent 100%)',
+      WebkitMaskImage:
+        'linear-gradient(to bottom, black 0%, black 55%, transparent 100%)',
+      pointerEvents: 'none',
+      zIndex: -1,
+    }
+  }
 });

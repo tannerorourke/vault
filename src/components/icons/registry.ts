@@ -7,6 +7,7 @@ import { ArrowDown } from "./arrow-down";
 import { ArrowLeft } from "./arrow-left";
 import { ArrowRight } from "./arrow-right";
 import { ArrowUp } from "./arrow-up";
+import { ArrowUpRight } from "./arrow-up-right";
 import { CaretCircleDown } from "./caret-circle-down";
 import { CaretCircleUp } from "./caret-circle-up";
 import { CaretLeft } from "./caret-left";
@@ -35,6 +36,7 @@ export const iconRegistry = {
   "arrow-left": ArrowLeft,
   "arrow-right": ArrowRight,
   "arrow-up": ArrowUp,
+  "arrow-up-right": ArrowUpRight,
   "caret-circle-down": CaretCircleDown,
   "caret-circle-up": CaretCircleUp,
   "caret-left": CaretLeft,

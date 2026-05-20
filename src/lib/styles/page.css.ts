@@ -12,28 +12,26 @@ import { theme } from "@/lib/theme/theme.css";
 import { mq } from "@/lib/theme/responsive.css";
 
 
-const SLOW_SNAP = "cubic-bezier(.4,0, .6,1)"
+export const SLOW_SNAP = "cubic-bezier(.4,0, .6,1)"
+
 
 export const page = {
   position: "relative",
   zIndex: theme.layout.zIndex.content,
   width: "100%",
+  height: "100%",
   margin: "0 auto",
-  marginTop: theme.layout.headerOffset.xs,
-  padding: `0 ${theme.space._24} ${theme.space._80}`,
+  padding: `${theme.layout.headerOffset.xs} ${theme.space._24} ${theme.space._80}`,
   [mq.sm]: { 
-    padding: `0 ${theme.space._24} ${theme.space._96}`,
-    marginTop: theme.layout.headerOffset.sm,
+    padding: `${theme.layout.headerOffset.sm} ${theme.space._24} ${theme.space._96}`,
   },
   [mq.md]: {
-    padding: `0 ${theme.space._80} ${theme.space._96}`,
-    marginTop: theme.layout.headerOffset.md, 
+    padding: `${theme.layout.headerOffset.md} ${theme.space._96} ${theme.space._96}`,
   },
   [mq.lg]: {
-    padding: `0 ${theme.space._96} ${theme.space._96}`,
-    marginTop: theme.layout.headerOffset.md,
+    padding: `${theme.layout.headerOffset.md} ${theme.space._112} ${theme.space._96}`,
   },
-  transition: `margin-top 220ms ${SLOW_SNAP} 80ms, padding 500ms ${SLOW_SNAP}`
+  transition: `padding 500ms ${SLOW_SNAP}`
 } satisfies ComplexStyleRule;
 
 

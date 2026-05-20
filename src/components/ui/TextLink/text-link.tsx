@@ -1,9 +1,11 @@
 'use client';
 
-import { ComponentType, ElementType } from 'react'
+import { ComponentType, ElementType, AnchorHTMLAttributes } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAppContext } from '@/components/navigation/AppProvider';
 import { NavFilter } from '@/lib/types/nav';
+import { IconProps } from '@/lib/types/icons';
 
-import type { AnchorHTMLAttributes } from 'react';
 import { Button, ButtonProps } from '@base-ui/react/button';
 import NextLink, { LinkProps as NextLinkProps } from 'next/link';
 import Text, { type TextProps } from '../Text';
@@ -12,9 +14,7 @@ import { ArrowRight } from '@/components/icons/arrow-right';
 import { ArrowUp } from '@/components/icons/arrow-up';
 import { ArrowDown } from '@/components/icons/arrow-down';
 
-
 import * as sty from "./text-link.css";
-import { IconProps } from '@/lib/types/icons';
 
 
 type direction = 'left' | 'right' | 'up' | 'down';
@@ -58,11 +58,26 @@ export const TextLink: React.FC<TextLinkProps> = ({
   rightArrow = {},
   ...rest
 }) => {
+  const { hasAppHistory } = useAppContext()
+  const router = useRouter();
+
   const LeftIcon = leftArrow?.dir ? directionMap[leftArrow.dir] : null;
   const RightIcon = rightArrow?.dir ? directionMap[rightArrow.dir] : null;
 
   const handleClick = (e: any /** Base UI needs better typing here */) => {
     onClick?.(e);
+
+    if (nextProps !== null) {
+      if (nextProps.href === 'back') {
+        e.preventDefault();
+        if (hasAppHistory)
+          router.back();
+        else
+          router.push('/');
+      } else {
+        router.push(nextProps.href as string);
+      }
+    }
 
     if (filterId && notifyOnClick) {
       notifyOnClick(filterId);

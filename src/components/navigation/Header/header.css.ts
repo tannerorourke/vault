@@ -19,8 +19,8 @@ export const root = style({
 
   padding: `32px ${theme.space._24} 0`,
   [mq.sm]: {  padding: `48px ${theme.space._24} 0` },
-  [mq.md]: {  padding: `48px ${theme.space._80} 0` },
-  [mq.lg]: {  padding: `56px ${theme.space._96}` },
+  [mq.md]: {  padding: `48px ${theme.space._96} 0` },
+  [mq.lg]: {  padding: `56px ${theme.space._112}` },
 
   selectors: {
     '&::before': {
@@ -31,8 +31,8 @@ export const root = style({
       right: 0,
       // extend ~40px below the header for overhang
       bottom: '-40px',
-      backdropFilter: 'blur(6px)',
-      WebkitBackdropFilter: 'blur(6px)',
+      backdropFilter: 'blur(4px)',
+      WebkitBackdropFilter: 'blur(4px)',
       maskImage:
         'linear-gradient(to bottom, black 0%, black 55%, transparent 100%)',
       WebkitMaskImage:
@@ -75,10 +75,10 @@ export const root = style({
 
   globalStyle(`.${navScrollWrap}::-webkit-scrollbar`, { display: "none" });
 
-    export const navMain = style({
+    export const navFlex = style({
       display: "inline-flex",
       alignItems: "center",
-      gap: "24px",
+      gap: "32px",
       marginTop: "6px",
       padding: "2px"
     });

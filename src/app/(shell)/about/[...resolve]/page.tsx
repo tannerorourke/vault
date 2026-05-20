@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation"
 
 /**
- * Resolve any "/profile/**" URL to /profile
+ * Resolve any "/about/**" URL to /about
  */
 export default function ResolveToProfile() {
-  redirect("/profile")
+  redirect("/about")
 }

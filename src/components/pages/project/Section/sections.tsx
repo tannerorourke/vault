@@ -14,7 +14,7 @@ import Sheet from "@/components/ui/Sheet";
 import * as sty from "./sections.css";
 
 
-function SectionShell({
+export function SectionShell({
   id,
   title,
   accent,
@@ -38,7 +38,7 @@ function SectionShell({
   );
 }
 
-function Paragraph({ s }: { s: SectionParagraph }) {
+export function Paragraph({ s }: { s: SectionParagraph }) {
   return (
     <SectionShell id={s.id} title={s.title} accent={s.accent}>
       <div className={sty.prose}>
@@ -48,7 +48,7 @@ function Paragraph({ s }: { s: SectionParagraph }) {
   );
 }
 
-function BulletedList({ s }: { s: SectionBulletedList }) {
+export function BulletedList({ s }: { s: SectionBulletedList }) {
   return (
     <SectionShell id={s.id} title={s.title} accent={s.accent}>
       {s.intro && (
@@ -67,7 +67,7 @@ function BulletedList({ s }: { s: SectionBulletedList }) {
   );
 }
 
-function TwoUpTextImage({ s }: { s: SectionTwoUpTextImage }) {
+export function TwoUpTextImage({ s }: { s: SectionTwoUpTextImage }) {
   const reverse = s.imageSide === "left";
   return (
     <SectionShell id={s.id} title={s.title} accent={s.accent}>
@@ -89,7 +89,7 @@ function TwoUpTextImage({ s }: { s: SectionTwoUpTextImage }) {
   );
 }
 
-function ImageSection({ s }: { s: SectionImage }) {
+export function ImageSection({ s }: { s: SectionImage }) {
   return (
     <SectionShell id={s.id} title={s.title} accent={s.accent}>
       <img
@@ -102,7 +102,7 @@ function ImageSection({ s }: { s: SectionImage }) {
   );
 }
 
-function VideoSection({ s }: { s: SectionVideo }) {
+export function VideoSection({ s }: { s: SectionVideo }) {
   const isYoutube =
     s.kind === "youtube" || /youtube\.com|youtu\.be/.test(s.src);
   return (
@@ -131,7 +131,7 @@ function VideoSection({ s }: { s: SectionVideo }) {
   );
 }
 
-function StatsSection({ s }: { s: SectionStats }) {
+export function StatsSection({ s }: { s: SectionStats }) {
   const isHeadlineMode = s.stats.length > 4;
   return (
     <SectionShell id={s.id} title={s.title} accent={s.accent}>

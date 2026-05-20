@@ -4,9 +4,11 @@ import Sheet from "@/components/ui/Sheet";
 import Text from "@/components/ui/Text";
 import TextLink from "@/components/ui/TextLink";
 import Markdown from "@/components/ui/Markdown";
+import Footer from "@/components/navigation/Footer";
 
-import { PARAGRAPHS, CONTACT_TEXT, ABOUT_LINKS, AUX_LINKS } from "@/content/profile-content";
-import * as sty from "./profile-page.css";
+import { PARAGRAPHS, CONTACT_TEXT, ABOUT_LINKS, AUX_LINKS } from "@/content/about-content";
+import * as sty from "./about-page.css";
+
 
 
 type ContactRowVariant = "primary" | "muted";
@@ -97,6 +99,11 @@ export function ProfilePage() {
         <ContactRow label="Get in touch" links={ABOUT_LINKS} variant="primary" />
         <ContactRow label="Also at" links={AUX_LINKS} variant="muted" />
       </Sheet>
+
+      <hr className={sty.pDivider} aria-hidden="true" />
+
+      <Footer />
+
     </main>
   );
 }
