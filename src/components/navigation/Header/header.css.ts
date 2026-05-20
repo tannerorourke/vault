@@ -55,6 +55,7 @@ export const root = style({
   });
 
   export const navScrollWrap = style({
+    position: "relative",
     flex: "1 1 0",
     minWidth: 0,
     overflowX: "auto",

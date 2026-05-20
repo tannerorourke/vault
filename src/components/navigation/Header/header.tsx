@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { AnimatePresence, motion } from "framer-motion";
 import { useAppContext } from "@/components/navigation/AppProvider";
 import { NavFilter } from "@/lib/types/nav";
 
@@ -35,10 +36,14 @@ export function Header({
     router.push("/");
   }
 
+  const isHome = pathname === "/";
   const isOnAbout = pathname === "/about";
-  const aboutBtnProps = isOnAbout 
-    ? { hrefOp: "back", label: "Back", leftArrow: { dir: "left" as const }, rightArrow: undefined } 
-    : { hrefOp: "/about", label: "About", leftArrow: undefined, rightArrow: { dir: "right" as const } };
+
+  const morphLabel =
+    activeFilters.length === 1
+      ? NAV_FILTERS.find((f) => f.id === activeFilters[0])?.label ?? "Projects"
+      : "Projects";
+  const morphArrowDir = isOnAbout ? "left" as const : "up" as const;
 
   /** Filter links: Apply always, conditionally wait for reroute */
   const toggleFilter = (id: NavFilter['id']) => {
@@ -119,32 +124,74 @@ export function Header({
           </Text>
         </Link>
         <div className={sty.navScrollWrap} onWheel={onNavShiftWheel}>
-          <nav className={sty.navFlex} aria-label="Filter projects">
-            {NAV_FILTERS.map((cf: NavFilter) => (
-              <TextLink
-                key={cf.id}
-                label={cf.label}
-                filterId={cf.id}
-                isActive={activeFilters.includes(cf.id)}
-                notifyOnClick={toggleFilter}
-                textProps={{
-                  variant: "bodyLg", 
-                  tone: "primary",
-                  className: sty.navFilters
-                }}
-              />
-            ))}
-          </nav>
+          <AnimatePresence mode="popLayout" initial={false}>
+            {isHome ? (
+              <motion.nav
+                key="filters"
+                className={sty.navFlex}
+                aria-label="Filter projects"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.18, ease: "easeOut" }}
+              >
+                {NAV_FILTERS.map((cf: NavFilter) => (
+                  <TextLink
+                    key={cf.id}
+                    label={cf.label}
+                    filterId={cf.id}
+                    isActive={activeFilters.includes(cf.id)}
+                    notifyOnClick={toggleFilter}
+                    textProps={{
+                      variant: "bodyLg",
+                      tone: "primary",
+                      className: sty.navFilters
+                    }}
+                  />
+                ))}
+              </motion.nav>
+            ) : (
+              <motion.div
+                key="morph"
+                className={sty.navFlex}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.18, ease: "easeOut" }}
+              >
+                <TextLink
+                  label={morphLabel}
+                  leftArrow={{ dir: morphArrowDir }}
+                  nextProps={{ href: "/", prefetch: true }}
+                  textProps={{
+                    variant: "bodyLg",
+                    tone: "primary",
+                    className: sty.navFilters
+                  }}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
         <div className={sty.navRight}>
-          <TextLink
-            label={aboutBtnProps.label}
-            leftArrow={aboutBtnProps.leftArrow}
-            rightArrow={aboutBtnProps.rightArrow}
-            nextProps={{ href: aboutBtnProps.hrefOp, prefetch: true, className: sty.navProfLink }}
-            textProps={{ variant: "bodyLg", tone: "primary", className: sty.navFilters }}
-            aria-current={isOnAbout ? "page" : undefined}
-          />
+          <AnimatePresence initial={false}>
+            {!isOnAbout && (
+              <motion.div
+                key="about-link"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.18, ease: "easeOut" }}
+              >
+                <TextLink
+                  label="About"
+                  rightArrow={{ dir: "right" }}
+                  nextProps={{ href: "/about", prefetch: true, className: sty.navProfLink }}
+                  textProps={{ variant: "bodyLg", tone: "primary", className: sty.navFilters }}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </header>
   )

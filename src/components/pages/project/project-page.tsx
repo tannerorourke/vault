@@ -2,17 +2,13 @@ import type { ProjectContent } from "@/lib/types/project-content";
 import { ContentNavLink } from "@/lib/types/nav";
 
 import Markdown from "@/components/ui/Markdown";
-import Link from "next/link";
 import TagChip from "@/components/ui/TagChip";
 import Sheet from "@/components/ui/Sheet";
 import { renderSection } from "./Section";
-import { ArrowLeft } from "@/components/icons/arrow-left";
+import TextLink from "@/components/ui/TextLink";
 
 import { iconRegistry } from "@/components/icons/registry";
 import * as sty from "./project-page.css";
-
-
-import TextLink from "@/components/ui/TextLink";
 
 
 export type ProjectPageProps = {
@@ -33,11 +29,7 @@ export function ProjectPage({ content }: ProjectPageProps) {
 
   return (
     <main className={sty.root} aria-label={content.title}>
-      <Link href="/" className={sty.backBtn}>
-        <ArrowLeft className={sty.backIcon} />
-        All projects
-      </Link>
-
+      
       <header className={hasFinding ? sty.headerWithFinding : sty.headerSolo}>
         <Sheet className={sty.heroSheet}>
           {content.eyebrow && (<div className={sty.eyebrow}>{content.eyebrow}</div>)}
@@ -118,24 +110,26 @@ export function ProjectPage({ content }: ProjectPageProps) {
       )}
 
       <div className={sty.layout}>
-        {tocSections.length > 0 ? (
-          <Sheet className={sty.toc}>
-            <div className={sty.tocLabel}>Contents</div>
-            <nav aria-label="Sections">
-              {tocSections.map((s) => (
-                <a
-                  key={s.id}
-                  href={`#section-${s.id}`}
-                  className={sty.tocLink}
-                >
-                  {s.title}
-                </a>
-              ))}
-            </nav>
-          </Sheet>
-        ) : (
-          <div />
-        )}
+        <div className={sty.tocRoot}>
+          {tocSections.length > 0 ? (
+            <Sheet className={sty.toc}>
+              <div className={sty.tocLabel}>Contents</div>
+              <nav aria-label="Sections">
+                {tocSections.map((s) => (
+                  <a
+                    key={s.id}
+                    href={`#section-${s.id}`}
+                    className={sty.tocLink}
+                  >
+                    {s.title}
+                  </a>
+                ))}
+              </nav>
+            </Sheet>
+          ) : (
+            <div />
+          )}
+        </div>
 
         <div className={sty.sections}>
           {content.sections.map((s) => renderSection(s))}

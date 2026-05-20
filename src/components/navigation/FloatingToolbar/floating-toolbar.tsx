@@ -20,7 +20,6 @@ const LIST_ID = "icon-list-items";
 
 export function FloatingToolbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(false);
 
   const { theme, toggleTheme } = useTheme();
   const isDark = theme === 'dark';
@@ -31,26 +30,12 @@ export function FloatingToolbar() {
     setIsOpen(false);
   }, [pathname]);
 
-  useEffect(() => {
-    const mql = window.matchMedia("(min-width: 768px)");
-    const sync = () => {
-      setIsDesktop(mql.matches);
-      if (mql.matches) setIsOpen(false);
-    };
-    sync();
-    mql.addEventListener("change", sync);
-    return () => mql.removeEventListener("change", sync);
-  }, []);
-
-  const tooltipSide = isDesktop ? "right" : "top";
-  const itemsFocusable = isDesktop || isOpen;
-
   return (
     <div className={sty.toolbarWrap}>
-      <aside className={[sty.toolbar, !isDesktop && isOpen ? sty.toolbarOpen : ""].filter(Boolean).join(" ")}>
-        <ul 
+      <aside className={[sty.toolbar, isOpen && sty.toolbarOpen].filter(Boolean).join(" ")}>
+        <ul
           id={LIST_ID}
-          className={[sty.list, !isDesktop && isOpen ? sty.listOpen : ""].filter(Boolean).join(" ")}
+          className={[sty.list, isOpen && sty.listOpen].filter(Boolean).join(" ")}
         >
           {LINKS.map((item: NavLink, ix: number) => (
             <li key={ix} className={sty.item}>
@@ -61,9 +46,7 @@ export function FloatingToolbar() {
                 download={item.download}
                 alt={item.alt}
                 tooltipText={item.tooltipText}
-                tooltipSide={tooltipSide}
-                tabIndex={itemsFocusable ? 0 : -1}
-                aria-hidden={itemsFocusable ? undefined : true}
+                tooltipSide="top"
               >
                 {item.Icon && <item.Icon duopacity={0.05} />}
               </IconLink>
