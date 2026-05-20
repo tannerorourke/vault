@@ -7,10 +7,9 @@ import { FileText } from "../components/icons/file-text";
 import { GradCap } from "@/components/icons/grad-cap";
 
 export const NAV_FILTERS: NavFilter[] = [
-  { id: 'aiml', label: 'AI/ML' },
-  { id: 'experience', label: 'Experience' },
   { id: 'research', label: 'Research' },
-  { id: 'labs', label: 'Labs' }
+  { id: 'labs', label: 'Labs' },
+  { id: 'experience', label: 'Experience' },
 ]
 
 export const LINKS: NavLink[] = [

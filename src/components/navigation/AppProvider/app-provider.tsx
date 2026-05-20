@@ -38,8 +38,10 @@ export function AppProvider({
   }, [pathname]);
 
   // const data = useMemo(() => ({
+  //   pathname,
   //   hasAppHistory,
-  //   activeFilters, setActiveFilters 
+  //   activeFilters,
+  //   setActiveFilters,
   // }), [activeFilters]);
 
   return (

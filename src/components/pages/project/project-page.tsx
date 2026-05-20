@@ -5,7 +5,7 @@ import Markdown from "@/components/ui/Markdown";
 import Link from "next/link";
 import TagChip from "@/components/ui/TagChip";
 import Sheet from "@/components/ui/Sheet";
-import { renderSection } from "./sections";
+import { renderSection } from "./Section";
 import { ArrowLeft } from "@/components/icons/arrow-left";
 
 import { iconRegistry } from "@/components/icons/registry";
@@ -28,6 +28,8 @@ export function ProjectPage({ content }: ProjectPageProps) {
     : undefined;
   const findingLabel =
     finding?.jumpToLabel ?? matchingSection?.title ?? finding?.jumpToId;
+  const findingEyebrow = 
+    finding?.eyebrowLabel ?? "The finding";
 
   return (
     <main className={sty.root} aria-label={content.title}>
@@ -38,10 +40,10 @@ export function ProjectPage({ content }: ProjectPageProps) {
 
       <header className={hasFinding ? sty.headerWithFinding : sty.headerSolo}>
         <Sheet className={sty.heroSheet}>
-          {content.eyebrow && (
-            <div className={sty.eyebrow}>{content.eyebrow}</div>
-          )}
+          {content.eyebrow && (<div className={sty.eyebrow}>{content.eyebrow}</div>)}
+
           <h1 className={sty.title}>{content.title}</h1>
+          
           {content.subtitle && (
             <p className={sty.subtitle}>
               <Markdown value={content.subtitle} inline />
@@ -80,7 +82,7 @@ export function ProjectPage({ content }: ProjectPageProps) {
 
         {hasFinding && (
           <Sheet accent="copper" className={sty.findingCard}>
-            <div className={sty.findingEyebrow}>The finding</div>
+            <div className={sty.findingEyebrow}>{findingEyebrow}</div>
             <p className={sty.findingBody}>
               <Markdown value={finding.body} inline />
             </p>

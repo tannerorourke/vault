@@ -1,22 +1,14 @@
 {
+  "live": true,
   "pid": "negation-snli",
-  "order": 2,
-  "title": "Negation is Not Enough",
-  "summary": "A deeper look at premise-negation artifacts in SNLI - and why slice-aware augmentation only goes so far.",
-  "filterIds": ["aiml", "research", "labs"],
+  "order": 3,
+  "title": "Syntactic Negation Probing",
+  "summary": "Where does negation live in a sentence, and which positions trip up a fine-tuned Electra NLI model?",
+  "filterIds": ["labs"],
   "year": "2025",
-  "readTime": 8,
-  "isFeature": true,
-  "eyebrow": "Research · 2025",
-  "subtitle": "Diagnosing a 'premise negation → contradiction' shortcut in a fine-tuned ELECTRA-small model on SNLI, then probing how far targeted contrast sets and slice-aware loss reweighting can push it.",
-  "cardImage": {
-    "src": "/content/negation-snli/hero.png",
-    "alt": "Negation patterns and accuracy on SNLI"
-  },
-  "heroImage": {
-    "src": "/content/negation-snli/hero.png",
-    "alt": "Premise vs hypothesis negation accuracy on SNLI"
-  },
+  "isFeature": false,
+  "eyebrow": "Labs · 2025",
+  "subtitle": "If 'The room is never empty without music', then is 'The room empty with music'? \n\n Negation is a common pitfall for NLI models, we built a detailed dependency-parse-driven analyzer to locate negation cues and their syntactic anchors, and found that a fine-tuned ELECTRA-small over-predicts contradiction whenever negation lives in the premise.",
   "tags": [
     { "label": "NLP", "color": "teal" },
     { "label": "PyTorch", "color": "teal" },
@@ -28,15 +20,15 @@
     { "label": "Labs", "color": "grey" }
   ],
   "links": [
-    { "label": "Paper (PDF)", "href": "/content/negation-snli/paper.pdf", "icon": "pdf", "download": "negation-is-not-enough.pdf" },
-    { "label": "GitHub", "href": "https://github.com/tannerorourke/aug-lexical-negation", "icon": "github" }
+    { "icon": "github", "href": "https://github.com/tannerorourke/aug-lexical-negation" },
+    { "text": "Read the paper", "href": "/content/negation-snli/negation-is-not-enough-orourke-2025.pdf", "download": "negation-is-not-enough-orourke-2025.pdf" }
   ],
   "sections": [
     {
       "type": "Paragraph",
       "id": "overview",
       "title": "Overview",
-      "body": "State-of-the-art NLI models routinely lean on shallow lexical heuristics - antonyms, bag-of-words overlap, and the presence of a single negation word - to clear benchmarks like SNLI. This project asks a narrower question: *where* in a sentence does negation appear, and does that location change how the model behaves?\n\nI fine-tuned a baseline `ELECTRA-small` discriminator on SNLI, then sliced its predictions along three axes: (i) part-of-speech region of the negation cue, (ii) lexical overlap between premise and hypothesis, and (iii) whether negation appears in the premise, hypothesis, both, or neither. The findings motivated a two-stage intervention - contrast-set augmentation plus slice-aware loss reweighting - explicitly designed to keep the model architecture frozen and probe how far data-side fixes can take you."
+      "body": "State-of-the-art NLI models routinely lean on shallow lexical heuristics - antonyms, bag-of-words overlap, and the presence of a single negation word - to clear benchmarks like SNLI. This project asks a narrower question: *where* in a sentence does negation appear, and does that location change how the model behaves?\n\nI fine-tuned a baseline `ELECTRA-small` discriminator on SNLI, then built a dependency-parse-driven analyzer (NPAS) that locates each negation cue inside the sentence's syntactic structure and assigns it to one of seven regions: root, subject, object, locative, attribute, modal, or quantifier. Slicing predictions by region - alongside lexical overlap and label distribution - surfaced a premise-side contradiction shortcut that a two-stage intervention (contrast-set augmentation plus slice-aware loss reweighting) could mitigate, but not remove."
     },
     {
       "type": "BulletedList",
@@ -44,16 +36,32 @@
       "title": "Headline findings",
       "intro": "Three results drove the rest of the project:",
       "items": [
+        "**Negation has a location, and the location matters.** Slicing by dependency region - not just by whether a negation word appears - exposes failures invisible to coarser analysis. Premise-root and premise-subject negation accuracy stayed in the 58–59% range while overall accuracy held at 86%.",
         "**Premise negation is vanishingly rare in SNLI.** Only ~0.6% of validation examples contain a negation cue in the premise - captions from Flickr30k almost never assert what is *not* happening.",
-        "**The model overgeneralizes 'negation → contradiction', but only on the premise side.** Hypothesis-negation reflects a real dataset prior (NRI ≈ 0.025); premise-negation injects an unwarranted bias (NRI ≈ 0.099) where gold labels don't actually skew toward contradiction.",
-        "**Augmentation helps coverage but not the core artifact.** Adding contrast examples and reweighting slices improved overall accuracy modestly (85.4% → 86.2%) and lifted rare slices, yet premise-negation NRI for contradiction *increased* to 0.147 - the shortcut is structural, not just under-sampled."
+        "**The model overgeneralizes 'negation → contradiction', but only on the premise side.** Hypothesis-negation reflects a real dataset prior (NRI ≈ 0.025); premise-negation injects an unwarranted bias (NRI ≈ 0.099) where gold labels don't actually skew toward contradiction. Augmentation reduced this on rare slices but pushed the bias *up* on PREM_ONLY (NRI ≈ 0.147) - the shortcut is structural, not just under-sampled."
       ]
     },
     {
+      "type": "Image",
+      "id": "loop-diagram",
+      "title": "The experiment loop",
+      "src": "/content/negation-snli/npas-experiment-loop.svg",
+      "alt": "Vertical flow diagram showing SNLI feeding ELECTRA-small fine-tuning, slice analysis along six axes, diagnosis surfacing premise-negation failure, two intervention boxes (contrast augmentation and slice-aware reweighting) feeding back into a retraining step",
+      "caption": "The full project as a loop: fine-tune, slice, diagnose, intervene, retrain. Slice analysis runs along six axes - the negation pattern, lexical overlap, NPAS regions, label distributions, NRI, and per-slice confusion matrices."
+    },
+    {
       "type": "Paragraph",
-      "id": "npas",
-      "title": "NPAS: locating negation in the dependency tree",
-      "body": "To analyze where negation operates, I built a small pipeline I call **NPAS** (Negation-Perturbation Analysis with Slices). For each premise/hypothesis it runs a spaCy parse, detects cues using a layered approach - single-token cues (`not`, `n't`, `never`, `no`), negative pronouns (`nobody`, `nothing`), negative verbs (`deny`, `refuse`, `lack`, `fail`), the `without` preposition, the `rule out` particle verb, and multi-token Matcher patterns like `never ever` and `in no way`, plus a `neither…nor` sentence-level rule - and then walks each cue's anchor token to classify it into one of seven syntactic regions.\n\nThe regions are `root` (main predicate), `subject`, `object`, `locative`, `attribute`, `modal`, and `quantifier`. Each cue gets a scope span via the anchor's subtree, and pair-level features encode which regions are negated in the premise vs. hypothesis. This is what made it possible to ask questions like 'how does the model do when negation modifies the subject of the premise?' rather than just 'is there a `not` somewhere?'."
+      "id": "npas-intro",
+      "title": "Locating negation with dependency parses",
+      "body": "The diagnostic engine for the whole project is a small pipeline I call **NPAS** (Negation-Perturbation Analysis with Slices). Most negation analyses in NLI ask a binary question: does this sentence contain a negation word? NPAS asks a structural one instead - where does the negation attach, and what is it modifying?\n\nFor each premise and hypothesis, NPAS runs a spaCy dependency parse, then detects cues using three parallel strategies. **Token rules** catch single-word negators (`not`, `n't`, `never`, `no`), negative pronouns (`nobody`, `nothing`), negative verbs (`deny`, `refuse`, `lack`, `fail`), the `without` preposition, and the `rule out` particle verb. **Phrase patterns** match multi-token cues like `never ever` and `in no way` via spaCy's Matcher. **Sentence-level rules** handle `neither…nor` coordination.\n\nEach cue's *anchor* - the token it grammatically modifies - is then classified into one of seven regions by inspecting its dependency label, part-of-speech tag, and children: `root` for the main predicate, `subject` for negated noun-phrase subjects, `object` for direct/indirect objects and complements, `locative` for prepositional phrases, `attribute` for adjectival predicates, `modal` for auxiliary verbs, and `quantifier` for determiners and numerals. Each cue's *scope* is taken as the anchor's subtree, clipped to the sentence. This gives per-pair feature flags like `prem_neg_subject` and `hyp_neg_root` that the rest of the analysis slices on."
+    },
+    {
+      "type": "Image",
+      "id": "npas-diagram",
+      "title": "NPAS applied to a single sentence",
+      "src": "/content/negation-snli/diagram-npas-pipeline.svg",
+      "alt": "Diagram showing the sentence 'The room is never empty without music' tokenized with dependency labels and NPAS region assignments for every token. Negation cues 'never' and 'without' are highlighted in coral with arcs connecting them to their syntactic anchors 'is' and 'music'. The region labels under is and music are coral; the labels under other tokens are faded gray. Below, a panel shows the three cue-detection strategies, with token-rule matching highlighted as the one that fired. The output is the feature flags prem_neg_root and prem_neg_locative.",
+      "caption": "Walking the pipeline on 'The room is never empty without music.' Two cues fire (never and without), each anchored on a different token via different dependency relations, lighting up two of the seven syntactic regions."
     },
     {
       "type": "Image",
@@ -67,13 +75,13 @@
       "type": "Paragraph",
       "id": "nri",
       "title": "Negation Reliance Index",
-      "body": "To quantify *how much* the model overuses negation as a cue, I defined a **Negation Reliance Index** (NRI):\n\n`NRI(ℓ) = Δ_pred(ℓ) - Δ_gold(ℓ)`\n\nwhere `Δ` is the change in label probability conditioned on negation being present vs. absent. NRI > 0 means the model leans on negation as evidence for label ℓ *more strongly than the dataset itself does*. It separates real dataset bias (which the model is supposed to learn) from spurious model bias (which it shouldn't)."
+      "body": "Counting accuracy by slice tells you *where* the model fails, not *why*. To quantify how much the model overuses negation as a cue, I defined a **Negation Reliance Index** (NRI):\n\n`NRI(ℓ) = Δ_pred(ℓ) − Δ_gold(ℓ)`\n\nwhere `Δ` is the change in label probability conditioned on negation being present vs. absent. NRI > 0 means the model leans on negation as evidence for label ℓ *more strongly than the dataset itself does*. This is the key separator: real dataset bias (which the model is supposed to learn) vs. spurious model bias (which it shouldn't)."
     },
     {
       "type": "Image",
       "id": "table3",
       "title": "NRI for CONTRADICTION: hypothesis vs. premise",
-      "src": "/content/negation-snli/table3-nri.png",
+      "src": "/content/negation-snli/table3-nri-for-contradiction.png",
       "alt": "NRI table comparing hypothesis-negation and premise-negation reliance for the contradiction label",
       "caption": "Hypothesis-negation NRI is small (0.025) - the model mirrors a real dataset coupling. Premise-negation NRI is four times larger (0.099) and points the wrong way: gold labels for premise-negation are roughly balanced, yet the model predicts contradiction 40% of the time."
     },
@@ -81,7 +89,7 @@
       "type": "Paragraph",
       "id": "intervention",
       "title": "Intervention: contrast sets + slice-aware reweighting",
-      "body": "The intervention had two stages. First, I hand-built ~150 contrastive examples seeded from SNLI premises with explicit negation, generating hypotheses that (i) preserve the core event, (ii) cover under-represented region patterns, and (iii) deliberately produce `NEUTRAL` or `ENTAILMENT` labels - directly attacking the 'premise negation = contradiction' shortcut. Examples were split 70/30 into train and validation after a deterministic shuffle.\n\nSecond, after a dry training run to recompute slice error rates, I applied a margin-dependent reweighting in the cross-entropy loss: examples in slices where the baseline performed worse than overall accuracy (premise root, premise subject, premise quantifier) were upweighted; slices the baseline already handled well were not. Architecture, optimizer, and hyperparameters stayed identical to the baseline."
+      "body": "The diagnosis pointed at two targets - under-coverage of premise-negation in the training distribution, and an over-strong shortcut that the model had already internalized. The intervention attacked both, deliberately keeping the architecture frozen so any improvement could be attributed to data-side changes alone.\n\nFirst, I hand-built ~150 contrastive examples seeded from SNLI premises with explicit negation, generating hypotheses that (i) preserve the core event, (ii) cover under-represented region patterns identified by NPAS, and (iii) deliberately produce `NEUTRAL` or `ENTAILMENT` labels - directly attacking the 'premise negation = contradiction' shortcut. Examples were split 70/30 into train and validation after a deterministic shuffle.\n\nSecond, after a dry training run to recompute slice error rates, I applied a margin-dependent reweighting in the cross-entropy loss: examples in slices where the baseline performed worse than overall accuracy (premise root, premise subject, premise quantifier) were upweighted; slices the baseline already handled well were left alone. Optimizer, batch size, and epoch count stayed identical to the baseline."
     },
     {
       "type": "Image",
@@ -89,16 +97,17 @@
       "title": "Results: baseline vs. augmented",
       "src": "/content/negation-snli/table4-baseline-vs-augmented.png",
       "alt": "Comparison of baseline and augmented model accuracy across negation patterns",
-      "caption": "Augmentation improved overall accuracy (85.4% → 86.2%) and dramatically improved the BOTH slice (50% → 85%), but PREM_ONLY accuracy fell from 75.7% to 66.7% on a larger, harder evaluation slice."
+      "caption": "Augmentation improved overall accuracy (85.4% → 86.2%) and dramatically improved the BOTH slice (50% → 85%), but PREM_ONLY accuracy fell from 75.7% to 66.7% on a larger, harder evaluation slice. The premise-side shortcut survived."
     },
     {
       "type": "BulletedList",
       "id": "takeaways",
       "title": "Takeaways",
       "items": [
+        "**Dependency-parse slicing surfaces failures that bag-of-words analysis hides.** 'Does the sentence contain a negation word?' is too coarse - the same word in subject vs. root vs. locative position produces measurably different model behavior. The seven-region taxonomy turns out to be the right granularity for this dataset.",
         "**Slice-aware augmentation can stabilize aggregate accuracy while exposing rare patterns** - the augmented model didn't regress on the easy majority slice, which isn't guaranteed.",
         "**Lexical overlap is not where the model fails most.** The baseline handled high-overlap examples (92%) better than low-overlap (85%). The interesting failure mode is structural, not surface.",
-        "**'Hypothesis-negation → contradiction' is mostly a real dataset prior.** The model isn't inventing it; it's learning what SNLI teaches. NRI is a useful tool for telling those cases apart from genuinely spurious shortcuts.",
+        "**'Hypothesis-negation → contradiction' is mostly a real dataset prior.** The model isn't inventing it; it's learning what SNLI teaches. NRI is the tool that separates real coupling from spurious shortcut.",
         "**Premise-negation is the spurious one - and dataset-side fixes don't fully resolve it.** Even after augmentation and reweighting, premise-root and premise-subject negation accuracy stayed in the 58–59% range. Architectural interventions (residual debiasing heads, ensemble-based artifact experts) are likely needed for real movement here.",
         "**Building NPAS was 60% of the value.** Once you can ask 'where does negation live?' as a structured query rather than a regex, every other diagnostic in the project comes nearly free."
       ]

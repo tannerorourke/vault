@@ -3,7 +3,7 @@ import { ContentNavLink } from "./nav";
 
 
 /** Governs home-page header tabs filter by. */
-export type ProjectFilterId = "aiml" | "experience" | "research" | "labs";
+export type ProjectFilterId = "research" | "labs" | "experience";
 
 // --------------------------------------------------------------------
 // Section types - discriminated by key
@@ -89,10 +89,12 @@ export type FindingCard = {
   jumpToId?: string;
   /** Display label for the jump link. Defaults to the matching section's title, then to jumpToId. */
   jumpToLabel?: string;
+  eyebrowLabel?: string;
 };
 
 export type ProjectContent = {
-  /** Identity */
+  /** Required */
+  live: boolean;
   pid: string;
   title: string;
 

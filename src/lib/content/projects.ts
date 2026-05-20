@@ -1,17 +1,14 @@
 import type { ProjectContent } from "@/lib/types/project-content";
-import firefusion from "@/content/projects/fire-fusion/content.json";
+import fire from "@/content/projects/fire/content.json";
 import gpt4Causality from "@/content/projects/gpt4-causality/content.json";
 import negationSnli from "@/content/projects/negation-snli/content.json";
-// import spotifyAnalysis from "./spotify-analysis/content.json";
-// import stkRacerCnn from "./stk-racer-cnn/content.json";
 
-const ALL = [
-  firefusion,
+
+const ALL = ([
+  fire,
   gpt4Causality,
   negationSnli,
-  // spotifyAnalysis,
-  // stkRacerCnn,
-] as unknown as ProjectContent[];
+] as unknown as ProjectContent[]).filter((p) => p.live);
 
 export const PROJECTS: ProjectContent[] = [...ALL].sort(
   (a, b) => (a.order ?? 99) - (b.order ?? 99),
