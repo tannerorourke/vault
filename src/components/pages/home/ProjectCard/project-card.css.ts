@@ -1,6 +1,7 @@
 import { globalStyle, style } from "@vanilla-extract/css";
 import { theme } from "@/lib/theme/theme.css";
 
+
 const EASE = "cubic-bezier(.2,.1,.2,1)";
 
 export const cardBase = style({
@@ -12,11 +13,12 @@ export const cardBase = style({
   padding: "22px 22px 20px 22px",
   
   background: theme.color.cardFrosted,
-  backdropFilter: "blur(6px)",
-  WebkitBackdropFilter: "blur(6px)",
+  backdropFilter: "blur(6px) saturate(180%)",
+  WebkitBackdropFilter: "blur(10x) saturate(180%)",
+  boxShadow: theme.color.cardFrostedShadow,
+  WebkitBoxShadow: theme.color.cardFrostedShadow,
   borderRadius: "14px",
   border: `1px solid ${theme.color.cardFrostedBorder}`,
-  boxShadow: "none",
   overflow: "hidden",
   textDecoration: "none",
   color: "inherit",
@@ -30,7 +32,7 @@ export const cardBase = style({
       boxShadow: `0 16px 40px -10px ${theme.color.shadowStrong}`,
       borderColor: "transparent",
       outline: "none",
-    },
+    }
   },
 });
     // copper feature rail pseudo-element
@@ -87,20 +89,28 @@ export const cardBase = style({
         opacity: 0.7,
       });
 
+
+
+  export const swapBox = style({
+    position: "relative",
+    // minHeight: "2.5lh",
+    height: "100%",
+    overflow: "hidden",
+  });
+
+
+
+
+
   // swap area for title and summary
   export const swap = style({
     position: "relative",
-    minHeight: "2.5lh",
+    // minHeight: "2.5lh",
+    height: "100%",
     overflow: "hidden",
     marginBottom: "14px",
   });
     export const title = style({
-      position: "absolute",
-      top: 0, left: 0, right: 0,
-      margin: 0,
-      overflow: "hidden",
-      opacity: 1,
-
       fontFamily: "var(--font-display)",
       fontSize: theme.typography.fontSize.titleSm,
       fontWeight: theme.typography.fontWeight.bold,
@@ -108,9 +118,13 @@ export const cardBase = style({
       letterSpacing: "-0.015em",
       color: theme.color.primary.main,
       display: "-webkit-box",
-      WebkitLineClamp: 2,
+      // WebkitLineClamp: 2,
       WebkitBoxOrient: "vertical",
-      
+
+      position: "absolute",
+      top: 0, left: 0, right: 0,
+      margin: 0,
+      opacity: 1,
       transform: "translateY(0)",
       transition: `opacity 240ms ease, transform 360ms ${EASE} 40ms`,
 
@@ -123,6 +137,33 @@ export const cardBase = style({
         },
       },
     });
+
+  // (tags + cta)
+  export const reveal = style({
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignContent: "space-between",
+    height: "100%",
+    flexWrap: "wrap",
+    gap: "10px",
+    marginTop: "auto", // push to bottom of flex column
+
+    opacity: 0,
+    transform: "translateY(8px)",
+    pointerEvents: "none",
+    transition: `transform 400ms ${EASE}, opacity 280ms ease`,
+
+    selectors: {
+      [`${cardBase}:hover &, ${cardBase}:focus-visible &, ${cardBase}[data-revealed="true"] &`]: {
+        opacity: 1,
+        transform: "translateY(0)",
+        pointerEvents: "auto",
+        transitionDelay: "120ms",
+      },
+    },
+  });
+
     export const summary = style({
       position: "relative",
       margin: 0,
@@ -151,28 +192,8 @@ export const cardBase = style({
       },
     });
 
-  // (tags + cta)
-  export const reveal = style({
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    gap: "10px",
-    marginTop: "auto", // push to bottom of flex column
 
-    opacity: 0,
-    transform: "translateY(8px)",
-    pointerEvents: "none",
-    transition: `transform 400ms ${EASE}, opacity 280ms ease`,
 
-    selectors: {
-      [`${cardBase}:hover &, ${cardBase}:focus-visible &, ${cardBase}[data-revealed="true"] &`]: {
-        opacity: 1,
-        transform: "translateY(0)",
-        pointerEvents: "auto",
-        transitionDelay: "120ms",
-      },
-    },
-  });
     export const tagsRow = style({
       display: "flex",
       alignItems: "center",

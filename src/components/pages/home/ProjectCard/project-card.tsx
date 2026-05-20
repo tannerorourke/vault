@@ -88,28 +88,27 @@ export function ProjectCard({
         <span className={sty.year}>{year}</span>
       </div>
 
-      <div className={sty.swap}>
+      <div className={sty.swapBox}>
         <h3 className={sty.title}>{project.title}</h3>
-        {project.summary && (
-          <p className={sty.summary}>{project.summary}</p>
-        )}
-      </div>
-
-      <div className={sty.reveal}>
-        {visibleTags.length > 0 && (
-          <div className={sty.tagsRow}>
-            {visibleTags.map((t, i) => (
-              <TagChip key={i} label={t.label} color={t.color} />
-            ))}
-            {overflow > 0 && (
-              <TagChip color="grey" label={`+${overflow}`} />
-            )}
-          </div>
-        )}
-        
-        <span className={sty.cta}>
-          <CaretCircleDown />
-        </span>
+        <div className={sty.reveal}>
+          {project.summary && (
+            <p className={sty.summary}>{project.summary}</p>
+          )}
+          {visibleTags.length > 0 && (
+            <div className={sty.tagsRow}>
+              {visibleTags.map((t, i) => (
+                <TagChip key={i} label={t.label} color={t.color} />
+              ))}
+              {overflow > 0 && (
+                <TagChip color="grey" label={`+${overflow}`} />
+              )}
+            </div>
+          )}
+          
+          <span className={sty.cta}>
+            <CaretCircleDown />
+          </span>
+        </div>
       </div>
     </Link>
   );
