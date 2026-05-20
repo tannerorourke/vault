@@ -5,7 +5,7 @@ export const breakpoints = {
   xs: 0, // phones (default)
   sm: 560, // phone landscape / small tablet portrait  multi-col becomes viable
   md: 900, // tablet landscape / standard laptop  comfortable two-up
-  lg: 1600, // large desktop  start using the extra space
+  lg: 1620, // large desktop  start using the extra space
 };
 
 type BreakpointKey = keyof typeof breakpoints;

@@ -42,7 +42,7 @@ export const grid = style({
 
   // xs: full width single col, v gap only
   gridTemplateColumns: "minmax(0, 1fr)",
-  rowGap: theme.space._16,
+  rowGap: theme.space._32,
   columnGap: 0,
 
   [mq.sm]: {
@@ -56,7 +56,7 @@ export const grid = style({
     columnGap: theme.space._48,
   },
   [mq.lg]: {
-    gridTemplateColumns: "repeat(auto-fill, minmax(280px, 360px))",
+    gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
     maxWidth: `${5 * 360 + 4 * 48}px`, // ~1992px, caps growth on ultrawide
     marginInline: "0"
   },

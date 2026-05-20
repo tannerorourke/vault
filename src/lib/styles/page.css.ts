@@ -20,16 +20,19 @@ export const page = {
   zIndex: theme.layout.zIndex.content,
   width: "100%",
   height: "100%",
-  margin: "0 auto",
-  padding: `${theme.layout.headerOffset.xs} ${theme.space._24} ${theme.space._80}`,
+  padding: `0 ${theme.space._24}`,
+  margin: `${theme.layout.headerOffset.xs} auto ${theme.space._96}`,
   [mq.sm]: { 
-    padding: `${theme.layout.headerOffset.sm} ${theme.space._24} ${theme.space._96}`,
+    padding: `0 ${theme.space._24}`,
+    margin: `${theme.layout.headerOffset.sm} 0 ${theme.space._96}`,
   },
   [mq.md]: {
-    padding: `${theme.layout.headerOffset.md} ${theme.space._96} ${theme.space._96}`,
+    padding: `0 ${theme.space._96}`,
+    margin: `${theme.layout.headerOffset.md} 0 ${theme.space._96}`,
   },
   [mq.lg]: {
-    padding: `${theme.layout.headerOffset.md} ${theme.space._112} ${theme.space._96}`,
+    padding: `0 ${theme.space._112}`,
+    margin: `${theme.layout.headerOffset.md} 0 ${theme.space._96}`,
   },
   transition: `padding 500ms ${SLOW_SNAP}`
 } satisfies ComplexStyleRule;
