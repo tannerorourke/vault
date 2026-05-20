@@ -1,0 +1,22 @@
+{
+  "live": false,
+  "pid": "interpret-gpt2",
+  "order": 2,
+  "title": "JEPA: Geometric Interpretability",
+  "summary": "circuit tracing and interpretability on a GPT-2-scale code LM",
+  "filterIds": ["labs"],
+  "year": "2026",
+  "isFeature": true,
+  "eyebrow": "Labs · 2026",
+  "subtitle": "",
+  "tags": [
+    { "label": "PyTorch", "color": "teal" },
+    { "label": "In Progress", "color": "copper" }
+  ],
+  "links": [
+    { "icon": "github", "href": "" }
+  ],
+  "sections": [
+    
+  ]
+}

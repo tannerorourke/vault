@@ -1,0 +1,23 @@
+{
+  "live": false,
+  "pid": "interpret-jepa",
+  "order": 1,
+  "title": "JEPA: Geometric Interpretability",
+  "summary": "",
+  "filterIds": ["research"],
+  "year": "2026",
+  "isFeature": true,
+  "eyebrow": "Research · 2026",
+  "subtitle": "",
+  "tags": [
+    { "label": "PyTorch", "color": "teal" },
+    { "label": "Paper", "color": "copper" },
+    { "label": "In Progress", "color": "copper" }
+  ],
+  "links": [
+    { "icon": "github", "href": "https://github.com/tannerorourke/chronos-lens" }
+  ],
+  "sections": [
+    
+  ]
+}

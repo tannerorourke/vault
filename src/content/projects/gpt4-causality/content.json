@@ -1,29 +1,23 @@
 {
+  "live": true,
   "pid": "gpt4-causality",
-  "order": 3,
-  "title": "Fact-Checking GPT-4 Outputs",
+  "order": 4,
+  "title": "is GPT-4 lying?",
   "summary": "Atomic fact verification on ChatGPT biographies using TF-IDF retrieval and DeBERTa-MNLI entailment. 85.5% accuracy.",
-  "filterIds": [
-    "aiml",
-    "research"
-  ],
+  "filterIds": ["labs"],
   "year": "2025",
-  "readTime": 7,
   "isFeature": false,
-  "eyebrow": "NLP Coursework · 2025",
+  "eyebrow": "Labs · 2025",
   "subtitle": "A FActScore-style pipeline that decomposes ChatGPT-generated biographies into atomic facts and verifies each one against retrieved Wikipedia passages - with an error analysis that surfaces a recurring failure mode I call cross-abstractive alignment.",
-  "cardImage": {
-    "src": "/content/gpt4-causality/hero-alignment-matrix.png",
-    "alt": "2x2 matrix categorizing fact-checking errors by abstraction level"
-  },
   "heroImage": {
     "src": "/content/gpt4-causality/hero-alignment-matrix.png",
     "alt": "Cross-abstractive alignment matrix: fact vs. support compression axes with example facts in each cell"
   },
   "finding": {
-    "body": "The hard cases aren't *\"the NLI model isn't smart enough.\"* They're cases where the fact and the passage live at different levels of abstraction — and need to be aligned before they can be compared.",
+    "body": "The hard cases aren't *\"the NLI model isn't smart enough.\"* They're cases where the fact and the passage live at different levels of abstraction  and need to be aligned before they can be compared.",
     "jumpToId": "cross-abstractive",
-    "jumpToLabel": "Cross-abstractive alignment"
+    "jumpToLabel": "Cross-abstractive alignment",
+    "findingEyebrow": "Abstraction alignment matters"
   },
   "tags": [
     {
@@ -103,7 +97,7 @@
         { "value": "85.5%", "label": "accuracy" },
         { "value": "0.852 / 0.858", "label": "F1 (S / NS)" },
         { "value": "221", "label": "dev-set facts" },
-        { "value": "20", "label": "false negatives — entailment-floored" }
+        { "value": "20", "label": "false negatives  entailment-floored" }
       ]
     },
     {
