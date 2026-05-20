@@ -6,6 +6,7 @@ export const shell = style({
   display: "flex",
   flexDirection: "column",
   position: "relative",
+  overflow: 'hidden',
 })
 
 export const content = style({
