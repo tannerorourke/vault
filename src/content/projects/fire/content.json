@@ -1,14 +1,14 @@
 {
   "live": true,
   "pid": "fire",
-  "order": 5,
+  "order": 8,
   "title": "Wildfire Ignition Modeling",
   "summary": "ConvFormer that forecasts next-day wildfire ignition over Washington from a 24-feature multi-modal stack",
   "filterIds": ["research"],
   "year": "2025",
   "isFeature": false,
   "readTime": 5,
-  "eyebrow": "Research · 2025",
+  "eyebrow": "Research",
   "subtitle": "Forecasting next-day wildfire ignition across Washington from 24 satellite, terrain, and meteorological features through a ConvFormer with physics-aware masking.",
   "heroImage": {
     "src": "/content/fire/ignition_heatmap.png",
@@ -71,7 +71,7 @@
         "src": "/content/fire/auprc.png",
         "alt": "Precision-recall curve for FireFusion's ignition head versus no-skill baseline"
       },
-      "imageSide": "right"
+      "side": "right"
     },
     {
       "type": "Stats",
@@ -92,7 +92,7 @@
         "src": "/content/fire/cause-cm.png",
         "alt": "Confusion matrix for the 4-class ignition cause head"
       },
-      "imageSide": "left"
+      "side": "left"
     },
     {
       "type": "BulletedList",

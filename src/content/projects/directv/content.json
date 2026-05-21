@@ -1,0 +1,73 @@
+{
+  "live": true,
+  "pid": "directv",
+  "order": 6,
+  "title": "Professional Work",
+  "summary": "Five years of frontend engineering - consumer surfaces, performance, accessibility, and tools for the team.",
+  "filterIds": ["experience"],
+  "year": "2020-2025",
+  "isFeature": false,
+  "eyebrow": "Experience",
+  "subtitle": "Frontend engineering at DirecTV and, before that, Warner Bros.",
+  "tags": [
+    { "label": "Frontend", "color": "teal" },
+    { "label": "Performance", "color": "teal" },
+    { "label": "Accessibility", "color": "teal" }
+  ],
+  "sections": [
+    {
+      "type": "Paragraph",
+      "id": "intro",
+      "body": "From late 2020 to mid-2025: frontend engineering, first at Warner Bros. and then at DirecTV. The DirecTV stretch was on the consumer site - the public-facing surfaces customers interact with when shopping for or managing service."
+    },
+    {
+      "type": "2upTextImage",
+      "id": "channel-lineup",
+      "title": "Channel lineup",
+      "body": "The channel lineup is one of the more trafficked surfaces on the site, and one of the heavier ones. A server-side rendering refactor restructured how it loaded - content arriving sooner, behaving more predictably once there. The shift was measurable across the usual Core Web Vitals.",
+      "image": {
+        "src": "/content/directv/channel-lineup-category.png",
+        "alt": "The DirecTV channel lineup page after the SSR refactor."
+      },
+      "side": "right"
+    },
+    {
+      "type": "Image",
+      "id": "accessibility",
+      "title": "Accessibility",
+      "src": "/content/directv/accessibility-scores.png",
+      "alt": "Health-score averages across four DirecTV properties.",
+      "caption": "A multi-month effort across four properties to bring the site into WCAG 2.2 conformance. Manual audits, automated scans, remediation coordinated across teams - the slow, unglamorous kind of work."
+    },
+    {
+      "type": "2upTextImage",
+      "id": "tooling",
+      "title": "Tooling for the team",
+      "body": "Some of the more useful work was infrastructure rather than features. The shared component library moved to independent versioning so teams could pull updates without coordinating releases. A small in-browser tool let engineers and designers preview components in context without a staging deploy.",
+      "image": {
+        "src": "/content/directv/channel-lineup-search-tool.png",
+        "alt": "An in-page component preview tool showing the channel lineup in an inspection view."
+      },
+      "side": "left"
+    },
+    {
+      "type": "BulletedList",
+      "id": "surfaces",
+      "title": "Other surfaces",
+      "intro": "A partial inventory of other things I shipped or contributed to:",
+      "items": [
+        "Package comparison modal",
+        "Regional Sports Network lookup tool",
+        "Video player theming",
+        "Show carousels - light and dark",
+        "Marketing components - countdown timers, reward callouts"
+      ]
+    },
+    {
+      "type": "Paragraph",
+      "id": "warner-bros",
+      "title": "Before that",
+      "body": "Warner Bros., 2020-2023. Internal applications for production teams - casting payments, script management, asset tracking. Mostly solo ownership end-to-end, occasionally directing offshore engineers. The work taught me how to talk about software with people who weren't engineers, which has been useful since."
+    }
+  ]
+}

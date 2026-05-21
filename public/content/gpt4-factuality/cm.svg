@@ -1,0 +1,48 @@
+<svg viewBox="0 0 530 280" xmlns="http://www.w3.org/2000/svg" font-family="ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif">
+  <rect width="560" height="320" fill="#ffffff"/>
+
+  <text x="40" y="34" font-size="13" fill="#57534e">221 dev-set facts | 85.5% accuracy | F1 0.852 / 0.858</text>
+
+  <text x="330" y="63" font-size="11" font-weight="600" fill="#44403c" letter-spacing="1.5" text-anchor="middle">
+    PREDICTED</text>
+
+  <text x="230" y="85" font-size="13" fill="#292524" text-anchor="middle">
+    supported</text>
+  <text x="410" y="85" font-size="13" fill="#292524" text-anchor="middle">
+    not supported</text>
+
+  <g transform="translate(40, 190) rotate(-90)">
+    <text font-size="11" font-weight="600" fill="#44403c" letter-spacing="1.5" text-anchor="middle">
+      GOLD</text>
+  </g>
+
+  <text x="130" y="145" font-size="13" fill="#292524" text-anchor="end">
+    supported</text>
+  <text x="130" y="225" font-size="13" fill="#292524" text-anchor="end">
+    not supported</text>
+
+  <!-- GRID -->
+  <rect x="140" y="100" width="180" height="80" fill="#eef4f3" stroke="#cdd9d6" stroke-width="1" rx="2"/>
+  <text x="230" y="145" font-size="32" font-weight="600" fill="#0f766e" text-anchor="middle">
+    92</text>
+  <text x="230" y="167" font-size="11" fill="#0f766e" text-anchor="middle" letter-spacing="0.5">
+    TRUE POSITIVE</text>
+
+  <rect x="320" y="100" width="180" height="80" fill="#fdf6ec" stroke="#f0d4ad" stroke-width="1" rx="2"/>
+  <text x="410" y="145" font-size="32" font-weight="600" fill="#b45309" text-anchor="middle">
+    20</text>
+  <text x="410" y="167" font-size="11" fill="#b45309" text-anchor="middle" letter-spacing="0.5">
+    FALSE NEGATIVE</text>
+
+  <rect x="140" y="180" width="180" height="80" fill="#fdf6ec" stroke="#f0d4ad" stroke-width="1" rx="2"/>
+  <text x="230" y="225" font-size="32" font-weight="600" fill="#b45309" text-anchor="middle">
+    12</text>
+  <text x="230" y="245" font-size="11" fill="#b45309" text-anchor="middle" letter-spacing="0.5">
+    FALSE POSITIVE</text>
+
+  <rect x="320" y="180" width="180" height="80" fill="#eef4f3" stroke="#cdd9d6" stroke-width="1" rx="2"/>
+  <text x="410" y="225" font-size="32" font-weight="600" fill="#0f766e" text-anchor="middle">
+    97</text>
+  <text x="410" y="245" font-size="11" fill="#0f766e" text-anchor="middle" letter-spacing="0.5">
+    TRUE NEGATIVE</text>
+</svg>

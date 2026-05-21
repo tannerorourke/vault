@@ -1,13 +1,13 @@
 {
   "live": false,
   "pid": "mnist",
-  "order": 1,
+  "order": 7,
   "title": "Professional Work",
   "summary": "Side-by-side implementations of VAE, GAN, normalizing flow, and diffusion on MNIST",
   "filterIds": ["labs"],
   "year": "2026",
   "isFeature": false,
-  "eyebrow": "Labs · 2026",
+  "eyebrow": "Labs",
   "subtitle": "",
   "tags": [
     { "label": "PyTorch", "color": "teal" }

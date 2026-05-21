@@ -1,0 +1,22 @@
+{
+  "live": false,
+  "pid": "interpret-jepa",
+  "order": 5,
+  "title": "Diffusion Velocity field circuitry",
+  "summary": "What's the velocity field of a diffusion flow model thinking about?",
+  "filterIds": ["research"],
+  "year": "2026",
+  "isFeature": true,
+  "eyebrow": "Labs",
+  "subtitle": "Independent work (with UT Austin advisor input), on introducing MI techniques to Joint Embedding Predictive Architectures trained on clinical encounter sequences. Targeting ML4H 2026 and ICLR 2027.",
+  "tags": [
+    { "label": "In Progress", "color": "copper" },
+    { "label": "Mechanistic Interpretability", "color": "teal" },
+    { "label": "Image Generation", "color": "teal" },
+    { "label": "PyTorch", "color": "teal" }
+    
+  ],
+  "links": [
+    { "icon": "github", "href": "" }
+  ]
+}
