@@ -7,7 +7,6 @@
   "filterIds": ["research"],
   "year": "2025",
   "isFeature": false,
-  "readTime": 5,
   "eyebrow": "Research",
   "subtitle": "Forecasting next-day wildfire ignition across Washington from 24 satellite, terrain, and meteorological features through a ConvFormer with physics-aware masking.",
   "heroImage": {

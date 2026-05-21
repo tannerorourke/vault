@@ -15,12 +15,10 @@ import * as sty from "./header.css";
 
 
 type HeaderProps = {
-  enableLoadAnimation?: boolean;
   enableClickAnimation?: boolean;
 };
 
 export function Header({
-  enableLoadAnimation = false,
   enableClickAnimation = true,
 }: HeaderProps) {
   const { pathname, activeFilters, setActiveFilters } = useAppContext()
@@ -28,7 +26,6 @@ export function Header({
 
   /** Logo: Go home, or reset filters */
   const onLogoClick = () => {
-    console.log("logo clicked")
     if (pathname === "/") {
       setActiveFilters([]);
       return;
@@ -85,19 +82,13 @@ export function Header({
       });
     }
 
-    if (enableLoadAnimation && spans.length > 0) {
-      window.setTimeout(() => {
-        spans[0].dataset.active = '';
-      }, 500);
-    }
-
     return () => {
       spans.forEach((span) => {
         span.removeEventListener("click", handleClick);
         span.removeEventListener("animationend", handleAnimationEnd);
       });
     };
-  }, [enableLoadAnimation, enableClickAnimation])
+  }, [enableClickAnimation])
 
   return (
     <header className={`${sty.root}`}>

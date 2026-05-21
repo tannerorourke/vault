@@ -10,7 +10,7 @@
   "eyebrow": "Labs",
   "subtitle": "A followup analysis to FActScore (Min et al., 2023). We find a recurring pattern where automated fact-checkers get things wrong (what I call cross-abstractive alignment), and relate this back to system-vs-human agreement in a fact-checking environment.",
   "heroImage": {
-    "src": "/content/gpt4-factuality/cross-abstractive-alignment.svg",
+    "src": "/content/gpt4-factuality/cross-abstractive-alignment-hero.svg",
     "alt": "2x2 matrix of fact-checking error categories with example facts in each cell"
   },
   "tags": [
@@ -33,12 +33,12 @@
       "type": "BulletedList",
       "id": "how-to-fact-check",
       "title": "How to fact check",
-      "intro": "The task: given an atomic fact (*\"Marianne McAndrew is a singer\"*) and up to five BM25-retrieved Wikipedia passages, label it Supported or Not Supported.\n\nA lexical baseline asks how many of the fact's content words appear in the passage, TF-IDF-weighted so common words count for less than rare ones. Reaches **79.2%** accuracy. The intuition: if a passage shares the fact's salient vocabulary, the fact is probably supported. That's workable until the fact and the passage say the same thing in different words, or until a single token decides truth (*\"Under-23\"* vs. *\"U-20\"*).\n\nThe entailment pipeline below swaps bag-of-words for a model trained to recognize when one sentence logically implies another. Reaches **85.5%**.",
+      "intro": "The task: given an atomic fact (*\"Marianne McAndrew is a singer\"*) and up to five BM25-retrieved Wikipedia passages, label it **Supported** or **Not Supported**.\n\nA lexical baseline asks how many of the fact's content words appear in the passage, TF-IDF-weighted so common words count for less than rare ones. Reaches **79.2%** accuracy. The intuition is that if a passage shares the fact's salient vocabulary, the fact is probably supported. That's workable until the fact and the passage say the same thing in different words, or until a single token decides truth (*\"Under-23\"* vs. *\"U-20\"*).\n\nThe entailment pipeline below swaps bag-of-words for a model trained to recognize when one sentence logically implies another. Reaches **85.5%**.",
       "items": [
         "**Windowing.** Each passage is split into sentences and adjacent bi-sentence pairs, normalized (NFKC, diacritic stripping) and lemmatized with spaCy. Each window becomes a candidate premise - a chunk small enough for the NLI model to handle.",
         "**Top-k pruning.** Each window gets a cheap composite score against the fact - `0.6·recall + 0.3·Jaccard + 0.1·bigram-overlap` - and only the top 24 pass to NLI. A passage often has dozens of candidate windows; the pre-score filters distractors before the slow model sees them.",
         "**DeBERTa-v3-MNLI entailment.** Each surviving window runs as premise against the fact as hypothesis, batched. The model outputs probabilities for *entail*, *neutral*, *contradict*. Model: `MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli`.",
-        "**Threshold + win-gap decision.** Predict S only if `entail ≥ 0.55` AND `entail − max(neutral, contradict) ≥ 0.15`. The threshold catches confidence; the win gap kills 0.55-entail / 0.46-neutral coin-flip calls dressed up as confidence."
+        "**Threshold + win-gap decision.** Predict S only if `entail ≥ 0.55` AND `entail - max(neutral, contradict) ≥ 0.15`. The threshold catches confidence; this stops 0.55-entail / 0.46-neutral coin-flip calls dressed up as confidence."
       ]
     },
     {
@@ -93,7 +93,7 @@
       "title": "Parting thoughts",
       "intro": "Fact-checking matters because LLMs are now embedded in workflows where users treat their output as authoritative. The same property that makes them useful - synthesizing across context - also makes them prone to plausible-sounding errors that are hard to spot without verification. Automated fact-checking is one piece of the broader effort to keep these models accountable to ground truth; the cross-abstractive failure mode points at where current pipelines need work. Three things I'd try next:",
       "items": [
-        "**Sentence-embedding pre-pruning.** Run sBERT or E5 alongside the lexical composite score. Catches the FGM-style false negatives that get killed by zero lexical overlap before NLI sees them. Cheap to add.",
+        "**Sentence-embedding pre-pruning.** Run sBERT or E5 alongside the lexical composite score. Catches the FGM-style false negatives that get killed by zero lexical overlap before NLI sees them.",
         "**Per-fact threshold calibration.** Detail mismatches and summarization-style facts almost certainly want different operating points. The fact that every false negative is a threshold miss suggests the threshold is wrong for some facts, more than the model is.",
         "**LLM-as-judge in place of NLI.** The paper's actual automated pipeline. Would close the FActScore gap and handle the multi-sentence-synthesis cases NLI breaks on. The real reproduction of FActScore lives here."
       ]

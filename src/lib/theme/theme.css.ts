@@ -330,6 +330,3 @@ export const darkTheme = createTheme(theme, {
 		layout,
 		sheet: darkSheet,
 });
-
-// Backwards-compat alias - remove after layout.tsx is updated
-export const themeClass = lightTheme;

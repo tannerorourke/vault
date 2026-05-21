@@ -106,10 +106,7 @@ export type ProjectContent = {
   summary: string;
   filterIds: ProjectFilterId[];
   year: string;
-  readTime?: number;
   isFeature?: boolean;
-  /** Optional thumbnail; falls back to heroImage when omitted. */
-  cardImage?: { src: string; alt?: string };
   /** Detail-page header */
   /** Small uppercase line above the title - e.g. "Labs · 2025". */
   eyebrow?: string;

@@ -27,10 +27,6 @@ export const PROJECTS: ProjectContent[] = [...ALL].sort(
 export const PROJECTS_BY_PID: Record<string, ProjectContent> =
   Object.fromEntries(PROJECTS.map((p) => [p.pid, p]));
 
-export function getAllProjects(): ProjectContent[] {
-  return PROJECTS;
-}
-
 export function getProjectContent(slug: string): ProjectContent | null {
   return PROJECTS_BY_PID[slug] ?? null;
 }

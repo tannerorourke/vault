@@ -6,7 +6,6 @@ import { useAppContext } from "@/components/navigation/AppProvider";
 import type { ProjectContent, ProjectFilterId } from "@/lib/types/project-content";
 
 import ProjectCard from "@/components/pages/home/ProjectCard";
-// import Footer from "@/components/navigation/Footer";
 
 import { NAV_FILTERS } from "@/content/nav-links";
 import * as sty from "./home-page.css";

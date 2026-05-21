@@ -14,7 +14,7 @@ import Sheet from "@/components/ui/Sheet";
 import * as sty from "./sections.css";
 
 
-export function SectionShell({
+function SectionShell({
   id,
   title,
   accent,
@@ -38,7 +38,7 @@ export function SectionShell({
   );
 }
 
-export function Paragraph({ s }: { s: SectionParagraph }) {
+function Paragraph({ s }: { s: SectionParagraph }) {
   return (
     <SectionShell id={s.id} title={s.title} accent={s.accent}>
       <div className={sty.prose}>
@@ -48,7 +48,7 @@ export function Paragraph({ s }: { s: SectionParagraph }) {
   );
 }
 
-export function BulletedList({ s }: { s: SectionBulletedList }) {
+function BulletedList({ s }: { s: SectionBulletedList }) {
   return (
     <SectionShell id={s.id} title={s.title} accent={s.accent}>
       {s.intro && (
@@ -67,7 +67,7 @@ export function BulletedList({ s }: { s: SectionBulletedList }) {
   );
 }
 
-export function TwoUpTextImage({ s }: { s: SectionTwoUpTextImage }) {
+function TwoUpTextImage({ s }: { s: SectionTwoUpTextImage }) {
   const imageSide = s.side ?? "right";
   const isStacked = imageSide === "top" || imageSide === "bottom";
 
@@ -100,7 +100,7 @@ export function TwoUpTextImage({ s }: { s: SectionTwoUpTextImage }) {
   );
 }
 
-export function ImageSection({ s }: { s: SectionImage }) {
+function ImageSection({ s }: { s: SectionImage }) {
   return (
     <SectionShell id={s.id} title={s.title} accent={s.accent}>
       <img
@@ -113,7 +113,7 @@ export function ImageSection({ s }: { s: SectionImage }) {
   );
 }
 
-export function VideoSection({ s }: { s: SectionVideo }) {
+function VideoSection({ s }: { s: SectionVideo }) {
   const isYoutube =
     s.kind === "youtube" || /youtube\.com|youtu\.be/.test(s.src);
   return (
@@ -142,11 +142,10 @@ export function VideoSection({ s }: { s: SectionVideo }) {
   );
 }
 
-export function StatsSection({ s }: { s: SectionStats }) {
+function StatsSection({ s }: { s: SectionStats }) {
   const isHeadlineMode = s.stats.length > 4;
   return (
     <SectionShell id={s.id} title={s.title} accent={s.accent}>
-      {/* <StatStrip stats={s.stats} /> */}
       <div className={sty.strip} role="list">
         {s.stats.map((s, i) => (
           <div key={i} className={sty.cell} role="listitem">
