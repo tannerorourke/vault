@@ -98,7 +98,7 @@ export const PALETTES = {
 
 // ---------------------------------------------------------------------------
 // Cluster definitions (world space)
-// cx/cy         - proportional center (0–1 of world dimensions)
+// cx/cy         - proportional center (0-1 of world dimensions)
 // rx            - major axis radius (proportion of WORLD_W)
 // ry            - minor axis radius (proportion of WORLD_H); rx/ry ratio = aspect
 // angle         - rotation of major axis in radians (0 = horizontal →)

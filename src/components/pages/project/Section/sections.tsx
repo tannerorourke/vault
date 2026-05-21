@@ -68,22 +68,33 @@ export function BulletedList({ s }: { s: SectionBulletedList }) {
 }
 
 export function TwoUpTextImage({ s }: { s: SectionTwoUpTextImage }) {
-  const reverse = s.imageSide === "left";
+  const imageSide = s.side ?? "right";
+  const isStacked = imageSide === "top" || imageSide === "bottom";
+
+  const containerCls = isStacked
+    ? sty.twoUpStacked
+    : [sty.twoUp, imageSide === "left" ? sty.twoUpReverse : ""]
+        .filter(Boolean).join(" ");
+
+  const image = (
+    <img className={sty.inlineImage} 
+         src={s.image.src} alt={s.image.alt ?? ""} 
+    />
+  );
+  const prose = (
+    <div className={sty.prose}>
+      <Markdown value={s.body} />
+    </div>
+  );
+
   return (
     <SectionShell id={s.id} title={s.title} accent={s.accent}>
-      <div
-        className={[sty.twoUp, reverse ? sty.twoUpReverse : ""]
-          .filter(Boolean)
-          .join(" ")}
-      >
-        <div className={sty.prose}>
-          <Markdown value={s.body} />
-        </div>
-        <img
-          className={sty.inlineImage}
-          src={s.image.src}
-          alt={s.image.alt ?? ""}
-        />
+      <div className={containerCls}>
+        {imageSide === "top" ? (
+          <>{image}{prose}</>
+        ) : (
+          <>{prose}{image}</>
+        )}
       </div>
     </SectionShell>
   );

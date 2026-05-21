@@ -1,7 +1,7 @@
 import type { ProjectContent } from "@/lib/types/project-content";
-import dtv from "@/content/projects/dtv/content.json";
+import directv from "@/content/projects/directv/content.json";
 import fire from "@/content/projects/fire/content.json";
-import gpt4Causality from "@/content/projects/gpt4-causality/content.json";
+import gpt4Factuality from "@/content/projects/gpt4-factuality/content.json";
 import interpretGpt2 from "@/content/projects/code-lm-interp/content.json";
 import interpretJepa from "@/content/projects/interpret-jepa/content.json";
 import mnist from "@/content/projects/mnist/content.json";
@@ -10,9 +10,9 @@ import rectifiedFlow from "@/content/projects/rectified-flow/content.json";
 
 
 const ALL = ([
-  dtv,
+  directv,
   fire,
-  gpt4Causality,
+  gpt4Factuality,
   interpretGpt2,
   interpretJepa,
   mnist,

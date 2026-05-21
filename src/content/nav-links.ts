@@ -64,7 +64,7 @@ export const LINKS: NavLink[] = [
   }
 ];
 
-export const FOOTER: string = "Designed and developed by me (including the canvas) with Next.js / Vanilla Extract."
+export const FOOTER: string = "Designed and developed E2E by me using boilerplate Next.js / Vanilla Extract."
 
 export const REPO_LINK: NavLink = {
   Icon: ArrowUpRight,

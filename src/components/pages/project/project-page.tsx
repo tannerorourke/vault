@@ -34,7 +34,9 @@ export function ProjectPage({ content }: ProjectPageProps) {
         <Sheet className={sty.heroSheet}>
           {content.eyebrow && (<div className={sty.eyebrow}>{content.eyebrow}</div>)}
 
-          <h1 className={sty.title}>{content.title}</h1>
+          <h1 className={sty.title}>
+            <Markdown value={content.title} inline />
+          </h1>
           
           {content.subtitle && (
             <p className={sty.subtitle}>

@@ -111,6 +111,13 @@ export const twoUp = style({
     },
   });
 
+  export const twoUpStacked = style({
+    display: "grid",
+    gridTemplateColumns: "1fr",
+    gap: theme.space._24,
+    alignItems: "start",
+  });
+
   export const inlineImage = style({
     width: "100%",
     borderRadius: MEDIA_RADIUS,

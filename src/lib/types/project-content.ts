@@ -32,7 +32,7 @@ export type SectionTwoUpTextImage = {
   body: string;
   image: { src: string; alt?: string };
   /** Which side the image sits on. Defaults to "right". */
-  imageSide?: "left" | "right";
+  side?: "left" | "right" | "top" | "bottom";
   accent?: "copper";
 };
 
