@@ -6,6 +6,7 @@ import { lightTheme, darkTheme } from '@/lib/theme/theme.css';
 
 
 type Theme = 'light' | 'dark';
+const THEME_CLASS: Record<Theme, string> = { light: lightTheme, dark: darkTheme };
 
 interface ThemeContextValue {
   theme: Theme;
@@ -20,27 +21,41 @@ export function useTheme(): ThemeContextValue {
   return ctx;
 }
 
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('light');
+export function ThemeProvider({ 
+  children,
+  initialTheme,
+  hasCookie
+}: { 
+  children: React.ReactNode,
+  initialTheme: Theme;
+  hasCookie: boolean;
+}) {
+  const [theme, setTheme] = useState<Theme>(initialTheme);
 
+  const swapTheme = (next: Theme) => {
+      const prev: Theme = next === 'light' ? 'dark' : 'light';
+      document.documentElement.classList.remove(THEME_CLASS[prev]);
+      document.documentElement.classList.add(THEME_CLASS[next]);
+      document.cookie = `theme=${next}; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Lax`;
+      setTheme(next);
+  }
+
+  // First-visit only: check system pref and persist cookie.
+  
   useEffect(() => {
-    const stored = localStorage.getItem('theme') as Theme | null;
-    if (stored === 'dark') {
-      setTheme('dark');
-      document.documentElement.classList.remove(lightTheme);
-      document.documentElement.classList.add(darkTheme);
-    }
-  }, []);
+    if (hasCookie) return; // already rendered the right one
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const systemTheme: Theme = prefersDark ? "dark" : "light";
 
-  const toggleTheme = () => {
-    const next: Theme = theme === 'light' ? 'dark' : 'light';
-    const nextClass = next === 'dark' ? darkTheme : lightTheme;
-    const prevClass = next === 'dark' ? lightTheme : darkTheme;
-    document.documentElement.classList.remove(prevClass);
-    document.documentElement.classList.add(nextClass);
-    localStorage.setItem('theme', next);
-    setTheme(next);
-  };
+    // If user prefers dark and we rendered light, swap to dark. Othwerwise persist cookie
+    if (systemTheme !== initialTheme) {
+      swapTheme(systemTheme);
+    } else {
+      document.cookie = `theme=${systemTheme}; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Lax`;
+    }
+  }, [initialTheme, hasCookie]);
+
+  const toggleTheme = () => swapTheme(theme === 'light' ? 'dark' : 'light');
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>

@@ -2,17 +2,13 @@ import type { ProjectContent } from "@/lib/types/project-content";
 import { ContentNavLink } from "@/lib/types/nav";
 
 import Markdown from "@/components/ui/Markdown";
-import Link from "next/link";
 import TagChip from "@/components/ui/TagChip";
 import Sheet from "@/components/ui/Sheet";
-import { renderSection } from "./sections";
-import { ArrowLeft } from "@/components/icons/arrow-left";
+import { renderSection } from "./Section";
+import TextLink from "@/components/ui/TextLink";
 
 import { iconRegistry } from "@/components/icons/registry";
 import * as sty from "./project-page.css";
-
-
-import TextLink from "@/components/ui/TextLink";
 
 
 export type ProjectPageProps = {
@@ -28,20 +24,20 @@ export function ProjectPage({ content }: ProjectPageProps) {
     : undefined;
   const findingLabel =
     finding?.jumpToLabel ?? matchingSection?.title ?? finding?.jumpToId;
+  const findingEyebrow = 
+    finding?.eyebrowLabel ?? "The finding";
 
   return (
     <main className={sty.root} aria-label={content.title}>
-      <Link href="/" className={sty.backBtn}>
-        <ArrowLeft className={sty.backIcon} />
-        All projects
-      </Link>
-
+      
       <header className={hasFinding ? sty.headerWithFinding : sty.headerSolo}>
         <Sheet className={sty.heroSheet}>
-          {content.eyebrow && (
-            <div className={sty.eyebrow}>{content.eyebrow}</div>
-          )}
-          <h1 className={sty.title}>{content.title}</h1>
+          {content.eyebrow && (<div className={sty.eyebrow}>{content.eyebrow}</div>)}
+
+          <h1 className={sty.title}>
+            <Markdown value={content.title} inline />
+          </h1>
+          
           {content.subtitle && (
             <p className={sty.subtitle}>
               <Markdown value={content.subtitle} inline />
@@ -80,7 +76,7 @@ export function ProjectPage({ content }: ProjectPageProps) {
 
         {hasFinding && (
           <Sheet accent="copper" className={sty.findingCard}>
-            <div className={sty.findingEyebrow}>The finding</div>
+            <div className={sty.findingEyebrow}>{findingEyebrow}</div>
             <p className={sty.findingBody}>
               <Markdown value={finding.body} inline />
             </p>
@@ -116,24 +112,26 @@ export function ProjectPage({ content }: ProjectPageProps) {
       )}
 
       <div className={sty.layout}>
-        {tocSections.length > 0 ? (
-          <Sheet className={sty.toc}>
-            <div className={sty.tocLabel}>Contents</div>
-            <nav aria-label="Sections">
-              {tocSections.map((s) => (
-                <a
-                  key={s.id}
-                  href={`#section-${s.id}`}
-                  className={sty.tocLink}
-                >
-                  {s.title}
-                </a>
-              ))}
-            </nav>
-          </Sheet>
-        ) : (
-          <div />
-        )}
+        <div className={sty.tocRoot}>
+          {tocSections.length > 0 ? (
+            <Sheet className={sty.toc}>
+              <div className={sty.tocLabel}>Contents</div>
+              <nav aria-label="Sections">
+                {tocSections.map((s) => (
+                  <a
+                    key={s.id}
+                    href={`#section-${s.id}`}
+                    className={sty.tocLink}
+                  >
+                    {s.title}
+                  </a>
+                ))}
+              </nav>
+            </Sheet>
+          ) : (
+            <div />
+          )}
+        </div>
 
         <div className={sty.sections}>
           {content.sections.map((s) => renderSection(s))}

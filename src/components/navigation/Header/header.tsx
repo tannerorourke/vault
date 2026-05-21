@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { AnimatePresence, motion } from "framer-motion";
 import { useAppContext } from "@/components/navigation/AppProvider";
 import { NavFilter } from "@/lib/types/nav";
 
@@ -14,20 +15,17 @@ import * as sty from "./header.css";
 
 
 type HeaderProps = {
-  enableLoadAnimation?: boolean;
   enableClickAnimation?: boolean;
 };
 
 export function Header({
-  enableLoadAnimation = false,
   enableClickAnimation = true,
 }: HeaderProps) {
-  const { pathname, hasAppHistory, activeFilters, setActiveFilters } = useAppContext()
+  const { pathname, activeFilters, setActiveFilters } = useAppContext()
   const router = useRouter();
 
   /** Logo: Go home, or reset filters */
   const onLogoClick = () => {
-    console.log("logo clicked")
     if (pathname === "/") {
       setActiveFilters([]);
       return;
@@ -35,27 +33,20 @@ export function Header({
     router.push("/");
   }
 
-  /** Profile Icon: Go back, or go to profile */
-  const onProfileClick = (href: string) => {
-    if (href === "back") {
-      if (hasAppHistory) 
-        router.back(); 
-      else
-        router.push("/");
-    } else {
-      router.push(href);
-    }
-  };
+  const isHome = pathname === "/";
+  const isOnAbout = pathname === "/about";
 
-  const isOnProfile = pathname === "/profile";
-  const profileBtnProps = isOnProfile 
-    ? { hrefOp: "back", label: "Back", leftArrow: { dir: "left" as const }, rightArrow: undefined } 
-    : { hrefOp: "/profile", label: "About", leftArrow: undefined, rightArrow: { dir: "right" as const } };
+  const morphLabel =
+    activeFilters.length === 1
+      ? NAV_FILTERS.find((f) => f.id === activeFilters[0])?.label ?? "Projects"
+      : "Projects";
+  const morphArrowDir = isOnAbout ? "left" as const : "up" as const;
 
   /** Filter links: Apply always, conditionally wait for reroute */
   const toggleFilter = (id: NavFilter['id']) => {
     const apply = () =>
       setActiveFilters((current) => current.includes(id) ? current.filter((f) => f !== id) : [...current, id]);
+    
     if (pathname === "/") {
       apply();
       return;
@@ -91,19 +82,13 @@ export function Header({
       });
     }
 
-    if (enableLoadAnimation && spans.length > 0) {
-      window.setTimeout(() => {
-        spans[0].dataset.active = '';
-      }, 500);
-    }
-
     return () => {
       spans.forEach((span) => {
         span.removeEventListener("click", handleClick);
         span.removeEventListener("animationend", handleAnimationEnd);
       });
     };
-  }, [enableLoadAnimation, enableClickAnimation])
+  }, [enableClickAnimation])
 
   return (
     <header className={`${sty.root}`}>
@@ -130,33 +115,74 @@ export function Header({
           </Text>
         </Link>
         <div className={sty.navScrollWrap} onWheel={onNavShiftWheel}>
-          <nav className={sty.navMain} aria-label="Filter projects">
-            {NAV_FILTERS.map((cf: NavFilter) => (
-              <TextLink
-                key={cf.id}
-                label={cf.label}
-                filterId={cf.id}
-                isActive={activeFilters.includes(cf.id)}
-                notifyOnClick={toggleFilter}
-                textProps={{
-                  variant: "bodyLg", 
-                  tone: "primary",
-                  className: sty.navFilters
-                }}
-              />
-            ))}
-          </nav>
+          <AnimatePresence mode="popLayout" initial={false}>
+            {isHome ? (
+              <motion.nav
+                key="filters"
+                className={sty.navFlex}
+                aria-label="Filter projects"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.18, ease: "easeOut" }}
+              >
+                {NAV_FILTERS.map((cf: NavFilter) => (
+                  <TextLink
+                    key={cf.id}
+                    label={cf.label}
+                    filterId={cf.id}
+                    isActive={activeFilters.includes(cf.id)}
+                    notifyOnClick={toggleFilter}
+                    textProps={{
+                      variant: "bodyLg",
+                      tone: "primary",
+                      className: sty.navFilters
+                    }}
+                  />
+                ))}
+              </motion.nav>
+            ) : (
+              <motion.div
+                key="morph"
+                className={sty.navFlex}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.18, ease: "easeOut" }}
+              >
+                <TextLink
+                  label={morphLabel}
+                  leftArrow={{ dir: morphArrowDir }}
+                  nextProps={{ href: "/", prefetch: true }}
+                  textProps={{
+                    variant: "bodyLg",
+                    tone: "primary",
+                    className: sty.navFilters
+                  }}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
         <div className={sty.navRight}>
-          <TextLink
-            label={profileBtnProps.label}
-            leftArrow={profileBtnProps.leftArrow}
-            rightArrow={profileBtnProps.rightArrow}
-            nextProps={{ href: profileBtnProps.hrefOp, prefetch: true, className: sty.navProfLink }}
-            textProps={{ variant: "bodyLg", tone: "primary", className: sty.navFilters }}
-            aria-current={isOnProfile ? "page" : undefined}
-            onClick={() => onProfileClick(profileBtnProps.hrefOp)}
-          />
+          <AnimatePresence initial={false}>
+            {!isOnAbout && (
+              <motion.div
+                key="about-link"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.18, ease: "easeOut" }}
+              >
+                <TextLink
+                  label="About"
+                  rightArrow={{ dir: "right" }}
+                  nextProps={{ href: "/about", prefetch: true, className: sty.navProfLink }}
+                  textProps={{ variant: "bodyLg", tone: "primary", className: sty.navFilters }}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </header>
   )

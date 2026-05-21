@@ -1,7 +1,7 @@
 "use client";
 
-import { 
-  createContext, useContext, useMemo, useRef, useState, useEffect,
+import {
+  createContext, useContext, useRef, useState, useEffect,
   ReactNode, Dispatch, SetStateAction
 } from "react";
 import { usePathname } from "next/navigation";
@@ -36,11 +36,6 @@ export function AppProvider({
     }
     if (!hasAppHistory) setHasAppHistory(true);
   }, [pathname]);
-
-  // const data = useMemo(() => ({
-  //   hasAppHistory,
-  //   activeFilters, setActiveFilters 
-  // }), [activeFilters]);
 
   return (
     <AppContext.Provider value={{

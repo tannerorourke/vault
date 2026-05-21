@@ -5,12 +5,13 @@ import { Github } from "@/components/icons/github";
 // import { Medium } from "@//components/icons/medium";
 import { FileText } from "../components/icons/file-text";
 import { GradCap } from "@/components/icons/grad-cap";
+import { ArrowUpRight } from "@/components/icons/arrow-up-right";
+import { CodeBrackets } from "@/components/icons/code-brackets";
 
 export const NAV_FILTERS: NavFilter[] = [
-  { id: 'aiml', label: 'AI/ML' },
-  { id: 'experience', label: 'Experience' },
   { id: 'research', label: 'Research' },
-  { id: 'labs', label: 'Labs' }
+  { id: 'labs', label: 'Labs' },
+  { id: 'experience', label: 'Experience' },
 ]
 
 export const LINKS: NavLink[] = [
@@ -53,5 +54,22 @@ export const LINKS: NavLink[] = [
     href: "https://scholar.google.com/citations?user=RwfFBoEAAAAJ&hl=en",
     target: "_blank",
     tooltipText: "Google Scholar"
+  },
+  {
+    Icon: CodeBrackets, text: "View Source",
+    alt: "View Source",
+    href: "https://github.com/tannerorourke/vault",
+    target: "_blank",
+    tooltipText: "View Source"
   }
 ];
+
+export const FOOTER: string = "Designed and developed E2E by me using boilerplate Next.js / Vanilla Extract."
+
+export const REPO_LINK: NavLink = {
+  Icon: ArrowUpRight,
+  alt: "View Source",
+  href: "https://github.com/tannerorourke/vault",
+  target: "_blank",
+  tooltipText: "View Source"
+}

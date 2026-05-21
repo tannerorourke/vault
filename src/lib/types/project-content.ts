@@ -3,7 +3,7 @@ import { ContentNavLink } from "./nav";
 
 
 /** Governs home-page header tabs filter by. */
-export type ProjectFilterId = "aiml" | "experience" | "research" | "labs";
+export type ProjectFilterId = "research" | "labs" | "experience";
 
 // --------------------------------------------------------------------
 // Section types - discriminated by key
@@ -32,7 +32,7 @@ export type SectionTwoUpTextImage = {
   body: string;
   image: { src: string; alt?: string };
   /** Which side the image sits on. Defaults to "right". */
-  imageSide?: "left" | "right";
+  side?: "left" | "right" | "top" | "bottom";
   accent?: "copper";
 };
 
@@ -89,10 +89,12 @@ export type FindingCard = {
   jumpToId?: string;
   /** Display label for the jump link. Defaults to the matching section's title, then to jumpToId. */
   jumpToLabel?: string;
+  eyebrowLabel?: string;
 };
 
 export type ProjectContent = {
-  /** Identity */
+  /** Required */
+  live: boolean;
   pid: string;
   title: string;
 
@@ -104,10 +106,7 @@ export type ProjectContent = {
   summary: string;
   filterIds: ProjectFilterId[];
   year: string;
-  readTime?: number;
   isFeature?: boolean;
-  /** Optional thumbnail; falls back to heroImage when omitted. */
-  cardImage?: { src: string; alt?: string };
   /** Detail-page header */
   /** Small uppercase line above the title - e.g. "Labs · 2025". */
   eyebrow?: string;

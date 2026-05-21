@@ -67,12 +67,14 @@ export const toolbar = style({
     alignItems: "center",
     gap: "16px",
     padding: "10px 0 6px 0",
-    listStyle: "none",    
+    listStyle: "none",
     pointerEvents: "none",
     // fade-in and raise icons on toolbar open
     opacity: 0,
+    visibility: "hidden",
     transform: "translateY(12px)",
-    transition: "opacity 250ms ease, transform 500ms cubic-bezier(.2,.8,.2,1)",
+    transition:
+      "opacity 250ms ease, transform 500ms cubic-bezier(.2,.8,.2,1), visibility 0s linear 250ms",
     // reset and place in static column
     [mq.md]: {
       flexDirection: "column",
@@ -80,6 +82,7 @@ export const toolbar = style({
       padding: 0,
       margin: '0 16px 0 0',
       opacity: 1,
+      visibility: "visible",
       transform: "none",
       pointerEvents: "auto",
       transition: "none",
@@ -87,8 +90,11 @@ export const toolbar = style({
   });
     export const listOpen = style({
       opacity: 1,
+      visibility: "visible",
       transform: "translateY(0)",
       pointerEvents: "auto",
+      transition:
+        "opacity 250ms ease, transform 500ms cubic-bezier(.2,.8,.2,1), visibility 0s linear 0s",
       transitionDelay: "80ms",
     });
 

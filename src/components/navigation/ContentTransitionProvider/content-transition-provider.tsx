@@ -4,15 +4,16 @@ import * as React from "react";
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { usePathname } from "next/navigation";
 
-import { ParticleCanvasBackdrop } from "@/components/navigation/ParticleCanvas";
 import { FrozenRouter } from "./frozen-router";
 
+import * as sty from "./content-transition-provider.css";
 
-type RouteKind = "home" | "profile" | "project";
+
+type RouteKind = "home" | "about" | "project";
 
 function getRouteKind(pathname: string): RouteKind {
   if (pathname === "/") return "home";
-  if (pathname.startsWith("/profile")) return "profile";
+  if (pathname.startsWith("/about")) return "about";
   return "project"; // any other top-level route is treated as a project page
 }
 
@@ -31,8 +32,8 @@ export function getDirection(fromPath: string | null, toPath: string): Direction
   if (from === to) return "none";
 
   // Horizontal transitions
-  if (to === "profile") return "left";
-  if (from === "profile") return "right";
+  if (to === "about") return "left";
+  if (from === "about") return "right";
 
   // Vertical transitions
   if (to === "project") return "up";
@@ -87,13 +88,8 @@ export function ContentTransitionProvider({ children }: { children: React.ReactN
         initial={animate ? "initial" : false}
         animate={animate ? "animate" : false}
         exit={animate ? "exit" : undefined}
-        transition={{ duration: 0.35, ease: "easeInOut" }}
-        style={{
-          position: "absolute",
-          inset: 0,
-          overflow: "auto",
-          scrollBehavior: "smooth",
-        }}
+        transition={{ duration: 0.4, ease: [0.5, 0.0, 0.3, 0.9] }}
+        className={sty.transitionMotionDiv}
         onScroll={(e) => {
           // dispatch for
           const scrollTop = (e.currentTarget as HTMLElement).scrollTop;
@@ -102,8 +98,7 @@ export function ContentTransitionProvider({ children }: { children: React.ReactN
           );
         }}
       >
-        <ParticleCanvasBackdrop outT={0.15} inD={0.35} inT={0.15}   />
-        <FrozenRouter>{children}</FrozenRouter>
+          <FrozenRouter>{children}</FrozenRouter>
       </motion.div>
     </AnimatePresence>
   );

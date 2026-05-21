@@ -1,0 +1,50 @@
+<svg viewBox="0 0 780 435" xmlns="http://www.w3.org/2000/svg" font-family="ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif">
+  <rect width="820" height="560" fill="#ffffff"/>
+  
+  <!-- Column headers -->
+  <text x="460" y="33" font-size="13" font-weight="600" fill="#44403c" letter-spacing="1.5" text-anchor="middle">SUPPORT</text>
+  <text x="290" y="57" font-size="13" fill="#292524" text-anchor="middle">token-level (1-2 words decide)</text>
+  <text x="630" y="57" font-size="13" fill="#292524" text-anchor="middle">summarized (across sentences)</text>
+
+  <!-- Row axis label -->
+  <g transform="translate(40, 265) rotate(-90)">
+    <text font-size="13" font-weight="600" fill="#44403c" letter-spacing="1.5" text-anchor="middle">FACT</text>
+  </g>
+
+  <!-- Row headers -->
+  <text x="110" y="140" font-size="13" fill="#292524" text-anchor="end">token-level</text>
+  <text x="110" y="320" font-size="13" fill="#292524" text-anchor="end">summarized</text>
+
+  <!-- TL: token / token diagonal: FP (detail mismatch) -->
+  <rect x="130" y="75" width="320" height="160" fill="#fafaf9" stroke="#e7e5e4" stroke-width="1" rx="2"/>
+  <text x="150" y="105" font-size="13" font-style="italic" fill="#1c1917">"Itakura played at the</text>
+  <text x="150" y="123" font-size="13" font-style="italic" fill="#1c1917">Under-23 level"</text>
+  <text x="150" y="153" font-size="11" fill="#78716c">passage says "U-20"; one token decides</text>
+  <text x="150" y="168" font-size="11" fill="#78716c">truth, lexical overlap drowns it out</text>
+  <text x="150" y="212" font-size="10" font-weight="600" fill="#a16207" letter-spacing="0.8">FALSE POSITIVE | ENTAIL = 0.553</text>
+
+  <!-- TR: token / summary off-diagonal: FN -->
+  <rect x="470" y="75" width="280" height="160" fill="#fdf6ec" stroke="#f0d4ad" stroke-width="1" rx="2"/>
+  <text x="490" y="105" font-size="13" font-style="italic" fill="#1c1917">"she worked to promote</text>
+  <text x="490" y="123" font-size="13" font-style="italic" fill="#1c1917">the elimination of FGM"</text>
+  <text x="490" y="153" font-size="11" fill="#78716c">passage describes elimination</text>
+  <text x="490" y="168" font-size="11" fill="#78716c">across sentences, never as keyword</text>
+  <text x="490" y="212" font-size="10" font-weight="600" fill="#a16207" letter-spacing="0.8">FALSE NEGATIVE | ENTAIL = 0.125</text>
+
+  <!-- BL: summary / token off-diagonal: FN -->
+  <rect x="130" y="250" width="320" height="160" fill="#fdf6ec" stroke="#f0d4ad" stroke-width="1" rx="2"/>
+  <text x="150" y="280" font-size="13" font-style="italic" fill="#1c1917">"Gerhard Fischer is best</text>
+  <text x="150" y="297" font-size="13" font-style="italic" fill="#1c1917">known for inventing a</text>
+  <text x="150" y="316" font-size="13" font-style="italic" fill="#1c1917">metal detector"</text>
+  <text x="150" y="346" font-size="11" fill="#78716c">needs synthesis across distant sentences;</text>
+  <text x="150" y="361" font-size="11" fill="#78716c">no single window covers the claim</text>
+  <text x="150" y="388" font-size="10" font-weight="600" fill="#a16207" letter-spacing="0.8">FALSE NEGATIVE | ENTAIL = 0.023</text>
+
+  <!-- BR: summary / summary diagonal: FP (semantic summarization) -->
+  <rect x="470" y="250" width="280" height="160" fill="#fafaf9" stroke="#e7e5e4" stroke-width="1" rx="2"/>
+  <text x="490" y="280" font-size="13" font-style="italic" fill="#1c1917">"Tusa has been involved in</text>
+  <text x="490" y="297" font-size="13" font-style="italic" fill="#1c1917">various cultural initiatives"</text>
+  <text x="490" y="328" font-size="11" fill="#78716c">both sides vague; entailment fires</text>
+  <text x="490" y="343" font-size="11" fill="#78716c">on topical similarity, not support</text>
+  <text x="490" y="388" font-size="10" font-weight="600" fill="#a16207" letter-spacing="0.8">FALSE POSITIVE | ENTAIL = 0.604</text>
+</svg>

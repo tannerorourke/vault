@@ -1,12 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import { Inter_Tight, Roboto_Flex } from "next/font/google";
+import { cookies } from "next/headers";
 import { Analytics } from "@vercel/analytics/next"
 
 import AppProvider from "@/components/navigation/AppProvider";
 import { ThemeProvider } from "@/components/navigation/ThemeProvider";
 import FloatingToolbar from "@/components/navigation/FloatingToolbar";
 
-import { lightTheme } from "@/lib/theme/theme.css";
+import { lightTheme, darkTheme } from "@/lib/theme/theme.css";
 import './global.css';
 import './global.styles.css';
 
@@ -68,15 +69,20 @@ export const metadata: Metadata = {
 };
 
 
-export default function RootLayout({ 
+export default async function RootLayout({ 
   children,
 }: Readonly<{ 
   children: React.ReactNode; 
 }>) {
+  const cookieStore = await cookies();
+  const themeCookie = cookieStore.get("theme")?.value;
+  const theme = themeCookie === "dark" ? "dark" : "light";
+  const themeClass = theme === "dark" ? darkTheme : lightTheme;
+
   return (
-    <html lang="en" className={lightTheme}>
+    <html lang="en" className={themeClass} data-theme={theme}>
       <body className={`${interTight.variable} ${robotoFlex.variable}`}>
-        <ThemeProvider>
+        <ThemeProvider initialTheme={theme} hasCookie={!!themeCookie}>
           <AppProvider>
               {children}
               <FloatingToolbar />

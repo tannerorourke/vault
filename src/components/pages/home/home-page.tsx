@@ -1,19 +1,15 @@
 "use client";
 
-import { useMemo, useRef, useEffect, useState } from "react";
+import { useMemo } from "react";
 import { motion, AnimatePresence, LayoutGroup } from "motion/react";
 import { useAppContext } from "@/components/navigation/AppProvider";
 import type { ProjectContent, ProjectFilterId } from "@/lib/types/project-content";
 
-import ProjectCard from "@/components/ui/ProjectCard";
+import ProjectCard from "@/components/pages/home/ProjectCard";
 
 import { NAV_FILTERS } from "@/content/nav-links";
 import * as sty from "./home-page.css";
 
-const MIN_CARD_WIDTH = 220;
-
-const TRACK_MIN = 220;
-const TRACK_MAX = 400;
 
 const FILTER_LABELS: Record<string, string> = NAV_FILTERS.reduce(
   (acc, f) => ({ ...acc, [f.id]: f.label }),

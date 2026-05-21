@@ -1,0 +1,71 @@
+{
+  "live": true,
+  "pid": "code-lm-interp",
+  "order": 2,
+  "title": "GPT-2 Codex From-Scratch (Interpreted)",
+  "summary": "A from-scratch code LM built as a substrate for mechanistic interpretability experimentation",
+  "filterIds": ["research", "labs"],
+  "year": "2026",
+  "isFeature": false,
+  "eyebrow": "Labs",
+  "subtitle": "A small code LM I'm training from scratch, used as a substrate for mechanistic interpretability experiments - circuit tracing, activation patching, attention attribution, and applied experimentation.",
+  "tags": [
+    { "label": "In Progress", "color": "copper" },
+    { "label": "PyTorch", "color": "teal" },
+    { "label": "Mechanistic Interpretability", "color": "teal" }
+  ],
+  "heroImage": {
+    "src": "/content/code-lm-interp/training-progress.png",
+    "alt": "Training loss, LR schedule, and gradient norm over 3000 iterations"
+  },
+  "links": [
+    { "icon": "github", "href": "#" }
+  ],
+  "finding": {
+    "body": "Most interpretability work bolts hooks onto a model someone else trained. Ariadne goes the other way: a small code LM built from scratch, with structural choices made so the residual stream stays readable later.",
+    "jumpToId": "tokenizer",
+    "jumpToLabel": "The tokenizer",
+    "findingEyebrow": "The angle"
+  },
+  "sections": [
+    {
+      "type": "Paragraph",
+      "id": "overview",
+      "body": "The training pipeline is working end-to-end - corpus, tokenizer, model, training loop. Loss curves below are from a recent run. Next is scaling the model into the 250-300M parameter range, then layering MI tooling on top: circuit tracing, activation patching, attention attribution."
+    },
+    {
+      "type": "2upTextImage",
+      "id": "substrate",
+      "title": "Where it stands",
+      "body": "GPT-2-style decoder: pre-LN blocks, causal self-attention, weight tying between embedding and output, scaled init. Standard modern training stack - bf16 autocast, fused AdamW, `torch.compile`, gradient accumulation, cosine LR with linear warmup. Loss curves are clean and the gradient norm settles below 1 after warmup, which is what I want before scaling.",
+      "image": {
+        "src": "/content/code-lm-interp/training-progress.png",
+        "alt": "Training loss, LR schedule, and gradient norm over 3000 iterations"
+      },
+      "side": "right"
+    },
+    {
+      "type": "BulletedList",
+      "id": "tokenizer",
+      "title": "Semi-supervised BPE",
+      "accent": "copper",
+      "intro": "The tokenizer is byte-level BPE with two non-standard additions. Without these, BPE will happily split `const` into `con` + `st` because `con` is a common English prefix, and the model loses the concept of `const` as a unit.",
+      "items": [
+        "**Locked Python keywords get seeded before merging.** Control flow (`if`, `else`, `for`, `while`, `return`, `yield`, `break`), definitions (`def`, `class`, `lambda`, `import`, `from`, `try`, `except`), identity (`self`, `None`, `True`, `False`), logic (`and`, `or`, `not`, `is`, `in`), and comparison/assignment operators (`==`, `!=`, `<=`, `>=`, `+=`, `-=`, `->`). These get prefixed onto the BPE split regex, so they're matched and emitted before frequency-based merging ever sees them. Pre-seeding them into the encoder cache at init also means the most common Python tokens are always cache hits.",
+        "**Scope is a token, not whitespace.** `<|indent|>` and `<|dedent|>` replace 2/4-space or tab runs with explicit scope-transition tokens, which is what Python's own lexer does. A deeply nested block costs one token per scope level instead of 16 spaces, and tab width is detected per document so 2-space and 4-space samples both compress correctly.",
+        "**FIM is wired in at 40%.** Forty percent of code samples get wrapped with `<|fim_prefix|>` / `<|fim_middle|>` / `<|fim_suffix|>` sentinels around a random split point, with a sub-fraction reordered as suffix-prefix-middle. This trains infill (bug-fix shaped) alongside left-to-right generation.",
+        "**Why this matters for the interp work.** Structural tokens make scope transitions and edit boundaries first-class objects in the residual stream. That's where I want to attribute attention heads against later, and you can't attribute against something the tokenizer threw away."
+      ]
+    },
+    {
+      "type": "BulletedList",
+      "id": "next",
+      "title": "Where it's headed",
+      "items": [
+        "**Scale up.** the model to ~250-300M parameters with FlashAttention enabled (or as high as an H100 let's us go)",
+        "**Interpretability hooks.** Activation patching, attention attribution, circuit tracing - the standard mech interp toolkit, applied to a model where I know what every structural decision was for.",
+        "**Sandbox layout.** Reorganize the repo so each technique is a notebook over a fixed checkpoint rather than a one-off. The point is to make running new MI experiments cheap once the base model is frozen."
+      ]
+    }
+  ]
+}
