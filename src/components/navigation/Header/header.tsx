@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { useAppContext } from "@/components/navigation/AppProvider";
 import { NavFilter } from "@/lib/types/nav";
 
