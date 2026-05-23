@@ -1,5 +1,5 @@
 import {
-  ParticleCanvasProvider,
+  CanvasProvider,
   ParticleCanvasWallpaper,
 } from "@/components/navigation/ParticleCanvas";
 import Header from "@/components/navigation/Header";
@@ -11,7 +11,7 @@ import * as sty from "./layout.css";
 export default function ShellLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className={sty.shell}>
-      <ParticleCanvasProvider>
+      <CanvasProvider>
           <ParticleCanvasWallpaper />
           <Header />
           <div className={sty.content}>
@@ -19,7 +19,7 @@ export default function ShellLayout({ children }: { children: React.ReactNode })
               {children}
             </ContentTransitionProvider>
           </div>
-      </ParticleCanvasProvider>
+      </CanvasProvider>
     </div>
   );
 }

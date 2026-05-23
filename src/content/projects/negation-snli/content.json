@@ -33,7 +33,7 @@
       "items": [
         "**Negation has a location, and the location matters.** Slicing by dependency region - not just by whether a negation word appears - exposes failures invisible to coarser analysis. Premise-root and premise-subject negation accuracy stayed in the 58-59% range while overall accuracy held at 86%.",
         "**Premise negation is vanishingly rare in SNLI.** Only ~0.6% of validation examples contain a negation cue in the premise - captions from Flickr30k almost never assert what is *not* happening.",
-        "**The model overgeneralizes 'negation → contradiction', but only on the premise side.** Hypothesis-negation reflects a real dataset prior (NRI ≈ 0.025); premise-negation injects an unwarranted bias (NRI ≈ 0.099) where gold labels don't actually skew toward contradiction. Augmentation reduced this on rare slices but pushed the bias *up* on PREM_ONLY (NRI ≈ 0.147) - the shortcut is structural, not just under-sampled."
+        "**The model overgeneralizes 'negation -> contradiction', but only on the premise side.** Hypothesis-negation reflects a real dataset prior (NRI ≈ 0.025); premise-negation injects an unwarranted bias (NRI ≈ 0.099) where gold labels don't actually skew toward contradiction. Augmentation reduced this on rare slices but pushed the bias *up* on PREM_ONLY (NRI ≈ 0.147) - the shortcut is structural, not just under-sampled."
       ]
     },
     {
@@ -92,7 +92,7 @@
       "title": "Results: baseline vs. augmented",
       "src": "/content/negation-snli/table4-baseline-vs-augmented.jpg",
       "alt": "Comparison of baseline and augmented model accuracy across negation patterns",
-      "caption": "Augmentation improved overall accuracy (85.4% → 86.2%) and dramatically improved the BOTH slice (50% → 85%), but PREM_ONLY accuracy fell from 75.7% to 66.7% on a larger, harder evaluation slice. The premise-side shortcut survived."
+      "caption": "Augmentation improved overall accuracy (85.4% -> 86.2%) and dramatically improved the BOTH slice (50% -> 85%), but PREM_ONLY accuracy fell from 75.7% to 66.7% on a larger, harder evaluation slice. The premise-side shortcut survived."
     },
     {
       "type": "BulletedList",
@@ -102,7 +102,7 @@
         "**Dependency-parse slicing surfaces failures that bag-of-words analysis hides.** 'Does the sentence contain a negation word?' is too coarse - the same word in subject vs. root vs. locative position produces measurably different model behavior. The seven-region taxonomy turns out to be the right granularity for this dataset.",
         "**Slice-aware augmentation can stabilize aggregate accuracy while exposing rare patterns** - the augmented model didn't regress on the easy majority slice, which isn't guaranteed.",
         "**Lexical overlap is not where the model fails most.** The baseline handled high-overlap examples (92%) better than low-overlap (85%). The interesting failure mode is structural, not surface.",
-        "**'Hypothesis-negation → contradiction' is mostly a real dataset prior.** The model isn't inventing it; it's learning what SNLI teaches. NRI is the tool that separates real coupling from spurious shortcut.",
+        "**'Hypothesis-negation -> contradiction' is mostly a real dataset prior.** The model isn't inventing it; it's learning what SNLI teaches. NRI is the tool that separates real coupling from spurious shortcut.",
         "**Premise-negation is the spurious one - and dataset-side fixes don't fully resolve it.** Even after augmentation and reweighting, premise-root and premise-subject negation accuracy stayed in the 58-59% range. Architectural interventions (residual debiasing heads, ensemble-based artifact experts) are likely needed for real movement here.",
         "**Building NPAS was 60% of the value.** Once you can ask 'where does negation live?' as a structured query rather than a regex, every other diagnostic in the project comes nearly free."
       ]
