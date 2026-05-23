@@ -1,10 +1,10 @@
 {
   "live": true,
   "pid": "fire",
-  "order": 8,
+  "order": 3,
   "title": "Wildfire Ignition Modeling",
   "summary": "ConvFormer that forecasts next-day wildfire ignition over Washington from a 24-feature multi-modal stack",
-  "filterIds": ["research"],
+  "filterIds": ["research", "papers"],
   "year": "2025",
   "isFeature": false,
   "eyebrow": "Research",
@@ -14,10 +14,9 @@
     "alt": "Predicted next-day ignition probability across Washington State"
   },
   "tags": [
-    { "label": "PyTorch", "color": "teal" },
-    { "label": "Geopandas", "color": "teal" },
     { "label": "ConvFormer", "color": "teal" },
-    { "label": "Spatiotemporal Modeling", "color": "grey" }
+    { "label": "Spatiotemporal", "color": "teal" },
+    { "label": "PyTorch", "color": "copper" }
   ],
   "links": [
     { "href": "https://github.com/tannerorourke/FireFusionNet", "icon": "github" },

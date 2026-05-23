@@ -2,20 +2,17 @@
   "live": true,
   "pid": "interpret-jepa",
   "order": 1,
-  "title": "Interpreting Clinical JEPA Representations",
-  "summary": "A MI framework for JEPAs trained on longitudinal MIMIC-IV encounter sequences",
-  "filterIds": ["research"],
+  "title": "Mechanistic Interpretability for Clinical JEPAs",
+  "summary": "A shared-encoder stop-gradient JEPA trained on ~55k MIMIC-IV patient sequences, with a four-layer interpretability pipeline applied to the F-code psychiatric subset. Treats the prediction error P - T as a first-class geometric object, not a scalar loss.",
+  "filterIds": ["research", "papers"],
   "year": "2026",
   "isFeature": true,
   "eyebrow": "Research · In Progress",
   "subtitle": "Introducing MI techniques to Joint Embedding Predictive Architectures trained on clinical encounter sequences. Targeting ML4H 2026 and ICLR 2027.",
   "tags": [
-    { "label": "In Progress", "color": "copper" },
     { "label": "Mechanistic Interpretability", "color": "teal" },
     { "label": "JEPA", "color": "teal" },
-    { "label": "PyTorch", "color": "teal" },
-    { "label": "Independent Research", "color": "grey" }
-    
+    { "label": "PyTorch", "color": "copper" }
   ],
   "links": [
     { "icon": "github", "href": "https://github.com/tannerorourke/chronos-lens" }
@@ -30,7 +27,7 @@
     {
       "type": "Paragraph",
       "id": "overview",
-      "body": "Independent research with input from an advisor. Trains a shared-encoder stop-gradient JEPA on ~55k MIMIC-IV patients, then applies a four-layer interpretability pipeline to the F-code psychiatric subset. Architecture, data extraction, and analysis scaffolding are built; broad-cohort training runs and full results are still ahead. Targeting NeurIPS 2026."
+      "body": "Independent research with input from an advisor. Trains a shared-encoder stop-gradient JEPA on ~55k MIMIC-IV patients, then applies a four-layer interpretability pipeline to the F-code psychiatric subset. Architecture, data extraction, and analysis scaffolding are built; broad-cohort training runs and full results are still ahead."
     },
     {
       "type": "Paragraph",
@@ -65,7 +62,7 @@
       "items": [
         "**Built.** MIMIC-IV extraction (~55k patients, no outcome-conditioned filtering), stop-grad and EMA JEPAs with temporal encoding and per-encounter `[CLS]` tokens, post-hoc label generation, baseline scaffolding for a supervised transformer, XGBoost, and logistic regression.",
         "**Lesson.** A 0.985 AUC on the diagnostic cohort turned out to be a data leak: the cohort had been pre-filtered on outcome. Later, under causal prefix masking, patient-level labels were reading future encounters and got replaced with per-encounter versions (`label_30d_per_enc[k]`, `label_escalation_per_enc[k]`). Both fixes landed before any reported result.",
-        "**Next.** Three-seed training on the broad cohort, baseline comparisons, the full four-layer analysis on the F-code subset, and a paper draft for NeurIPS by May 2026."
+        "**Next.** Three-seed training on the broad cohort, baseline comparisons, the full four-layer analysis on the F-code subset."
       ]
     }
   ]
