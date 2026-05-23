@@ -5,16 +5,21 @@ import {
   useCallback, useEffect, useMemo, useRef, ReactNode
  } from 'react';
 import {
-  CanvasPalette,
-  CanvasOptions,
-  DotData,
-  options as defaultOptions,
-  PALETTES,
+  
   generateDotData,
   easeOutCubic,
   drawFrame,
 } from './diffusion-utils';
+import { 
+  CANVAS_DISABLED,
+  CanvasPalette,
+  CanvasOptions,
+  DotData,
+  options as defaultOptions,
+  PALETTES
+} from './config';
 import { useTheme } from '@/components/navigation/ThemeProvider';
+
 
 
 interface CanvasEngineContextValue {
@@ -30,20 +35,32 @@ export function useCanvasEngine(): CanvasEngineContextValue {
   return ctx;
 }
 
-export function ParticleCanvasProvider({
-  options = defaultOptions,
-  children,
-}: {
-  options?: CanvasOptions;
-  children: ReactNode;
-}) {
-  const { theme: activeTheme } = useTheme();
+
+export function CanvasProvider(
+  { options = defaultOptions, children }: 
+  { options?: CanvasOptions; children: ReactNode; }
+) {
+  // Option to disable for whatever reason
+  if (CANVAS_DISABLED) {
+    const NO_OP_CTX = {
+      registerCanvas: () => () => {}, 
+      startEmergence: () => {}
+    }
+    return (
+      <CanvasEngineContext.Provider value={NO_OP_CTX}>
+        {children}
+      </CanvasEngineContext.Provider>
+    );
+  }
+
+
+  const { theme } = useTheme();
 
   // Updated synchronously on every render so RAF always reads the current palette.
   const paletteRef = useRef<CanvasPalette>(
-    activeTheme === 'dark' ? PALETTES.brandTeal : PALETTES.brandTealLight,
+    theme === 'dark' ? PALETTES.brandTeal : PALETTES.brandTealLight,
   );
-  paletteRef.current = activeTheme === 'dark' ? PALETTES.brandTeal : PALETTES.brandTealLight;
+  paletteRef.current = theme === 'dark' ? PALETTES.brandTeal : PALETTES.brandTealLight;
 
   const dotDataRef = useRef<DotData[][]>(
     generateDotData(42, options.WORLD_W, options.WORLD_H),
@@ -142,7 +159,7 @@ export function ParticleCanvasProvider({
                   false); // driftEnabled
       }
     });
-  }, [activeTheme]);
+  }, [theme]);
 
   useEffect(() => {
     vpWRef.current = window.innerWidth;

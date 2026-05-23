@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { useCanvasEngine } from './particle-engine-provider';
+import { CANVAS_DISABLED } from './config';
 
 import * as sty from './particle-canvas.css';
 
@@ -15,6 +16,7 @@ export function ParticleCanvasWallpaper({ children }: { children?: React.ReactNo
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
+    if (CANVAS_DISABLED) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -23,6 +25,15 @@ export function ParticleCanvasWallpaper({ children }: { children?: React.ReactNo
 
     return () => unregister();
   }, [registerCanvas, startEmergence]);
+
+  if (CANVAS_DISABLED) {
+    return (
+      <>
+        <div className={sty.canvas} aria-hidden="true" />
+        {children && <div className={sty.content}>{children}</div>}
+      </>
+    );
+  }
 
   return (
     <>

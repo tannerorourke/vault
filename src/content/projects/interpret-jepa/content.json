@@ -9,6 +9,9 @@
   "isFeature": true,
   "eyebrow": "Research · In Progress",
   "subtitle": "Introducing MI techniques to Joint Embedding Predictive Architectures trained on clinical encounter sequences. Targeting ML4H 2026 and ICLR 2027.",
+  "featuredStatus": "Architecture & pipeline complete. Training begins Q3 2026; preliminary results targeted for ML4H.",
+  "heroLabel": "jepa_architecture.svg",
+  "heroCaption": "Shared-encoder stop-gradient · VICReg 1.0 / 1.0 / 0.04",
   "tags": [
     { "label": "Mechanistic Interpretability", "color": "teal" },
     { "label": "JEPA", "color": "teal" },
