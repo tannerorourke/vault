@@ -1,23 +1,18 @@
 {
   "live": true,
   "pid": "negation-snli",
-  "order": 3,
+  "order": 4,
   "title": "Syntactic Negation Probing",
   "summary": "Where does negation live in a sentence, and which positions trip up a fine-tuned Electra NLI model?",
-  "filterIds": ["labs"],
+  "filterIds": ["labs", "papers"],
   "year": "2025",
   "isFeature": false,
   "eyebrow": "Labs",
   "subtitle": "If 'The room is never empty without music', then is 'The room empty with music'? - and a dependency-parser-driven analysis of ELECTRA-small's reliance on negation cue location in SNLI.",
   "tags": [
     { "label": "NLP", "color": "teal" },
-    { "label": "PyTorch", "color": "teal" },
-    { "label": "spaCy", "color": "teal" },
-    { "label": "ELECTRA", "color": "teal" },
     { "label": "SNLI", "color": "teal" },
-    { "label": "Paper", "color": "copper" },
-    { "label": "Research", "color": "copper" },
-    { "label": "Labs", "color": "grey" }
+    { "label": "PyTorch", "color": "copper" }
   ],
   "links": [
     { "icon": "github", "href": "https://github.com/tannerorourke/aug-lexical-negation" },

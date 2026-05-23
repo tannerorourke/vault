@@ -6,7 +6,7 @@ import TextLink from "@/components/ui/TextLink";
 import Markdown from "@/components/ui/Markdown";
 import Footer from "@/components/navigation/Footer";
 
-import { PARAGRAPHS, CONTACT_TEXT, ABOUT_LINKS, AUX_LINKS } from "@/content/about-content";
+import { PARAGRAPHS, CONTACT_TEXT, ABOUT_LINKS, AUX_LINKS } from "@/content/about";
 import * as sty from "./about-page.css";
 
 
