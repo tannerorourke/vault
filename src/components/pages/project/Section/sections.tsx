@@ -1,13 +1,3 @@
-import type {
-  ProjectSection,
-  SectionParagraph,
-  SectionBulletedList,
-  SectionTwoUpTextImage,
-  SectionImage,
-  SectionVideo,
-  SectionStats,
-} from "@/lib/types/project-content";
-
 import Markdown from "@/components/ui/Markdown";
 import Sheet from "@/components/ui/Sheet";
 
@@ -38,6 +28,14 @@ function SectionShell({
   );
 }
 
+type SectionParagraph = {
+  type: "Paragraph";
+  id: string;
+  title?: string;
+  body: string;
+  accent?: "copper";
+};
+
 function Paragraph({ s }: { s: SectionParagraph }) {
   return (
     <SectionShell id={s.id} title={s.title} accent={s.accent}>
@@ -47,6 +45,15 @@ function Paragraph({ s }: { s: SectionParagraph }) {
     </SectionShell>
   );
 }
+
+type SectionBulletedList = {
+  type: "BulletedList";
+  id: string;
+  title?: string;
+  intro?: string;
+  items: string[];
+  accent?: "copper";
+};
 
 function BulletedList({ s }: { s: SectionBulletedList }) {
   return (
@@ -66,6 +73,17 @@ function BulletedList({ s }: { s: SectionBulletedList }) {
     </SectionShell>
   );
 }
+
+type SectionTwoUpTextImage = {
+  type: "2upTextImage";
+  id: string;
+  title?: string;
+  body: string;
+  image: { src: string; alt?: string };
+  /** Which side the image sits on. Defaults to "right". */
+  side?: "left" | "right" | "top" | "bottom";
+  accent?: "copper";
+};
 
 function TwoUpTextImage({ s }: { s: SectionTwoUpTextImage }) {
   const imageSide = s.side ?? "right";
@@ -100,6 +118,16 @@ function TwoUpTextImage({ s }: { s: SectionTwoUpTextImage }) {
   );
 }
 
+type SectionImage = {
+  type: "Image";
+  id: string;
+  title?: string;
+  src: string;
+  alt?: string;
+  caption?: string;
+  accent?: "copper";
+};
+
 function ImageSection({ s }: { s: SectionImage }) {
   return (
     <SectionShell id={s.id} title={s.title} accent={s.accent}>
@@ -112,6 +140,19 @@ function ImageSection({ s }: { s: SectionImage }) {
     </SectionShell>
   );
 }
+
+type SectionVideo = {
+  type: "Video";
+  id: string;
+  title?: string;
+  /** Either an mp4 path/URL, or a YouTube embed URL. */
+  src: string;
+  /** Defaults to "mp4". Use "youtube" for an iframe embed. */
+  kind?: "mp4" | "youtube";
+  poster?: string;
+  caption?: string;
+  accent?: "copper";
+};
 
 function VideoSection({ s }: { s: SectionVideo }) {
   const isYoutube =
@@ -142,6 +183,14 @@ function VideoSection({ s }: { s: SectionVideo }) {
   );
 }
 
+type SectionStats = {
+  type: "Stats";
+  id: string;
+  title?: string;
+  stats: Array<{ value: string; label: string }>;
+  accent?: "copper";
+};
+
 function StatsSection({ s }: { s: SectionStats }) {
   const isHeadlineMode = s.stats.length > 4;
   return (
@@ -159,6 +208,14 @@ function StatsSection({ s }: { s: SectionStats }) {
     </SectionShell>
   );
 }
+
+export type ProjectSection =
+  | SectionParagraph
+  | SectionBulletedList
+  | SectionTwoUpTextImage
+  | SectionImage
+  | SectionVideo
+  | SectionStats;
 
 export function renderSection(s: ProjectSection) {
   switch (s.type) {
