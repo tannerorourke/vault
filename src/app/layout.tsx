@@ -26,7 +26,7 @@ const robotoFlex = Roboto_Flex({
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ??
-  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -54,6 +54,9 @@ export const metadata: Metadata = {
     url: SITE_URL,
     siteName: "Tanner O'Rourke",
     type: "website"
+  },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GSV
   },
   robots: {
     index: true,
