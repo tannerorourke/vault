@@ -3,7 +3,8 @@
 import { useMemo } from "react";
 import { motion, AnimatePresence, LayoutGroup } from "motion/react";
 import { useAppContext } from "@/components/navigation/AppProvider";
-import type { ProjectContent, ProjectFilterId } from "@/lib/types/project-content";
+import { ProjectContent } from "@/components/pages/project";
+import { ProjectFilterId } from "@/lib/types/nav";
 
 import ProjectCard from "@/components/pages/home/ProjectCard";
 

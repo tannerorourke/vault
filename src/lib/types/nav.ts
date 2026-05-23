@@ -1,6 +1,8 @@
-import { IconName } from "@/components/icons/registry";
 import type { IconComponent } from "@/lib/types/icons";
-import type { ProjectFilterId } from "@/lib/types/project-content";
+
+
+/** Governs home-page header tabs filter by. */
+export type ProjectFilterId = "research" | "labs" | "experience" | "papers";
 
 export type NavFilter = {
   id: ProjectFilterId | "";
@@ -8,7 +10,6 @@ export type NavFilter = {
   order?: number;
 };
 
-// code-side definition
 export type NavLink = {
   Icon?: IconComponent;
   text?: string;
@@ -18,14 +19,3 @@ export type NavLink = {
   target?: string;
   download?: string;
 };
-
-// maps from icon registry
-export type ContentNavLink = {
-  icon: IconName;
-  text?: string;
-  alt?: string;
-  href: string;
-  tooltipText?: string;
-  target?: string;
-  download?: string;
-}

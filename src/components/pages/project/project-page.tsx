@@ -1,21 +1,16 @@
-import type { ProjectContent } from "@/lib/types/project-content";
-import { ContentNavLink } from "@/lib/types/nav";
+import { ProjectContent, JumpIconButton } from "@/lib/types/project";
 
 import Markdown from "@/components/ui/Markdown";
-import TagChip from "@/components/ui/TagChip";
 import Sheet from "@/components/ui/Sheet";
-import { renderSection } from "./Section";
 import TextLink from "@/components/ui/TextLink";
+import TagChip from "@/components/ui/TagChip";
+import { renderSection } from "./Section";
 
 import { iconRegistry } from "@/components/icons/registry";
 import * as sty from "./project-page.css";
 
 
-export type ProjectPageProps = {
-  content: ProjectContent;
-};
-
-export function ProjectPage({ content }: ProjectPageProps) {
+export function ProjectPage({ content }: { content: ProjectContent }) {
   const tocSections = content.sections.filter((s) => s.title);
   const finding = content.finding;
   const hasFinding = !!finding;
@@ -25,7 +20,7 @@ export function ProjectPage({ content }: ProjectPageProps) {
   const findingLabel =
     finding?.jumpToLabel ?? matchingSection?.title ?? finding?.jumpToId;
   const findingEyebrow = 
-    finding?.eyebrowLabel ?? "The finding";
+    finding?.eyebrow ?? "The finding";
 
   return (
     <main className={sty.root} aria-label={content.title}>
@@ -54,7 +49,7 @@ export function ProjectPage({ content }: ProjectPageProps) {
 
           {content.links && content.links.length > 0 && (
             <div className={sty.links}>
-              {content.links.map((l: ContentNavLink, i) => {
+              {content.links.map((l: JumpIconButton, i) => {
                 const Icon = l.icon ? iconRegistry[l.icon] : null;
                 return (
                   <a
