@@ -1,4 +1,5 @@
-import type { NavFilter, NavLink } from "@/lib/types/nav";
+import { IconComponent } from "@/lib/types/icons";
+
 import { Envelope } from "@/components/icons/envelope";
 import { Linkedin } from "@/components/icons/linkedin";
 import { Github } from "@/components/icons/github";
@@ -6,13 +7,17 @@ import { Github } from "@/components/icons/github";
 import { FileText } from "../components/icons/file-text";
 import { GradCap } from "@/components/icons/grad-cap";
 import { ArrowUpRight } from "@/components/icons/arrow-up-right";
-import { CodeBrackets } from "@/components/icons/code-brackets";
 
-export const NAV_FILTERS: NavFilter[] = [
-  { id: 'research', label: 'Research' },
-  { id: 'labs', label: 'Labs' },
-  { id: 'experience', label: 'Experience' },
-]
+
+export type NavLink = {
+  Icon?: IconComponent;
+  text?: string;
+  alt?: string;
+  href?: string;
+  tooltipText?: string;
+  target?: string;
+  download?: string;
+};
 
 export const LINKS: NavLink[] = [
   {
@@ -54,13 +59,6 @@ export const LINKS: NavLink[] = [
     href: "https://scholar.google.com/citations?user=RwfFBoEAAAAJ&hl=en",
     target: "_blank",
     tooltipText: "Google Scholar"
-  },
-  {
-    Icon: CodeBrackets, text: "View Source",
-    alt: "View Source",
-    href: "https://github.com/tannerorourke/vault",
-    target: "_blank",
-    tooltipText: "View Source"
   }
 ];
 

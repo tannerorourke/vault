@@ -1,4 +1,4 @@
-import { NavLink } from "@/lib/types/nav";
+import { NavLink } from "@/content/nav-links";
 import { LINKS } from "./nav-links";
 
 export const PARAGRAPHS: string[] = [
@@ -9,30 +9,20 @@ export const PARAGRAPHS: string[] = [
 ];
 
 
-export const CONTACT_TEXT: string = "Currently open to ML engineering and interpretability research roles.";
+export const CONTACT_TEXT: string =
+  "Currently open to *ML engineering and interpretability research roles*. [Download my CV](/Tanner-ORourke-cv.pdf).";
 
 
-export const ABOUT_LINKS: NavLink[] = 
-  ["Email me", "LinkedIn", "GitHub", "Download CV"].reduce((acc, alt) => {
+export const ABOUT_LINKS: NavLink[] =
+  ["Email me", "LinkedIn", "GitHub", "Google Scholar"].reduce((acc, alt) => {
     const found = LINKS.find((l) => l.alt === alt);
     if (!found) return acc;
     return [...acc, found];
   }, [] as NavLink[]);
 
-  
-export const AUX_LINKS: NavLink[] = [
-  {
-    text: "ORCID",
-    alt: "ORCID profile",
-    href: "https://orcid.org/0009-0000-8384-4046",
-    target: "_blank",
-    tooltipText: "ORCID",
-  },
-  {
-    text: "ResearchGate",
-    alt: "ResearchGate profile",
-    href: "https://www.researchgate.net/about/Tanner-Orourke",
-    target: "_blank",
-    tooltipText: "ResearchGate",
-  },
+
+export const PHOTO_META: { key: string; val: string }[] = [
+  { key: "Subject",  val: "Tanner O'Rourke" },
+  { key: "Shot",     val: "2024" },
+  { key: "Location", val: "Boulder, CO" },
 ];

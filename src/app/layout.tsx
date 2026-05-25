@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter_Tight, Roboto_Flex } from "next/font/google";
+import { Inter_Tight, JetBrains_Mono, Roboto_Flex } from "next/font/google";
 import { cookies } from "next/headers";
 import { Analytics } from "@vercel/analytics/next"
 
@@ -9,6 +9,7 @@ import { ThemeProvider } from "@/components/navigation/ThemeProvider";
 import { lightTheme, darkTheme } from "@/lib/theme/theme.css";
 import './global.css';
 import './global.styles.css';
+import 'katex/dist/katex.min.css';
 
 
 const interTight = Inter_Tight({
@@ -21,6 +22,12 @@ const robotoFlex = Roboto_Flex({
   style: "normal",
   variable: "--font-display",
   subsets: ["latin"]
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-mono",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"]
 });
 
 const SITE_URL =
@@ -83,7 +90,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={themeClass} data-theme={theme}>
-      <body className={`${interTight.variable} ${robotoFlex.variable}`}>
+      <body className={`${interTight.variable} ${robotoFlex.variable} ${jetbrainsMono.variable}`}>
         <ThemeProvider initialTheme={theme} hasCookie={!!themeCookie}>
           <AppProvider>
               {children}
