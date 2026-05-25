@@ -1,1 +1,0 @@
-export { FloatingToolbar as default } from "./floating-toolbar";

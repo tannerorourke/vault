@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type MouseEvent } from "react";
-import type { ProjectContent } from "@/lib/types/project-content";
+import type { ProjectContent } from "@/lib/types/project";
 
 import Link from "next/link";
 import TagChip from "@/components/ui/TagChip";

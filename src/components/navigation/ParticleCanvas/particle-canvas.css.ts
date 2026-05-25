@@ -7,7 +7,7 @@ export const canvas = style({
   width: '100vw',
   height: '100vh',
   display: 'block',
-  zIndex: 0,
+  zIndex: -2,
   backgroundColor: theme.color.canvas,
 });
 
@@ -17,11 +17,11 @@ export const fadeBottom = style({
   bottom: 0,
   left: 0,
   right: 0,
-  minHeight: theme.layout.footerHeight,
+  minHeight: '120px',
   height: '10vh',
   background: `linear-gradient(to bottom, transparent, ${theme.color.canvas})`,
   pointerEvents: 'none',
-  zIndex: 1,
+  zIndex: -1,
 });
 
 export const fadeVignette = style({
@@ -29,7 +29,7 @@ export const fadeVignette = style({
   inset: 0,
   background: `radial-gradient(ellipse at 50% 40%, transparent 38%, color-mix(in srgb, ${theme.color.canvas} 50%, transparent) 100%)`,
   pointerEvents: 'none',
-  zIndex: 1,
+  zIndex: -1,
 });
 
 // Slot for name, nav, etc. - sits above canvas + overlays

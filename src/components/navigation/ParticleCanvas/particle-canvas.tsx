@@ -41,7 +41,7 @@ export function ParticleCanvasWallpaper({ children }: { children?: React.ReactNo
       <canvas ref={canvasRef} className={sty.canvas} aria-hidden="true" />
 
       {/* Overlay gradients, above the canvas */}
-      <div className={sty.fadeBottom} aria-hidden="true" />
+      {/* <div className={sty.fadeBottom} aria-hidden="true" /> */}
       <div className={sty.fadeVignette} aria-hidden="true" />
 
       {children && <div className={sty.content}>{children}</div>}
