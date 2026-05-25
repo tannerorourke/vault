@@ -153,7 +153,7 @@ export const contact = style({
 });
 
 export const contactStatement = style({
-  fontFamily: "var(--font-display)",
+  fontFamily: theme.typography.fontFamily.display,
   fontSize: "clamp(20px, 2.2vw, 28px)",
   lineHeight: theme.typography.lineHeight.snug,
   fontWeight: theme.typography.fontWeight.medium,

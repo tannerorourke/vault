@@ -18,7 +18,7 @@ export const section = style({
 });
 
 export const sectionTitle = style({
-  fontFamily: "var(--font-display)",
+  fontFamily: theme.typography.fontFamily.display,
   fontWeight: theme.typography.fontWeight.semibold,
   fontSize: theme.typography.fontSize.titleSm,
   letterSpacing: "-0.018em",
@@ -52,6 +52,7 @@ export const sectionTitleCopper = style({
 // --- Prose ---
 
 export const prose = style({
+  fontFamily: theme.typography.fontFamily.serif,
   fontSize: "15.5px",
   lineHeight: "1.65",
   color: theme.color.text.primary,
@@ -85,6 +86,7 @@ export const list = style({
   flexDirection: "column",
   gap: theme.space._12,
   maxWidth: "70ch",
+  fontFamily: theme.typography.fontFamily.serif,
   fontSize: "15px",
   lineHeight: "1.6",
   color: theme.color.text.primary,
@@ -216,7 +218,7 @@ export const cell = style({
 });
 
 const valueBase = {
-  fontFamily: "var(--font-display)",
+  fontFamily: theme.typography.fontFamily.display,
   fontWeight: theme.typography.fontWeight.semibold,
   letterSpacing: "-0.018em",
   lineHeight: 1,

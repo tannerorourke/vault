@@ -125,7 +125,7 @@ export const year = style({
 
 
 export const title = style({
-  fontFamily: "var(--font-display)",
+  fontFamily: theme.typography.fontFamily.display,
   fontWeight: theme.typography.fontWeight.semibold,
   fontSize: "17px",
   lineHeight: "1.22",

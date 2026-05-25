@@ -90,7 +90,7 @@ export const headerWithFinding = style({
 
   // title and subtitle
   export const title = style({
-    fontFamily: "var(--font-display)",
+    fontFamily: theme.typography.fontFamily.display,
     fontSize: theme.typography.fontSize.displayLg,
     fontWeight: theme.typography.fontWeight.semibold,
     lineHeight: "1.06",
@@ -102,7 +102,7 @@ export const headerWithFinding = style({
   });
 
   export const subtitle = style({
-    fontFamily: "var(--font-body)",
+    fontFamily: theme.typography.fontFamily.serif,
     fontSize: theme.typography.fontSize.bodyLg,
     lineHeight: 1.55,
     color: theme.color.text.primary,
@@ -220,7 +220,7 @@ export const findingCard = style({
     });
 
     export const findingBody = style({
-      fontFamily: "var(--font-body)",
+      fontFamily: theme.typography.fontFamily.serif,
       fontSize: "15px",
       lineHeight: 1.55,
       color: theme.color.text.primary,
@@ -233,7 +233,6 @@ export const findingCard = style({
 export const heroImage = style({
   width: "100%",
   display: "block",
-  aspectRatio: "21 / 9",
   objectFit: "cover",
   borderRadius: "6px",
   background: theme.color.tint.neutralSoft,

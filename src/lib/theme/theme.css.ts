@@ -82,6 +82,9 @@ export const theme = createThemeContract({
       tight: null,
     },
     fontFamily: {
+      sans: null,
+      display: null,
+      serif: null,
       mono: null,
     },
 	},
@@ -176,7 +179,10 @@ const typography = {
     tight: "-0.01em",
   },
   fontFamily: {
-    mono: 'var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace',
+    sans:    'var(--font-display)',
+    display: 'var(--font-display)',
+    serif:   'var(--font-serif)',
+    mono:    'var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace',
   },
 };
 

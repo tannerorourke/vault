@@ -2,12 +2,13 @@
   "live": true,
   "pid": "code-lm-interp",
   "order": 2,
+  "category": "research",
+  "isFeature": false,
+
   "title": "A Code LM Interpretability Sandbox",
   "summary": "A from-scratch code LM built as a substrate for mechanistic interpretability experimentation",
-  "filterIds": ["labs"],
   "year": "2026",
-  "isFeature": false,
-  "eyebrow": "Labs · In Progress",
+  "eyebrow": "In progress",
   "subtitle": "A small code LM I'm training from scratch, used as a substrate for mechanistic interpretability experiments - circuit tracing, activation patching, attention attribution, and applied experimentation.",
   "tags": [
     { "label": "Mechanistic Interpretability", "color": "teal" },

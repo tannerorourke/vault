@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter_Tight, JetBrains_Mono, Roboto_Flex } from "next/font/google";
+import { JetBrains_Mono, Newsreader, Roboto_Flex } from "next/font/google";
 import { cookies } from "next/headers";
 import { Analytics } from "@vercel/analytics/next"
 
@@ -12,15 +12,15 @@ import './global.styles.css';
 import 'katex/dist/katex.min.css';
 
 
-const interTight = Inter_Tight({
-  style: "normal",
-  variable: "--font-body",
-  subsets: ["latin"]
-});
-
 const robotoFlex = Roboto_Flex({
   style: "normal",
   variable: "--font-display",
+  subsets: ["latin"]
+});
+
+const newsreader = Newsreader({
+  style: "normal",
+  variable: "--font-serif",
   subsets: ["latin"]
 });
 
@@ -89,8 +89,12 @@ export default async function RootLayout({
   const themeClass = theme === "dark" ? darkTheme : lightTheme;
 
   return (
-    <html lang="en" className={themeClass} data-theme={theme}>
-      <body className={`${interTight.variable} ${robotoFlex.variable} ${jetbrainsMono.variable}`}>
+    <html
+      lang="en"
+      className={`${themeClass} ${robotoFlex.variable} ${newsreader.variable} ${jetbrainsMono.variable}`}
+      data-theme={theme}
+    >
+      <body>
         <ThemeProvider initialTheme={theme} hasCookie={!!themeCookie}>
           <AppProvider>
               {children}

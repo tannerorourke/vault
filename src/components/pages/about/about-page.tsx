@@ -23,7 +23,7 @@ function ContactRow({ label, links }: { label: string; links: NavLink[] }) {
   return (
     <div className={sty.contactRow}>
       <Text
-        as="span"
+        as="h2"
         variant="micro"
         tone="secondary"
         className={sty.contactRowLabel}
@@ -76,7 +76,7 @@ export function ProfilePage() {
         </aside>
 
         <div className={sty.proseCol}>
-          <Text as="p" variant="bodyLg" className={sty.headline}>
+          <Text as="h1" variant="bodyLg" className={sty.headline}>
             <Markdown value={PARAGRAPHS[0]} inline />
           </Text>
           {PARAGRAPHS.slice(1).map((p, i) => (

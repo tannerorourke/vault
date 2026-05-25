@@ -2,12 +2,12 @@
   "live": true,
   "pid": "directv",
   "order": 6,
+  "category": "experience",
+
   "title": "Frontend Engineering (2020-2025)",
   "summary": "Five years of frontend engineering - consumer surfaces, performance, accessibility, and tools for the team.",
-  "filterIds": ["experience"],
   "year": "2020-2025",
-  "isFeature": false,
-  "eyebrow": "Experience",
+  "eyebrow": "",
   "subtitle": "Frontend engineering at DirecTV and, before that, Warner Bros.",
   "tags": [
     { "label": "Performance", "color": "teal" },
