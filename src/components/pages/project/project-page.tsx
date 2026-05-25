@@ -1,37 +1,52 @@
 import { ProjectContent, JumpIconButton } from "@/lib/types/project";
 
+import Link from "next/link";
+
 import Markdown from "@/components/ui/Markdown";
-import Sheet from "@/components/ui/Sheet";
 import TextLink from "@/components/ui/TextLink";
 import TagChip from "@/components/ui/TagChip";
 import { renderSection } from "./Section";
+import { ProjectToc } from "./Toc";
+import { NextProjectFooter } from "./NextProject";
 
 import { iconRegistry } from "@/components/icons/registry";
 import * as sty from "./project-page.css";
 
 
 export function ProjectPage({ content }: { content: ProjectContent }) {
-  const tocSections = content.sections.filter((s) => s.title);
+  const tocSections = content.sections
+    .filter((s): s is typeof s & { title: string } => Boolean(s.title))
+    .map((s) => ({ id: s.id, title: s.title }));
+
   const finding = content.finding;
   const hasFinding = !!finding;
-  const matchingSection = finding?.jumpToId
-    ? content.sections.find((s) => s.id === finding.jumpToId)
-    : undefined;
-  const findingLabel =
-    finding?.jumpToLabel ?? matchingSection?.title ?? finding?.jumpToId;
   const findingEyebrow = 
     finding?.eyebrow ?? "The finding";
 
   return (
     <main className={sty.root} aria-label={content.title}>
+
+      <nav aria-label="Breadcrumb" className={sty.crumbs}>
+        <Link href="/" className={sty.crumbLink}>Work</Link>
+        <span className={sty.crumbSep} aria-hidden>/</span>
+        <span className={sty.crumbCurrent}>
+          <Markdown value={content.title} inline />
+        </span>
+      </nav>
       
       <header className={hasFinding ? sty.headerWithFinding : sty.headerSolo}>
-        <Sheet className={sty.heroSheet}>
-          {content.eyebrow && (<div className={sty.eyebrow}>{content.eyebrow}</div>)}
-
+        <div className={sty.heroBody}>
           <h1 className={sty.title}>
             <Markdown value={content.title} inline />
           </h1>
+
+          {(content.eyebrow || content.year) && (
+            <div className={sty.eyebrow}>
+              {content.eyebrow && <span>{content.eyebrow}</span>}
+              {content.eyebrow && content.year && <span className={sty.eyebrowDot} aria-hidden />}
+              {content.year && <span className={sty.eyebrowYear}>{content.year}</span>}
+            </div>
+          )}
           
           {content.subtitle && (
             <p className={sty.subtitle}>
@@ -39,6 +54,9 @@ export function ProjectPage({ content }: { content: ProjectContent }) {
             </p>
           )}
 
+          {((content.tags && content.tags.length > 0) ||
+            (content.links && content.links.length > 0)) && (
+            <div className={sty.heroFoot}>
           {content.tags && content.tags.length > 0 && (
             <div className={sty.tagsRow}>
               {content.tags.map((t, i) => (
@@ -67,34 +85,23 @@ export function ProjectPage({ content }: { content: ProjectContent }) {
               })}
             </div>
           )}
-        </Sheet>
+            </div>
+          )}
+        </div>
 
         {hasFinding && (
-          <Sheet accent="copper" className={sty.findingCard}>
-            <div className={sty.findingEyebrow}>{findingEyebrow}</div>
+          <aside className={sty.findingCard}>
+            <TextLink
+              label={`# ${findingEyebrow}`}
+              rightIcon={{ icon: 'arrow-down', hold: true }}
+              className={sty.findingEyebrow}
+              nextProps={{ href: `#section-${finding.jumpToId}` }}
+              textProps={{ as: 'span', className: sty.findingEyebrowText }}
+            />
             <p className={sty.findingBody}>
               <Markdown value={finding.body} inline />
             </p>
-            {finding.jumpToId && findingLabel && (
-              <div className={sty.findingJump}>
-                <span className={sty.findingName}>{findingLabel}</span>
-                <TextLink 
-                  label="jump"
-                  leftArrow={{ dir: 'down', hold: true}}
-                  className={sty.findingJumpCta}
-                  nextProps={{
-                    href: `#section-${finding.jumpToId}`,
-                    className: sty.findingJumpCta
-                  }}
-                  textProps={{
-                    variant: 'caption', as: 'span',
-                    tone: 'primary',
-                    
-                  }}
-                />
-              </div>
-            )}
-          </Sheet>
+          </aside>
         )}
       </header>
 
@@ -108,24 +115,7 @@ export function ProjectPage({ content }: { content: ProjectContent }) {
 
       <div className={sty.layout}>
         <div className={sty.tocRoot}>
-          {tocSections.length > 0 ? (
-            <Sheet className={sty.toc}>
-              <div className={sty.tocLabel}>Contents</div>
-              <nav aria-label="Sections">
-                {tocSections.map((s) => (
-                  <a
-                    key={s.id}
-                    href={`#section-${s.id}`}
-                    className={sty.tocLink}
-                  >
-                    {s.title}
-                  </a>
-                ))}
-              </nav>
-            </Sheet>
-          ) : (
-            <div />
-          )}
+          <ProjectToc sections={tocSections} />
         </div>
 
         <div className={sty.sections}>

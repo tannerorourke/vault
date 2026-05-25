@@ -1,5 +1,5 @@
 import Markdown from "@/components/ui/Markdown";
-import Sheet from "@/components/ui/Sheet";
+import { preHighlightCodeBlocks } from "@/lib/markdown/highlight";
 
 import * as sty from "./sections.css";
 
@@ -19,12 +19,10 @@ function SectionShell({
     .filter(Boolean)
     .join(" ");
   return (
-    <Sheet accent={accent} className={sty.sectionSheet}>
-      <section id={`section-${id}`} className={sty.section}>
-        {title && <h2 className={titleCls}>{title}</h2>}
-        {children}
-      </section>
-    </Sheet>
+    <section id={`section-${id}`} className={sty.section}>
+      {title && <h2 className={titleCls}>{title}</h2>}
+      {children}
+    </section>
   );
 }
 
@@ -36,11 +34,12 @@ type SectionParagraph = {
   accent?: "copper";
 };
 
-function Paragraph({ s }: { s: SectionParagraph }) {
+async function Paragraph({ s }: { s: SectionParagraph }) {
+  const body = await preHighlightCodeBlocks(s.body);
   return (
     <SectionShell id={s.id} title={s.title} accent={s.accent}>
       <div className={sty.prose}>
-        <Markdown value={s.body} />
+        <Markdown value={body} />
       </div>
     </SectionShell>
   );
@@ -55,12 +54,13 @@ type SectionBulletedList = {
   accent?: "copper";
 };
 
-function BulletedList({ s }: { s: SectionBulletedList }) {
+async function BulletedList({ s }: { s: SectionBulletedList }) {
+  const intro = s.intro ? await preHighlightCodeBlocks(s.intro) : undefined;
   return (
     <SectionShell id={s.id} title={s.title} accent={s.accent}>
-      {s.intro && (
+      {intro && (
         <div className={[sty.prose, sty.intro].join(" ")}>
-          <Markdown value={s.intro} />
+          <Markdown value={intro} />
         </div>
       )}
       <ul className={sty.list}>
@@ -85,7 +85,8 @@ type SectionTwoUpTextImage = {
   accent?: "copper";
 };
 
-function TwoUpTextImage({ s }: { s: SectionTwoUpTextImage }) {
+async function TwoUpTextImage({ s }: { s: SectionTwoUpTextImage }) {
+  const body = await preHighlightCodeBlocks(s.body);
   const imageSide = s.side ?? "right";
   const isStacked = imageSide === "top" || imageSide === "bottom";
 
@@ -95,13 +96,13 @@ function TwoUpTextImage({ s }: { s: SectionTwoUpTextImage }) {
         .filter(Boolean).join(" ");
 
   const image = (
-    <img className={sty.inlineImage} 
-         src={s.image.src} alt={s.image.alt ?? ""} 
+    <img className={sty.inlineImage}
+         src={s.image.src} alt={s.image.alt ?? ""}
     />
   );
   const prose = (
     <div className={sty.prose}>
-      <Markdown value={s.body} />
+      <Markdown value={body} />
     </div>
   );
 

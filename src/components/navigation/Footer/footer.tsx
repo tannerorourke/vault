@@ -27,7 +27,7 @@ export function Footer({ className, withDivider, ...rest }: FooterProps) {
         </Text>
         <TextLink
           label={'View Source'}
-          rightArrow={{ hold: true, dir: "right" }}
+          rightIcon={{ icon: "arrow-right", hold: true }}
           underline="always"
           textProps={{ variant: "bodySm" }}
           nextProps={{
