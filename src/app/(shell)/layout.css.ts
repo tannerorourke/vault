@@ -12,5 +12,4 @@ export const shell = style({
 export const content = style({
   position: 'fixed',
   inset: 0,
-  zIndex: theme.layout.zIndex.content,
 });

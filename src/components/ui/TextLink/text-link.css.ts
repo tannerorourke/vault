@@ -62,9 +62,7 @@ export const linkTextBase = style({
   },
 });
 
-
-
-// -- Directional Arrows -----------------------------------------------
+// -- Left/Right Icons
 
 const hoverBase = {
   opacity: 1,
@@ -72,7 +70,7 @@ const hoverBase = {
 
 const activeBase = {
   color: theme.color.secondary.active,
-  width: "16px",
+  width: "20px",
   opacity: 1,
 } as const;
 
@@ -99,10 +97,10 @@ export const leftSlotEnabled = style({
   ...slotBase,
   selectors: {
     [`${linkBtnBase}:hover &`]: {
-      ...hoverBase, width: "16px", padding: "0 0.25em 0 0",
+      ...hoverBase, width: "20px", padding: "0 0.25em 0 0",
     },
     [`${linkBtnBase}:active &`]: {
-      ...activeBase, width: "16px", padding: "0 0.25em 0 0",
+      ...activeBase, width: "20px", padding: "0 0.25em 0 0",
     },
   }
 });
@@ -111,10 +109,10 @@ export const rightSlotEnabled = style({
   ...slotBase,
   selectors: {
     [`${linkBtnBase}:hover &`]: {
-      ...hoverBase, width: "16px", padding: "0 0 0 0.25em"
+      ...hoverBase, width: "20px", padding: "0 0 0 0.25em"
     },
     [`${linkBtnBase}:active &`]: {
-      ...activeBase, width: "16px", padding: "0 0 0 0.25em"
+      ...activeBase, width: "20px", padding: "0 0 0 0.25em"
     },
   }
 });
@@ -122,13 +120,13 @@ export const rightSlotEnabled = style({
 export const leftSlotHold = style({
   ...slotBase,
   opacity: 1,
-  width: "16px",
+  width: "20px",
   padding: "0 0.25em 0 0"
 });
 
 export const rightSlotHold = style({
   ...slotBase,
   opacity: 1,
-  width: "16px",
+  width: "20px",
   padding: "0 0 0 0.25em"
 });

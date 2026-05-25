@@ -44,8 +44,9 @@ export const theme = createThemeContract({
   },
 	typography: {
 		fontSize: {
+      logo: null,
+      displayLg: null,
 			display: null,
-			displayLg: null,
 			titleLg: null,
 			titleMd: null,
 			titleSm: null,
@@ -96,23 +97,24 @@ export const theme = createThemeContract({
     _160: null,
     _192: null,
 	},
-	layout: {
-		gutterWidth: null,
-    footerHeight: null,
-		headerHeight: null,
-    headerOffset: {
-      xs: null,
-      sm: null,
-      md: null,
+  header: {
+    padTop: { xs: null, sm: null, md: null, lg: null },
+    height: { xs: null, sm: null },
+    offset: { xs: null, sm: null, md: null, lg: null },
     },
-		contentMaxWidth: null,
+  page: {
+    marginTop: { xs: null,    sm: null, md: null, lg: null },
+    gutter: { xs: null,       sm: null, md: null, lg: null },
+    maxContentWidth: {        sm: null, md: null, lg: null },
+    marginBottom: { xs: null, sm: null, md: null, lg: null },
+  },
 		zIndex: {
 			tooltip: null,
 			sidebar: null,
+    pageSticky: null,
 			header: null,
 			canvas: null,
       content: null,
-		}
 	},
 	sheet: {
 		bg: null,
@@ -133,8 +135,9 @@ const fluid = (
 
 const typography = {
   fontSize: {
-    display:   fluid(36, 44, 900, 1600),
+    logo:      'clamp(30px, 1.5rem + 2vw, 52px)',
     displayLg: fluid(36, 52, 560, 900),
+    display:   fluid(36, 44, 900, 1600),
     titleLg:   fluid(32, 36, 900, 1600),
     titleMd:   fluid(28, 32, 900, 1600),
     titleSm:   fluid(24, 26, 900, 1600),
@@ -187,24 +190,32 @@ const space = {
     _192: '192px',
 }
 
-const layout = {
-  gutterWidth: '80px',
-  footerHeight: '120px',
-  headerHeight: '140px',
-  headerOffset: {
-    xs: '188px', // 140 + 48
-    sm: '196px', // 140 + 56
-    md: '220px' // 140 + 80
+const header = {
+  padTop: { xs: '16px', sm: '24px', md: '36px', lg: '48px' },
+  height: { xs: '63px', sm: '42px' },
+  // padTop + height + page.marginTop
+  offset: { xs: '103px', sm: '112px', md: '126px', lg: '154px' }
+}
+
+const page = {
+  marginTop: { xs: '24px', sm: '48px', md: '48px', lg: '64px' },
+  gutter: { xs: '20px', sm: '32px', md: '48px', lg: '48px' },
+  maxContentWidth: { 
+    sm: '876px', // 900px - gutter diff * 2
+    md: '1240px', // width set to scalar for animation, max-width=100vw to prevent overflow
+    lg: '1500px' 
   },
-  contentMaxWidth: '1600px',
-  zIndex: {
+  marginBottom: { xs: '96px', sm: '96px', md: '96px', lg: '96px' },
+};
+
+const zIndex = {
     tooltip: '9999',
-    sidebar: '12',
+  sidebar: '13',
+  pageSticky: '12',
     header: '11',
     canvas: '1',
     content: '2',
   }
-};
 
 /** ------------------------------------------------------ */
 /** -- THEME DEFINITIONS --------------------------------- */
@@ -319,7 +330,9 @@ export const lightTheme = createTheme(theme, {
     color: lightThemeColors,
 		typography,
     space,
-		layout,
+		header,
+    page,
+    zIndex,
 		sheet: lightSheet,
 });
 
@@ -327,6 +340,8 @@ export const darkTheme = createTheme(theme, {
     color: darkThemeColors,
 		typography,
     space,
-		layout,
+		header,
+    page,
+    zIndex,
 		sheet: darkSheet,
 });

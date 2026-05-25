@@ -1,115 +1,123 @@
 "use client";
 
-import { useEffect, useRef, useState, type MouseEvent } from "react";
-import type { ProjectContent } from "@/lib/types/project";
-
+import type { MouseEvent } from "react";
 import Link from "next/link";
-import TagChip from "@/components/ui/TagChip";
-import { CaretCircleDown } from "@/components/icons/caret-circle-down";
+
+import type { ProjectContent } from "@/lib/types/project";
+import Markdown from "@/components/ui/Markdown";
+import { iconRegistry } from "@/components/icons/registry";
 
 import * as sty from "./project-card.css";
 
 
 export type ProjectCardProps = {
   project: ProjectContent;
-  eyebrow: string;
-  year: string;
-  isFeature?: boolean;
+  variant?: "default" | "featured";
+  imageRatio?: "40-60" | "45-55" | "50-50";
+  eyebrow?: string;
+  year?: string;
 };
-
-const MAX_VISIBLE_TAG_CHARS = 28;
-
-function getVisibleTags(tags: ProjectContent["tags"]) {
-  if (!tags || tags.length === 0) return { visible: [], overflow: 0 };
-  let total = 0;
-  let cutoff = tags.length;
-  for (let i = 0; i < tags.length; i++) {
-    total += tags[i].label.length + 2;
-    if (total > MAX_VISIBLE_TAG_CHARS && i > 0) {
-      cutoff = i;
-      break;
-    }
-  }
-  return {
-    visible: tags.slice(0, cutoff),
-    overflow: tags.length - cutoff,
-  };
-}
 
 export function ProjectCard({
   project,
+  variant = "default",
+  imageRatio = "45-55",
   eyebrow,
   year,
-  isFeature = false,
 }: ProjectCardProps) {
-  const { visible: visibleTags, overflow } = getVisibleTags(project.tags);
-  const cardRef = useRef<HTMLAnchorElement>(null);
-  const [revealed, setRevealed] = useState(false);
+  const isFeatured = variant === "featured";
+  const eyebrowText = eyebrow ?? project.eyebrow ?? "";
+  const yearText = year ?? project.year ?? "";
 
-  const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
-    if (revealed) return;
-    if (
-      typeof window !== "undefined" &&
-      window.matchMedia("(hover: none)").matches
-    ) {
-      e.preventDefault();
-      setRevealed(true);
-    }
+  const handleIconLinkClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    e.stopPropagation();
   };
-
-  useEffect(() => {
-    if (!revealed) return;
-    const onPointerDown = (e: PointerEvent) => {
-      if (cardRef.current &&
-          !cardRef.current.contains(e.target as Node)
-      ) {
-        setRevealed(false);
-      }
-    };
-    document.addEventListener("pointerdown", onPointerDown);
-    return () => document.removeEventListener("pointerdown", onPointerDown);
-  }, [revealed]);
 
   return (
     <Link
-      ref={cardRef}
       href={`/${project.pid}`}
       prefetch
       className={sty.cardBase}
-      onClick={handleClick}
-      data-feature={isFeature ? "true" : undefined}
-      data-revealed={revealed ? "true" : undefined}
+      data-variant={variant}
+      data-ratio={isFeatured ? imageRatio : undefined}
     >
-      <div className={sty.eyebrow}>
-        {isFeature && (
-          <span className={sty.featureDot} aria-label="Featured" />
-        )}
-        <span>{eyebrow}</span>
-        <span className={sty.year}>{year}</span>
-      </div>
-
-      <div className={sty.swapBox}>
-        <h3 className={sty.title}>{project.title}</h3>
-        <div className={sty.reveal}>
-          {project.summary && (
-            <p className={sty.summary}>{project.summary}</p>
-          )}
-          {visibleTags.length > 0 && (
-            <div className={sty.tagsRow}>
-              {visibleTags.map((t, i) => (
-                <TagChip key={i} label={t.label} color={t.color} />
-              ))}
-              {overflow > 0 && (
-                <TagChip color="grey" label={`+${overflow}`} />
+      {isFeatured && project.heroImage?.src && (
+        <div className={sty.imageCol}>
+          <img
+            src={project.heroImage.src}
+            alt={project.heroImage.alt ?? ""}
+            className={sty.heroImg}
+          />
+          {(project.heroImage.label || project.heroImage.caption) && (
+            <div className={sty.heroCaptionStack}>
+              {project.heroImage.label && (
+                <span className={sty.heroLabelText}>{project.heroImage.label}</span>
+              )}
+              {project.heroImage.caption && (
+                <span className={sty.heroCaptionText}>{project.heroImage.caption}</span>
               )}
             </div>
           )}
-          
-          <span className={sty.cta}>
-            <CaretCircleDown />
-          </span>
+        </div>
+      )}
+
+      <div className={sty.bodyCol}>
+        <div className={sty.eyebrow}>
+          <span>{eyebrowText}</span>
+          <span className={sty.year}>{yearText}</span>
+        </div>
+
+        <h3 className={sty.title}>{project.title}</h3>
+
+        {isFeatured && project.subtitle && (
+          <div className={sty.subtitle}>
+            <Markdown value={project.subtitle} inline />
+          </div>
+        )}
+
+        {!isFeatured && project.summary && (
+          <p className={sty.summary}>{project.summary}</p>
+        )}
+
+        <div className={sty.foot}>
+          {project.tags && project.tags.length > 0 && (
+            <span className={sty.tagsInline}>
+              {project.tags.map((t, i) => (
+                <span key={i}>
+                  {i > 0 && <span className={sty.tagsSep}>·</span>}
+                  {t.label}
+                </span>
+              ))}
+            </span>
+          )}
+
+          {project.links && project.links.length > 0 && (
+            <span className={sty.cardLinks}>
+              {project.links.map((l, i) => {
+                const Icon = iconRegistry[l.icon];
+                if (!Icon) return null;
+                return (
+                  <a
+                    key={i}
+                    href={l.href}
+                    target={l.target ?? "_blank"}
+                    rel="noreferrer"
+                    download={l.download}
+                    aria-label={l.tooltipText ?? l.alt ?? l.text ?? l.icon}
+                    title={l.tooltipText ?? l.alt ?? l.text ?? l.icon}
+                    className={sty.cardLink}
+                    onClick={handleIconLinkClick}
+                  >
+                    <Icon width={16} height={16} />
+                  </a>
+                );
+              })}
+            </span>
+          )}
         </div>
       </div>
     </Link>
   );
 }
+
+export default ProjectCard;
