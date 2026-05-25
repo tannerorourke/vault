@@ -2,12 +2,13 @@
   "live": true,
   "pid": "fire",
   "order": 3,
+  "category": "research",
+  "isFeature": false,
+
   "title": "Wildfire Ignition Modeling",
   "summary": "ConvFormer that forecasts next-day wildfire ignition over Washington from a 24-feature multi-modal stack",
-  "filterIds": ["research", "papers"],
   "year": "2025",
-  "isFeature": false,
-  "eyebrow": "Research",
+  "eyebrow": "2025 · paper",
   "subtitle": "Forecasting next-day wildfire ignition across Washington from 24 satellite, terrain, and meteorological features through a ConvFormer with physics-aware masking.",
   "heroImage": {
     "src": "/content/fire/ignition_heatmap.png",

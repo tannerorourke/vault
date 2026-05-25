@@ -57,7 +57,7 @@ export const tooltipPositioner = style({
 });
 
 export const tooltipPopup = style({
-  fontFamily: "var(--font-body), system-ui, sans-serif",
+  fontFamily: theme.typography.fontFamily.sans,
   fontSize: theme.typography.fontSize.caption,
   fontWeight: theme.typography.fontWeight.medium,
   lineHeight: theme.typography.lineHeight.normal,

@@ -2,11 +2,12 @@
   "live": true,
   "pid": "negation-snli",
   "order": 4,
+  "category": "labs",
+  "isFeature": false,
+  
   "title": "Syntactic Negation Probing",
   "summary": "Where does negation live in a sentence, and which positions trip up a fine-tuned Electra NLI model?",
-  "filterIds": ["labs", "papers"],
-  "year": "2025",
-  "isFeature": false,
+  "year": "2025 · paper",
   "eyebrow": "Labs",
   "subtitle": "If 'The room is never empty without music', then is 'The room empty with music'? - and a dependency-parser-driven analysis of ELECTRA-small's reliance on negation cue location in SNLI.",
   "tags": [
@@ -70,7 +71,7 @@
       "type": "Paragraph",
       "id": "nri",
       "title": "Negation Reliance Index",
-      "body": "Counting accuracy by slice tells you *where* the model fails, not *why*. To quantify how much the model overuses negation as a cue, I defined a **Negation Reliance Index** (NRI):\n\n`NRI(ℓ) = Δ_pred(ℓ) - Δ_gold(ℓ)`\n\nwhere `Δ` is the change in label probability conditioned on negation being present vs. absent. NRI > 0 means the model leans on negation as evidence for label ℓ *more strongly than the dataset itself does*. This is the key separator: real dataset bias (which the model is supposed to learn) vs. spurious model bias (which it shouldn't)."
+      "body": "Counting accuracy by slice tells you *where* the model fails, not *why*. To quantify how much the model overuses negation as a cue, I defined a **Negation Reliance Index** (NRI):\n\n$$\\text{NRI}(\\ell) = \\Delta_{\\text{pred}}(\\ell) - \\Delta_{\\text{gold}}(\\ell)$$\n\nwhere $\\Delta$ is the change in label probability conditioned on negation being present vs. absent. NRI > 0 means the model leans on negation as evidence for label $\\ell$ *more strongly than the dataset itself does*. This is the key separator: real dataset bias (which the model is supposed to learn) vs. spurious model bias (which it shouldn't)."
     },
     {
       "type": "Image",

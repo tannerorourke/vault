@@ -24,7 +24,7 @@ export function HomePage({ projects }: HomePageProps) {
   return (
     <main className={sty.root}>
       <div className={sty.content}>
-        <Markdown as="h2" className={sty.heading} value={HEADING} />
+        <Markdown as="h1" className={sty.heading} value={HEADING} />
 
         <LayoutGroup>
           <div className={sty.gridFeature}>

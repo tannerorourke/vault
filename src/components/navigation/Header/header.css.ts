@@ -65,7 +65,7 @@ export const container = style({
 export const logoContainer = style({
   display: "flex",
   flexWrap: "wrap",
-  cursor: "text",
+  cursor: "pointer",
   marginRight: "12px",
   selectors: {
     "&:span": { lineHeight: '0.1em !important' }
