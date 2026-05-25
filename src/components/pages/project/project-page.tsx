@@ -1,9 +1,8 @@
 import { ProjectContent, JumpIconButton } from "@/lib/types/project";
 
-import Link from "next/link";
-
 import Markdown from "@/components/ui/Markdown";
 import TextLink from "@/components/ui/TextLink";
+import Link from "next/link";
 import TagChip from "@/components/ui/TagChip";
 import { renderSection } from "./Section";
 import { ProjectToc } from "./Toc";
@@ -20,11 +19,11 @@ export function ProjectPage({ content }: { content: ProjectContent }) {
 
   const finding = content.finding;
   const hasFinding = !!finding;
-  const findingEyebrow = 
+  const findingEyebrow =
     finding?.eyebrow ?? "The finding";
 
   return (
-    <main className={sty.root} aria-label={content.title}>
+    <main id={content.pid} className={sty.root} aria-label={content.title}>
 
       <nav aria-label="Breadcrumb" className={sty.crumbs}>
         <Link href="/" className={sty.crumbLink}>Work</Link>
@@ -33,7 +32,7 @@ export function ProjectPage({ content }: { content: ProjectContent }) {
           <Markdown value={content.title} inline />
         </span>
       </nav>
-      
+
       <header className={hasFinding ? sty.headerWithFinding : sty.headerSolo}>
         <div className={sty.heroBody}>
           <h1 className={sty.title}>
@@ -47,7 +46,7 @@ export function ProjectPage({ content }: { content: ProjectContent }) {
               {content.year && <span className={sty.eyebrowYear}>{content.year}</span>}
             </div>
           )}
-          
+
           {content.subtitle && (
             <p className={sty.subtitle}>
               <Markdown value={content.subtitle} inline />
@@ -57,34 +56,34 @@ export function ProjectPage({ content }: { content: ProjectContent }) {
           {((content.tags && content.tags.length > 0) ||
             (content.links && content.links.length > 0)) && (
             <div className={sty.heroFoot}>
-          {content.tags && content.tags.length > 0 && (
-            <div className={sty.tagsRow}>
-              {content.tags.map((t, i) => (
-                <TagChip key={i} label={t.label} color={t.color} />
-              ))}
-            </div>
-          )}
+              {content.tags && content.tags.length > 0 && (
+                <div className={sty.tagsRow}>
+                  {content.tags.map((t, i) => (
+                    <TagChip key={i} label={t.label} color={t.color} />
+                  ))}
+                </div>
+              )}
 
-          {content.links && content.links.length > 0 && (
-            <div className={sty.links}>
-              {content.links.map((l: JumpIconButton, i) => {
-                const Icon = l.icon ? iconRegistry[l.icon] : null;
-                return (
-                  <a
-                    key={i}
-                    className={sty.linkBtn}
-                    href={l.href}
-                    target={l.target ? l.target : "_blank"}
-                    rel="noopener noreferrer"
-                    download={l.download ? l.download : undefined}
-                  >
-                    {Icon && <Icon className={sty.linkBtnIcon} />}
-                    {l.text && l.text}
-                  </a>
-                );
-              })}
-            </div>
-          )}
+              {content.links && content.links.length > 0 && (
+                <div className={sty.links}>
+                  {content.links.map((l: JumpIconButton, i) => {
+                    const Icon = l.icon ? iconRegistry[l.icon] : null;
+                    return (
+                      <a
+                        key={i}
+                        className={sty.linkBtn}
+                        href={l.href}
+                        target={l.target ? l.target : "_blank"}
+                        rel="noopener noreferrer"
+                        download={l.download ? l.download : undefined}
+                      >
+                        {Icon && <Icon className={sty.linkBtnIcon} />}
+                        {l.text && l.text}
+                      </a>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -122,6 +121,8 @@ export function ProjectPage({ content }: { content: ProjectContent }) {
           {content.sections.map((s) => renderSection(s))}
         </div>
       </div>
+
+      <NextProjectFooter currentPid={content.pid} />
     </main>
   );
 }
