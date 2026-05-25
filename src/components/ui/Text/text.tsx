@@ -27,17 +27,15 @@ export function Text<TAs extends ElementType = "span">({
   ...rest
 }: TextProps<TAs>) {
   const Component = (as ?? "p") as ElementType;
-
-  const mergeStyle = color !== undefined ? { ...style, color } : style;
   
   return (
     <Component
+      style={color !== undefined ? { ...style, color } : style}
       className={[
           textRecipe({ variant, tone, truncate: truncate || false }), 
           className
         ].filter(Boolean).join(" ")
       }
-      style={mergeStyle}
       {...rest}
     />
   );

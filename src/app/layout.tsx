@@ -5,7 +5,6 @@ import { Analytics } from "@vercel/analytics/next"
 
 import AppProvider from "@/components/navigation/AppProvider";
 import { ThemeProvider } from "@/components/navigation/ThemeProvider";
-import FloatingToolbar from "@/components/navigation/FloatingToolbar";
 
 import { lightTheme, darkTheme } from "@/lib/theme/theme.css";
 import './global.css';
@@ -88,7 +87,6 @@ export default async function RootLayout({
         <ThemeProvider initialTheme={theme} hasCookie={!!themeCookie}>
           <AppProvider>
               {children}
-              <FloatingToolbar />
               <Analytics />
           </AppProvider>
         </ThemeProvider>

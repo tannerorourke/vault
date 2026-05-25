@@ -1,70 +1,30 @@
 "use client";
 
-import { useMemo } from "react";
 import { motion, AnimatePresence, LayoutGroup } from "motion/react";
-import { useAppContext } from "@/components/navigation/AppProvider";
 import { ProjectContent } from "@/components/pages/project";
-import { ProjectFilterId } from "@/lib/types/nav";
+import { ProjectCategoryId } from "@/lib/types/project";
 
 import ProjectCard from "@/components/pages/home/ProjectCard";
-import FeaturedProjectCard from "@/components/pages/home/FeaturedProjectCard";
 import Markdown from "@/components/ui/Markdown";
 
-import { HEADER } from "@/content/home";
+import { HEADING } from "@/content/home";
 import * as sty from "./home-page.css";
 
 
 
 type HomePageProps = {
-  projects: ProjectContent[];
+  projects: Record<string, ProjectContent[]>;
 };
 
+const CATS: ProjectCategoryId[] = ["research", "labs", "experience"];
+
 export function HomePage({ projects }: HomePageProps) {
-  const { activeFilters } = useAppContext();
-
-  const originalFeatured = useMemo<ProjectContent | null>(
-    () => projects.find((p) => p.isFeature) ?? null,
-    [projects]
-  );
-
-  const featuredProject = useMemo<ProjectContent | null>(() => {
-    if (activeFilters.length > 0) {
-      return (
-        projects.find((p) =>
-          p.isFeature &&
-          activeFilters.some((f) => p.filterIds.includes(f as ProjectFilterId))
-        ) ?? null
-      );
-    }
-    return projects.find((p) => p.isFeature) ?? null;
-  }, [projects, activeFilters]);
-
-  const gridProjects = useMemo<ProjectContent[]>(() => {
-    return projects.filter((p) => {
-      if (featuredProject && p.pid === featuredProject.pid) return false;
-      if (activeFilters.length === 0) return true;
-      return activeFilters.some((f) => p.filterIds.includes(f as ProjectFilterId));
-    });
-  }, [projects, activeFilters, featuredProject]);
+  const featuredProject = projects["feature"]?.[0] ?? null;
 
   return (
     <main className={sty.root}>
-
       <div className={sty.content}>
-
-        <h3 className={sty.header}>
-          <Markdown value={HEADER} />
-        </h3>
-
-        {!featuredProject && originalFeatured && activeFilters.length > 0 && (
-          <div className={sty.featuredHiddenNote}>
-            <span className={sty.featureDotInline} />
-            <span>
-              Featured project hidden by active filter. Clear filters to see{" "}
-              <em>{originalFeatured.title}</em>.
-            </span>
-          </div>
-        )}
+        <Markdown as="h2" className={sty.heading} value={HEADING} />
 
         <LayoutGroup>
           <div className={sty.gridFeature}>
@@ -73,45 +33,51 @@ export function HomePage({ projects }: HomePageProps) {
                 <motion.div
                   key={featuredProject.pid}
                   layout
-                  initial={{ opacity: 0.5, scale: 0.96 }}
+                  initial={{ opacity: 0.5 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.96 }}
-                  transition={{
-                    layout: { duration: 0.4, ease: [0.2, 0.1, 0.2, 1] },
-                    default: { duration: 0.25 },
-                  }}
                 >
-                  <FeaturedProjectCard project={featuredProject} />
+                  <ProjectCard project={featuredProject} variant="featured" />
                 </motion.div>
               )}
             </AnimatePresence>
           </div>
 
-          <div className={sty.grid}>
-            <AnimatePresence mode="popLayout">
-              {gridProjects.map((p) => (
-                <motion.div
-                  key={p.pid}
-                  layout
-                  initial={{ opacity: 0.5, scale: 0.96,  }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.96 }}
-                  transition={{ 
-                    layout: { duration: 0.4, ease: [0.2, 0.1, 0.2, 1] },
-                    default: { duration: 0.25 },
-                  }}
-                >
-                  <ProjectCard
-                    key={p.pid}
-                    project={p}
-                    eyebrow={p.eyebrow ?? ""}
-                    year={p.year ?? ""}
-                    isFeature={p.isFeature}
-                  />
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </div>
+          {CATS.map((cat) => {
+            const items = projects[cat];
+            if (!items?.length) return null;
+            return (
+              <section key={cat}>
+                <Markdown
+                  as="h2"
+                  className={sty.sectionHeading}
+                  value={cat.charAt(0).toUpperCase() + cat.slice(1)}
+                />
+                <div className={sty.grid}>
+                  <AnimatePresence mode="popLayout">
+                    {items.map((p) => (
+                      <motion.div
+                        key={p.pid}
+                        layout
+                        initial={{ opacity: 0.5 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{
+                          layout: { duration: 0.4, ease: [0.2, 0.1, 0.2, 1] },
+                          default: { duration: 0.25 },
+                        }}
+                      >
+                        <ProjectCard
+                          key={p.pid}
+                          project={p}
+                          eyebrow={p.eyebrow ?? ""}
+                          year={p.year ?? ""}
+                        />
+                      </motion.div>
+                    ))}
+                  </AnimatePresence>
+                </div>
+              </section>
+            );
+          })}
         </LayoutGroup>
       </div>
     </main>
