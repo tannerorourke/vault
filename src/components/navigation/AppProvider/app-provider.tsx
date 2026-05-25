@@ -1,18 +1,17 @@
 "use client";
 
 import {
-  createContext, useContext, useRef, useState, useEffect,
-  ReactNode, Dispatch, SetStateAction
+  createContext, useContext, useRef, useState, useEffect, useCallback,
+  ReactNode
 } from "react";
 import { usePathname } from "next/navigation";
-import { NavFilter } from "@/lib/types/nav";
 
 
 export type AppContext = {
   pathname: string;
-  hasAppHistory: boolean
-  activeFilters: NavFilter['id'][];
-  setActiveFilters: Dispatch<SetStateAction<NavFilter['id'][]>>;
+  hasAppHistory: boolean;
+  viewedProjects: ReadonlySet<string>;
+  markProjectViewed: (pid: string) => void;
 };
 
 const AppContext =
@@ -24,8 +23,8 @@ export function AppProvider({
 }: {
   children: ReactNode,
 }) {
-  const [activeFilters, setActiveFilters] = useState<NavFilter['id'][]>([]);
   const [hasAppHistory, setHasAppHistory] = useState(false);
+  const [viewedProjects, setViewedProjects] = useState<Set<string>>(() => new Set());
   const pathname = usePathname();
   const isFirstRender = useRef(true);
 
@@ -37,12 +36,21 @@ export function AppProvider({
     if (!hasAppHistory) setHasAppHistory(true);
   }, [pathname]);
 
+  const markProjectViewed = useCallback((pid: string) => {
+    setViewedProjects((prev) => {
+      if (prev.has(pid)) return prev;
+      const next = new Set(prev);
+      next.add(pid);
+      return next;
+    });
+  }, []);
+
   return (
     <AppContext.Provider value={{
       pathname,
       hasAppHistory,
-      activeFilters,
-      setActiveFilters,
+      viewedProjects,
+      markProjectViewed,
     }}>
       {children}
     </AppContext.Provider>
