@@ -1,29 +1,25 @@
-import { NavLink } from "@/lib/types/nav";
+import { NavLink } from "@/content/nav-links";
 
-import Sheet from "@/components/ui/Sheet";
 import Text from "@/components/ui/Text";
 import TextLink from "@/components/ui/TextLink";
 import Markdown from "@/components/ui/Markdown";
 import Footer from "@/components/navigation/Footer";
 
-import { PARAGRAPHS, CONTACT_TEXT, ABOUT_LINKS, AUX_LINKS } from "@/content/about";
+import { IconName } from "@/components/icons/registry";
+
+import { PARAGRAPHS, CONTACT_TEXT, ABOUT_LINKS, PHOTO_META } from "@/content/about";
 import * as sty from "./about-page.css";
 
 
+const ICON_FOR_ALT: Record<string, IconName> = {
+  "Email me":       "envelope",
+  "LinkedIn":       "linkedin",
+  "GitHub":         "github",
+  "Google Scholar": "grad-cap",
+};
 
-type ContactRowVariant = "primary" | "muted";
 
-function ContactRow({
-  label,
-  links,
-  variant,
-}: {
-  label: string;
-  links: NavLink[];
-  variant: ContactRowVariant;
-}) {
-  const tone = variant === "primary" ? "primary" : "secondary";
-  const underline = variant === "primary" ? "always" : "hover";
+function ContactRow({ label, links }: { label: string; links: NavLink[] }) {
   return (
     <div className={sty.contactRow}>
       <Text
@@ -39,8 +35,10 @@ function ContactRow({
           <li key={l.href ?? l.text} className={sty.contactRowItem}>
             <TextLink
               label={l.text ?? l.alt ?? ""}
-              underline={underline}
-              textProps={{ variant: "bodySm", tone }}
+              underline="hover"
+              textProps={{ variant: "body" }}
+              leftIcon={{ icon: ICON_FOR_ALT[l.alt ?? ""], hold: true }}
+              rightIcon={{ icon: "arrow-up-right" }}
               nextProps={{
                 href: l.href ?? "#",
                 target: l.target,
@@ -48,6 +46,7 @@ function ContactRow({
                 download: l.download,
               }}
               aria-label={l.alt}
+              className={sty.contactLink}
             />
           </li>
         ))}
@@ -59,51 +58,43 @@ function ContactRow({
 
 export function ProfilePage() {
   return (
-    <main className={sty.profileRoot}>
-      <section className={sty.body}>
+    <main className={sty.aboutRoot}>
+      <section className={sty.intro}>
 
-        <aside className={sty.photoColumn} aria-label="At a glance">
+        <aside className={sty.photoCol} aria-label="At a glance">
           <figure className={sty.photoFigure}>
-            <img className={sty.photo} src="/me_4-5.png" alt="Tanner O\'Rourke, headshot" />
+            <img className={sty.photo} src="/me_4-5.png" alt="Tanner O'Rourke, headshot" />
           </figure>
+          <dl className={sty.photoMeta}>
+            {PHOTO_META.map(({ key, val }) => (
+              <div key={key} className={sty.photoMetaRow}>
+                <Text as="dt" variant="micro" className={sty.photoMetaKey}>{key}</Text>
+                <Text as="dd" variant="micro" className={sty.photoMetaVal}>{val}</Text>
+              </div>
+            ))}
+          </dl>
         </aside>
 
-        <Sheet className={sty.bodySheet}>
-          {PARAGRAPHS.map((p, i) => (
-            <article key={i} className={sty.article}>
-              <Text
-                as="p"
-                variant="bodyLg"
-                className={sty.par}
-              >
-                <Markdown value={p} inline />
-              </Text>
-            </article>
+        <div className={sty.proseCol}>
+          <Text as="p" variant="bodyLg" className={sty.headline}>
+            <Markdown value={PARAGRAPHS[0]} inline />
+          </Text>
+          {PARAGRAPHS.slice(1).map((p, i) => (
+            <Text as="p" key={i} variant="bodyLg" className={sty.par}>
+              <Markdown value={p} inline />
+            </Text>
           ))}
-        </Sheet>
+        </div>
       </section>
 
-      <Sheet className={sty.contactSheet} aria-label="Contact links">
-        {CONTACT_TEXT !== "" && (
-          <>
-            <Text
-              as="p"
-              variant="bodyLg"
-              className={sty.par}
-            >
-              <Markdown value={CONTACT_TEXT} inline />
-            </Text>
-            <hr className={sty.pDivider} aria-hidden="true" />
-          </>
-        )}
-        <ContactRow label="Get in touch" links={ABOUT_LINKS} variant="primary" />
-        <ContactRow label="Also at" links={AUX_LINKS} variant="muted" />
-      </Sheet>
-
-      <hr className={sty.pDivider} aria-hidden="true" />
+      <section className={sty.contact} aria-label="Contact">
+        <Text as="p" className={sty.contactStatement}>
+          <Markdown value={CONTACT_TEXT} inline />
+        </Text>
+        <ContactRow label="Get in touch" links={ABOUT_LINKS} />
+      </section>
 
       <Footer />
-
     </main>
   );
 }
