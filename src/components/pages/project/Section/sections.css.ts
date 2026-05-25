@@ -4,35 +4,59 @@ import { mq } from "@/lib/theme/responsive.css";
 
 const MEDIA_RADIUS = "10px";
 
-export const sectionSheet = style({
-  padding: `${theme.space._24} 28px`,
+export const section = style({
+  scrollMarginTop: `calc(${theme.header.offset.xs} + ${theme.space._24})`,
+  [mq.sm]: {
+    scrollMarginTop: `calc(${theme.header.offset.sm} + ${theme.space._24})`,
+  },
+  [mq.md]: {
+    scrollMarginTop: `calc(${theme.header.offset.md} + ${theme.space._24})`,
+  },
+  [mq.lg]: {
+    scrollMarginTop: `calc(${theme.header.offset.lg} + ${theme.space._24})`,
+  },
 });
 
-  export const sectionTitle = style({
-    fontFamily: "var(--font-display)",
-    fontWeight: theme.typography.fontWeight.bold,
-    fontSize: theme.typography.fontSize.titleXs,
-    letterSpacing: "-0.012em",
-    color: theme.color.primary.main,
-    margin: `0 0 ${theme.space._12} 0`,
-  });
+export const sectionTitle = style({
+  fontFamily: "var(--font-display)",
+  fontWeight: theme.typography.fontWeight.semibold,
+  fontSize: theme.typography.fontSize.titleSm,
+  letterSpacing: "-0.018em",
+  lineHeight: 1.18,
+  color: theme.color.text.primary,
+  margin: `0 0 ${theme.space._16} 0`,
+  display: "flex",
+  alignItems: "baseline",
+  gap: theme.space._12,
+  selectors: {
+    "&::before": {
+      content: "''",
+      display: "inline-block",
+      width: "9px",
+      height: "2px",
+      background: theme.color.secondary.main,
+      flexShrink: 0,
+      transform: "translateY(-6px)",
+    },
+  },
+});
 
-  export const sectionTitleCopper = style({
-    color: theme.color.secondary.active,
-  });
-
-    export const section = style({
-      scrollMarginTop: `calc(${theme.layout.headerHeight} + ${theme.space._24})`,
-    });
+export const sectionTitleCopper = style({
+  selectors: {
+    "&::before": {
+      background: theme.color.primary.main,
+    },
+  },
+});
 
 // --- Prose ---
 
 export const prose = style({
-  fontSize: theme.typography.fontSize.bodySm,
-  lineHeight: "1.7",
+  fontSize: "15.5px",
+  lineHeight: "1.65",
   color: theme.color.text.primary,
+  maxWidth: "68ch",
 });
-
     globalStyle(`${prose} p`, {
       margin: `0 0 ${theme.space._12}`,
     });
@@ -54,21 +78,38 @@ export const prose = style({
 // --- Bulleted List ---
 
 export const list = style({
-  margin: `${theme.space._8} 0 0 ${theme.space._20}`,
-  fontSize: theme.typography.fontSize.bodySm,
-  lineHeight: "1.7",
+  listStyle: "none",
+  padding: 0,
+  margin: 0,
+  display: "flex",
+  flexDirection: "column",
+  gap: theme.space._12,
+  maxWidth: "70ch",
+  fontSize: "15px",
+  lineHeight: "1.6",
   color: theme.color.text.primary,
 });
 
     globalStyle(`${list} li`, {
-      marginBottom: theme.space._4,
+      position: "relative",
+      paddingLeft: "22px",
     });
-    globalStyle(`${list} li:last-child`, {
-      marginBottom: 0,
+    globalStyle(`${list} li::before`, {
+      content: "''",
+      position: "absolute",
+      left: 0,
+      top: "0.78em",
+      width: "8px",
+      height: "1px",
+      background: theme.color.secondary.main,
+      opacity: 0.85,
+    });
+    globalStyle(`${list} li strong`, {
+      fontWeight: theme.typography.fontWeight.semibold,
     });
 
 export const intro = style({
-  marginBottom: theme.space._8,
+  marginBottom: theme.space._12,
 });
 
 
@@ -158,19 +199,26 @@ export const videoMedia = style({
 // --- Stat sheet ---
 export const strip = style({
   display: "grid",
-  gridTemplateColumns: "repeat(2, 1fr)",
-  gap: theme.space._16,
-  [mq.sm]: {
-    gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))",
+  gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
+  gap: 0,
+  borderTop: `1px solid ${theme.color.divider}`,
+  borderBottom: `1px solid ${theme.color.divider}`,
+});
+
+export const cell = style({
+  padding: `${theme.space._16} ${theme.space._20} ${theme.space._16} 0`,
+  borderRight: `1px solid ${theme.color.divider}`,
+  selectors: {
+    "&:last-child": {
+      borderRight: "none",
+    },
   },
 });
 
-export const cell = style({});
-
 const valueBase = {
   fontFamily: "var(--font-display)",
-  fontWeight: theme.typography.fontWeight.bold,
-  letterSpacing: "-0.015em",
+  fontWeight: theme.typography.fontWeight.semibold,
+  letterSpacing: "-0.018em",
   lineHeight: 1,
   color: theme.color.primary.main,
   marginBottom: theme.space._8,
@@ -182,9 +230,9 @@ export const value = styleVariants({
 });
 
 export const label = style({
-  fontFamily: "var(--font-mono)",
-  fontSize: theme.typography.fontSize.micro,
-  letterSpacing: "0.06em",
+  fontSize: theme.typography.fontSize.eyebrow,
+  fontWeight: theme.typography.fontWeight.semibold,
+  letterSpacing: "0.14em",
   textTransform: "uppercase",
   lineHeight: 1.4,
   color: theme.color.text.secondary,

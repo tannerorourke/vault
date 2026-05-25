@@ -1,16 +1,15 @@
 'use client'
 
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "motion/react";
 import { useAppContext } from "@/components/navigation/AppProvider";
-import { NavFilter } from "@/lib/types/nav";
+import { IconName } from "@/components/icons/registry";
 
 import Link from "next/link";
 import TextLink from "@/components/ui/TextLink";
 import Text from "@/components/ui/Text";
+import ConnectMenu from "./ConnectMenu";
 
-import { NAV_FILTERS } from "@/content/nav-links";
 import * as sty from "./header.css";
 
 
@@ -21,48 +20,9 @@ type HeaderProps = {
 export function Header({
   enableClickAnimation = true,
 }: HeaderProps) {
-  const { pathname, activeFilters, setActiveFilters } = useAppContext()
-  const router = useRouter();
-
-  /** Logo: Go home, or reset filters */
-  const onLogoClick = () => {
-    if (pathname === "/") {
-      setActiveFilters([]);
-      return;
-    }
-    router.push("/");
-  }
-
-  const isHome = pathname === "/";
-  const isOnAbout = pathname === "/about";
-
-  const morphLabel =
-    activeFilters.length === 1
-      ? NAV_FILTERS.find((f) => f.id === activeFilters[0])?.label ?? "Projects"
-      : "Projects";
-  const morphArrowDir = isOnAbout ? "left" as const : "up" as const;
-
-  /** Filter links: Apply always, conditionally wait for reroute */
-  const toggleFilter = (id: NavFilter['id']) => {
-    const apply = () =>
-      setActiveFilters((current) => current.includes(id) ? current.filter((f) => f !== id) : [...current, id]);
-    
-    if (pathname === "/") {
-      apply();
-      return;
-    }
-    router.push("/");
-    setTimeout(apply, 500);
-  };
-
-  const onNavShiftWheel: React.WheelEventHandler<HTMLDivElement> = (e) => {
-    if (!e.shiftKey) return;
-    const el = e.currentTarget;
-    if (el.scrollWidth <= el.clientWidth) return;
-    e.preventDefault();
-    el.scrollLeft += e.deltaY;
-  };
-
+  const { pathname } = useAppContext();
+  
+  // Logo
   useEffect(() => {
     const spans: NodeListOf<HTMLSpanElement> = document.querySelectorAll('[data-logo-span]');
 
@@ -88,102 +48,68 @@ export function Header({
         span.removeEventListener("animationend", handleAnimationEnd);
       });
     };
-  }, [enableClickAnimation])
+  }, [enableClickAnimation]);
+
+  // Nav item
+  const navProps = pathname === "/about"
+    ? { key: "back", label: "Back", href: "back", icon: "arrow-left" as IconName }
+    : { key: "about", label:"About", href: "/about", icon: "user" as IconName };
 
   return (
-    <header className={`${sty.root}`}>
-        <Link prefetch href="/" onNavigate={onLogoClick} className={sty.logoContainer} aria-label="Home">
+    <header className={sty.root}>
+      <motion.div
+        key="header"
+        initial={{ opacity: 0.5 }} animate={{ opacity: 1 }}
+        // transition={{ duration: 0.18, ease: "easeOut", delay: 0 }}
+        className={sty.container}
+      >
+        <Link prefetch href="/" className={sty.logoContainer} aria-label="Home">
           <Text as="span" variant={"titleLg"} className={sty.word} id="w2">
             <span data-logo-span id="logo-T">T</span>
-            <span data-logo-span>A</span>
-            <span data-logo-span>N</span>
+            <span>A</span>
+            <span>N</span>
             <span data-logo-span id="logo-N2">N</span>
-            <span data-logo-span>E</span>
-            <span data-logo-span>R</span>
+            <span>E</span>
+            <span>R</span>
             &nbsp;&nbsp;
           </Text>
           <Text as="span" variant={"titleLg"} className={sty.word} id="w1">
             <br/>
-            <span data-logo-span id="logo-O1">O</span>
-            <span data-logo-span>'</span>
-            <span data-logo-span>R</span>
-            <span data-logo-span>O</span>
+            <span data-logo-span id='logo-O1'>O</span>
+            <span>'</span>
+            <span>R</span>
+            <span>O</span>
             <span data-logo-span id="logo-U">U</span>
-            <span data-logo-span>R</span>
+            <span>R</span>
             <span data-logo-span id="logo-K">K</span>
-            <span data-logo-span>E</span>
+            <span>E</span>
           </Text>
         </Link>
-        <div className={sty.navScrollWrap} onWheel={onNavShiftWheel}>
-          <AnimatePresence mode="popLayout" initial={false}>
-            {isHome ? (
-              <motion.nav
-                key="filters"
-                className={sty.navFlex}
-                aria-label="Filter projects"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.18, ease: "easeOut" }}
-              >
-                {NAV_FILTERS.map((cf: NavFilter) => (
-                  <TextLink
-                    key={cf.id}
-                    label={cf.label}
-                    filterId={cf.id}
-                    isActive={activeFilters.includes(cf.id)}
-                    notifyOnClick={toggleFilter}
-                    textProps={{
-                      variant: "bodyLg",
-                      tone: "primary",
-                      className: sty.navFilters
-                    }}
-                  />
-                ))}
-              </motion.nav>
-            ) : (
-              <motion.div
-                key="morph"
-                className={sty.navFlex}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.18, ease: "easeOut" }}
-              >
-                <TextLink
-                  label={morphLabel}
-                  leftArrow={{ dir: morphArrowDir }}
-                  nextProps={{ href: "/", prefetch: true }}
-                  textProps={{
-                    variant: "bodyLg",
-                    tone: "primary",
-                    className: sty.navFilters
-                  }}
-                />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
         <div className={sty.navRight}>
-          <AnimatePresence initial={false}>
-            {!isOnAbout && (
-              <motion.div
-                key="about-link"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.18, ease: "easeOut" }}
-              >
-                <TextLink
-                  label="About"
-                  rightArrow={{ dir: "right" }}
-                  nextProps={{ href: "/about", prefetch: true, className: sty.navProfLink }}
-                  textProps={{ variant: "bodyLg", tone: "primary", className: sty.navFilters }}
-                />
-              </motion.div>
-            )}
+          <AnimatePresence initial={false} mode="popLayout">
+            <motion.div
+              key={navProps.key}
+              initial={{ opacity: 0 }}
+              animate={{ 
+                opacity: 1,
+                transition: { duration: 0.2, delay: 0.1, ease: "easeIn" },
+              }}
+              exit={{ 
+                opacity: 0,
+                transition: { duration: 0.15, ease: "easeOut" },
+              }}
+            >
+              <TextLink
+                label={navProps.label}
+                leftIcon={{ icon: navProps.icon, hold: true, props: { height: 20, width: 20 } }}
+                nextProps={{ href: navProps.href, prefetch: true, className: sty.aboutLink }}
+                textProps={{ variant: "bodyLg", tone: "primary", className: sty.aboutText }}
+              />
+            </motion.div>
           </AnimatePresence>
+          <ConnectMenu />
         </div>
-      </header>
+      </motion.div>
+    </header>
   )
 }
