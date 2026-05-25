@@ -25,6 +25,12 @@ export const theme = createThemeContract({
 				main: null,
 				hover: null,
 		},
+		code: {
+				bg: null,
+				border: null,
+				text: null,
+				blockBg: null,
+		},
 		tint: {
 				primaryWeak: null,
 				primarySoft: null,
@@ -75,6 +81,9 @@ export const theme = createThemeContract({
       normal: null,
       tight: null,
     },
+    fontFamily: {
+      mono: null,
+    },
 	},
 	space: {
 		auto: null,
@@ -101,21 +110,21 @@ export const theme = createThemeContract({
     padTop: { xs: null, sm: null, md: null, lg: null },
     height: { xs: null, sm: null },
     offset: { xs: null, sm: null, md: null, lg: null },
-    },
+  },
   page: {
     marginTop: { xs: null,    sm: null, md: null, lg: null },
     gutter: { xs: null,       sm: null, md: null, lg: null },
     maxContentWidth: {        sm: null, md: null, lg: null },
     marginBottom: { xs: null, sm: null, md: null, lg: null },
   },
-		zIndex: {
-			tooltip: null,
-			sidebar: null,
+  zIndex: {
+    tooltip: null,
+    sidebar: null,
     pageSticky: null,
-			header: null,
-			canvas: null,
-      content: null,
-	},
+    header: null,
+    canvas: null,
+    content: null,
+  },
 	sheet: {
 		bg: null,
 		blur: null,
@@ -166,6 +175,9 @@ const typography = {
     normal: "0",
     tight: "-0.01em",
   },
+  fontFamily: {
+    mono: 'var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace',
+  },
 };
 
 const space = {
@@ -209,13 +221,13 @@ const page = {
 };
 
 const zIndex = {
-    tooltip: '9999',
+  tooltip: '9999',
   sidebar: '13',
   pageSticky: '12',
-    header: '11',
-    canvas: '1',
-    content: '2',
-  }
+  header: '11',
+  canvas: '1',
+  content: '2',
+}
 
 /** ------------------------------------------------------ */
 /** -- THEME DEFINITIONS --------------------------------- */
@@ -245,6 +257,12 @@ const lightThemeColors = {
   link: {
       main: '#5D6D68',
       hover: '#E07A5F', // intentional teal->copper jump on link hover
+  },
+  code: {
+      bg:      'rgba(42, 95, 88, 0.06)',
+      border:  'rgba(42, 95, 88, 0.12)',
+      text:    '#1C2321',
+      blockBg: '#F8FAF9',
   },
   tint: {
       primaryWeak:      'rgba(42, 95, 88, 0.06)',
@@ -290,6 +308,12 @@ const darkThemeColors = {
   link: {
       main: '#7A9E98',
       hover: '#C4A87A',
+  },
+  code: {
+      bg:      'rgba(77, 184, 172, 0.10)',
+      border:  'rgba(77, 184, 172, 0.18)',
+      text:    '#E0EDEA',
+      blockBg: '#11211D',
   },
   tint: {
       primaryWeak:      'rgba(77, 184, 172, 0.06)',
