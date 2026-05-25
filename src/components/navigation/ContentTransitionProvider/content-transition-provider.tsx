@@ -29,6 +29,10 @@ export function getDirection(fromPath: string | null, toPath: string): Direction
 
   const from = getRouteKind(fromPath);
   const to = getRouteKind(toPath);
+
+  // Next Project transitions
+  if (from === "project" && to === "project") return "up";
+
   if (from === to) return "none";
 
   // Horizontal transitions
@@ -88,7 +92,7 @@ export function ContentTransitionProvider({ children }: { children: React.ReactN
         initial={animate ? "initial" : false}
         animate={animate ? "animate" : false}
         exit={animate ? "exit" : undefined}
-        transition={{ duration: 0.4, ease: [0.5, 0.0, 0.3, 0.9] }}
+        transition={{ duration: 0.4, ease: [.5, 0, .3, .9] }}
         className={sty.transitionMotionDiv}
         onScroll={(e) => {
           // dispatch for

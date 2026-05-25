@@ -20,6 +20,7 @@ import { Envelope } from "./envelope";
 import { FileText } from "./file-text";
 import { Github } from "./github";
 // import { Globe } from "./globe";
+import { GradCap } from "./grad-cap";
 import { Linkedin } from "./linkedin";
 // import { Medium } from "./medium";
 import { Moon } from "./moon";
@@ -28,6 +29,7 @@ import { Network } from "./network";
 // import { Pdf } from "./pdf";
 import { Sun } from "./sun";
 import { Times } from "./times";
+import { User } from "./user";
 
 export const iconRegistry = {
   "arrow-down": ArrowDown,
@@ -40,11 +42,13 @@ export const iconRegistry = {
   "envelope": Envelope,
   "file-text": FileText,
   "github": Github,
+  "grad-cap": GradCap,
   "linkedin": Linkedin,
   "moon": Moon,
   "network": Network,
   "sun": Sun,
   "times": Times,
+  'user': User
 } as const satisfies Record<string, ComponentType<IconProps>>;
 
 export type IconName = keyof typeof iconRegistry;

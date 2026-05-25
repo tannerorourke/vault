@@ -23,6 +23,22 @@ export const PROJECTS: ProjectContent[] = [...ALL].sort(
 export const PROJECTS_BY_PID: Record<string, ProjectContent> =
   Object.fromEntries(PROJECTS.map((p) => [p.pid, p]));
 
+export const PROJECTS_BY_CTGY: Record<string, ProjectContent[]> =
+  PROJECTS.reduce((acc, p) => {
+    if (p.isFeature && !acc["feature"]) {
+      acc["feature"] = [p];
+    } else {
+      const cat = p.category;
+      if (!acc[cat]) acc[cat] = [];
+      acc[cat].push(p);
+    }
+    return acc;
+  }, {} as Record<string, ProjectContent[]>);
+
+for (const key in PROJECTS_BY_CTGY) {
+  PROJECTS_BY_CTGY[key].sort((a, b) => (a.order ?? 99) - (b.order ?? 99));
+}
+
 export function getProjectContent(slug: string): ProjectContent | null {
   return PROJECTS_BY_PID[slug] ?? null;
 }
