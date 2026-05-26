@@ -100,8 +100,9 @@ export function Header({
               }}
             >
               <TextLink
+                intent="navigation"
                 label={navProps.label}
-                leftIcon={{ icon: navProps.icon, hold: true, props: { height: 20, width: 20 } }}
+                leftIcon={{ name: navProps.icon, hold: true }}
                 nextProps={{ href: navProps.href, prefetch: true, className: sty.aboutLink }}
                 textProps={{ variant: "bodyLg", tone: "primary", className: sty.aboutText }}
               />

@@ -12,11 +12,10 @@ export const iconButton = recipe({
     border: "none",
     background: "transparent",
     color: theme.color.text.primary,
-    transition: "background-color 300ms ease, color 300ms ease, box-shadow 300ms ease",
+    transition: "background-color 300ms ease, color 300ms ease, box-shadow 300ms ease, transform 100ms ease",
     selectors: {
       "&:hover": {
         color: theme.color.secondary.main,
-        // TODO(palette-pass-2): nav-vs-CTA hover convention misalignment
       },
       "&:focus-visible": {
         outline: `2px solid ${theme.color.focus}`,
@@ -47,6 +46,15 @@ export const iconButton = recipe({
 });
 
 export type IconButtonVariants = RecipeVariants<typeof iconButton>;
+
+// Stable selector for :has() rules in other modules that need to suppress
+// card-level hover while an icon inside is hovered.
+export const iconButtonBase = iconButton.classNames.base;
+
+
+export const iconMuted = style({
+  opacity: 0.7,
+});
 
 // -----------------------------------------------------
 // tooltip
