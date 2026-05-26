@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { JetBrains_Mono, Newsreader, Roboto_Flex } from "next/font/google";
 import { cookies } from "next/headers";
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 import AppProvider from "@/components/navigation/AppProvider";
 import { ThemeProvider } from "@/components/navigation/ThemeProvider";
@@ -99,6 +100,7 @@ export default async function RootLayout({
           <AppProvider>
               {children}
               <Analytics />
+              <SpeedInsights />
           </AppProvider>
         </ThemeProvider>
       </body>
