@@ -13,13 +13,13 @@ const nextConfig: NextConfig = {
   // "use client" components that transitively import LayoutRouterContext
   // (via the canonical `next/dist/shared/lib/app-router-context.shared-runtime`
   // path) end up with a server bundle whose require chain reaches
-  // pages.runtime.prod.js — a file Vercel's NFT does NOT package into App
+  // pages.runtime.prod.js - a file Vercel's NFT does NOT package into App
   // Router Lambdas. Cold-start MODULE_NOT_FOUND ensues.
   //
   // Tried the proper fix (post-process the substitution plugin's `pages` -> 
   // `app-page` rewrite in next.config.ts webpack hook). Local builds came out
   // clean either way, but the same fix on Vercel left the broken require in
-  // place — likely a plugin-ordering or layer-tagging issue inside Next's
+  // place - likely a plugin-ordering or layer-tagging issue inside Next's
   // pipeline that we couldn't isolate.
   //
   // This is the bandage: force NFT to include the file. The require still

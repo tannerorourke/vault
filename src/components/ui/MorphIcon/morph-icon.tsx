@@ -1,13 +1,14 @@
 import { cloneElement, isValidElement, ReactElement } from 'react';
-import type { IconProps } from "@/lib/types/icons";
 
 import * as sty from './morph-icon.css';
 
 
+type MorphElement = ReactElement<{ className?: string }>;
+
 export type MorphIconProps = {
   active: boolean;
-  from: ReactElement<IconProps>;
-  to: ReactElement<IconProps>;
+  from: MorphElement;
+  to: MorphElement;
   shownClass?: string;  // default "shown" transition override
   hiddenClass?: string; // default "hidden" transition override
   className?: string;   // applied to span
@@ -21,7 +22,7 @@ export function MorphIcon({
   hiddenClass = sty.hidden,
   className,
 }: MorphIconProps) {
-  const layer = (el: ReactElement<IconProps>, visible: boolean) =>
+  const layer = (el: MorphElement, visible: boolean) =>
     isValidElement(el)
       ? cloneElement(el, {
           className: [sty.layer, visible ? shownClass : hiddenClass, el.props.className]

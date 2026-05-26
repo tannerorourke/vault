@@ -1,7 +1,7 @@
 import { createHighlighter, type Highlighter, type BundledLanguage } from 'shiki/bundle/web';
 
 import { codeBlock } from '@/components/ui/Markdown/markdown.css';
-import { portfolioDark, portfolioLight } from '@/lib/shiki/themes';
+import { portfolioDark, portfolioLight } from '@/lib/markdown/shiki-themes';
 
 const LANGS: BundledLanguage[] = [
   'ts', 'tsx', 'js', 'jsx', 'python', 'bash', 'json', 'html', 'css', 'md',
