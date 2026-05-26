@@ -3,7 +3,7 @@ import { theme } from "@/lib/theme/theme.css";
 
 export const linkBtnBase = style({
   letterSpacing: "-0.005em",
-  padding: "6px 2px 2px 2px",
+  padding: "2px",
   border: "none",
   borderRadius: "2px",
   display: "inline-flex", alignItems: "center",
@@ -30,12 +30,33 @@ export const linkBtnBase = style({
       opacity: 0.5,
     },
     "&:hover": {
-      color: `${theme.color.link.hover} !important`,
       backgroundSize: "100% 2px",
     },
     "&:active": {
-      color: theme.color.secondary.active,
       backgroundSize: "100% 2px",
+    },
+  },
+});
+
+// variants - applied alongside linkBtnBase
+export const linkBtnInteractive = style({
+  selectors: {
+    "&:hover": {
+      color: `${theme.color.link.hover} !important`,
+    },
+    "&:active": {
+      color: theme.color.secondary.active,
+    },
+  },
+});
+
+export const linkBtnNavigation = style({
+  selectors: {
+    "&:hover": {
+      color: `${theme.color.primary.main} !important`,
+    },
+    "&:active": {
+      color: theme.color.primary.active,
     },
   },
 });
@@ -49,15 +70,21 @@ export const linkTextBase = style({
   transition: "color 200ms ease",
 
   selectors: {
-    // Order matters: later rules win at equal specificity.
+    // Order matters: later rules wins
     [`${linkBtnBase}[aria-pressed="true"] &`]: {
       color: theme.color.secondary.active,
     },
-    [`${linkBtnBase}:hover &`]: {
+    [`${linkBtnInteractive}:hover &`]: {
       color: theme.color.link.hover,
     },
-    [`${linkBtnBase}:active &`]: {
+    [`${linkBtnNavigation}:hover &`]: {
+      color: theme.color.primary.main,
+    },
+    [`${linkBtnInteractive}:active &`]: {
       color: theme.color.secondary.active,
+    },
+    [`${linkBtnNavigation}:active &`]: {
+      color: theme.color.primary.active,
     },
   },
 });
@@ -69,7 +96,6 @@ const hoverBase = {
 } as const;
 
 const activeBase = {
-  color: theme.color.secondary.active,
   width: "20px",
   opacity: 1,
 } as const;
@@ -78,8 +104,8 @@ const slotBase = {
   display: "inline-flex",
   alignItems: "center",
   overflow: "hidden",
-  height: "20px", 
-  
+  height: "20px",
+
   width: "0px",
   padding: 0,
   opacity: 0,

@@ -2,15 +2,6 @@ import { style, globalStyle } from "@vanilla-extract/css";
 import { theme } from "@/lib/theme/theme.css";
 import { mq } from "@/lib/theme/responsive.css";
 import { page } from "@/lib/styles/page.css";
-import { EASE_CUBIC } from "@/lib/styles/utils.css";
-import {
-  linkBtnBase,
-  leftSlotHold,
-  rightSlotEnabled,
-} from "@/components/ui/TextLink/text-link.css";
-
-
-const MONO = "ui-monospace, SFMono-Regular, Menlo, monospace";
 
 
 export const aboutRoot = style([
@@ -53,56 +44,21 @@ export const photoCol = style({
   },
 });
 
-export const photoFigure = style({
-  margin: 0,
-  transition: `transform 400ms ${EASE_CUBIC}`,
-  selectors: {
-    "&:hover": {
-      transform: "translateY(-2px)",
-    },
-  },
-});
+  export const photoFigure = style({
+    margin: 0,
+  });
 
-export const photo = style({
-  display: "block",
-  width: "100%",
-  aspectRatio: "4 / 5",
-  borderRadius: "4px",
-  objectFit: "cover",
-  background: theme.color.tint.primaryWeak,
-  filter: "saturate(0.95)",
-});
+    export const photo = style({
+      display: "block",
+      width: "100%",
+      aspectRatio: "4 / 5",
+      borderRadius: "4px",
+      objectFit: "cover",
+      background: theme.color.tint.primaryWeak,
+      filter: "saturate(0.95)",
+    });
 
-export const photoMeta = style({
-  margin: 0,
-  padding: `${theme.space._4} 0 0 0`,
-  display: "flex",
-  flexDirection: "column",
-  gap: theme.space._4,
-});
-
-export const photoMetaRow = style({
-  display: "flex",
-  gap: theme.space._12,
-  margin: 0,
-});
-
-export const photoMetaKey = style({
-  fontFamily: MONO,
-  color: theme.color.text.secondary,
-  opacity: 0.6,
-  minWidth: "64px",
-  letterSpacing: "0.02em",
-});
-
-export const photoMetaVal = style({
-  fontFamily: MONO,
-  color: theme.color.text.primary,
-  opacity: 0.85,
-  letterSpacing: "0.02em",
-});
-
-// -- Prose column
+// -- Prose
 
 export const proseCol = style({
   display: "flex",
@@ -111,129 +67,117 @@ export const proseCol = style({
   maxWidth: "62ch",
 });
 
-export const headline = style({
-  fontWeight: theme.typography.fontWeight.semibold,
-  lineHeight: theme.typography.lineHeight.relaxed,
-  letterSpacing: "-0.005em",
-  textWrap: "pretty",
-  margin: 0,
-  color: theme.color.text.primary,
-});
+  export const par = style({
+    display: "inline-block",
+    lineHeight: theme.typography.lineHeight.relaxed,
+    opacity: 0.92,
+    textWrap: "pretty",
+    margin: 0,
+    scrollMarginTop: `calc(${theme.header.height.xs} + ${theme.space._24})`,
+    [mq.sm]: {
+      scrollMarginTop: `calc(${theme.header.height.sm} + ${theme.space._24})`,
+    },
+  });
 
-export const par = style({
-  lineHeight: theme.typography.lineHeight.relaxed,
-  color: theme.color.text.primary,
-  opacity: 0.92,
-  textWrap: "pretty",
-  margin: 0,
-  scrollMarginTop: `calc(${theme.header.height.xs} + ${theme.space._24})`,
-  [mq.sm]: {
-    scrollMarginTop: `calc(${theme.header.height.sm} + ${theme.space._24})`,
-  },
-});
+    globalStyle(`${par} strong`, {
+      fontWeight: theme.typography.fontWeight.medium,
+      color: theme.color.primary.main,
+    });
 
-globalStyle(`${headline} strong, ${par} strong`, {
-  fontWeight: theme.typography.fontWeight.semibold,
-  color: theme.color.primary.main,
-});
-
-globalStyle(`${headline} em, ${par} em`, {
-  fontStyle: "italic",
-  color: theme.color.text.primary,
-});
+    globalStyle(`${par} em`, {
+      fontStyle: "italic",
+      color: theme.color.text.primary,
+    });
 
 // -- CONTACT
 
 export const contact = style({
   display: "flex",
   flexDirection: "column",
-  gap: theme.space._4,
-  paddingTop: theme.space._12,
+  // gap: theme.space._4,
+  // paddingTop: theme.space._12,
   borderTop: `1px solid ${theme.color.divider}`,
 });
 
-export const contactStatement = style({
-  fontFamily: theme.typography.fontFamily.display,
-  fontSize: "clamp(20px, 2.2vw, 28px)",
-  lineHeight: theme.typography.lineHeight.snug,
-  fontWeight: theme.typography.fontWeight.medium,
-  letterSpacing: "-0.012em",
-  color: theme.color.text.primary,
-  maxWidth: "36ch",
-  margin: `${theme.space._16} 0 ${theme.space._24}`,
-});
+const contactRowBase = {
+  display: "inline-block",
+  padding: `${theme.space._20} 0`,
+  // borderTop: `1px solid ${theme.color.divider}`,
+  borderBottom: `1px solid ${theme.color.divider}`,
+}
 
-globalStyle(`${contactStatement} em`, {
-  fontStyle: "normal",
-  color: theme.color.primary.main,
-  borderBottom: `1px solid ${theme.color.tint.primarySoft}`,
-});
+export const contactRow = style(contactRowBase);
 
-globalStyle(`${contactStatement} a`, {
-  color: "inherit",
-  textDecoration: "underline",
-  textDecorationColor: theme.color.tint.primarySoft,
-  textDecorationThickness: "1px",
-  textUnderlineOffset: "4px",
-  transition: "color 180ms ease, text-decoration-color 180ms ease",
-});
-
-globalStyle(`${contactStatement} a:hover`, {
-  color: theme.color.primary.main,
-  textDecorationColor: theme.color.secondary.main,
-});
-
-// -- Contact row
-
-export const contactRow = style({
+export const contactRowGrid = style({
+  ...contactRowBase,
   display: "grid",
   gridTemplateColumns: "1fr",
   rowGap: theme.space._4,
   columnGap: theme.space._24,
-  alignItems: "baseline",
-  padding: `${theme.space._16} 0`,
-  borderTop: `1px solid ${theme.color.divider}`,
-  borderBottom: `1px solid ${theme.color.divider}`,
+  alignItems: "center",
   [mq.sm]: {
-    gridTemplateColumns: "160px 1fr",
+    gridTemplateColumns: "130px 1fr",
   },
 });
 
-export const contactRowLabel = style({
-  fontWeight: theme.typography.fontWeight.bold,
-  letterSpacing: "0.16em",
-  textTransform: "uppercase",
-  whiteSpace: "nowrap",
-  color: theme.color.text.secondary,
-});
+  // -- Contact statement
+  export const contactStatement = style({
+    fontFamily: theme.typography.fontFamily.display,
+    fontSize: "clamp(20px, 2vw, 28px)",
+    lineHeight: theme.typography.lineHeight.snug,
+    fontWeight: theme.typography.fontWeight.medium,
+    letterSpacing: "-0.012em",
+    color: theme.color.text.primary,
+    maxWidth: "42ch",
+    margin: `${theme.space._12} 0 ${theme.space._24}`,
+  });
 
-export const contactRowList = style({
-  listStyle: "none",
-  margin: 0,
-  padding: 0,
-  display: "flex",
-  flexWrap: "wrap",
-  alignItems: "baseline",
-  rowGap: theme.space._4,
-  columnGap: theme.space._24,
-});
+    globalStyle(`${contactStatement} em`, {
+      fontStyle: "normal",
+      color: theme.color.primary.main,
+    });
 
-export const contactRowItem = style({
-  display: "inline-flex",
-  alignItems: "baseline",
-  listStyleType: "none",
-});
+    globalStyle(`${contactStatement} a`, {
+      color: "inherit",
+      textDecoration: "underline",
+      textDecorationColor: theme.color.tint.primarySoft,
+      textDecorationThickness: "px",
+      textUnderlineOffset: "4px",
+      transition: "color 180ms ease, text-decoration-color 180ms ease",
+    });
 
-// Contact link (TextLink override hooks)
+    globalStyle(`${contactStatement} a:hover`, {
+      color: theme.color.primary.main,
+      textDecorationColor: theme.color.secondary.main,
+    });
 
-export const contactLink = style({});
+  // -- Contact links
+  export const contactGridLabel = style({
+    fontWeight: theme.typography.fontWeight.semibold,
+    letterSpacing: "0.16em",
+    textTransform: "uppercase",
+    whiteSpace: "nowrap",
+    color: theme.color.text.secondary,
+  });
 
-// Tint the trailing arrow copper on hover (TextLink's right slot).
-globalStyle(`${contactLink}${linkBtnBase}:hover ${rightSlotEnabled}`, {
-  color: theme.color.secondary.main,
-});
+  export const contactGridList = style({
+    listStyle: "none",
+    margin: 0,
+    padding: 0,
+    display: "flex",
+    flexWrap: "wrap",
+    alignItems: "baseline",
+    rowGap: theme.space._4,
+    columnGap: theme.space._24,
+  });
 
-// Tint the leading icon primary on hover (overrides TextLink's default).
-globalStyle(`${contactLink}${linkBtnBase}:hover ${leftSlotHold}`, {
-  color: theme.color.primary.main,
+    export const contactGridItem = style({
+      display: "inline-flex",
+      alignItems: "baseline",
+      listStyleType: "none",
+    });
+
+export const footerLink = style({
+  margin: "0 0 0 6px",
+  fontFamily: theme.typography.fontFamily.sans,
 });

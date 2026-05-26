@@ -1,6 +1,6 @@
 'use client';
 
-import { ElementType, AnchorHTMLAttributes } from 'react';
+import { ElementType, AnchorHTMLAttributes, ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAppContext } from '@/components/navigation/AppProvider';
 
@@ -8,35 +8,39 @@ import { Button, ButtonProps } from '@base-ui/react/button';
 import NextLink, { LinkProps as NextLinkProps } from 'next/link';
 import Text, { type TextProps } from '../Text';
 
-import { IconName, iconRegistry } from '@/components/icons/registry';
+import { IconName } from '@/components/icons/registry';
+import { Icon, type IconSize, type IconTone } from '@/components/ui/Icon';
 
 import * as sty from "./text-link.css";
-import { IconProps } from '@/lib/types/icons';
 
 
 export type TextLinkProps = ButtonProps & {
-  label: string;
+  intent: "interactive" | "navigation";
+  label: ReactNode;
   isActive?: boolean;
-  nextProps?: NextLinkProps & 
-              Omit<AnchorHTMLAttributes<HTMLAnchorElement>, keyof NextLinkProps> & 
+  nextProps?: NextLinkProps &
+              Omit<AnchorHTMLAttributes<HTMLAnchorElement>, keyof NextLinkProps> &
               { className?: string };
   textProps?: TextProps<ElementType>;
   underline?: 'hover' | 'always';
   leftIcon?: {
-    icon: IconName | undefined;
+    name: IconName;
     hold?: boolean;
-    props?: IconProps;
+    size?: IconSize;
+    tone?: IconTone;
   };
   rightIcon?: {
-    icon: IconName | undefined;
+    name: IconName;
     hold?: boolean;
-    props?: IconProps;
+    size?: IconSize;
+    tone?: IconTone;
   };
 }
 
 export const TextLink: React.FC<TextLinkProps> = ({
   className,
   onClick,
+  intent,
   label,
   isActive,
   nextProps = null,
@@ -46,11 +50,8 @@ export const TextLink: React.FC<TextLinkProps> = ({
   rightIcon,
   ...rest
 }) => {
-  const { hasAppHistory } = useAppContext()
+  const { hasAppHistory } = useAppContext();
   const router = useRouter();
-
-  const LeftIcon = leftIcon?.icon ? iconRegistry[leftIcon.icon] : null;
-  const RightIcon = rightIcon?.icon ? iconRegistry[rightIcon.icon] : null;
 
   const handleNavigate = (e: any /** Base UI needs better typing here */) => {
     if (nextProps?.href) {
@@ -68,21 +69,26 @@ export const TextLink: React.FC<TextLinkProps> = ({
 
   const innerChildren = (
     <>
-      {LeftIcon && (
+      {leftIcon && (
         <span
-          className={leftIcon?.hold === true ? sty.leftSlotHold : sty.leftSlotEnabled} aria-hidden>
-          {LeftIcon && <LeftIcon {...leftIcon?.props} />}
+          className={leftIcon.hold === true ? sty.leftSlotHold : sty.leftSlotEnabled}
+          aria-hidden
+        >
+          <Icon name={leftIcon.name} size={leftIcon.size ?? "lg"} tone={leftIcon.tone} />
         </span>
       )}
 
-      <Text
-        {...restTextProps}
-        className={[sty.linkTextBase, textClassName].filter(Boolean).join(' ')}
-      >{label}</Text>
+      {typeof label === "string"
+        ? <Text {...restTextProps} className={[sty.linkTextBase, textClassName].filter(Boolean).join(' ')}>{label}</Text>
+        : label
+      }
 
-      {RightIcon && (
-        <span className={rightIcon?.hold ? sty.rightSlotHold : sty.rightSlotEnabled} aria-hidden>
-          {RightIcon && <RightIcon {...rightIcon?.props} />}
+      {rightIcon && (
+        <span
+          className={rightIcon.hold ? sty.rightSlotHold : sty.rightSlotEnabled}
+          aria-hidden
+        >
+          <Icon name={rightIcon.name} size={rightIcon.size ?? "lg"} tone={rightIcon.tone} />
         </span>
       )}
     </>
@@ -90,6 +96,7 @@ export const TextLink: React.FC<TextLinkProps> = ({
 
   const rootCls = [
     sty.linkBtnBase,
+    intent === "interactive" ? sty.linkBtnInteractive : sty.linkBtnNavigation,
     underline === 'always' && sty.linkBtnAlwaysUnderlined,
     className,
   ].filter(Boolean).join(' ');
