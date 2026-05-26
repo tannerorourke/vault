@@ -1,6 +1,10 @@
 import type { ComponentType } from "react";
 import type { IconProps } from "@/lib/types/icons";
 
+/** Common unused icons explicitly keeping around in case we need them 
+ *  If an icon becomes needed, uncomment import and add to registry
+*/
+
 // import { ArrowCircleDown } from "./arrow-circle-down";
 // import { ArrowCircleUp } from "./arrow-circle-up";
 import { ArrowDown } from "./arrow-down";
@@ -13,8 +17,8 @@ import { CaretCircleDown } from "./caret-circle-down";
 // import { CaretLeft } from "./caret-left";
 // import { CaretRight } from "./caret-right";
 import { CodeBrackets } from "./code-brackets";
+// import { Colab } from "./colab";
 // import { CodeFile } from "./code-file";
-// import { Dot } from "./dot";
 // import { Download } from "./download";
 import { Envelope } from "./envelope";
 import { FileText } from "./file-text";
