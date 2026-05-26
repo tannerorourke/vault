@@ -1,4 +1,5 @@
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+import { getProjectContent } from "@/lib/content/projects";
 import { PageProps } from "@/lib/types/routes"
 
 /**
@@ -6,5 +7,6 @@ import { PageProps } from "@/lib/types/routes"
  */
 export default async function ResolveToProjectId({ params }: PageProps) {
   const { project } = await params;
+  if (!getProjectContent(project)) notFound();
   redirect(`/${project}`)
 }
