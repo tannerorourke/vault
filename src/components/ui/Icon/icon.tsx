@@ -1,16 +1,22 @@
 'use client';
 
-import { ComponentPropsWithoutRef, ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode, SVGProps } from 'react';
 
 import { Tooltip } from "@base-ui/react";
+
+import { iconRegistry, type IconName } from '@/components/icons/registry';
 import Text from '../Text';
 
 import * as sty from "./icon.css";
 
 
-type Side = "top" | "right" | "bottom" | "left";
+// -----------------------------------------------------
+// shared tooltip wiring (used by IconLink + IconButton)
+// -----------------------------------------------------
 
-type CommonProps = {
+export type Side = "top" | "right" | "bottom" | "left";
+
+export type CommonProps = {
   children: ReactNode;
   alt?: string;
   tooltipText?: string;
@@ -18,22 +24,15 @@ type CommonProps = {
   variant?: NonNullable<sty.IconButtonVariants>["variant"]; // "flat" | "pill"
 };
 
-
-export type IconLinkProps = ComponentPropsWithoutRef<"a"> & 
-  CommonProps;
-
-export type IconButtonProps = ComponentPropsWithoutRef<"button"> & 
-  CommonProps;
-
-function withTooltip(node: ReactElement, tooltipText?: string, tooltipSide: Side = "right") {
+export function withTooltip(node: ReactElement, tooltipText?: string, tooltipSide: Side = "right") {
   if (!tooltipText) return node;
   return (
     <Tooltip.Root>
       <Tooltip.Trigger render={node} delay={220} />
       <Tooltip.Portal>
-        <Tooltip.Positioner 
+        <Tooltip.Positioner
           side={tooltipSide} className={sty.tooltipPositioner}
-          align="center" 
+          align="center"
           sideOffset={10}
         >
           <Tooltip.Popup className={sty.tooltipPopup}>
@@ -46,47 +45,45 @@ function withTooltip(node: ReactElement, tooltipText?: string, tooltipSide: Side
 }
 
 
-export function IconLink({
-  className, 
-  children, 
-  alt, 
-  tooltipText, 
-  tooltipSide, 
-  variant, 
-  target,
-  ...rest
-}: IconLinkProps) {
-  const el = (
-    <a
-      className={[sty.iconButton({ variant }), className].filter(Boolean).join(" ")}
-      aria-label={alt ?? tooltipText}
-      {...rest}
-    >
-      {children}
-    </a>
-  );
-  return withTooltip(el, tooltipText, tooltipSide);
-}
+// -----------------------------------------------------
+// Icon wrapper primitive
+// -----------------------------------------------------
 
-export function IconButton({
-  className, 
-  children, 
-  alt, 
-  tooltipText, 
-  tooltipSide, 
-  type = "button", 
-  variant,
+export type IconSize = "sm" | "md" | "lg" | "xl";
+export type IconTone = "default" | "muted";
+
+const SIZE_MAP: Record<IconSize, number> = {
+  sm: 14,
+  md: 16,
+  lg: 20,
+  xl: 24,
+};
+
+export type IconProps = Omit<SVGProps<SVGSVGElement>, "width" | "height"> & {
+  name: IconName;
+  size?: IconSize;
+  tone?: IconTone;
+  className?: string;
+};
+
+export function Icon({
+  name,
+  size = "md",
+  tone = "default",
+  className,
   ...rest
-}: IconButtonProps) {
-  const el = (
-    <button
-      type={type}
-      className={[sty.iconButton({ variant }), className].filter(Boolean).join(" ")}
-      aria-label={alt ?? tooltipText}
+}: IconProps) {
+  const Glyph = iconRegistry[name];
+  if (!Glyph) return null;
+  const px = SIZE_MAP[size];
+
+  return (
+    <Glyph
+      width={px}
+      height={px}
+      aria-hidden="true"
+      className={[tone === "muted" ? sty.iconMuted : null, className].filter(Boolean).join(" ") || undefined}
       {...rest}
-    >
-      {children}
-    </button>
+    />
   );
-  return withTooltip(el, tooltipText, tooltipSide);
 }

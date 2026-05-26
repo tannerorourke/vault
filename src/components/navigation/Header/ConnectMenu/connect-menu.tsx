@@ -6,13 +6,8 @@ import { motion } from "motion/react";
 import { useTheme } from "@/components/navigation/ThemeProvider";
 
 import type { NavLink } from "@/content/nav-links";
-import { IconButton } from "@/components/ui/Icon";
+import { Icon, IconButton } from "@/components/ui/Icon";
 import MorphIcon from "@/components/ui/MorphIcon";
-import { Sun } from "@/components/icons/sun";
-import { Moon } from "@/components/icons/moon";
-import { Network } from "@/components/icons/network";
-import { Times } from "@/components/icons/times";
-import { ArrowUpRight } from "@/components/icons/arrow-up-right";
 
 import { LINKS } from "@/content/nav-links";
 import * as sty from "./connect-menu.css";
@@ -61,7 +56,11 @@ export function ConnectMenu() {
         aria-haspopup="menu"
         alt={isOpen ? "Close menu" : "Open menu"}
       >
-        <MorphIcon active={isOpen} from={<Network />} to={<Times />} />
+        <MorphIcon
+          active={isOpen}
+          from={<Icon name="network" size="lg" />}
+          to={<Icon name="times" size="lg" />}
+        />
       </IconButton>
 
       <motion.div
@@ -96,14 +95,14 @@ export function ConnectMenu() {
                 onClick={() => setIsOpen(false)}
                 tabIndex={isOpen ? 0 : -1}
               >
-                {item.Icon && (
+                {item.iconName && (
                   <span className={sty.itemIcon}>
-                    <item.Icon />
+                    <Icon name={item.iconName} size="lg" />
                   </span>
                 )}
                 <span className={sty.itemLabel}>{item.text}</span>
                 <span className={sty.itemArrow}>
-                  <ArrowUpRight />
+                  <Icon name="arrow-up-right" size="sm" />
                 </span>
               </a>
             </li>
@@ -119,7 +118,11 @@ export function ConnectMenu() {
           tabIndex={isOpen ? 0 : -1}
         >
           <span className={sty.itemIcon}>
-            <MorphIcon active={isDark} from={<Sun />} to={<Moon />} />
+            <MorphIcon
+              active={isDark}
+              from={<Icon name="sun" size="lg" />}
+              to={<Icon name="moon" size="lg" />}
+            />
           </span>
           <span className={sty.itemLabel}>{isDark ? "Dark mode" : "Light mode"}</span>
           <span className={sty.toggleDot} data-on={isDark} aria-hidden />
