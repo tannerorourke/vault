@@ -64,8 +64,43 @@ const nextConfig: NextConfig = {
     ]
   },
   
-  webpack: (webpackConfig, { dev }) => {
+  webpack: (webpackConfig, { dev, isServer, webpack }) => {
     if (dev) webpackConfig.cache = false; // temporarily
+
+    // Workaround for next@16 server-build bug.
+    //
+    // Next's webpack config registers a layer-aware NormalModuleReplacementPlugin
+    // that rewrites relative `./X.shared-runtime` imports inside next's own
+    // internals to one of two vendored runtimes based on the issuer's webpack
+    // layer:
+    //   - App Router layers   -> `next/dist/server/route-modules/app-page/vendored/contexts/X`
+    //   - null/undefined      -> `next/dist/server/route-modules/pages/vendored/contexts/X`
+    //
+    // When next's internal client-component files (layout-router.js, etc.)
+    // get pulled into a "use client" component's server bundle for SSR, the
+    // issuer's layer can end up null/undefined, causing the plugin to choose
+    // the `pages` variant. That variant's module.compiled.js then requires
+    // `pages.runtime.prod.js`, which Vercel does NOT package into App Router
+    // Lambdas — producing a cold-start MODULE_NOT_FOUND at runtime.
+    //
+    // Fix: post-process those mis-rewrites by redirecting any request for
+    // `pages/vendored/contexts/` to `app-page/vendored/contexts/`. Both files
+    // re-export the same shape (`vendored.contexts.AppRouterContext`), so
+    // this is a safe drop-in, and `app-page.runtime.prod.js` IS bundled.
+    if (isServer) {
+      webpackConfig.plugins.push(
+        new webpack.NormalModuleReplacementPlugin(
+          /next\/dist\/server\/route-modules\/pages\/vendored\/contexts\//,
+          (resource: { request: string }) => {
+            resource.request = resource.request.replace(
+              "/pages/vendored/contexts/",
+              "/app-page/vendored/contexts/"
+            );
+          }
+        )
+      );
+    }
+
     return webpackConfig;
   },
 };
