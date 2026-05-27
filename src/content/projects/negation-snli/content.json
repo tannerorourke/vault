@@ -17,7 +17,7 @@
   ],
   "links": [
     { "icon": "github", "href": "https://github.com/tannerorourke/aug-lexical-negation" },
-    { "text": "Read the paper", "href": "/content/negation-snli/negation-is-not-enough-orourke-2025.pdf", "download": "negation-is-not-enough-orourke-2025.pdf" }
+    { "icon": "pdf", "text": "Read the paper", "href": "/content/negation-snli/negation-is-not-enough-orourke-2025.pdf", "download": "negation-is-not-enough-orourke-2025.pdf" }
   ],
   "sections": [
     {

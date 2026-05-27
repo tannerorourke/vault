@@ -7,15 +7,8 @@ export const tocNav = style({
   gap: "2px",
 });
 
-export const tocLabel = style({
-  fontSize: theme.typography.fontSize.micro,
-  fontWeight: theme.typography.fontWeight.semibold,
-  letterSpacing: "0.16em",
-  textTransform: "uppercase",
-  color: theme.color.text.secondary,
-  marginBottom: theme.space._12,
-});
-
+// Navigation convention (teal hover, primary.main) per CONVENTIONS.md -> Link/icon hover.
+// Intentionally bespoke: data-active left-border treatment is beyond TextLink's scope.
 export const tocLink = style({
   display: "block",
   padding: "5px 0 5px 12px",
@@ -25,15 +18,32 @@ export const tocLink = style({
   color: theme.color.text.secondary,
   textDecoration: "none",
   letterSpacing: "-0.005em",
-  transition: "color 200ms ease, border-color 200ms ease",
+  borderRadius: "0px",
+
+  background: "transparent",
+  backgroundImage: "linear-gradient(currentColor, currentColor)",
+  backgroundSize: "2px 0%",
+  backgroundPosition: "top left",
+  backgroundRepeat: "no-repeat",
+  transition: "color 200ms ease, border-color 200ms ease, background-size 300ms ease",
+
   selectors: {
+    "&:focus-visible": {
+      outline: `2px solid ${theme.color.focus}`,
+      outlineOffset: 2,
+    },
     "&:hover": {
       color: theme.color.primary.main,
-      borderLeftColor: theme.color.tint.primarySoft,
+      backgroundSize: "2px 100%",
     },
     '&[data-active="true"]': {
       color: theme.color.primary.main,
-      borderLeftColor: theme.color.secondary.main,
+      backgroundSize: "2px 100%",
+      fontWeight: theme.typography.fontWeight.semibold,
+    },
+    "&:active": {
+      color: theme.color.primary.main,
+      backgroundSize: "2px 100%",
       fontWeight: theme.typography.fontWeight.semibold,
     },
   },

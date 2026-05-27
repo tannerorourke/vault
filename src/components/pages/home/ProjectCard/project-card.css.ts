@@ -1,5 +1,6 @@
 import { globalStyle, style } from "@vanilla-extract/css";
 import { theme } from "@/lib/theme/theme.css";
+import { iconButtonBase } from "@/components/ui/Icon/icon.css";
 
 
 export const cardBase = style({
@@ -99,15 +100,9 @@ export const eyebrow = style({
   display: "flex",
   alignItems: "center",
   gap: "8px",
-  fontSize: "10px",
-  fontWeight: theme.typography.fontWeight.semibold,
-  textTransform: "uppercase",
-  letterSpacing: "0.12em",
-  color: theme.color.text.secondary,
   margin: "0 0 6px",
   selectors: {
     [`${cardBase}[data-variant="featured"] &`]: {
-      fontSize: "10.5px",
       marginBottom: "10px",
     },
   },
@@ -220,37 +215,16 @@ export const cardLinks = style({
   marginRight: "-4px",
 });
 
-export const cardLink = style({
-  width: "28px",
-  height: "28px",
-  display: "inline-grid",
-  placeItems: "center",
-  borderRadius: "6px",
-  color: theme.color.text.secondary,
-  textDecoration: "none",
-  opacity: 0.7,
-  background: "transparent",
-  transition: `color 180ms ease, opacity 180ms ease, background 180ms ease`,
-  selectors: {
-    '&:hover, &:focus-visible': {
-      background: theme.color.tint.secondarySoft,
-      color: theme.color.secondary.main,
-      opacity: 1,
-      outline: "none",
-    },
-  },
-});
-
-// Suppress card's own hover state while an icon link inside it is hovered/focused,
+// Suppress card's own hover state while an icon inside it is hovered/focused,
 // so only one target reads as active under the cursor.
 globalStyle(
-  `${cardBase}:has(${cardLink}:hover), ${cardBase}:has(${cardLink}:focus-visible)`,
+  `${cardBase}:has(${iconButtonBase}:hover), ${cardBase}:has(${iconButtonBase}:focus-visible)`,
   {
     background: "transparent",
   },
 );
 globalStyle(
-  `${cardBase}:has(${cardLink}:hover) ${title}, ${cardBase}:has(${cardLink}:focus-visible) ${title}`,
+  `${cardBase}:has(${iconButtonBase}:hover) ${title}, ${cardBase}:has(${iconButtonBase}:focus-visible) ${title}`,
   {
     color: theme.color.primary.main,
   },

@@ -4,8 +4,8 @@ import * as sty from "./link-pill.css";
 
 
 export type LinkPillProps = {
-  icon: IconName;
-  label: string;
+  icon?: IconName;
+  label?: string;
   href?: string;
   target?: string;
   download?: string;
@@ -14,6 +14,7 @@ export type LinkPillProps = {
 };
 
 export function LinkPill({ icon, label, href, target, download, rel, className }: LinkPillProps) {
+  if (!icon && !label) return null;
   return (
     <a
       className={[sty.pill, className].filter(Boolean).join(" ")}
@@ -22,8 +23,8 @@ export function LinkPill({ icon, label, href, target, download, rel, className }
       download={download}
       rel={rel}
     >
-      <Icon name={icon} size="md" />
-      {label}
+      {icon && <Icon name={icon} size="md" />}
+      {!label ? null : label}
     </a>
   );
 }

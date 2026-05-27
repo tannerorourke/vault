@@ -18,7 +18,8 @@ export const trigger = style({
   borderRadius: 999,
   boxShadow: `0 4px 20px -6px ${theme.color.shadow}`,
   color: theme.color.text.primary,
-  transition: `box-shadow 240ms ease, transform 180ms ${EASE_CUBIC}, border-color 200ms ease, color 200ms ease`,
+  transition: 
+    `box-shadow 240ms ease, transform 180ms ${EASE_CUBIC}, border-color 200ms ease, color 200ms ease !important`,
   selectors: {
     "&:hover": {
       boxShadow: `0 8px 24px -6px ${theme.color.shadowStrong}`,
@@ -93,8 +94,8 @@ export const item = style({
 export const itemIcon = style({
   display: "inline-grid",
   placeItems: "center",
-  width: 18,
-  height: 18,
+  width: 20,
+  height: 20,
   color: theme.color.text.secondary,
   transition: "color 200ms ease",
   selectors: {

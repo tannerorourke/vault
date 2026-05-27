@@ -30,7 +30,7 @@ import { Linkedin } from "./linkedin";
 import { Moon } from "./moon";
 import { Network } from "./network";
 // import { Notebook } from "./notebook";
-// import { Pdf } from "./pdf";
+import { Pdf } from "./pdf";
 import { Sun } from "./sun";
 import { Times } from "./times";
 import { User } from "./user";
@@ -50,6 +50,7 @@ export const iconRegistry = {
   "linkedin": Linkedin,
   "moon": Moon,
   "network": Network,
+  "pdf": Pdf,
   "sun": Sun,
   "times": Times,
   'user': User

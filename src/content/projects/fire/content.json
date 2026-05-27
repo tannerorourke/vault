@@ -20,8 +20,8 @@
     { "label": "PyTorch", "color": "copper" }
   ],
   "links": [
-    { "href": "https://github.com/tannerorourke/FireFusionNet", "icon": "github" },
-    { "text": "Read the Paper", "href": "/content/fire/Leveraging Multi-Modal Representations With Spatio Temporal Learning for Wildfire Ignition Modeling.pdf", "download": "orourke-2025.pdf" }
+    { "icon": "github", "href": "https://github.com/tannerorourke/FireFusionNet" },
+    { "icon": "pdf", "text": "Read the Paper", "href": "/content/fire/Leveraging Multi-Modal Representations With Spatio Temporal Learning for Wildfire Ignition Modeling.pdf", "download": "orourke-2025.pdf" }
   ],
   "finding": {
     "body": "Most spatiotemporal fire models run attention over space and time but treat input channels as independent. We investigate adding a third attention axis - over the 24 features themselves - to enable the model to learn which feature combinations actually produce ignitions.",
