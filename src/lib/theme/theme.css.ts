@@ -1,4 +1,5 @@
 import { createTheme, createThemeContract } from "@vanilla-extract/css";
+import { stepped } from "./responsive.css"
 
 export const theme = createThemeContract({
   color: {
@@ -155,9 +156,9 @@ const typography = {
     titleMd:   fluid(28, 32, 900, 1600),
     titleSm:   fluid(22, 26, 900, 1600),
     titleXs:   fluid(18, 21, 900, 1600),
-    bodyLg:    '18px', // fluid(18, 21, 900, 1600),
-    body:      '16px', // fluid(16, 20, 900, 1600),
-    bodySm:    '14px', // fluid(14, 18, 900, 1600),
+    bodyLg:    '18px', // stepped,
+    body:      '16px', // stepped
+    bodySm:    '14px', // stepped
     eyebrow:   '12px', // eligibility floor
     caption:   '12px', // eligibility floor
     micro:     '10px',
