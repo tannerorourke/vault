@@ -1,14 +1,15 @@
 {
-  "live": true,
   "pid": "gpt4-factuality",
-  "order": 5,
+  "title": "Cross-Abstractive Alignment in Fact-Checking",
+
+  "live": true,
   "category": "labs",
+  "order": 5,
   "isFeature": false,
 
-  "title": "Cross-Abstractive Alignment in Fact-Checking",
-  "summary": "Per-fact verification of GPT-4 biographies, built on FActScore. The error analysis matters more than the 85.5%.",
-  "year": "2025",
-  "eyebrow": "2025",
+  "cardSubtitle": "Per-fact verification of GPT-4 biographies, built on FActScore. The error analysis matters more than the 85.5%.",
+  
+  "eyebrow": "2025 - Article",
   "subtitle": "A followup analysis to FActScore (Min et al., 2023). We find a recurring pattern where automated fact-checkers get things wrong (what I call cross-abstractive alignment), and relate this back to system-vs-human agreement in a fact-checking environment.",
   "heroImage": {
     "src": "/content/gpt4-factuality/cross-abstractive-alignment-hero.svg",
@@ -45,12 +46,13 @@
       "type": "2upTextImage",
       "id": "results",
       "title": "Results",
-      "body": "92 true positives, 97 true negatives, 12 false positives, 20 false negatives. 85.5% accuracy, balanced F1 (0.852 / 0.858).\n\nThe error asymmetry is more interesting than the headline. Every false negative missed by failing the absolute entailment threshold, never by failing the win gap. The model wasn't borderline-uncertain on its misses - it was confidently wrong, often predicting entailment under 0.05 when the gold was S. False positives split roughly in half between high-confidence wrong on detail mismatches (entailment ≥ 0.95) and threshold-skirting calls just above 0.55.",
+      "body": "The error asymmetry is more interesting than the headline. Every false negative missed by failing the absolute entailment threshold, never by failing the win gap. The model wasn't borderline-uncertain on its misses - it was confidently wrong, often predicting entailment under 0.05 when the gold was S. False positives split roughly in half between high-confidence wrong on detail mismatches (entailment ≥ 0.95) and threshold-skirting calls just above 0.55.",
+      "caption": "92 true positives, 97 true negatives, 12 false positives, 20 false negatives. 85.5% accuracy, balanced F1 (0.852 / 0.858).",
+      "side": "right",
       "image": {
         "src": "/content/gpt4-factuality/cm.svg",
         "alt": "Confusion matrix showing 92 true positives, 97 true negatives, 12 false positives, 20 false negatives"
-      },
-      "side": "bottom"
+      }
     },
     {
       "type": "Stats",

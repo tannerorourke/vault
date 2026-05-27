@@ -5,12 +5,41 @@ import { usePathname } from "next/navigation";
 import { motion } from "motion/react";
 import { useTheme } from "@/components/navigation/ThemeProvider";
 
-import type { NavLink } from "@/content/nav-links";
 import { Icon, IconButton } from "@/components/ui/Icon";
 import MorphIcon from "@/components/ui/MorphIcon";
 
-import { LINKS } from "@/content/nav-links";
+import { NavLink, NAV_LINKS } from "@/content/nav-links";
 import * as sty from "./connect-menu.css";
+import Eyebrow from "@/components/ui/Eyebrow";
+
+
+function NavItem(
+  { link, onClick, isOpen }: 
+  { link: NavLink; onClick: () => void; isOpen: boolean; }
+) {
+  return (
+    <a
+      role="menuitem"
+      className={sty.item}
+      href={link.href}
+      target={link.target ?? undefined}
+      download={link.download ?? undefined}
+      aria-label={link.alt}
+      onClick={onClick}
+      tabIndex={isOpen ? 0 : -1}
+    >
+      {link.iconName && (
+        <span className={sty.itemIcon}>
+          <Icon name={link.iconName} size="lg" />
+        </span>
+      )}
+      <span className={sty.itemLabel}>{link.text}</span>
+      <span className={sty.itemArrow}>
+        <Icon name="arrow-up-right" size="sm" />
+      </span>
+    </a>
+  );
+}
 
 
 const PANEL_ID = "header-connect-panel";
@@ -44,6 +73,11 @@ export function ConnectMenu() {
       document.removeEventListener("keydown", onKeyDown);
     };
   }, [isOpen]);
+
+  const CV_LINK = NAV_LINKS.find(link => link.alt === "Download CV") ?? null;
+  const LINKS = NAV_LINKS.filter(link => link.alt !== "Download CV");
+
+  console.log(CV_LINK, LINKS)
 
   return (
     <div ref={wrapRef} className={sty.wrap}>
@@ -81,33 +115,30 @@ export function ConnectMenu() {
           scale: { duration: 0.24, ease: [0.2, 0.1, 0.2, 1] },
         }}
       >
-        <div className={sty.eyebrow}>Connect</div>
+        <Eyebrow size="micro" className={sty.eyebrow}>Connect</Eyebrow>
         <ul className={sty.list}>
           {LINKS.map((item: NavLink, ix: number) => (
             <li key={ix} role="none">
-              <a
-                role="menuitem"
-                className={sty.item}
-                href={item.href}
-                target={item.target}
-                download={item.download}
-                aria-label={item.alt}
+              <NavItem
+                link={item}
                 onClick={() => setIsOpen(false)}
-                tabIndex={isOpen ? 0 : -1}
-              >
-                {item.iconName && (
-                  <span className={sty.itemIcon}>
-                    <Icon name={item.iconName} size="lg" />
-                  </span>
-                )}
-                <span className={sty.itemLabel}>{item.text}</span>
-                <span className={sty.itemArrow}>
-                  <Icon name="arrow-up-right" size="sm" />
-                </span>
-              </a>
+                isOpen={isOpen}
+              />
             </li>
           ))}
         </ul>
+
+        {CV_LINK && (
+          <>
+          <hr className={sty.divider} />
+          <NavItem
+            link={CV_LINK}
+            onClick={() => setIsOpen(false)}
+            isOpen={isOpen}
+          />
+          </>
+        )}
+        
         <hr className={sty.divider} />
         <button
           role="menuitem"
@@ -127,6 +158,7 @@ export function ConnectMenu() {
           <span className={sty.itemLabel}>{isDark ? "Dark mode" : "Light mode"}</span>
           <span className={sty.toggleDot} data-on={isDark} aria-hidden />
         </button>
+        
       </motion.div>
     </div>
   );

@@ -17,6 +17,7 @@ export type JumpIconButton = {
   tooltipText?: string;
   target?: string;
   download?: string;
+  rel?: string;
 }
 
 export type FindingCard = {
@@ -27,19 +28,17 @@ export type FindingCard = {
 };
 
 export type ProjectContent = {
-  // Required
-  live: boolean;
   pid: string;
   title: string;
-  // ----------
+  // -- meta ------------
+  live: boolean;
+  category: ProjectCategoryId; 
   order?: number;
-  summary: string; // description shown on the card
-  category: ProjectCategoryId;    
-  year?: string;
   isFeature?: boolean;
+  // -- On card ----------
+  cardSubtitle: string;
+  // -- On project page --
   eyebrow?: string;
-
-  // On project page
   subtitle?: string;
   tags?: ProjectTag[];
   links?: JumpIconButton[];
@@ -50,6 +49,5 @@ export type ProjectContent = {
     label?: string;   // Feature only
     caption?: string; // Feature only
   };
-  // Detail-page body
   sections: ProjectSection[];
 };

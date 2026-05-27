@@ -1,11 +1,10 @@
-import { FOOTER, NavLink, REPO_LINK } from "@/content/nav-links";
-
 import Text from "@/components/ui/Text";
 import TextLink from "@/components/ui/TextLink";
 import Markdown from "@/components/ui/Markdown";
 import { IconName } from "@/components/icons/registry";
 
-import { PARAGRAPHS, CONTACT_TEXT, ABOUT_LINKS, CONTACT_ROW_LABEL } from "@/content/about";
+import { PARAGRAPHS, CONTACT_TEXT, CONTACT_ROW_LABEL, FOOTER } from "@/content/about";
+import { ABOUT_LINKS, REPO_LINK } from "@/content/nav-links";
 import * as sty from "./about-page.css";
 
 
@@ -21,37 +20,44 @@ export function ProfilePage() {
         </aside>
 
         <div className={sty.proseCol}>
-          <Text as="h1" variant="bodyLg" className={`${sty.par}`}>
-            <Markdown value={PARAGRAPHS[0]} inline />
-          </Text>
+          <Markdown 
+            textProps={{ as: 'h1', variant: 'bodyLg', className: sty.par }} 
+            value={PARAGRAPHS[0]}
+          />
           {PARAGRAPHS.slice(1).map((p, i) => (
-            <Text as="p" key={i} variant="bodyLg" className={sty.par}>
-              <Markdown value={p} inline />
-            </Text>
+            <Markdown
+              key={i}
+              textProps={{ as: 'h3', variant: 'bodyLg', className: sty.par }} 
+              value={p}
+            />
           ))}
         </div>
+
       </section>
 
-      <section className={sty.contact} aria-label="Contact">
+      <section className={sty.contactSection} aria-label="Contact">
+
         <div className={sty.contactRow}>
-          <Text as="h2" className={sty.contactStatement}>
-            <Markdown value={CONTACT_TEXT} inline />
-          </Text>
+            <Markdown 
+              textProps={{ as: "h2", variant: "bodyLg", className: sty.contactStatement }}
+              value={CONTACT_TEXT}
+            />
         </div>
         
         <div className={sty.contactRowGrid}>
-          <Text as="h3" variant="caption" tone="secondary" className={sty.contactGridLabel}>
+          <Text as="h2" variant="caption" tone="secondary" className={sty.contactGridLabel}>
             {CONTACT_ROW_LABEL}
           </Text>
+          
           <ul className={sty.contactGridList}>
             {ABOUT_LINKS.map((l, ix) => (
-              <li key={l.href ?? l.text ?? ix} className={sty.contactGridItem}>
+              <li key={l.href ?? l.text ?? ix}>
                 <TextLink
                   intent="interactive"
                   label={l.text ?? l.alt ?? ""}
                   underline="hover"
-                  textProps={{ variant: "body" }}
                   leftIcon={{ name: l.iconName as IconName, hold: true, tone: "muted" }}
+                  textProps={{ variant: "body", className: sty.contactLink }}
                   nextProps={{
                     href: l.href ?? "#",
                     target: l.target,
@@ -66,9 +72,10 @@ export function ProfilePage() {
         </div>
 
         <div className={sty.contactRow}>
-          <Text as="h3" variant="caption" tone="secondary" className={sty.par}>
-            <Markdown value={FOOTER} inline />
-          </Text>
+          <Markdown 
+            textProps={{ as: 'h3', variant: 'caption', className: [sty.par, sty.footPad].join(" ") }} 
+            value={FOOTER} 
+          />
           <TextLink
             intent="interactive"
             label={'View Source'}
@@ -78,15 +85,14 @@ export function ProfilePage() {
               href: REPO_LINK.href || "#",
               target: REPO_LINK.target,
               rel: REPO_LINK.target === "_blank" ? "noopener noreferrer" : undefined,
-              className: sty.footerLink
+              className: sty.footLink
             }}
             aria-label={REPO_LINK.alt}
           />
         </div>
 
       </section>
-
-      {/* <Footer /> */}
+      
     </main>
   );
 }

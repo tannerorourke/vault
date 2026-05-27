@@ -28,32 +28,37 @@ const FENCE_RE = /^```(\w*)\r?\n([\s\S]*?)```/gm;
  * without bundling Shiki into the client.
  */
 export async function preHighlightCodeBlocks(body: string): Promise<string> {
-  if (!body.includes('```')) return body;
+  try {
+    if (!body.includes('```')) return body;
 
-  const hl = await getHighlighter();
-  const loaded = hl.getLoadedLanguages();
+    const hl = await getHighlighter();
+    const loaded = hl.getLoadedLanguages();
 
-  let out = '';
-  let lastIndex = 0;
+    let out = '';
+    let lastIndex = 0;
 
-  for (const match of body.matchAll(FENCE_RE)) {
-    const idx = match.index!;
-    out += body.slice(lastIndex, idx);
+    for (const match of body.matchAll(FENCE_RE)) {
+      const idx = match.index!;
+      out += body.slice(lastIndex, idx);
 
-    const requested = match[1] || 'text';
-    const code = match[2].replace(/\r?\n$/, '');
-    const lang = loaded.includes(requested as never) ? requested : 'text';
+      const requested = match[1] || 'text';
+      const code = match[2].replace(/\r?\n$/, '');
+      const lang = loaded.includes(requested as never) ? requested : 'text';
 
-    const html = hl.codeToHtml(code, {
-      lang,
-      themes: { light: 'portfolio-light', dark: 'portfolio-dark' },
-      defaultColor: false,
-    });
+      const html = hl.codeToHtml(code, {
+        lang,
+        themes: { light: 'portfolio-light', dark: 'portfolio-dark' },
+        defaultColor: false,
+      });
 
-    out += `\n\n<div class="${codeBlock}">${html}</div>\n\n`;
-    lastIndex = idx + match[0].length;
+      out += `\n\n<div class="${codeBlock}">${html}</div>\n\n`;
+      lastIndex = idx + match[0].length;
+    }
+
+    out += body.slice(lastIndex);
+    return out;
+  } catch (err) {
+    console.error("failed to highlight code block with ", err);
+    return body;
   }
-
-  out += body.slice(lastIndex);
-  return out;
 }

@@ -48,12 +48,8 @@ export const panel = style({
 });
 
 export const eyebrow = style({
-  fontSize: theme.typography.fontSize.micro,
-  fontWeight: theme.typography.fontWeight.bold,
-  letterSpacing: "0.14em",
-  textTransform: "uppercase",
-  color: theme.color.text.secondary,
   padding: "8px 12px 6px",
+  lineHeight: theme.typography.lineHeight.normal,
 });
 
 export const list = style({

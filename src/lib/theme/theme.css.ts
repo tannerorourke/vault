@@ -60,7 +60,6 @@ export const theme = createThemeContract({
 			bodyLg: null,
 			body: null,
 			bodySm: null,
-			ui: null,
 			eyebrow: null,
 			caption: null,
 			micro: null,
@@ -78,8 +77,10 @@ export const theme = createThemeContract({
       bold: null,
     },
     letterSpacing: {
+      loose: null,
       normal: null,
       tight: null,
+      tighter: null,
     },
     fontFamily: {
       sans: null,
@@ -152,14 +153,13 @@ const typography = {
     display:   fluid(36, 44, 900, 1600),
     titleLg:   fluid(32, 36, 900, 1600),
     titleMd:   fluid(28, 32, 900, 1600),
-    titleSm:   fluid(24, 26, 900, 1600),
-    titleXs:   fluid(20, 22, 900, 1600),
-    bodyLg:    '18px',
-    body:      '16px',
-    bodySm:    '14px',
-    ui:        '14px',
-    eyebrow:   '11px',
-    caption:   '12px',
+    titleSm:   fluid(22, 26, 900, 1600),
+    titleXs:   fluid(18, 21, 900, 1600),
+    bodyLg:    '18px', // fluid(18, 21, 900, 1600),
+    body:      '16px', // fluid(16, 20, 900, 1600),
+    bodySm:    '14px', // fluid(14, 18, 900, 1600),
+    eyebrow:   '12px', // eligibility floor
+    caption:   '12px', // eligibility floor
     micro:     '10px',
   },
   lineHeight: {
@@ -175,8 +175,10 @@ const typography = {
     bold: "700",
   },
   letterSpacing: {
+    loose: "0.1em",
     normal: "0",
     tight: "-0.01em",
+    tighter: "-0.025em"
   },
   fontFamily: {
     sans:    'var(--font-display)',

@@ -18,16 +18,10 @@ export const section = style({
 });
 
 export const sectionTitle = style({
-  fontFamily: theme.typography.fontFamily.display,
-  fontWeight: theme.typography.fontWeight.semibold,
-  fontSize: theme.typography.fontSize.titleSm,
-  letterSpacing: "-0.018em",
-  lineHeight: 1.18,
-  color: theme.color.text.primary,
-  margin: `0 0 ${theme.space._16} 0`,
   display: "flex",
   alignItems: "baseline",
   gap: theme.space._12,
+  margin: `0 0 ${theme.space._16} 0`,
   selectors: {
     "&::before": {
       content: "''",
@@ -50,13 +44,9 @@ export const sectionTitleCopper = style({
 });
 
 // --- Prose ---
-
+// --- paragraphs
 export const prose = style({
   fontFamily: theme.typography.fontFamily.serif,
-  fontSize: "15.5px",
-  lineHeight: "1.65",
-  color: theme.color.text.primary,
-  maxWidth: "68ch",
 });
     globalStyle(`${prose} p`, {
       margin: `0 0 ${theme.space._12}`,
@@ -75,67 +65,59 @@ export const prose = style({
     globalStyle(`${prose} strong`, {
       fontWeight: theme.typography.fontWeight.semibold,
     });
+    globalStyle(`${prose} em`, {
+      fontStyle: "italic",
+    });
 
-// --- Bulleted List ---
+// --- Bulleted List
 
-export const list = style({
-  listStyle: "none",
-  padding: 0,
-  margin: 0,
+export const bulletList = style({
   display: "flex",
   flexDirection: "column",
   gap: theme.space._12,
+  listStyle: "none",
+  padding: 0,
+  margin: 0,
   maxWidth: "70ch",
-  fontFamily: theme.typography.fontFamily.serif,
-  fontSize: "15px",
-  lineHeight: "1.6",
-  color: theme.color.text.primary,
+  [mq.md]: { maxWidth: "88ch" },
+  [mq.lg]: { maxWidth: "90ch" }
 });
 
-    globalStyle(`${list} li`, {
-      position: "relative",
-      paddingLeft: "22px",
-    });
-    globalStyle(`${list} li::before`, {
-      content: "''",
-      position: "absolute",
-      left: 0,
-      top: "0.78em",
-      width: "8px",
-      height: "1px",
-      background: theme.color.secondary.main,
-      opacity: 0.85,
-    });
-    globalStyle(`${list} li strong`, {
+  export const bulletListItem = style({
+    position: "relative",
+    paddingLeft: "22px",
+    selectors: {
+      "&::before": {
+        content: "''",
+        position: "absolute",
+        left: 0,
+        top: "0.78em",
+        width: "8px",
+        height: "1px",
+        background: theme.color.secondary.main,
+        opacity: 0.85,
+      }
+    }
+  })
+    globalStyle(`${bulletListItem} strong`, {
       fontWeight: theme.typography.fontWeight.semibold,
     });
 
-export const intro = style({
+export const bulletListIntro = style({
   marginBottom: theme.space._12,
 });
 
 
 // --- Media ---------------------------------
-
-export const caption = style({
-  fontSize: theme.typography.fontSize.caption,
-  color: theme.color.text.secondary,
-  marginTop: theme.space._8,
-  textAlign: "center",
-});
-
-
-// --- Two-Up Image ---
+// --- Two-Up Image
 export const twoUp = style({
   display: "grid",
   gridTemplateColumns: "1fr",
   gap: theme.space._24,
   alignItems: "start",
-  "@media": {
-    "(min-width: 700px)": {
-      gridTemplateColumns: "1fr 1fr",
-    },
-  },
+  [mq.md]: {
+    gridTemplateColumns: "45% 1fr",
+  }
 });
 
   export const twoUpReverse = style({
@@ -167,7 +149,17 @@ export const twoUp = style({
     display: "block",
   });
 
-// --- 1-up Image ---
+
+  // --- image captions
+  export const inlineImageWrap = style({
+    display: "flex",
+    flexDirection: "column",
+  })
+  export const imgCaption = style({
+    marginTop: theme.space._8
+  });
+
+// --- 1-up Image
 
 export const standaloneImage = style({
   width: "100%",
@@ -177,7 +169,7 @@ export const standaloneImage = style({
 });
 
 
-// --- Video ---
+// --- Video
 export const videoWrap = style({
   width: "100%",
   borderRadius: MEDIA_RADIUS,
@@ -198,8 +190,8 @@ export const videoMedia = style({
 });
 
 
-// --- Stat sheet ---
-export const strip = style({
+// --- Stat sheet
+export const statsContainer = style({
   display: "grid",
   gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
   gap: 0,
@@ -207,35 +199,16 @@ export const strip = style({
   borderBottom: `1px solid ${theme.color.divider}`,
 });
 
-export const cell = style({
-  padding: `${theme.space._16} ${theme.space._20} ${theme.space._16} 0`,
-  borderRight: `1px solid ${theme.color.divider}`,
-  selectors: {
-    "&:last-child": {
-      borderRight: "none",
+  export const statCell = style({
+    padding: `${theme.space._16} ${theme.space._20} ${theme.space._16}`,
+    borderRight: `1px solid ${theme.color.divider}`,
+    selectors: {
+      "&:last-child": {
+        borderRight: "none",
+      },
     },
-  },
-});
+  });
 
-const valueBase = {
-  fontFamily: theme.typography.fontFamily.display,
-  fontWeight: theme.typography.fontWeight.semibold,
-  letterSpacing: "-0.018em",
-  lineHeight: 1,
-  color: theme.color.primary.main,
-  marginBottom: theme.space._8,
-};
-
-export const value = styleVariants({
-  default: { ...valueBase, fontSize: theme.typography.fontSize.titleXs },
-  headline: { ...valueBase, fontSize: theme.typography.fontSize.titleLg },
-});
-
-export const label = style({
-  fontSize: theme.typography.fontSize.eyebrow,
-  fontWeight: theme.typography.fontWeight.semibold,
-  letterSpacing: "0.14em",
-  textTransform: "uppercase",
-  lineHeight: 1.4,
-  color: theme.color.text.secondary,
-});
+    export const statValue = style({
+      marginBottom: theme.space._8
+    });

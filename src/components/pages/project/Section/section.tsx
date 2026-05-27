@@ -2,6 +2,7 @@ import Markdown from "@/components/ui/Markdown";
 import { preHighlightCodeBlocks } from "@/lib/markdown/highlight";
 
 import * as sty from "./section.css";
+import Eyebrow from "@/components/ui/Eyebrow";
 
 
 function SectionShell({
@@ -20,7 +21,11 @@ function SectionShell({
     .join(" ");
   return (
     <section id={`section-${id}`} className={sty.section}>
-      {title && <h2 className={titleCls}>{title}</h2>}
+      {title && 
+        <Markdown
+          textProps={{ as: "h2", variant: "titleMd", className: titleCls }}
+          value={title}
+        />}
       {children}
     </section>
   );
@@ -34,13 +39,15 @@ type SectionParagraph = {
   accent?: "copper";
 };
 
+
 async function Paragraph({ s }: { s: SectionParagraph }) {
   const body = await preHighlightCodeBlocks(s.body);
   return (
     <SectionShell id={s.id} title={s.title} accent={s.accent}>
-      <div className={sty.prose}>
-        <Markdown value={body} />
-      </div>
+      <Markdown
+        textProps={{ as: "p", variant: 'body', className: sty.prose }}
+        value={body}
+      />
     </SectionShell>
   );
 }
@@ -59,15 +66,22 @@ async function BulletedList({ s }: { s: SectionBulletedList }) {
   return (
     <SectionShell id={s.id} title={s.title} accent={s.accent}>
       {intro && (
-        <div className={[sty.prose, sty.intro].join(" ")}>
-          <Markdown value={intro} />
-        </div>
+        <Markdown 
+          textProps={{ as: "p", variant: "body", className: [sty.prose, sty.bulletListIntro].join(" ") }}
+          value={intro}
+        />
       )}
-      <ul className={sty.list}>
+      <ul className={sty.bulletList}>
         {s.items.map((item, i) => (
-          <li key={i}>
-            <Markdown value={item} inline />
-          </li>
+          <Markdown
+            key={i}
+            textProps={{
+              as: "li",
+              variant: "bodySm",
+              className: sty.bulletListItem,
+            }}
+            value={item}
+          />
         ))}
       </ul>
     </SectionShell>
@@ -78,33 +92,56 @@ type SectionTwoUpTextImage = {
   type: "2upTextImage";
   id: string;
   title?: string;
-  body: string;
+  body?: string;
+  caption?: string;
   image: { src: string; alt?: string };
-  /** Which side the image sits on. Defaults to "right". */
   side?: "left" | "right" | "top" | "bottom";
   accent?: "copper";
 };
 
 async function TwoUpTextImage({ s }: { s: SectionTwoUpTextImage }) {
-  const body = await preHighlightCodeBlocks(s.body);
-  const imageSide = s.side ?? "right";
-  const isStacked = imageSide === "top" || imageSide === "bottom";
+  const body = s.body ? await preHighlightCodeBlocks(s.body) : "";
 
-  const containerCls = isStacked
+  // image / side
+  // ?caption
+
+
+  const imageSide = s.side ?? "right";
+
+  const containerCls = ["top", "bottom"].includes(imageSide)
     ? sty.twoUpStacked
     : [sty.twoUp, imageSide === "left" ? sty.twoUpReverse : ""]
         .filter(Boolean).join(" ");
 
-  const image = (
-    <img className={sty.inlineImage}
-         src={s.image.src} alt={s.image.alt ?? ""}
+  const img = (
+    <img 
+      className={sty.inlineImage}
+      src={s.image.src} alt={s.image.alt ?? ""}
     />
-  );
-  const prose = (
-    <div className={sty.prose}>
-      <Markdown value={body} />
+  )
+
+  const image = s?.caption ? (
+    <div className={sty.inlineImageWrap}>
+      {img}
+      <Markdown 
+        textProps={{ as: "p", 
+          variant: 'caption', 
+          className: [sty.prose, sty.imgCaption].join(" ")
+        }}
+        value={s.caption}
+      />
     </div>
-  );
+  ) : img;
+
+  const prose = s?.body ? (
+    <Markdown 
+      value={body}
+      textProps={{ as: "p", 
+        variant: imageSide === 'top' ? 'caption' : 'body', 
+        className: [sty.prose, sty.imgCaption].join(" ")
+      }}
+    />
+  ) : null;
 
   return (
     <SectionShell id={s.id} title={s.title} accent={s.accent}>
@@ -137,7 +174,11 @@ function ImageSection({ s }: { s: SectionImage }) {
         src={s.src}
         alt={s.alt ?? ""}
       />
-      {s.caption && <p className={sty.caption}>{s.caption}</p>}
+      {s.caption && 
+        <Markdown
+          textProps={{ as: "p", variant: "caption", className: sty.imgCaption }}
+          value={s.caption}
+        />}
     </SectionShell>
   );
 }
@@ -179,7 +220,7 @@ function VideoSection({ s }: { s: SectionVideo }) {
           />
         )}
       </div>
-      {s.caption && <p className={sty.caption}>{s.caption}</p>}
+      {s.caption && <p className={sty.imgCaption}>{s.caption}</p>}
     </SectionShell>
   );
 }
@@ -194,15 +235,21 @@ type SectionStats = {
 
 function StatsSection({ s }: { s: SectionStats }) {
   const isHeadlineMode = s.stats.length > 4;
+
   return (
     <SectionShell id={s.id} title={s.title} accent={s.accent}>
-      <div className={sty.strip} role="list">
+      <div className={sty.statsContainer} role="list">
         {s.stats.map((s, i) => (
-          <div key={i} className={sty.cell} role="listitem">
-            <div className={i === 0 && isHeadlineMode ? sty.value.headline : sty.value.default}>
-              {s.value}
-            </div>
-            <div className={sty.label}>{s.label}</div>
+          <div key={i} className={sty.statCell} role="listitem">
+            <Markdown
+              textProps={{
+                as: "h4",
+                variant: i === 0 && isHeadlineMode ? "titleLg" : "titleXs",
+                className: sty.statValue,
+              }}
+              value={s.value}
+            />
+            <Eyebrow>{s.label}</Eyebrow>
           </div>
         ))}
       </div>
@@ -232,5 +279,7 @@ export function renderSection(s: ProjectSection) {
       return <VideoSection key={s.id} s={s} />;
     case "Stats":
       return <StatsSection key={s.id} s={s} />;
+    default:
+      return null;
   }
 }

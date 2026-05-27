@@ -1,9 +1,7 @@
-"use client";
-
-import type { MouseEvent } from "react";
-import { Link } from "next-view-transitions";
-
 import type { ProjectContent } from "@/lib/types/project";
+
+import { Link } from "next-view-transitions";
+import Text from "@/components/ui/Text";
 import Markdown from "@/components/ui/Markdown";
 import Eyebrow from "@/components/ui/Eyebrow";
 import { Icon, IconButton } from "@/components/ui/Icon";
@@ -15,98 +13,80 @@ export type ProjectCardProps = {
   project: ProjectContent;
   variant?: "default" | "featured";
   imageRatio?: "40-60" | "45-55" | "50-50";
-  eyebrow?: string;
-  year?: string;
 };
 
 export function ProjectCard({
   project,
   variant = "default",
-  imageRatio = "45-55",
-  eyebrow,
-  year,
+  imageRatio = "50-50",
 }: ProjectCardProps) {
+  const {
+    pid,
+    title,
+    cardSubtitle,
+    eyebrow,
+    heroImage,
+    links
+  } = project;
   const isFeatured = variant === "featured";
-  const eyebrowText = eyebrow ?? project.eyebrow ?? "";
-  const yearText = year ?? project.year ?? "";
-
-  // <button> not <a> — IconLink renders <a>, which can't be nested inside <Link>'s <a>
-  const handleIconButtonClick = (href: string, target: string) =>
-    (e: MouseEvent<HTMLButtonElement>) => {
-      e.stopPropagation();
-      window.open(href, target, "noreferrer");
-    };
 
   return (
     <Link
-      href={`/${project.pid}`}
+      href={`/${pid}`}
       prefetch
       className={sty.cardBase}
       data-variant={variant}
       data-ratio={isFeatured ? imageRatio : undefined}
     >
-      {isFeatured && project.heroImage?.src && (
+      {isFeatured && heroImage?.src && (
         <div className={sty.imageCol}>
           <img
-            src={project.heroImage.src}
-            alt={project.heroImage.alt ?? ""}
+            src={heroImage.src}
+            alt={heroImage.alt ?? ""}
             className={sty.heroImg}
           />
-          {(project.heroImage.label || project.heroImage.caption) && (
-            <div className={sty.heroCaptionStack}>
-              {project.heroImage.label && (
-                <span className={sty.heroLabelText}>{project.heroImage.label}</span>
-              )}
-              {project.heroImage.caption && (
-                <span className={sty.heroCaptionText}>{project.heroImage.caption}</span>
-              )}
-            </div>
+          {heroImage.label && (
+            <Text as="dl" className={sty.heroLabelText}>
+              <Markdown value={heroImage.label} inline />
+            </Text>
           )}
         </div>
       )}
 
       <div className={sty.bodyCol}>
-        <Eyebrow as="div" className={sty.eyebrow}>
-          <span>{eyebrowText}</span>
-          <span className={sty.year}>{yearText}</span>
-        </Eyebrow>
+        <Text as="h3" className={sty.title} variant="titleXs">
+          {title}
+        </Text>
 
-        <h3 className={sty.title}>{project.title}</h3>
-
-        {isFeatured && project.subtitle && (
-          <div className={sty.subtitle}>
-            <Markdown value={project.subtitle} inline />
-          </div>
-        )}
-
-        {!isFeatured && project.summary && (
-          <p className={sty.summary}>{project.summary}</p>
-        )}
+        {cardSubtitle &&
+          <Markdown 
+            textProps={{ as: "p", variant: "bodySm", className: sty.subtitle }}
+            value={cardSubtitle}
+          />
+        }
 
         <div className={sty.foot}>
-          {project.tags && project.tags.length > 0 && (
-            <span className={sty.tagsInline}>
-              {project.tags.map((t, i) => (
-                <span key={i}>
-                  {i > 0 && <span className={sty.tagsSep}>·</span>}
-                  {t.label}
-                </span>
-              ))}
-            </span>
-          )}
-
-          {project.links && project.links.length > 0 && (
-            <span className={sty.cardLinks}>
-              {project.links.map((l, i) => {
+          {eyebrow && 
+            <Eyebrow as="span">{eyebrow}</Eyebrow>}
+          
+          {!!links && links.length > 0 && (
+            <span className={sty.footLinks}>
+              {links.map((l, i) => {
                 if (!l.icon) return null;
                 return (
                   <IconButton
                     key={i}
-                    alt={l.alt ?? l.text ?? l.icon}
-                    variant="flat"
-                    onClick={handleIconButtonClick(l.href, l.target ?? "_blank")}
+                    variant="boxSmall"
+                    className={sty.footLink}
+                    alt={l.alt ?? l.text ?? l.icon ?? ""}
+                    tooltipText={l.text ?? l.alt ?? ""}
+                    tooltipSide="bottom"
+                    href={l.href}
+                    target={l.target ?? "_blank"}
+                    download={l.download ?? undefined}
+                    rel={l.rel ?? "noopener noreferrer"}
                   >
-                    <Icon name={l.icon} size="md" tone="muted" />
+                    <Icon name={l.icon} size="sm" />
                   </IconButton>
                 );
               })}

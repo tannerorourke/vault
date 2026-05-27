@@ -1,6 +1,3 @@
-import { NavLink } from "@/content/nav-links";
-import { LINKS } from "./nav-links";
-
 export const PARAGRAPHS: string[] = [
   "Hi, I'm Tanner. I work on understanding and conveying what neural networks are doing on the inside.",
   "Be it human-in-the-loop developer workflows, evaluation pipelines, or interpretability research, I build to make AI legible to us.",
@@ -10,13 +7,9 @@ export const PARAGRAPHS: string[] = [
 
 export const CONTACT_ROW_LABEL: string =
   "Get in touch";
+
 export const CONTACT_TEXT: string =
   "Currently open to *ML engineering and interpretability research roles*. [Download my CV](/Tanner-ORourke-cv.pdf).";
 
-
-export const ABOUT_LINKS: NavLink[] =
-  ["Email me", "LinkedIn", "GitHub", "Google Scholar"].reduce((acc, alt) => {
-    const l = LINKS.find((l) => l.alt === alt);
-    if (!l) return acc;
-    return [...acc, l];
-  }, [] as NavLink[]);
+export const FOOTER: string = 
+  "Designed and developed E2E by me using boilerplate Next.js / Vanilla Extract."

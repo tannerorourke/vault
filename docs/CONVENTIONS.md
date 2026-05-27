@@ -48,7 +48,7 @@ The site logo in `Header` is never an `h1` - it's repeated on every page and sta
 
 **Project page (`/[pid]`):**
 - `h1`: project title
-- `h2`: section titles (`sectionTitle` in `Section/sections.tsx`)
+- `h2`: section titles (`sectionTitle` in `Section/section.tsx`)
 - `h2`: next-project title (`NextProjectFooter`)
 
 **About (`/about`):**

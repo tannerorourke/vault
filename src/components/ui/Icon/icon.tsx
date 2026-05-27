@@ -10,9 +10,7 @@ import Text from '../Text';
 import * as sty from "./icon.css";
 
 
-// -----------------------------------------------------
-// shared tooltip wiring (used by IconLink + IconButton)
-// -----------------------------------------------------
+// --- tooltip wiring (used by IconLink + IconButton) ---
 
 export type Side = "top" | "right" | "bottom" | "left";
 
@@ -21,7 +19,7 @@ export type CommonProps = {
   alt?: string;
   tooltipText?: string;
   tooltipSide?: Side;
-  variant?: NonNullable<sty.IconButtonVariants>["variant"]; // "flat" | "pill"
+  variant?: NonNullable<sty.IconButtonVariants>["variant"]; // "flat" | "pill" | "box" | "boxSmall"
 };
 
 export function withTooltip(node: ReactElement, tooltipText?: string, tooltipSide: Side = "right") {
@@ -44,10 +42,7 @@ export function withTooltip(node: ReactElement, tooltipText?: string, tooltipSid
   );
 }
 
-
-// -----------------------------------------------------
-// Icon wrapper primitive
-// -----------------------------------------------------
+// -- Icon wrapper primitive --
 
 export type IconSize = "sm" | "md" | "lg" | "xl";
 export type IconTone = "default" | "muted";

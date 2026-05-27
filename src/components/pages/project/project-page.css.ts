@@ -7,11 +7,14 @@ import { page } from "@/lib/styles/page.css";
 export const root = style([page, {
   display: "flex",
   flexDirection: "column",
-  gap: theme.space._48,
+  gap: theme.space._32,
+  [mq.md]: {
+    gap: theme.space._48,
+  }
 }]);
 
   /** Breadcrumbs */
-  export const crumbs = style({
+  export const crumbsNav = style({
     display: "flex",
     alignItems: "center",
     gap: theme.space._12,
@@ -64,29 +67,17 @@ export const headerWithFinding = style({
       flexShrink: 0,
     });
 
-    export const eyebrowYear = style({
-      color: theme.color.text.primary,
-      opacity: 0.7,
-    });
 
   // title and subtitle
   export const title = style({
-    fontFamily: theme.typography.fontFamily.display,
-    fontSize: theme.typography.fontSize.displayLg,
-    fontWeight: theme.typography.fontWeight.semibold,
-    lineHeight: "1.06",
-    letterSpacing: "-0.024em",
     color: theme.color.text.primary,
     margin: `0 0 ${theme.space._16}`,
-    maxWidth: "22ch",
+    maxWidth: "26ch",
     textWrap: "balance",
   });
 
   export const subtitle = style({
     fontFamily: theme.typography.fontFamily.serif,
-    fontSize: theme.typography.fontSize.bodyLg,
-    lineHeight: 1.55,
-    color: theme.color.text.primary,
     opacity: 0.85,
     margin: `0 0 ${theme.space._24}`,
     maxWidth: "62ch",
@@ -113,8 +104,7 @@ export const headerWithFinding = style({
       export const links = style({
         display: "inline-flex",
         flexWrap: "wrap",
-        gap: theme.space._8,
-        marginLeft: "auto",
+        gap: theme.space._8
       });
 
 
@@ -128,16 +118,13 @@ export const findingCard = style({
 });
 
     export const findingEyebrow = style({
-      height: "20px"
+      height: "20px",
+      marginBottom: theme.space._8
     });
 
     export const findingBody = style({
       fontFamily: theme.typography.fontFamily.serif,
-      fontSize: "15px",
-      lineHeight: 1.55,
-      color: theme.color.text.primary,
       opacity: 0.92,
-      margin: `0 0 ${theme.space._12}`,
       textWrap: "pretty",
     });
 
@@ -156,30 +143,39 @@ export const layout = style({
   gridTemplateColumns: "1fr",
   gap: theme.space._24,
   alignItems: "start",
+  margin: `0 auto`,
   [mq.md]: {
     gridTemplateColumns: "220px 1fr",
-    gap: theme.space._64,
-  },
-});
-
-/** TOC */
-export const tocRoot = style({
-  display: "none",
-  [mq.md]: {
-    display: "block",
-    position: "sticky",
-    top: `calc(${theme.header.offset.md} + ${theme.space._24})`,
+    gap: theme.space._36,
   },
   [mq.lg]: {
-    top: `calc(${theme.header.offset.lg} + ${theme.space._24})`,
-  },
+    gridTemplateColumns: "240px 1fr",
+    gap: theme.space._64,
+  }
 });
 
-/** Sections */
-export const sections = style({
-  display: "flex",
-  flexDirection: "column",
-  gap: theme.space._56,
-  minWidth: 0,
-  maxWidth: "760px",
-});
+  export const tocWrapSticky = style({
+    display: "inline-flex",
+    [mq.md]: {
+      display: "block",
+      position: "sticky",
+      top: `calc(${theme.header.offset.md})`,
+    },
+    [mq.lg]: {
+      top: `calc(${theme.header.offset.lg})`,
+    },
+  });
+
+  export const sectionsWrap = style({
+    display: "flex",
+    flexDirection: "column",
+    gap: theme.space._56,
+    maxWidth: "72ch",
+    [mq.md]: {
+      maxWidth: "92ch",
+    },
+    [mq.lg]: {
+      maxWidth: "98ch",
+      margin: `0 auto`,
+    },
+  });

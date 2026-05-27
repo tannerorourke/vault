@@ -6,25 +6,19 @@ import { EASE_CUBIC } from "@/lib/styles/utils.css";
 
 export const root = style(page);
 
-  export const content = style({
-
-  });
-
   export const heading = style({
-    fontSize: "14px",
-    lineHeight: "1.5",
+    fontSize: theme.typography.fontSize.body,
+    lineHeight: theme.typography.lineHeight.relaxed,
     color: theme.color.text.primary,
     letterSpacing: "0.005em",
     fontWeight: theme.typography.fontWeight.regular,
-    marginBottom: theme.space._48,
-    [mq.md]: { fontSize: "15px" },
-    [mq.lg]: { fontSize: "16px" },
+    marginBottom: theme.space._48
   });
 
   export const sectionHeading = style({
-    fontSize: "11px",
+    fontSize: theme.typography.fontSize.body,
     fontWeight: theme.typography.fontWeight.bold,
-    letterSpacing: "0.16em",
+    letterSpacing: theme.typography.letterSpacing.loose,
     textTransform: "uppercase",
     color: theme.color.text.secondary,
     margin: `${theme.space._48} 0 ${theme.space._8}`,
@@ -54,15 +48,19 @@ export const root = style(page);
     position: "absolute",
     width: "100%",
     bottom: 0,   left: 0,
-    padding: `0 ${theme.space._24}`,
-    [mq.sm]: { 
-      padding: `0 ${theme.space._24}`,
+    padding: `0 ${theme.page.gutter.xs} ${theme.space._24}`,
+    margin: `${theme.space._96} calc(-1 * ${theme.page.gutter.xs}) 0`,
+    [mq.sm]: {
+      padding: `0 ${theme.page.gutter.sm} ${theme.space._24}`,
+      margin: `${theme.space._96} calc(-1 * ${theme.page.gutter.sm}) 0`,
     },
     [mq.md]: {
-      padding: `0 ${theme.space._80}`,
+      padding: `0 ${theme.page.gutter.md} ${theme.space._24}`,
+      margin: `${theme.space._96} calc(-1 * ${theme.page.gutter.md}) 0`,
     },
     [mq.lg]: {
-      padding: `0 ${theme.space._96}`,
+      padding: `0 ${theme.page.gutter.lg} ${theme.space._24}`,
+      margin: `${theme.space._96} calc(-1 * ${theme.page.gutter.lg}) 0`,
     },
     transition: `padding 500ms ${EASE_CUBIC}`,
 

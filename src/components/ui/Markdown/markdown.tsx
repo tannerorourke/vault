@@ -11,13 +11,15 @@
  * Paragraph breaks via `\n\n`.
 */
 
-import type { ComponentProps } from 'react';
+import type { ComponentProps, ElementType } from 'react';
 
 import { Link as NextLink } from 'next-view-transitions';
 import ReactMarkdown, { type Components } from 'react-markdown';
 import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 import remarkMath from 'remark-math';
+
+import Text, { type TextProps } from '@/components/ui/Text';
 
 import * as sty from './markdown.css';
 
@@ -27,6 +29,7 @@ export type MarkdownProps = {
   inline?: boolean;
   as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
   className?: string;
+  textProps?: Omit<TextProps<ElementType>, 'children'>;
 };
 
 const SmartLink = ({ href, children }: ComponentProps<'a'>) => {
@@ -68,17 +71,23 @@ const rehypePlugins = [
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ] as any;
 
-export function Markdown({ value, inline = false, as, className }: MarkdownProps) {
+export function Markdown({ value, inline = false, as, className, textProps }: MarkdownProps) {
   let components: Components;
-  if (as) {
+  if (inline) {
+    components = inlineComponents;
+  } else if (textProps) {
+    components = {
+      a: SmartLink,
+      code: InlineCode,
+      p: ({ children }) => <Text {...textProps}>{children}</Text>,
+    };
+  } else if (as) {
     const Tag = as;
     components = {
       a: SmartLink,
       code: InlineCode,
       p: ({ children }) => <Tag className={className}>{children}</Tag>,
     };
-  } else if (inline) {
-    components = inlineComponents;
   } else {
     components = baseComponents;
   }
