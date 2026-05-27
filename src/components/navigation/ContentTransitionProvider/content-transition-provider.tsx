@@ -1,10 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { AnimatePresence, motion, type Variants } from "motion/react";
 import { usePathname } from "next/navigation";
-
-import { FrozenRouter } from "./frozen-router";
 
 import * as sty from "./content-transition-provider.css";
 
@@ -46,64 +43,33 @@ export function getDirection(fromPath: string | null, toPath: string): Direction
   return "none";
 }
 
-const variants: Variants = {
-  initial: (dir: Direction) => {
-    switch (dir) {
-      case "left":  return { x: "100%",  y: 0 };
-      case "right": return { x: "-100%", y: 0 };
-      case "down":  return { x: 0, y: "-100%" };
-      case "up":    return { x: 0, y: "100%"  };
-      default:      return { x: 0, y: 0 };
-    }
-  },
-  animate: { x: 0, y: 0 },
-  exit: (dir: Direction) => {
-    switch (dir) {
-      case "left":  return { x: "-100%", y: 0 };
-      case "right": return { x: "100%",  y: 0 };
-      case "down":  return { x: 0, y: "100%" };
-      case "up":    return { x: 0, y: "-100%" };
-      default:      return { x: 0, y: 0 };
-    }
-  },
-};
-
 export function ContentTransitionProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const previousPathRef = React.useRef<string | null>(null);
 
-  const direction = React.useMemo(
-    () => getDirection(previousPathRef.current, pathname),
-    [pathname]
-  );
-
-  React.useEffect(() => {
+  // Writes the direction onto <html> synchronously before the browser captures
+  // the new view-transition snapshot. next-view-transitions runs the React
+  // commit inside startViewTransition's callback, so this useLayoutEffect
+  // resolves before the "new" snapshot is taken — the keyed CSS animations
+  // pick up the direction correctly.
+  React.useLayoutEffect(() => {
+    const direction = getDirection(previousPathRef.current, pathname);
+    document.documentElement.dataset.pageTransition = direction;
+    document.documentElement.style.setProperty("--page-transition-direction", direction);
     previousPathRef.current = pathname;
   }, [pathname]);
 
-  const animate = direction !== "none";
-
   return (
-    <AnimatePresence mode="sync" initial={false} custom={direction}>
-      <motion.div
-        key={pathname}
-        custom={direction}
-        variants={animate ? variants : undefined}
-        initial={animate ? "initial" : false}
-        animate={animate ? "animate" : false}
-        exit={animate ? "exit" : undefined}
-        transition={{ duration: 0.4, ease: [.5, 0, .3, .9] }}
-        className={sty.transitionMotionDiv}
-        onScroll={(e) => {
-          // dispatch for
-          const scrollTop = (e.currentTarget as HTMLElement).scrollTop;
-          window.dispatchEvent(
-            new CustomEvent('app-scroll', { detail: { scrollTop } })
-          );
-        }}
-      >
-          <FrozenRouter>{children}</FrozenRouter>
-      </motion.div>
-    </AnimatePresence>
+    <div
+      className={sty.scrollContainer}
+      onScroll={(e) => {
+        const scrollTop = (e.currentTarget as HTMLElement).scrollTop;
+        window.dispatchEvent(
+          new CustomEvent("app-scroll", { detail: { scrollTop } }),
+        );
+      }}
+    >
+      {children}
+    </div>
   );
 }

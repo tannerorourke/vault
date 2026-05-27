@@ -1,11 +1,10 @@
 'use client';
 
 import { ElementType, AnchorHTMLAttributes, ReactNode } from 'react';
-import { useRouter } from 'next/navigation';
-import { useAppContext } from '@/components/navigation/AppProvider';
+import { Link } from 'next-view-transitions';
 
 import { Button, ButtonProps } from '@base-ui/react/button';
-import NextLink, { LinkProps as NextLinkProps } from 'next/link';
+import { type LinkProps } from 'next/link';
 import Text, { type TextProps } from '../Text';
 
 import { IconName } from '@/components/icons/registry';
@@ -18,8 +17,8 @@ export type TextLinkProps = ButtonProps & {
   intent: "interactive" | "navigation";
   label: ReactNode;
   isActive?: boolean;
-  nextProps?: NextLinkProps &
-              Omit<AnchorHTMLAttributes<HTMLAnchorElement>, keyof NextLinkProps> &
+  nextProps?: LinkProps &
+              Omit<AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps> &
               { className?: string };
   textProps?: TextProps<ElementType>;
   underline?: 'hover' | 'always';
@@ -50,21 +49,6 @@ export const TextLink: React.FC<TextLinkProps> = ({
   rightIcon,
   ...rest
 }) => {
-  const { hasAppHistory } = useAppContext();
-  const router = useRouter();
-
-  const handleNavigate = (e: any /** Base UI needs better typing here */) => {
-    if (nextProps?.href) {
-      e.preventDefault();
-      if (nextProps.href === 'back') {
-        if (hasAppHistory) router.back();
-        else router.push('/');
-      } else {
-        router.push(nextProps.href as string);
-      }
-    }
-  };
-
   const { className: textClassName, ...restTextProps } = textProps;
 
   const innerChildren = (
@@ -104,14 +88,13 @@ export const TextLink: React.FC<TextLinkProps> = ({
   if (nextProps) {
     const { className: nextClassName, ...restNextProps } = nextProps;
     return (
-      <NextLink
+      <Link
         {...restNextProps}
         {...(rest as Record<string, unknown>)}
-        onNavigate={handleNavigate}
         className={[rootCls, nextClassName].filter(Boolean).join(' ')}
       >
         {innerChildren}
-      </NextLink>
+      </Link>
     );
   }
 
@@ -119,6 +102,7 @@ export const TextLink: React.FC<TextLinkProps> = ({
     <Button
       aria-pressed={isActive}
       className={rootCls}
+      onClick={onClick}
       {...rest}
     >
       {innerChildren}

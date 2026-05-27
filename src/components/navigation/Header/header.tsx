@@ -2,10 +2,9 @@
 
 import { useEffect } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import { Link, useTransitionRouter } from "next-view-transitions";
 import { useAppContext } from "@/components/navigation/AppProvider";
-import { IconName } from "@/components/icons/registry";
 
-import Link from "next/link";
 import TextLink from "@/components/ui/TextLink";
 import Text from "@/components/ui/Text";
 import ConnectMenu from "./ConnectMenu";
@@ -20,7 +19,14 @@ type HeaderProps = {
 export function Header({
   enableClickAnimation = true,
 }: HeaderProps) {
-  const { pathname } = useAppContext();
+  const { pathname, hasAppHistory } = useAppContext();
+  const router = useTransitionRouter();
+
+  const isAbout = pathname === "/about";
+  const handleBack = () => {
+    if (hasAppHistory) router.back();
+    else router.push("/");
+  };
   
   // Logo
   useEffect(() => {
@@ -49,11 +55,6 @@ export function Header({
       });
     };
   }, [enableClickAnimation]);
-
-  // Nav item
-  const navProps = pathname === "/about"
-    ? { key: "back", label: "Back", href: "back", icon: "arrow-left" as IconName }
-    : { key: "about", label:"About", href: "/about", icon: "user" as IconName };
 
   return (
     <header className={sty.root}>
@@ -88,24 +89,35 @@ export function Header({
         <div className={sty.navRight}>
           <AnimatePresence initial={false} mode="popLayout">
             <motion.div
-              key={navProps.key}
+              key={isAbout ? "back" : "about"}
               initial={{ opacity: 0 }}
-              animate={{ 
+              animate={{
                 opacity: 1,
                 transition: { duration: 0.2, delay: 0.1, ease: "easeIn" },
               }}
-              exit={{ 
+              exit={{
                 opacity: 0,
                 transition: { duration: 0.15, ease: "easeOut" },
               }}
             >
-              <TextLink
-                intent="navigation"
-                label={navProps.label}
-                leftIcon={{ name: navProps.icon, hold: true }}
-                nextProps={{ href: navProps.href, prefetch: true, className: sty.aboutLink }}
-                textProps={{ variant: "bodyLg", tone: "primary", className: sty.aboutText }}
-              />
+              {isAbout ? (
+                <TextLink
+                  intent="navigation"
+                  label="Back"
+                  leftIcon={{ name: "arrow-left", hold: true }}
+                  onClick={handleBack}
+                  className={sty.aboutLink}
+                  textProps={{ variant: "bodyLg", tone: "primary", className: sty.aboutText }}
+                />
+              ) : (
+                <TextLink
+                  intent="navigation"
+                  label="About"
+                  leftIcon={{ name: "user", hold: true }}
+                  nextProps={{ href: "/about", prefetch: true, className: sty.aboutLink }}
+                  textProps={{ variant: "bodyLg", tone: "primary", className: sty.aboutText }}
+                />
+              )}
             </motion.div>
           </AnimatePresence>
           <ConnectMenu />

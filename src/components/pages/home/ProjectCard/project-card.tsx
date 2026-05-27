@@ -1,7 +1,7 @@
 "use client";
 
 import type { MouseEvent } from "react";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 
 import type { ProjectContent } from "@/lib/types/project";
 import Markdown from "@/components/ui/Markdown";

@@ -3,6 +3,7 @@ import { JetBrains_Mono, Newsreader, Roboto_Flex } from "next/font/google";
 import { cookies } from "next/headers";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { ViewTransitions } from "next-view-transitions";
 
 import AppProvider from "@/components/navigation/AppProvider";
 import { ThemeProvider } from "@/components/navigation/ThemeProvider";
@@ -90,20 +91,22 @@ export default async function RootLayout({
   const themeClass = theme === "dark" ? darkTheme : lightTheme;
 
   return (
-    <html
-      lang="en"
-      className={`${themeClass} ${robotoFlex.variable} ${newsreader.variable} ${jetbrainsMono.variable}`}
-      data-theme={theme}
-    >
-      <body>
-        <ThemeProvider initialTheme={theme} hasCookie={!!themeCookie}>
-          <AppProvider>
-              {children}
-              <Analytics />
-              <SpeedInsights />
-          </AppProvider>
-        </ThemeProvider>
-      </body>
-    </html>
+    <ViewTransitions>
+      <html
+        lang="en"
+        className={`${themeClass} ${robotoFlex.variable} ${newsreader.variable} ${jetbrainsMono.variable}`}
+        data-theme={theme}
+      >
+        <body>
+          <ThemeProvider initialTheme={theme} hasCookie={!!themeCookie}>
+            <AppProvider>
+                {children}
+                <Analytics />
+                <SpeedInsights />
+            </AppProvider>
+          </ThemeProvider>
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }

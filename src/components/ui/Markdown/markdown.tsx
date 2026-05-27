@@ -13,7 +13,7 @@
 
 import type { ComponentProps } from 'react';
 
-import NextLink from 'next/link';
+import { Link as NextLink } from 'next-view-transitions';
 import ReactMarkdown, { type Components } from 'react-markdown';
 import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
@@ -31,8 +31,11 @@ export type MarkdownProps = {
 
 const SmartLink = ({ href, children }: ComponentProps<'a'>) => {
   if (!href) return <>{children}</>;
-  const isInternal = href.startsWith('/') || href.startsWith('#');
-  if (isInternal) {
+  // Anchor links to the same page must NOT trigger a view transition.
+  if (href.startsWith('#')) {
+    return <a href={href}>{children}</a>;
+  }
+  if (href.startsWith('/')) {
     return <NextLink href={href}>{children}</NextLink>;
   }
   return (
