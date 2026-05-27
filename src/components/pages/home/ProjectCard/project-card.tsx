@@ -5,7 +5,8 @@ import Link from "next/link";
 
 import type { ProjectContent } from "@/lib/types/project";
 import Markdown from "@/components/ui/Markdown";
-import { iconRegistry } from "@/components/icons/registry";
+import Eyebrow from "@/components/ui/Eyebrow";
+import { Icon, IconButton } from "@/components/ui/Icon";
 
 import * as sty from "./project-card.css";
 
@@ -29,9 +30,12 @@ export function ProjectCard({
   const eyebrowText = eyebrow ?? project.eyebrow ?? "";
   const yearText = year ?? project.year ?? "";
 
-  const handleIconLinkClick = (e: MouseEvent<HTMLAnchorElement>) => {
-    e.stopPropagation();
-  };
+  // <button> not <a> — IconLink renders <a>, which can't be nested inside <Link>'s <a>
+  const handleIconButtonClick = (href: string, target: string) =>
+    (e: MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation();
+      window.open(href, target, "noreferrer");
+    };
 
   return (
     <Link
@@ -62,10 +66,10 @@ export function ProjectCard({
       )}
 
       <div className={sty.bodyCol}>
-        <div className={sty.eyebrow}>
+        <Eyebrow as="div" className={sty.eyebrow}>
           <span>{eyebrowText}</span>
           <span className={sty.year}>{yearText}</span>
-        </div>
+        </Eyebrow>
 
         <h3 className={sty.title}>{project.title}</h3>
 
@@ -94,22 +98,16 @@ export function ProjectCard({
           {project.links && project.links.length > 0 && (
             <span className={sty.cardLinks}>
               {project.links.map((l, i) => {
-                const Icon = iconRegistry[l.icon];
-                if (!Icon) return null;
+                if (!l.icon) return null;
                 return (
-                  <a
+                  <IconButton
                     key={i}
-                    href={l.href}
-                    target={l.target ?? "_blank"}
-                    rel="noreferrer"
-                    download={l.download}
-                    aria-label={l.tooltipText ?? l.alt ?? l.text ?? l.icon}
-                    title={l.tooltipText ?? l.alt ?? l.text ?? l.icon}
-                    className={sty.cardLink}
-                    onClick={handleIconLinkClick}
+                    alt={l.alt ?? l.text ?? l.icon}
+                    variant="flat"
+                    onClick={handleIconButtonClick(l.href, l.target ?? "_blank")}
                   >
-                    <Icon width={16} height={16} />
-                  </a>
+                    <Icon name={l.icon} size="md" tone="muted" />
+                  </IconButton>
                 );
               })}
             </span>

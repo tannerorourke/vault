@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Eyebrow from "@/components/ui/Eyebrow";
 import * as sty from "./toc.css";
 
 export type TocSection = { id: string; title: string };
@@ -57,7 +58,7 @@ export function ProjectToc({ sections }: { sections: TocSection[] }) {
 
   return (
     <nav aria-label="Sections" className={sty.tocNav}>
-      <div className={sty.tocLabel}>Contents</div>
+      <Eyebrow>Contents</Eyebrow>
       {sections.map((s) => (
         <a
           key={s.id}

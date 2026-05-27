@@ -15,22 +15,8 @@ export const root = style([page, {
     display: "flex",
     alignItems: "center",
     gap: theme.space._12,
-    fontSize: theme.typography.fontSize.eyebrow,
-    fontWeight: theme.typography.fontWeight.semibold,
-    letterSpacing: "0.14em",
-    textTransform: "uppercase",
-    color: theme.color.text.secondary,
     marginBottom: `calc(-1 * ${theme.space._24})`,
   });
-
-    export const crumbLink = style({
-      color: theme.color.text.secondary,
-      textDecoration: "none",
-      transition: "color 180ms ease",
-      selectors: {
-        "&:hover": { color: theme.color.primary.main },
-      },
-    });
 
     export const crumbSep = style({
       opacity: 0.5,
@@ -66,11 +52,6 @@ export const headerWithFinding = style({
       display: "flex",
       alignItems: "center",
       gap: theme.space._12,
-      fontSize: theme.typography.fontSize.eyebrow,
-      fontWeight: theme.typography.fontWeight.semibold,
-      letterSpacing: "0.16em",
-      textTransform: "uppercase",
-      color: theme.color.text.secondary,
       marginBottom: theme.space._12,
     });
 
@@ -136,48 +117,6 @@ export const headerWithFinding = style({
         marginLeft: "auto",
       });
 
-      export const linkBtn = style({
-        display: "inline-flex",
-        alignItems: "center",
-        gap: theme.space._8,
-        height: "36px",
-        padding: "0 14px",
-        borderRadius: "999px",
-        fontSize: theme.typography.fontSize.bodySm,
-        fontWeight: theme.typography.fontWeight.medium,
-        border: `1px solid ${theme.color.divider}`,
-        color: theme.color.text.primary,
-        background: "transparent",
-        textDecoration: "none",
-        cursor: "pointer",
-        transition: "border-color 180ms ease, color 180ms ease, background 180ms ease",
-
-        selectors: {
-          "&:hover": {
-            borderColor: theme.color.tint.primarySoft,
-            color: theme.color.primary.main,
-            background: theme.color.tint.primaryWeak,
-          },
-          "&:focus-visible": {
-            outline: `2px solid ${theme.color.focus}`,
-            outlineOffset: 2,
-          },
-        },
-      });
-
-        export const linkBtnIcon = style({
-          width: "16px",
-          height: "16px",
-          fill: "currentColor",
-          color: theme.color.text.secondary,
-          flexShrink: 0,
-          transition: "color 180ms ease",
-          selectors: {
-            [`${linkBtn}:hover &`]: {
-              color: theme.color.primary.main,
-            },
-          },
-        });
 
 /** Finding card */
 export const findingCard = style({
@@ -188,35 +127,8 @@ export const findingCard = style({
   borderRadius: "0 8px 8px 0",
 });
 
-  export const findingEyebrow = style({
-    color: theme.color.secondary.active,
-    marginBottom: theme.space._12,
-    selectors: {
-      "&:hover": {
-        color: `${theme.color.secondary.active} !important`,
-      },
-      "&:active": {
-        color: theme.color.secondary.active,
-      },
-    },
-  });
-
-    export const findingEyebrowText = style({
-      selectors: {
-        [`${findingEyebrow} &`]: {
-          fontSize: theme.typography.fontSize.eyebrow,
-          fontWeight: theme.typography.fontWeight.semibold,
-          letterSpacing: "0.16em",
-          textTransform: "uppercase",
-          color: theme.color.secondary.active,
-        },
-        [`${findingEyebrow}:hover &`]: {
-          color: theme.color.secondary.active,
-        },
-        [`${findingEyebrow}:active &`]: {
-          color: theme.color.secondary.active,
-        },
-      },
+    export const findingEyebrow = style({
+      height: "20px"
     });
 
     export const findingBody = style({

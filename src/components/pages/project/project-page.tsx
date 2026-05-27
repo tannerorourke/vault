@@ -2,14 +2,15 @@ import { ProjectContent, JumpIconButton } from "@/lib/types/project";
 
 import Markdown from "@/components/ui/Markdown";
 import TextLink from "@/components/ui/TextLink";
-import Link from "next/link";
+import Eyebrow from "@/components/ui/Eyebrow";
 import TagChip from "@/components/ui/TagChip";
 import { renderSection } from "./Section";
 import { ProjectToc } from "./Toc";
 import { NextProjectFooter } from "./NextProject";
 
-import { iconRegistry } from "@/components/icons/registry";
+import { LinkPill } from "@/components/ui/LinkPill";
 import * as sty from "./project-page.css";
+
 
 
 export function ProjectPage({ content }: { content: ProjectContent }) {
@@ -26,11 +27,16 @@ export function ProjectPage({ content }: { content: ProjectContent }) {
     <main id={content.pid} className={sty.root} aria-label={content.title}>
 
       <nav aria-label="Breadcrumb" className={sty.crumbs}>
-        <Link href="/" className={sty.crumbLink}>Work</Link>
-        <span className={sty.crumbSep} aria-hidden>/</span>
-        <span className={sty.crumbCurrent}>
+        <TextLink 
+          intent="navigation"
+          label={
+            <Eyebrow as="span">Work</Eyebrow>}
+          nextProps={{ href: "/" }}
+        />
+        <Eyebrow className={sty.crumbSep} aria-hidden>/</Eyebrow>
+        <Eyebrow className={sty.crumbCurrent}>
           <Markdown value={content.title} inline />
-        </span>
+        </Eyebrow>
       </nav>
 
       <header className={hasFinding ? sty.headerWithFinding : sty.headerSolo}>
@@ -40,11 +46,11 @@ export function ProjectPage({ content }: { content: ProjectContent }) {
           </h1>
 
           {(content.eyebrow || content.year) && (
-            <div className={sty.eyebrow}>
+            <Eyebrow as="div" className={sty.eyebrow}>
               {content.eyebrow && <span>{content.eyebrow}</span>}
               {content.eyebrow && content.year && <span className={sty.eyebrowDot} aria-hidden />}
               {content.year && <span className={sty.eyebrowYear}>{content.year}</span>}
-            </div>
+            </Eyebrow>
           )}
 
           {content.subtitle && (
@@ -67,19 +73,17 @@ export function ProjectPage({ content }: { content: ProjectContent }) {
               {content.links && content.links.length > 0 && (
                 <div className={sty.links}>
                   {content.links.map((l: JumpIconButton, i) => {
-                    const Icon = l.icon ? iconRegistry[l.icon] : null;
                     return (
-                      <a
+                      <LinkPill
                         key={i}
-                        className={sty.linkBtn}
+                        // don't render both icon and text
+                        icon={(l.icon && l.text) ? undefined : l.icon}
+                        label={l.text ?? ""}
                         href={l.href}
-                        target={l.target ? l.target : "_blank"}
+                        target={l.target ?? "_blank"}
                         rel="noopener noreferrer"
-                        download={l.download ? l.download : undefined}
-                      >
-                        {Icon && <Icon className={sty.linkBtnIcon} />}
-                        {l.text && l.text}
-                      </a>
+                        download={l.download}
+                      />
                     );
                   })}
                 </div>
@@ -91,11 +95,10 @@ export function ProjectPage({ content }: { content: ProjectContent }) {
         {hasFinding && (
           <aside className={sty.findingCard}>
             <TextLink
-              label={`# ${findingEyebrow}`}
-              rightIcon={{ icon: 'arrow-down', hold: true }}
-              className={sty.findingEyebrow}
+              intent="navigation"
+              label={
+                <Eyebrow as="span" className={sty.findingEyebrow}># {findingEyebrow}</Eyebrow>}
               nextProps={{ href: `#section-${finding.jumpToId}` }}
-              textProps={{ as: 'span', className: sty.findingEyebrowText }}
             />
             <p className={sty.findingBody}>
               <Markdown value={finding.body} inline />
