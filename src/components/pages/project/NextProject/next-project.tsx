@@ -3,7 +3,7 @@
 import { useEffect, useMemo } from "react";
 import { useAppContext } from "@/components/navigation/AppProvider";
 
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import Markdown from "@/components/ui/Markdown";
 
 import { PROJECTS } from "@/lib/content/projects";
