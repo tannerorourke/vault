@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const content = await getProjectContent(project)
   if (!content) return notFound()
 
-  const { title, summary: description } = content
+  const { title, cardSubtitle: description } = content
 
   return {
     title,

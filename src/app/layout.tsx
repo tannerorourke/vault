@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     default: "Tanner O\'Rourke",
     template: "%s - Tanner O",
   },
-  description: "Tanner O\'Rourke | selected ML and web Engineering work.",
+  description: "Tanner O\'Rourke | AI/ML engineer and researcher. MS in AI, UT Austin. Work in mechanistic interpretability, time-series modeling, and systems.",
   applicationName: "Tanner O\'Rourke Portfolio",
   creator: "Tanner O\'Rourke",
   publisher: "Tanner O\'Rourke",
