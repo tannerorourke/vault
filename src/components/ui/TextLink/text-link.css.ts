@@ -18,7 +18,7 @@ export const linkBtnBase = style({
   backgroundSize: "0% 2px",
   backgroundPosition: "bottom left",
   backgroundRepeat: "no-repeat",
-  transition: "color 200ms ease, background-size 300ms ease",
+  transition: "color 150ms ease, background-size 200ms ease",
 
   selectors: {
     "&:focus-visible": {

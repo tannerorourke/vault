@@ -3,13 +3,10 @@ import { recipe } from "@vanilla-extract/recipes";
 import { theme } from "@/lib/theme/theme.css";
 
 const base = style({
-  margin: 0,
   fontFamily: theme.typography.fontFamily.sans,
-  fontWeight: theme.typography.fontWeight.semibold,
   letterSpacing: "0.14em",
   textTransform: "uppercase",
   color: theme.color.text.secondary,
-  lineHeight: theme.typography.lineHeight.normal,
 });
 
 export const eyebrowRecipe = recipe({
@@ -18,9 +15,11 @@ export const eyebrowRecipe = recipe({
     size: {
       eyebrow: {
         fontSize: theme.typography.fontSize.eyebrow,
+        fontWeight: theme.typography.fontWeight.semibold,
       },
       micro: {
         fontSize: theme.typography.fontSize.micro,
+        fontWeight: theme.typography.fontWeight.bold,
       },
     },
   },

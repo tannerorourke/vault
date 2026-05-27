@@ -1,131 +1,134 @@
 import { ProjectContent, JumpIconButton } from "@/lib/types/project";
 
 import Markdown from "@/components/ui/Markdown";
+import Text from "@/components/ui/Text";
 import TextLink from "@/components/ui/TextLink";
 import Eyebrow from "@/components/ui/Eyebrow";
 import TagChip from "@/components/ui/TagChip";
+import Icon, { IconLink } from "@/components/ui/Icon";
 import { renderSection } from "./Section";
-import { ProjectToc } from "./Toc";
-import { NextProjectFooter } from "./NextProject";
 
-import { LinkPill } from "@/components/ui/LinkPill";
+import TrackedMain from "./TrackedMain";
+import ProjectToc from "./Toc";
+import NextProjectFooter from "./NextProject";
+
 import * as sty from "./project-page.css";
 
 
-
 export function ProjectPage({ content }: { content: ProjectContent }) {
-  const tocSections = content.sections
+  const { 
+    pid, title, subtitle, eyebrow, tags: tagsObj, links: linksObj, 
+    heroImage: heroImageObj, finding: findingObj, sections: sectionsObj, 
+  } = content;
+
+  const tocSections = sectionsObj
     .filter((s): s is typeof s & { title: string } => Boolean(s.title))
     .map((s) => ({ id: s.id, title: s.title }));
 
-  const finding = content.finding;
-  const hasFinding = !!finding;
-  const findingEyebrow =
-    finding?.eyebrow ?? "The finding";
-
   return (
-    <main id={content.pid} className={sty.root} aria-label={content.title}>
+    <TrackedMain pid={pid} title={title} className={sty.root}>
 
-      <nav aria-label="Breadcrumb" className={sty.crumbs}>
+      <nav aria-label="Breadcrumb" className={sty.crumbsNav}>
         <TextLink 
           intent="navigation"
-          label={
-            <Eyebrow as="span">Work</Eyebrow>}
+          label={<Eyebrow as="span">Work</Eyebrow>}
           nextProps={{ href: "/" }}
         />
         <Eyebrow className={sty.crumbSep} aria-hidden>/</Eyebrow>
         <Eyebrow className={sty.crumbCurrent}>
-          <Markdown value={content.title} inline />
+          <Markdown value={title} inline />
         </Eyebrow>
       </nav>
 
-      <header className={hasFinding ? sty.headerWithFinding : sty.headerSolo}>
+      <header className={!!findingObj ? sty.headerWithFinding : sty.headerSolo}>
         <div className={sty.heroBody}>
-          <h1 className={sty.title}>
-            <Markdown value={content.title} inline />
-          </h1>
+          <Markdown 
+            textProps={{ as: 'h1', variant: 'display', className: sty.title }} 
+            value={title} 
+          />
 
-          {(content.eyebrow || content.year) && (
-            <Eyebrow as="div" className={sty.eyebrow}>
-              {content.eyebrow && <span>{content.eyebrow}</span>}
-              {content.eyebrow && content.year && <span className={sty.eyebrowDot} aria-hidden />}
-              {content.year && <span className={sty.eyebrowYear}>{content.year}</span>}
-            </Eyebrow>
-          )}
+          {eyebrow &&
+            <Eyebrow as="span" className={sty.eyebrow}>{eyebrow}</Eyebrow>}
 
-          {content.subtitle && (
-            <p className={sty.subtitle}>
-              <Markdown value={content.subtitle} inline />
-            </p>
-          )}
+          {subtitle &&
+            <Markdown
+              textProps={{ as: 'h2', variant: 'bodyLg', className: sty.subtitle }} 
+              value={subtitle}
+            />}
 
-          {((content.tags && content.tags.length > 0) ||
-            (content.links && content.links.length > 0)) && (
+          {((!!tagsObj && tagsObj.length > 0) || (!!linksObj && linksObj.length > 0)) && (
             <div className={sty.heroFoot}>
-              {content.tags && content.tags.length > 0 && (
+              {tagsObj && tagsObj.length > 0 && (
                 <div className={sty.tagsRow}>
-                  {content.tags.map((t, i) => (
+                  {tagsObj.map((t, i) => (
                     <TagChip key={i} label={t.label} color={t.color} />
                   ))}
                 </div>
               )}
 
-              {content.links && content.links.length > 0 && (
+              {!!linksObj && linksObj.length > 0 && (
                 <div className={sty.links}>
-                  {content.links.map((l: JumpIconButton, i) => {
-                    return (
-                      <LinkPill
-                        key={i}
-                        // don't render both icon and text
-                        icon={(l.icon && l.text) ? undefined : l.icon}
-                        label={l.text ?? ""}
-                        href={l.href}
-                        target={l.target ?? "_blank"}
-                        rel="noopener noreferrer"
-                        download={l.download}
-                      />
-                    );
-                  })}
+                  {linksObj.map((l: JumpIconButton, i) => (
+                    <IconLink
+                      key={i}
+                      variant="box"
+                      alt={l.alt ?? l.text ?? l.icon ?? ""}
+                      tooltipText={l.text ?? l.alt ?? ""}
+                      tooltipSide="bottom"
+                      href={l.href}
+                      target={l.target ?? "_blank"}
+                      download={l.download ?? undefined}
+                      rel={l.rel ?? "noopener noreferrer"}
+                    >
+                      {(l.icon && l.text)
+                        ? <Text as="span">{l.text}</Text>
+                        : <Icon name={l.icon} size="md" tone="muted" />}
+                    </IconLink>
+                  ))}
                 </div>
               )}
             </div>
           )}
         </div>
 
-        {hasFinding && (
+        {!!findingObj && findingObj?.body && (
           <aside className={sty.findingCard}>
-            <TextLink
-              intent="navigation"
-              label={
-                <Eyebrow as="span" className={sty.findingEyebrow}># {findingEyebrow}</Eyebrow>}
-              nextProps={{ href: `#section-${finding.jumpToId}` }}
+            {findingObj?.eyebrow && (
+              <TextLink 
+                intent="navigation" 
+                nextProps={{ href: `#section-${findingObj.jumpToId}` }}
+                label={
+                  <Eyebrow as="span" className={sty.findingEyebrow}># {findingObj?.eyebrow}</Eyebrow>
+                }
+              />
+            )}
+            <Markdown 
+              textProps={{ as: 'p', variant: 'bodySm', className: sty.findingBody }}
+              value={findingObj.body}
             />
-            <p className={sty.findingBody}>
-              <Markdown value={finding.body} inline />
-            </p>
           </aside>
         )}
       </header>
 
-      {content.heroImage && (
+      {!!heroImageObj && (
         <img
+          src={heroImageObj.src} 
+          alt={heroImageObj.alt ?? ""}
           className={sty.heroImage}
-          src={content.heroImage.src}
-          alt={content.heroImage.alt ?? ""}
         />
       )}
 
       <div className={sty.layout}>
-        <div className={sty.tocRoot}>
+        <div className={sty.tocWrapSticky}>
           <ProjectToc sections={tocSections} />
         </div>
 
-        <div className={sty.sections}>
-          {content.sections.map((s) => renderSection(s))}
+        <div className={sty.sectionsWrap}>
+          {sectionsObj.map((s) => renderSection(s))}
         </div>
       </div>
 
-      <NextProjectFooter currentPid={content.pid} />
-    </main>
+      <NextProjectFooter currentPid={pid} />
+    </TrackedMain>
   );
 }

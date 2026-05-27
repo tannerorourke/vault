@@ -1,0 +1,1 @@
+export { TrackedMain as default } from "./tracked-main";

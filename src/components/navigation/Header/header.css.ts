@@ -18,16 +18,16 @@ export const root = style({
   margin: '0 auto',
   padding: `${theme.header.padTop.xs} ${theme.page.gutter.xs} 0`,
   transition: `margin 400ms ${EASE_CUBIC}, padding 400ms ${EASE_CUBIC}, width 400ms ${EASE_CUBIC}`,
-  [mq.sm]: { 
+  [mq.sm]: {
     padding: `${theme.header.padTop.sm} ${theme.page.gutter.sm} 0`,
     maxWidth: theme.page.maxContentWidth.sm,
   },
-  [mq.md]: { 
+  [mq.md]: {
     padding: `${theme.header.padTop.md} ${theme.page.gutter.md} 0`,
     width: theme.page.maxContentWidth.md,
     maxWidth: '100vw',
   },
-  [mq.lg]: { 
+  [mq.lg]: {
     padding: `${theme.header.padTop.lg} ${theme.page.gutter.md} 0`,
     width: theme.page.maxContentWidth.lg,
     maxWidth: theme.page.maxContentWidth.lg,
@@ -39,9 +39,9 @@ export const root = style({
       top: 0,
       left: 0,
       right: 0,
-      bottom: '-20px',
-      backdropFilter: 'blur(4px)',
-      WebkitBackdropFilter: 'blur(4px)',
+      bottom: '-40px',
+      backdropFilter: 'blur(6px)',
+      WebkitBackdropFilter: 'blur(6px)',
       maskImage:
         'linear-gradient(to bottom, black 0%, black 75%, transparent 100%)',
       WebkitMaskImage:
@@ -110,12 +110,8 @@ export const navRight = style({
   export const aboutLink = style({
     display: "inline-flex",
     alignItems: "center",
-    padding: "0px !important",
-    // margin: "-2px",
-    [mq.sm]: {
-      padding: "revert",
-      margin: "revert",
-    },
+    margin: "4px 0 0 0",
+    padding: "0px"
   });
 
     // icon

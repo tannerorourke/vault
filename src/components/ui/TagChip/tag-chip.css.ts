@@ -8,7 +8,7 @@ const base = style({
   fontSize: theme.typography.fontSize.micro,
   fontWeight: theme.typography.fontWeight.semibold,
   borderRadius: "4px",
-  padding: "3px 7px",
+  padding: "5px 8px",
   whiteSpace: "nowrap",
 });
 

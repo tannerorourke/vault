@@ -1,14 +1,15 @@
 {
-  "live": true,
   "pid": "negation-snli",
-  "order": 4,
+  "title": "Syntactic Negation Probing",
+  
+  "live": true,
   "category": "labs",
+  "order": 4,
   "isFeature": false,
   
-  "title": "Syntactic Negation Probing",
-  "summary": "Where does negation live in a sentence, and which positions trip up a fine-tuned Electra NLI model?",
-  "year": "2025 · paper",
-  "eyebrow": "Labs",
+  "cardSubtitle": "Where does negation live in a sentence, and which positions trip up a fine-tuned Electra NLI model?",
+  
+  "eyebrow": "2025 - paper",
   "subtitle": "If 'The room is never empty without music', then is 'The room empty with music'? - and a dependency-parser-driven analysis of ELECTRA-small's reliance on negation cue location in SNLI.",
   "tags": [
     { "label": "NLP", "color": "teal" },

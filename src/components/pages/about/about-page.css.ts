@@ -63,13 +63,12 @@ export const photoCol = style({
 export const proseCol = style({
   display: "flex",
   flexDirection: "column",
-  gap: theme.space._16,
+  gap: theme.space._12,
   maxWidth: "62ch",
 });
 
   export const par = style({
     display: "inline-block",
-    lineHeight: theme.typography.lineHeight.relaxed,
     opacity: 0.92,
     textWrap: "pretty",
     margin: 0,
@@ -79,105 +78,121 @@ export const proseCol = style({
     },
   });
 
+    globalStyle(`${par} a`, {
+      color: theme.color.link.main,
+      textDecoration: "underline",
+      textDecorationColor: theme.color.tint.primaryHoverSoft,
+    });
+
+    globalStyle(`${par} a:hover`, {
+      color: theme.color.link.hover,
+    });
+
     globalStyle(`${par} strong`, {
       fontWeight: theme.typography.fontWeight.medium,
-      color: theme.color.primary.main,
     });
 
     globalStyle(`${par} em`, {
       fontStyle: "italic",
-      color: theme.color.text.primary,
     });
 
 // -- CONTACT
 
-export const contact = style({
+export const contactSection = style({
   display: "flex",
   flexDirection: "column",
-  // gap: theme.space._4,
-  // paddingTop: theme.space._12,
   borderTop: `1px solid ${theme.color.divider}`,
 });
 
-const contactRowBase = {
-  display: "inline-block",
-  padding: `${theme.space._20} 0`,
-  // borderTop: `1px solid ${theme.color.divider}`,
-  borderBottom: `1px solid ${theme.color.divider}`,
-}
+  const contactRowBase = {
+    display: "inline-block",
+    padding: `${theme.space._20} 0`,
+    // borderTop: `1px solid ${theme.color.divider}`,
+    borderBottom: `1px solid ${theme.color.divider}`,
+  }
 
-export const contactRow = style(contactRowBase);
+  export const contactRow = style(contactRowBase);
 
-export const contactRowGrid = style({
-  ...contactRowBase,
-  display: "grid",
-  gridTemplateColumns: "1fr",
-  rowGap: theme.space._4,
-  columnGap: theme.space._24,
-  alignItems: "center",
-  [mq.sm]: {
-    gridTemplateColumns: "130px 1fr",
-  },
-});
-
-  // -- Contact statement
-  export const contactStatement = style({
-    fontFamily: theme.typography.fontFamily.display,
-    fontSize: "clamp(20px, 2vw, 28px)",
-    lineHeight: theme.typography.lineHeight.snug,
-    fontWeight: theme.typography.fontWeight.medium,
-    letterSpacing: "-0.012em",
-    color: theme.color.text.primary,
-    maxWidth: "42ch",
-    margin: `${theme.space._12} 0 ${theme.space._24}`,
-  });
-
-    globalStyle(`${contactStatement} em`, {
-      fontStyle: "normal",
-      color: theme.color.primary.main,
-    });
-
-    globalStyle(`${contactStatement} a`, {
-      color: "inherit",
-      textDecoration: "underline",
-      textDecorationColor: theme.color.tint.primarySoft,
-      textDecorationThickness: "px",
-      textUnderlineOffset: "4px",
-      transition: "color 180ms ease, text-decoration-color 180ms ease",
-    });
-
-    globalStyle(`${contactStatement} a:hover`, {
-      color: theme.color.primary.main,
-      textDecorationColor: theme.color.secondary.main,
-    });
-
-  // -- Contact links
-  export const contactGridLabel = style({
-    fontWeight: theme.typography.fontWeight.semibold,
-    letterSpacing: "0.16em",
-    textTransform: "uppercase",
-    whiteSpace: "nowrap",
-    color: theme.color.text.secondary,
-  });
-
-  export const contactGridList = style({
-    listStyle: "none",
-    margin: 0,
-    padding: 0,
-    display: "flex",
-    flexWrap: "wrap",
-    alignItems: "baseline",
+  export const contactRowGrid = style({
+    ...contactRowBase,
+    display: "grid",
+    gridTemplateColumns: "1fr",
     rowGap: theme.space._4,
     columnGap: theme.space._24,
+    alignItems: "center",
+    [mq.sm]: {
+      gridTemplateColumns: "130px 1fr",
+    },
   });
 
-    export const contactGridItem = style({
-      display: "inline-flex",
-      alignItems: "baseline",
-      listStyleType: "none",
+    // -- Contact statement
+    export const contactStatement = style({
+      fontFamily: theme.typography.fontFamily.display,
+      fontSize: "clamp(20px, 2vw, 26px)",
+      lineHeight: theme.typography.lineHeight.snug,
+      fontWeight: theme.typography.fontWeight.medium,
+      letterSpacing: "-0.012em",
+      color: theme.color.text.primary,
+      maxWidth: "44ch",
+      margin: `${theme.space._12} 0 ${theme.space._24}`,
     });
 
-export const footerLink = style({
-  margin: "0 0 0 6px",
-  fontFamily: theme.typography.fontFamily.sans,
-});
+      globalStyle(`${contactStatement} em`, {
+        fontStyle: "normal",
+        color: theme.color.primary.main,
+      });
+
+      globalStyle(`${contactStatement} a`, {
+        color: "inherit",
+        background: "transparent",
+        backgroundImage: "linear-gradient(currentColor, currentColor)",
+        backgroundSize: "0% 2px",
+        backgroundPosition: "bottom left",
+        backgroundRepeat: "no-repeat",
+        transition: "color 150ms ease, background-size 200ms ease",
+      });
+
+      globalStyle(`${contactStatement} a:focus-visible`, {
+        outline: `2px solid ${theme.color.focus}`,
+        outlineOffset: 2,
+      });
+
+      globalStyle(`${contactStatement} a:hover`, {
+        color: theme.color.primary.hover,
+        backgroundSize: "100% 2px",
+      });
+
+      globalStyle(`${contactStatement} a:active`, {
+        backgroundSize: "100% 2px",
+      });
+
+    // -- Contact links
+    export const contactGridLabel = style({
+      fontWeight: theme.typography.fontWeight.semibold,
+      letterSpacing: "0.16em",
+      textTransform: "uppercase",
+      whiteSpace: "nowrap",
+      color: theme.color.text.secondary,
+    });
+
+    export const contactGridList = style({
+      listStyle: "none",
+      margin: 0,
+      padding: 0,
+      display: "flex",
+      flexWrap: "wrap",
+      alignItems: "baseline",
+      rowGap: theme.space._4,
+      columnGap: theme.space._24,
+    });
+
+      export const contactLink = style({
+        fontFamily: theme.typography.fontFamily.sans,
+      });
+
+    export const footPad = style({ 
+      marginRight: "6px"
+    })
+    export const footLink = style({
+      fontFamily: theme.typography.fontFamily.sans,
+    });

@@ -11,7 +11,7 @@ export type NavLink = {
   download?: string;
 };
 
-export const LINKS: NavLink[] = [
+export const ACTION_LINKS: NavLink[] = [
   {
     iconName: "github", text: "GitHub",
     alt: "GitHub",
@@ -44,18 +44,22 @@ export const LINKS: NavLink[] = [
   //   href: "https://medium.com/@tannerorourke",
   //   target: "_blank",
   //   tooltipText: "Medium"
-  // }
+  // },
   {
     iconName: "grad-cap", text: "Google Scholar",
     alt: "Google Scholar",
     href: "https://scholar.google.com/citations?user=RwfFBoEAAAAJ&hl=en",
     target: "_blank",
     tooltipText: "Google Scholar"
+  },
+  {
+    iconName: "arrow-up-right",
+    alt: "View Source",
+    href: "https://github.com/tannerorourke/vault",
+    target: "_blank",
+    tooltipText: "View Source"
   }
 ];
-
-export const FOOTER: string = 
-  "Designed and developed E2E by me using boilerplate Next.js / Vanilla Extract."
 
 export const REPO_LINK: NavLink = {
   iconName: "arrow-up-right",
@@ -64,3 +68,17 @@ export const REPO_LINK: NavLink = {
   target: "_blank",
   tooltipText: "View Source"
 }
+
+const linkSubset = (links: string[]): NavLink[] =>
+  links.reduce((acc, l) => {
+    const link = ACTION_LINKS.find((link) => link.alt === l);
+    if (!link) return acc;
+    return [...acc, link];
+  }, [] as NavLink[]);
+
+
+export const NAV_LINKS = 
+  linkSubset(["Email me", "LinkedIn", "GitHub", "Google Scholar", "Download CV"]);
+
+export const ABOUT_LINKS = 
+  linkSubset(["Email me", "LinkedIn", "GitHub", "Google Scholar"]);

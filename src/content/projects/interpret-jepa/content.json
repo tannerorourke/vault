@@ -1,16 +1,16 @@
 {
-  "live": true,
   "pid": "interpret-jepa",
-  "order": 1,
-  "category": "research",
-  "isFeature": true,
-
   "title": "Mechanistic Interpretability for Clinical JEPAs",
-  "summary": "A shared-encoder stop-gradient JEPA trained on ~55k MIMIC-IV patient sequences, with a four-layer interpretability pipeline applied to the F-code psychiatric subset. Treats the prediction error P - T as a first-class geometric object, not a scalar loss.",
-  "year": "2026",
-  "eyebrow": "In progress · Paper",
 
-  "subtitle": "Introducing MI techniques to Joint Embedding Predictive Architectures trained on clinical encounter sequences. Targeting ML4H 2026 and ICLR 2027.",
+  "live": true,
+  "category": "research",
+  "order": 1,
+  "isFeature": true,
+  
+  "cardSubtitle": "A shared-encoder stop-gradient JEPA trained on ~55k MIMIC-IV patient sequences, with a four-layer interpretability pipeline applied to the F-code psychiatric subset. Treats the prediction error P - T as a first-class geometric object, not a scalar loss.",
+  
+  "eyebrow": "In progress - Paper",
+  "subtitle": "Introducing MI techniques to Joint Embedding Predictive Architectures trained on clinical encounter sequences. Targeting ML4H 2026.",
   "heroImage": {
     "src": "/content/interpret-jepa/jepa-architecture.png",
     "alt": "Diagram of the shared-encoder stop-gradient JEPA architecture, with VICReg loss components annotated.",
@@ -26,7 +26,7 @@
     { "icon": "github", "href": "https://github.com/tannerorourke/chronos-lens" }
   ],
   "finding": {
-    "findingEyebrow": "The decision",
+    "eyebrow": "Why JEPA?",
     "body": "With an EMA target encoder, the prediction error $P - T$ conflates two things: predictor failure and slow encoder drift. Shared-encoder stop-gradient with VICReg is the only configuration where the error vector means what you want it to.",
     "jumpToId": "stop-gradient",
     "jumpToLabel": "Why stop-gradient, not EMA"
@@ -47,7 +47,6 @@
       "type": "Paragraph",
       "id": "stop-gradient",
       "title": "Why stop-gradient, not EMA",
-      "accent": "copper",
       "body": "With an EMA target encoder, $z_{\\text{target}}$ comes from a slightly different function than $z_{\\text{enc}}$. Any analysis of $P - T$ then conflates predictor failure with encoder drift - a confound that varies across training and can't be factored out post-hoc. For anything that treats the error vector as a first-class object (SAE features on $P - T$, probe magnitude correlation with outcomes), this is fatal.\n\nShared-encoder stop-gradient kills it: both paths use identical weights, and the target path wraps its forward pass in `torch.no_grad()` and `.detach()`. VICReg with weights $1.0 / 1.0 / 0.04$ (invariance / variance / covariance) handles collapse explicitly. Both architectures live in the repo; stop-grad is the one downstream interpretability depends on."
     },
     {

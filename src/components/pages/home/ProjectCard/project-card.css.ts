@@ -1,10 +1,12 @@
 import { globalStyle, style } from "@vanilla-extract/css";
 import { theme } from "@/lib/theme/theme.css";
 import { iconButtonBase } from "@/components/ui/Icon/icon.css";
+import { mq } from "@/lib/theme/responsive.css";
 
 
 export const cardBase = style({
   position: "relative",
+  height: "100%",
   display: "grid",
   gridTemplateColumns: "minmax(0, 1fr)",
   padding: "14px 18px",
@@ -21,10 +23,16 @@ export const cardBase = style({
   transition: `background 200ms ease`,
 
   selectors: {
-    '&:hover, &:focus-visible': {
-      background: theme.color.tint.primaryWeak,
-      outline: "none",
+    '&:focus-visible': {
+      outline: `2px solid ${theme.color.focus}`,
+      outlineOffset: 2
     },
+    '&:hover': {
+      background: theme.color.tint.primaryWeak
+    },
+    "&:active": {
+      background: theme.color.tint.primary
+    }
   },
 });
 
@@ -52,168 +60,92 @@ globalStyle(`${cardBase}[data-variant="featured"][data-ratio="50-50"]`, {
 });
 
 
-export const imageCol = style({
-  position: "relative",
-  aspectRatio: "16 / 10",
-  borderRadius: "6px",
-  overflow: "hidden",
-});
+  export const imageCol = style({
+    position: "relative",
+    aspectRatio: "16 / 10",
+    borderRadius: "6px",
+    overflow: "hidden",
+  });
 
-export const heroImg = style({
-  width: "100%",
-  height: "100%",
-  objectFit: "cover",
-  display: "block",
-});
+    export const heroImg = style({
+      width: "100%",
+      height: "100%",
+      objectFit: "cover",
+      display: "block",
+    });
 
-export const heroCaptionStack = style({
-  position: "absolute",
-  left: "12px",
-  bottom: "12px",
-  display: "flex",
-  flexDirection: "column",
-  gap: "2px",
-  fontFamily: 'ui-monospace, "SFMono-Regular", Menlo, monospace',
-});
-
-export const heroLabelText = style({
-  fontSize: "11px",
-  color: theme.color.text.primary,
-  opacity: 0.85,
-});
-
-export const heroCaptionText = style({
-  fontSize: "10px",
-  color: theme.color.text.secondary,
-  opacity: 0.7,
-});
+    export const heroLabelText = style({
+      position: "absolute",
+      bottom: "12px", left: "12px",
+      fontSize: theme.typography.fontSize.caption,
+      fontFamily: theme.typography.fontFamily.mono,
+      color: theme.color.text.secondary,
+    });
 
 
 export const bodyCol = style({
   display: "flex",
   flexDirection: "column",
+  justifyContent: "flex-start",
   minWidth: 0,
 });
 
-
-export const eyebrow = style({
-  display: "flex",
-  alignItems: "center",
-  gap: "8px",
-  margin: "0 0 6px",
-  selectors: {
-    [`${cardBase}[data-variant="featured"] &`]: {
-      marginBottom: "10px",
+  export const title = style({
+    margin: "0 0 6px",
+    transition: `color 180ms ease`,
+    selectors: {
+      [`${cardBase} &`]: {
+        color: theme.color.primary.main,
+      },
+      [`${cardBase}:hover &, ${cardBase}:focus-visible &`]: {
+        color: theme.color.primary.hover,
+      },
+      [`${cardBase}[data-variant="featured"] &`]: {
+        fontSize: theme.typography.fontSize.titleSm,
+        lineHeight: theme.typography.lineHeight.tight,
+        letterSpacing: "-0.018em",
+        margin: "0 0 10px",
+      },
     },
-  },
-});
+  });
 
-export const year = style({
-  marginLeft: "auto",
-  opacity: 0.7,
-  selectors: {
-    [`${cardBase}[data-variant="featured"] &`]: {
-      letterSpacing: "0.08em",
-    },
-  },
-});
-
-
-export const title = style({
-  fontFamily: theme.typography.fontFamily.display,
-  fontWeight: theme.typography.fontWeight.semibold,
-  fontSize: "17px",
-  lineHeight: "1.22",
-  letterSpacing: "-0.012em",
-  color: theme.color.primary.main,
-  margin: "0 0 6px",
-  transition: `color 180ms ease`,
-  selectors: {
-    [`${cardBase}:hover &, ${cardBase}:focus-visible &`]: {
-      color: theme.color.primary.hover,
-    },
-    [`${cardBase}[data-variant="featured"] &`]: {
-      fontSize: "clamp(22px, 2.2vw, 26px)",
-      lineHeight: "1.18",
-      letterSpacing: "-0.018em",
-      margin: "0 0 10px",
-    },
-  },
-});
-
-globalStyle(`${cardBase}[data-variant="featured"] ${title}`, {
-  "@media": {
-    "(min-width: 900px)": {
+  globalStyle(`${cardBase}[data-variant="featured"] ${title}`, {
+    [mq.sm]: {
       fontSize: theme.typography.fontSize.titleMd,
+    }
+  });
+
+  export const subtitle = style({
+    opacity: 0.82,
+    maxWidth: "70ch",
+    margin: "0 0 14px",
+  });
+
+  export const foot = style({
+    marginTop: 'auto',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: "12px",
+    selectors: {
+      [`${cardBase}[data-variant="featured"] &`]: {
+        marginTop: "auto",
+        gap: "16px",
+        flexWrap: "wrap",
+      },
     },
-  },
-});
+  });
 
+      export const footLinks = style({
+        display: "inline-flex",
+        gap: 0,
+        flexShrink: 0,
+        marginRight: "-4px",
+      });
 
-export const summary = style({
-  margin: 0,
-  fontSize: "13px",
-  lineHeight: "1.5",
-  color: theme.color.text.primary,
-  opacity: 0.78,
-  display: "-webkit-box",
-  WebkitLineClamp: 2,
-  WebkitBoxOrient: "vertical",
-  overflow: "hidden",
-});
-
-export const subtitle = style({
-  fontSize: "14px",
-  lineHeight: "1.55",
-  color: theme.color.text.primary,
-  opacity: 0.82,
-  maxWidth: "60ch",
-  margin: "0 0 14px",
-});
-
-
-export const foot = style({
-  marginTop: "10px",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-  gap: "12px",
-  selectors: {
-    [`${cardBase}[data-variant="featured"] &`]: {
-      marginTop: "auto",
-      gap: "16px",
-      flexWrap: "wrap",
-    },
-  },
-});
-
-
-export const tagsInline = style({
-  fontSize: "10px",
-  fontWeight: theme.typography.fontWeight.semibold,
-  letterSpacing: "0.13em",
-  textTransform: "uppercase",
-  color: theme.color.text.secondary,
-  lineHeight: "1.4",
-  minWidth: 0,
-  flex: "1 1 auto",
-  overflow: "hidden",
-  textOverflow: "ellipsis",
-  whiteSpace: "nowrap",
-});
-
-export const tagsSep = style({
-  margin: "0 7px",
-  opacity: 0.45,
-});
-
-
-export const cardLinks = style({
-  display: "inline-flex",
-  gap: 0,
-  flexShrink: 0,
-  marginRight: "-4px",
-});
+        export const footLink = style({
+          margin: "0 4px",
+        });
 
 // Suppress card's own hover state while an icon inside it is hovered/focused,
 // so only one target reads as active under the cursor.

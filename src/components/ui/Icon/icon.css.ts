@@ -12,7 +12,7 @@ export const iconButton = recipe({
     border: "none",
     background: "transparent",
     color: theme.color.text.primary,
-    transition: "background-color 300ms ease, color 300ms ease, box-shadow 300ms ease, transform 100ms ease",
+    transition: "background-color 300ms ease, box-shadow 300ms ease, transform 100ms ease, color 200ms ease, border-color 200ms ease",
     selectors: {
       "&:hover": {
         color: theme.color.secondary.main,
@@ -21,9 +21,8 @@ export const iconButton = recipe({
         outline: `2px solid ${theme.color.focus}`,
         outlineOffset: 2,
       },
-      "&:disabled": { 
-        cursor: "not-allowed", 
-        opacity: 0.5 
+      "&:active": {
+        background: theme.color.tint.primaryWeak
       },
     },
   },
@@ -40,6 +39,31 @@ export const iconButton = recipe({
         background: theme.color.card,
         boxShadow: `0 4px 20px -2px ${theme.color.shadow}`,
       },
+      box: {
+        borderRadius: "8px",
+        border: `1px solid ${theme.color.link.main}`,
+        height: "36px",
+        padding: "0 14px",
+        selectors: {
+          "&:hover": {
+            borderColor: theme.color.secondary.main,
+            color: theme.color.secondary.main,
+            background: theme.color.tint.secondary,
+          },
+        }
+      },
+      boxSmall: {
+        borderRadius: "8px",
+        border: `1px solid ${theme.color.link.main}`,
+        height: "30px",
+        padding: "0 8px",
+        selectors: {
+          "&:hover": {
+            borderColor: theme.color.secondary.main,
+            color: theme.color.secondary.main,
+          },
+        }
+      }
     },
   },
   defaultVariants: { variant: "flat" },
