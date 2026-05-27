@@ -1,2 +1,2 @@
-export { renderSection } from './sections';
-export type { ProjectSection } from './sections';
+export { renderSection } from './section';
+export type { ProjectSection } from './section';

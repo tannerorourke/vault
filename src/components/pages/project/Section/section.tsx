@@ -1,7 +1,7 @@
 import Markdown from "@/components/ui/Markdown";
 import { preHighlightCodeBlocks } from "@/lib/markdown/highlight";
 
-import * as sty from "./sections.css";
+import * as sty from "./section.css";
 
 
 function SectionShell({
