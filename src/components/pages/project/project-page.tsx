@@ -119,13 +119,14 @@ export function ProjectPage({ content }: { content: ProjectContent }) {
             src={heroImageObj.src}
             alt={heroImageObj.alt ?? ""}
             className={sty.heroImage}
-            loading="lazy"
+            loading="eager"
           />
         ) : (
           <Image
             src={heroImageObj.src}
             alt={heroImageObj.alt ?? ""}
             className={sty.heroImage}
+            loading="eager"
             sizes="100vw"
             {...getImageSize(heroImageObj.src)}
           />

@@ -47,12 +47,14 @@ export function ProjectCard({
               src={heroImage.src}
               alt={heroImage.alt ?? ""}
               className={sty.heroImg}
+              loading="eager"
             />
           ) : (
             <Image
               src={heroImage.src}
               alt={heroImage.alt ?? ""}
               className={sty.heroImg}
+              loading="eager"
               fill
               sizes="(min-width: 900px) 45vw, 100vw"
             />
