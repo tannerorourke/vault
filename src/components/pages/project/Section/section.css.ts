@@ -1,4 +1,4 @@
-import { style, globalStyle, styleVariants } from "@vanilla-extract/css";
+import { style, globalStyle } from "@vanilla-extract/css";
 import { theme } from "@/lib/theme/theme.css";
 import { mq } from "@/lib/theme/responsive.css";
 
@@ -145,6 +145,7 @@ export const twoUp = style({
 
   export const inlineImage = style({
     width: "100%",
+    height: "auto",
     borderRadius: MEDIA_RADIUS,
     display: "block",
   });
@@ -163,6 +164,7 @@ export const twoUp = style({
 
 export const standaloneImage = style({
   width: "100%",
+  height: "auto",
   borderRadius: MEDIA_RADIUS,
   display: "block",
   marginTop: theme.space._4,

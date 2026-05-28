@@ -1,5 +1,7 @@
+import Image from "next/image";
 import Markdown from "@/components/ui/Markdown";
 import { preHighlightCodeBlocks } from "@/lib/markdown/highlight";
+import { getImageSize, isSvg } from "@/lib/content/images";
 
 import * as sty from "./section.css";
 import Eyebrow from "@/components/ui/Eyebrow";
@@ -113,10 +115,19 @@ async function TwoUpTextImage({ s }: { s: SectionTwoUpTextImage }) {
     : [sty.twoUp, imageSide === "left" ? sty.twoUpReverse : ""]
         .filter(Boolean).join(" ");
 
-  const img = (
-    <img 
+  const img = isSvg(s.image.src) ? (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
       className={sty.inlineImage}
       src={s.image.src} alt={s.image.alt ?? ""}
+      loading="lazy"
+    />
+  ) : (
+    <Image
+      className={sty.inlineImage}
+      src={s.image.src} alt={s.image.alt ?? ""}
+      sizes="(min-width: 700px) 45vw, 100vw"
+      {...getImageSize(s.image.src)}
     />
   )
 
@@ -169,12 +180,24 @@ type SectionImage = {
 function ImageSection({ s }: { s: SectionImage }) {
   return (
     <SectionShell id={s.id} title={s.title} accent={s.accent}>
-      <img
-        className={sty.standaloneImage}
-        src={s.src}
-        alt={s.alt ?? ""}
-      />
-      {s.caption && 
+      {isSvg(s.src) ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          className={sty.standaloneImage}
+          src={s.src}
+          alt={s.alt ?? ""}
+          loading="lazy"
+        />
+      ) : (
+        <Image
+          className={sty.standaloneImage}
+          src={s.src}
+          alt={s.alt ?? ""}
+          sizes="(min-width: 1024px) 98ch, 100vw"
+          {...getImageSize(s.src)}
+        />
+      )}
+      {s.caption &&
         <Markdown
           textProps={{ as: "p", variant: "caption", className: sty.imgCaption }}
           value={s.caption}

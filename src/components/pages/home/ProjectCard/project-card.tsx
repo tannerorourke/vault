@@ -1,6 +1,7 @@
 import type { ProjectContent } from "@/lib/types/project";
 
 import { Link } from "next-view-transitions";
+import Image from "next/image";
 import Text from "@/components/ui/Text";
 import Markdown from "@/components/ui/Markdown";
 import Eyebrow from "@/components/ui/Eyebrow";
@@ -40,11 +41,22 @@ export function ProjectCard({
     >
       {isFeatured && heroImage?.src && (
         <div className={sty.imageCol}>
-          <img
-            src={heroImage.src}
-            alt={heroImage.alt ?? ""}
-            className={sty.heroImg}
-          />
+          {heroImage.src.toLowerCase().endsWith(".svg") ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={heroImage.src}
+              alt={heroImage.alt ?? ""}
+              className={sty.heroImg}
+            />
+          ) : (
+            <Image
+              src={heroImage.src}
+              alt={heroImage.alt ?? ""}
+              className={sty.heroImg}
+              fill
+              sizes="(min-width: 900px) 45vw, 100vw"
+            />
+          )}
           {heroImage.label && (
             <Text as="dl" className={sty.heroLabelText}>
               <Markdown value={heroImage.label} inline />
