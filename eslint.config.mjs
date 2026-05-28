@@ -9,8 +9,6 @@ const eslintConfig = defineConfig([
     files: ["**/*.ts", "**/*.tsx"],
     rules: {
       "@typescript-eslint/no-explicit-any": "warn",
-      "semi": ["error", "never"],
-      "@typescript-eslint/semi": ["error", "never"],
       "react/jsx-props-no-spreading": "off",
     },
   },

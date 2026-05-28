@@ -1,5 +1,4 @@
 import { style } from '@vanilla-extract/css';
-import { theme } from '@/lib/theme/theme.css';
 
 export const morphWrap = style({
   position: 'relative',
