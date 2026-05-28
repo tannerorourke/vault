@@ -53,7 +53,13 @@ export function CanvasProvider(
     );
   }
 
+  return <ActiveCanvasProvider options={options}>{children}</ActiveCanvasProvider>;
+}
 
+function ActiveCanvasProvider(
+  { options, children }:
+  { options: CanvasOptions; children: ReactNode; }
+) {
   const { theme } = useTheme();
 
   // Updated synchronously on every render so RAF always reads the current palette.

@@ -238,9 +238,9 @@ function StatsSection({ s }: { s: SectionStats }) {
 
   return (
     <SectionShell id={s.id} title={s.title} accent={s.accent}>
-      <div className={sty.statsContainer} role="list">
+      <ul className={sty.statsContainer}>
         {s.stats.map((s, i) => (
-          <div key={i} className={sty.statCell} role="listitem">
+          <li key={i} className={sty.statCell}>
             <Markdown
               textProps={{
                 as: "h4",
@@ -250,9 +250,9 @@ function StatsSection({ s }: { s: SectionStats }) {
               value={s.value}
             />
             <Eyebrow>{s.label}</Eyebrow>
-          </div>
+          </li>
         ))}
-      </div>
+      </ul>
     </SectionShell>
   );
 }

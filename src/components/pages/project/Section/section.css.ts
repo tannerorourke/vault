@@ -195,6 +195,9 @@ export const statsContainer = style({
   display: "grid",
   gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
   gap: 0,
+  listStyle: "none",
+  margin: 0,
+  padding: 0,
   borderTop: `1px solid ${theme.color.divider}`,
   borderBottom: `1px solid ${theme.color.divider}`,
 });

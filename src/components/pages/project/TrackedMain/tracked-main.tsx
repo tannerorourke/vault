@@ -7,12 +7,10 @@ import { useAppContext } from "@/components/navigation/AppProvider";
 
 type ProjectRootProps = ComponentProps<"main"> & {
   pid: string;
-  title: string
 }
 
-export function TrackedMain({ 
+export function TrackedMain({
   pid,
-  title,
   children,
   ...rest
 }: ProjectRootProps) {
@@ -35,7 +33,7 @@ export function TrackedMain({
   }, [pid, viewedProjects, markProjectViewed]);
 
   return (
-    <main {...rest} ref={trackScroll} aria-label={title}>
+    <main {...rest} id="main-content" tabIndex={-1} ref={trackScroll}>
       {children}
     </main>
   );

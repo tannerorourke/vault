@@ -57,6 +57,36 @@ The site logo in `Header` is never an `h1` - it's repeated on every page and sta
 
 **Not-found:** `h1`: "Page not found"
 
+## Accessibility / ARIA
+
+Targets WCAG 2.2 AA. The governing rule is the **first rule of ARIA**: use native HTML semantics, and only add an ARIA `role`/attribute when no native element conveys the meaning. A role asserts a contract — most importantly the keyboard behavior assistive tech then expects — so an unbacked role is worse than none.
+
+### Roles: prefer native, never over-assert
+
+- **Navigation dropdowns use the disclosure pattern, never `role="menu"`.** The `menu`/`menuitem` roles are for application command menus and require roving-`tabindex` arrow-key navigation and type-ahead (per the W3C ARIA APG). The `ConnectMenu` is a list of links + a toggle — it has no such behavior, so it is a *disclosure*: a trigger button with `aria-expanded` + `aria-controls`, revealing a native `<ul>`/`<li>` of links. "Menu" in this codebase is a product label, not an ARIA role.
+- **Don't add `role="list"`/`role="listitem"` to `<div>`s** when a `<ul>`/`<li>` works. Reset default list styling in CSS (`listStyle: none`, `margin: 0`, `padding: 0`) rather than reaching for roles.
+- **Don't add `role="none"`** except to strip semantics inside a role that demands it (e.g. menu) — which we don't use.
+
+### Hiding the inactive disclosure panel
+
+Use the native **`inert`** attribute (`inert={!isOpen}`) to remove a collapsed panel from both tab order and the accessibility tree in one step. Do **not** combine `aria-hidden` with focusable descendants (an `aria-hidden` ancestor of a tabbable element is a violation), and don't hand-manage per-item `tabIndex`.
+
+### Accessible names (WCAG 2.5.3 Label in Name)
+
+- **Icon-only controls** (`IconButton`, `IconLink`) require a name via the `alt` prop — there is no visible text. Icons are `aria-hidden` by default through the `Icon` wrapper.
+- **Controls with visible text** (`TextLink`, the `ConnectMenu` rows) must **not** carry an `aria-label` that differs from that visible text. A mismatched `aria-label` overrides the visible label and breaks speech-input users ("click Email me" when the label reads `tannero@live.com`). Let the visible text be the name; drop the redundant `aria-label`.
+
+### Landmarks & skip link
+
+- One `<main>` per page; it carries `id="main-content"` and `tabIndex={-1}` as the skip-link target. A single `<main>` needs no `aria-label`.
+- The shell renders a **skip link** (`Skip to main content`) as the first focusable element — visually hidden via `srOnly`, revealed on `:focus-visible` (see `(shell)/layout.css.ts`). Satisfies WCAG 2.4.1 Bypass Blocks.
+- Multiple same-type landmarks need distinct labels: e.g. `<nav aria-label="Breadcrumb">`, `<nav aria-label="Sections">`, `<aside aria-label="…">`.
+
+### `aria-current`
+
+- **Breadcrumb** current page: `aria-current="page"` on the current crumb.
+- **TOC** active section (in-page reading position): `aria-current="location"` on the active anchor. Keep visual state on a separate `data-active` attribute.
+
 ## Link & Icon Hover Colors
 
 Hover color signals **what kind of action** a link performs.

@@ -22,7 +22,7 @@ export function HomePage({ projects }: HomePageProps) {
   const featuredProject = projects["feature"]?.[0] ?? null;
 
   return (
-    <main className={sty.root}>
+    <main id="main-content" tabIndex={-1} className={sty.root}>
       <Markdown 
         as="h1" className={sty.heading} 
         value={HEADING} 

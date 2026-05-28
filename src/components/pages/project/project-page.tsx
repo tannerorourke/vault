@@ -26,7 +26,7 @@ export function ProjectPage({ content }: { content: ProjectContent }) {
     .map((s) => ({ id: s.id, title: s.title }));
 
   return (
-    <TrackedMain pid={pid} title={title} className={sty.root}>
+    <TrackedMain pid={pid} className={sty.root}>
 
       <nav aria-label="Breadcrumb" className={sty.crumbsNav}>
         <TextLink 
@@ -35,7 +35,7 @@ export function ProjectPage({ content }: { content: ProjectContent }) {
           nextProps={{ href: "/" }}
         />
         <Eyebrow className={sty.crumbSep} aria-hidden>/</Eyebrow>
-        <Eyebrow className={sty.crumbCurrent}>
+        <Eyebrow className={sty.crumbCurrent} aria-current="page">
           <Markdown value={title} inline />
         </Eyebrow>
       </nav>

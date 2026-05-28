@@ -14,19 +14,16 @@ import Eyebrow from "@/components/ui/Eyebrow";
 
 
 function NavItem(
-  { link, onClick, isOpen }: 
-  { link: NavLink; onClick: () => void; isOpen: boolean; }
+  { link, onClick }:
+  { link: NavLink; onClick: () => void; }
 ) {
   return (
     <a
-      role="menuitem"
       className={sty.item}
       href={link.href}
       target={link.target ?? undefined}
       download={link.download ?? undefined}
-      aria-label={link.alt}
       onClick={onClick}
-      tabIndex={isOpen ? 0 : -1}
     >
       {link.iconName && (
         <span className={sty.itemIcon}>
@@ -53,6 +50,7 @@ export function ConnectMenu() {
   const pathname = usePathname();
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsOpen(false);
   }, [pathname]);
 
@@ -85,7 +83,6 @@ export function ConnectMenu() {
         onClick={() => setIsOpen((prev) => !prev)}
         aria-expanded={isOpen}
         aria-controls={PANEL_ID}
-        aria-haspopup="menu"
         alt={isOpen ? "Close menu" : "Open menu"}
       >
         <MorphIcon
@@ -97,8 +94,7 @@ export function ConnectMenu() {
 
       <motion.div
         id={PANEL_ID}
-        role="menu"
-        aria-hidden={!isOpen}
+        inert={!isOpen}
         className={sty.panel}
         initial={false}
         animate={{
@@ -116,11 +112,10 @@ export function ConnectMenu() {
         <Eyebrow size="micro" className={sty.eyebrow}>Connect</Eyebrow>
         <ul className={sty.list}>
           {LINKS.map((item: NavLink, ix: number) => (
-            <li key={ix} role="none">
+            <li key={ix}>
               <NavItem
                 link={item}
                 onClick={() => setIsOpen(false)}
-                isOpen={isOpen}
               />
             </li>
           ))}
@@ -132,19 +127,16 @@ export function ConnectMenu() {
           <NavItem
             link={CV_LINK}
             onClick={() => setIsOpen(false)}
-            isOpen={isOpen}
           />
           </>
         )}
         
         <hr className={sty.divider} />
         <button
-          role="menuitem"
           type="button"
           className={sty.item}
           onClick={toggleTheme}
           aria-pressed={isDark}
-          tabIndex={isOpen ? 0 : -1}
         >
           <span className={sty.itemIcon}>
             <MorphIcon
