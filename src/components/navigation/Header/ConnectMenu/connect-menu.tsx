@@ -77,8 +77,6 @@ export function ConnectMenu() {
   const CV_LINK = NAV_LINKS.find(link => link.alt === "Download CV") ?? null;
   const LINKS = NAV_LINKS.filter(link => link.alt !== "Download CV");
 
-  console.log(CV_LINK, LINKS)
-
   return (
     <div ref={wrapRef} className={sty.wrap}>
       <IconButton
