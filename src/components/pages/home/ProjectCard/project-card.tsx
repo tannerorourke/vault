@@ -13,13 +13,13 @@ import * as sty from "./project-card.css";
 export type ProjectCardProps = {
   project: ProjectContent;
   variant?: "default" | "featured";
-  imageRatio?: "40-60" | "45-55" | "50-50";
+  imageRatio?: "40-60" | "45-55" | "50-50" | "55-45" | "60-40";
 };
 
 export function ProjectCard({
   project,
   variant = "default",
-  imageRatio = "50-50",
+  imageRatio = "60-40",
 }: ProjectCardProps) {
   const {
     pid,
