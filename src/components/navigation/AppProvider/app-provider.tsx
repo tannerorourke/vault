@@ -6,13 +6,14 @@ import {
 } from "react";
 import { usePathname } from "next/navigation";
 
+import { PROJECTS } from "@/lib/content/projects";
+
 
 export type AppContext = {
   pathname: string;
   hasAppHistory: boolean;
   viewedProjects: ReadonlySet<string>;
   markProjectViewed: (pid: string) => void;
-  resetViewedProjects: () => void;
 };
 
 const AppContext =
@@ -28,11 +29,16 @@ export function AppProvider({
   const [viewedProjects, setViewedProjects] = useState<Set<string>>(() => new Set());
   const pathname = usePathname();
 
-  // Latch hasAppHistory true on first in-app navigation (pathname change after initial render)
+  
   const [prevPathname, setPrevPathname] = useState(pathname);
   if (pathname !== prevPathname) {
     setPrevPathname(pathname);
-    if (!hasAppHistory) setHasAppHistory(true);
+    // hasAppHistory true on first in-app navigation (pathname change after initial render)
+    if (!hasAppHistory)
+      setHasAppHistory(true);
+    // Once every project is viewed, the next navigation starts a fresh cycle.
+    if (viewedProjects.size >= PROJECTS.length)
+      setViewedProjects(new Set());
   }
 
   const markProjectViewed = useCallback((pid: string) => {
@@ -44,17 +50,12 @@ export function AppProvider({
     });
   }, []);
 
-  const resetViewedProjects = useCallback(() => {
-    setViewedProjects(new Set());
-  }, []);
-
   return (
     <AppContext.Provider value={{
       pathname,
       hasAppHistory,
       viewedProjects,
-      markProjectViewed,
-      resetViewedProjects
+      markProjectViewed
     }}>
       {children}
     </AppContext.Provider>

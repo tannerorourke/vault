@@ -12,7 +12,7 @@ import * as sty from "./next-project.css";
 import * as PjSty from "../project-page.css";
 
 export function NextProjectFooter({ currentPid }: { currentPid: string }) {
-  const { viewedProjects, resetViewedProjects } = useAppContext();
+  const { viewedProjects } = useAppContext();
 
   const next = useMemo(() => {
     for (const p of PROJECTS) {
@@ -20,31 +20,31 @@ export function NextProjectFooter({ currentPid }: { currentPid: string }) {
       if (viewedProjects.has(p.pid)) continue;
       return p;
     }
-    // user has viewed all projects. Return null + reset
-    resetViewedProjects();
-    return null; 
-  }, [currentPid, viewedProjects, resetViewedProjects]);
+    // All projects viewed. AppProvider resets viewed set on home navigation
+    return null;
+  }, [currentPid, viewedProjects]);
 
-  const linkProps = next === null 
-    ? { href: "/", title: "Home", ariaLabel: "Return to home" } 
-    : { href: `/${next.pid}`, title: next.title, ariaLabel: `Next project: ${next.title}` }
+  const linkProps = next === null
+    ? { eyebrow: "Thanks for reading! Email me with any questions or feedback :)", 
+        title: "Home", href: "/", ariaLabel: "Return to home", 
+      }
+    : { eyebrow: next.category === "experience" ? "Next" : "Next Project",
+        title: next.title, href: `/${next.pid}`, ariaLabel: `Next project: ${next.title}`
+      }
 
   return (
     <Link href={linkProps.href} className={sty.root} aria-label={linkProps.ariaLabel}>
-      {next && 
-        <Eyebrow 
-          className={[PjSty.eyebrow, sty.eyebrowBox].join(" ")} 
-          aria-hidden
-        >Next Project</Eyebrow>
-      }
-
+      <Eyebrow className={[PjSty.eyebrow, sty.eyebrowBox].join(" ")} aria-hidden>
+        {linkProps.eyebrow}
+      </Eyebrow>
       <Markdown 
         textProps={{ as: 'h3', variant: 'display', className: PjSty.title }}
         value={linkProps.title}
       />
-
-      {next !== null && next?.eyebrow &&
-        <Eyebrow as="span" className={[PjSty.eyebrow, sty.eyebrowGutter].join(" ")}>{next?.eyebrow}</Eyebrow>
+      {next && next?.eyebrow &&
+        <Eyebrow as="span" className={[PjSty.eyebrow, sty.eyebrowGutter].join(" ")}>
+          {next?.eyebrow}
+        </Eyebrow>
       }
     </Link>
   );
