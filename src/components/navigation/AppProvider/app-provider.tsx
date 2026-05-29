@@ -12,6 +12,7 @@ export type AppContext = {
   hasAppHistory: boolean;
   viewedProjects: ReadonlySet<string>;
   markProjectViewed: (pid: string) => void;
+  resetViewedProjects: () => void;
 };
 
 const AppContext =
@@ -43,12 +44,17 @@ export function AppProvider({
     });
   }, []);
 
+  const resetViewedProjects = useCallback(() => {
+    setViewedProjects(new Set());
+  }, []);
+
   return (
     <AppContext.Provider value={{
       pathname,
       hasAppHistory,
       viewedProjects,
       markProjectViewed,
+      resetViewedProjects
     }}>
       {children}
     </AppContext.Provider>

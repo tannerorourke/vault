@@ -12,17 +12,20 @@ import * as sty from "./next-project.css";
 import * as PjSty from "../project-page.css";
 
 export function NextProjectFooter({ currentPid }: { currentPid: string }) {
-  const { viewedProjects } = useAppContext();
+  const { viewedProjects, resetViewedProjects } = useAppContext();
 
   const next = useMemo(() => {
-    const unviewed = PROJECTS.find((p) =>
-      p.pid !== currentPid && !viewedProjects.has(p.pid));
+    for (const p of PROJECTS) {
+      if (p.pid === currentPid) continue;
+      if (viewedProjects.has(p.pid)) continue;
+      return p;
+    }
+    // user has viewed all projects. Return null + reset
+    resetViewedProjects();
+    return null; 
+  }, [currentPid, viewedProjects, resetViewedProjects]);
 
-    if (unviewed) return unviewed;
-    return null; // user has viewed all projects 
-  }, [currentPid, viewedProjects]);
-
-  const linkProps = !next 
+  const linkProps = next === null 
     ? { href: "/", title: "Home", ariaLabel: "Return to home" } 
     : { href: `/${next.pid}`, title: next.title, ariaLabel: `Next project: ${next.title}` }
 
