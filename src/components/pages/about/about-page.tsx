@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Text from "@/components/ui/Text";
 import TextLink from "@/components/ui/TextLink";
 import Markdown from "@/components/ui/Markdown";
@@ -10,12 +11,12 @@ import * as sty from "./about-page.css";
 
 export function ProfilePage() {
   return (
-    <main className={sty.aboutRoot}>
+    <main id="main-content" tabIndex={-1} className={sty.aboutRoot}>
       <section className={sty.intro}>
 
         <aside className={sty.photoCol} aria-label="At a glance">
           <figure className={sty.photoFigure}>
-            <img className={sty.photo} src="/me_4-5.png" alt="Tanner O'Rourke, headshot" />
+            <Image src="/me_4-5.png" alt="Tanner O'Rourke, headshot" className={sty.photo} />
           </figure>
         </aside>
 
@@ -27,7 +28,7 @@ export function ProfilePage() {
           {PARAGRAPHS.slice(1).map((p, i) => (
             <Markdown
               key={i}
-              textProps={{ as: 'h3', variant: 'bodyLg', className: sty.par }} 
+              textProps={{ as: 'p', variant: 'bodyLg', className: sty.par }}
               value={p}
             />
           ))}
@@ -64,7 +65,6 @@ export function ProfilePage() {
                     rel: l.target === "_blank" ? "noopener noreferrer" : undefined,
                     download: l.download,
                   }}
-                  aria-label={l.alt}
                 />
               </li>
             ))}
@@ -87,7 +87,6 @@ export function ProfilePage() {
               rel: REPO_LINK.target === "_blank" ? "noopener noreferrer" : undefined,
               className: sty.footLink
             }}
-            aria-label={REPO_LINK.alt}
           />
         </div>
 

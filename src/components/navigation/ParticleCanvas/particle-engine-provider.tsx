@@ -53,20 +53,30 @@ export function CanvasProvider(
     );
   }
 
+  return <ActiveCanvasProvider options={options}>{children}</ActiveCanvasProvider>;
+}
 
+function ActiveCanvasProvider(
+  { options, children }:
+  { options: CanvasOptions; children: ReactNode; }
+) {
   const { theme } = useTheme();
 
-  // Updated synchronously on every render so RAF always reads the current palette.
   const paletteRef = useRef<CanvasPalette>(
     theme === 'dark' ? PALETTES.brandTeal : PALETTES.brandTealLight,
   );
-  paletteRef.current = theme === 'dark' ? PALETTES.brandTeal : PALETTES.brandTealLight;
-
   const dotDataRef = useRef<DotData[][]>(
     generateDotData(42, options.WORLD_W, options.WORLD_H),
   );
   const optionsRef = useRef<CanvasOptions>(options);
-  optionsRef.current = options;
+
+  // Keep palette/options refs current so the RAF loop and the theme-redraw
+  // effect below read the latest values. this effect is declared before the
+  // theme-redraw effect so paletteRef is updated before that effect reads it.
+  useEffect(() => {
+    paletteRef.current = theme === 'dark' ? PALETTES.brandTeal : PALETTES.brandTealLight;
+    optionsRef.current = options;
+  });
 
   // Animated canvases, redraws on every frame
   const canvasesRef = useRef<Set<HTMLCanvasElement>>(new Set());

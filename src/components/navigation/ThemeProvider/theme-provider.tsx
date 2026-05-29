@@ -40,15 +40,18 @@ export function ThemeProvider({
       setTheme(next);
   }
 
-  // First-visit only: check system pref and persist cookie.
-  
+  // First-visit only (no cookie):
+  // - the server can't read prefers-color-scheme, render `initialTheme`
+  // - After hydration: read the media query and correct once.
+  //   Below setState-in-effect is simple solution to toggling theme without
+  //   re-rendering the app or using an injected script.
   useEffect(() => {
-    if (hasCookie) return; // already rendered the right one
+    if (hasCookie) return; // server already rendered the right one
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
     const systemTheme: Theme = prefersDark ? "dark" : "light";
 
-    // If user prefers dark and we rendered light, swap to dark. Othwerwise persist cookie
     if (systemTheme !== initialTheme) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       swapTheme(systemTheme);
     } else {
       document.cookie = `theme=${systemTheme}; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Lax`;

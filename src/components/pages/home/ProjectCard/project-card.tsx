@@ -1,6 +1,7 @@
 import type { ProjectContent } from "@/lib/types/project";
 
 import { Link } from "next-view-transitions";
+import Image from "next/image";
 import Text from "@/components/ui/Text";
 import Markdown from "@/components/ui/Markdown";
 import Eyebrow from "@/components/ui/Eyebrow";
@@ -12,13 +13,13 @@ import * as sty from "./project-card.css";
 export type ProjectCardProps = {
   project: ProjectContent;
   variant?: "default" | "featured";
-  imageRatio?: "40-60" | "45-55" | "50-50";
+  imageRatio?: "40-60" | "45-55" | "50-50" | "55-45" | "60-40";
 };
 
 export function ProjectCard({
   project,
   variant = "default",
-  imageRatio = "50-50",
+  imageRatio = "60-40",
 }: ProjectCardProps) {
   const {
     pid,
@@ -40,11 +41,24 @@ export function ProjectCard({
     >
       {isFeatured && heroImage?.src && (
         <div className={sty.imageCol}>
-          <img
-            src={heroImage.src}
-            alt={heroImage.alt ?? ""}
-            className={sty.heroImg}
-          />
+          {heroImage.src.toLowerCase().endsWith(".svg") ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={heroImage.src}
+              alt={heroImage.alt ?? ""}
+              className={sty.heroImg}
+              loading="eager"
+            />
+          ) : (
+            <Image
+              src={heroImage.src}
+              alt={heroImage.alt ?? ""}
+              className={sty.heroImg}
+              loading="eager"
+              fill
+              sizes="(min-width: 900px) 45vw, 100vw"
+            />
+          )}
           {heroImage.label && (
             <Text as="dl" className={sty.heroLabelText}>
               <Markdown value={heroImage.label} inline />

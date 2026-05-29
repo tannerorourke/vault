@@ -77,7 +77,7 @@ export function Header({
           <Text as="span" variant={"titleLg"} className={sty.word} id="w1">
             <br/>
             <span data-logo-span id='logo-O1'>O</span>
-            <span>'</span>
+            <span>&apos;</span>
             <span>R</span>
             <span>O</span>
             <span data-logo-span id="logo-U">U</span>

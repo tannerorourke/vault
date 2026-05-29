@@ -123,10 +123,10 @@ export const leftSlotEnabled = style({
   ...slotBase,
   selectors: {
     [`${linkBtnBase}:hover &`]: {
-      ...hoverBase, width: "20px", padding: "0 0.25em 0 0",
+      ...hoverBase, width: "20px", padding: "0 0.25em 2px 0",
     },
     [`${linkBtnBase}:active &`]: {
-      ...activeBase, width: "20px", padding: "0 0.25em 0 0",
+      ...activeBase, width: "20px", padding: "0 0.25em 2px 0",
     },
   }
 });
@@ -135,10 +135,10 @@ export const rightSlotEnabled = style({
   ...slotBase,
   selectors: {
     [`${linkBtnBase}:hover &`]: {
-      ...hoverBase, width: "20px", padding: "0 0 0 0.25em"
+      ...hoverBase, width: "20px", padding: "0 0 2px 0.25em"
     },
     [`${linkBtnBase}:active &`]: {
-      ...activeBase, width: "20px", padding: "0 0 0 0.25em"
+      ...activeBase, width: "20px", padding: "0 0 2px 0.25em"
     },
   }
 });
@@ -147,12 +147,12 @@ export const leftSlotHold = style({
   ...slotBase,
   opacity: 1,
   width: "20px",
-  padding: "0 0.25em 0 0"
+  padding: "0 0.25em 2px 0"
 });
 
 export const rightSlotHold = style({
   ...slotBase,
   opacity: 1,
   width: "20px",
-  padding: "0 0 0 0.25em"
+  padding: "0 0 0 2px.25em"
 });

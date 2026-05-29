@@ -131,6 +131,7 @@ export const findingCard = style({
 /** Hero image */
 export const heroImage = style({
   width: "100%",
+  height: "auto",
   display: "block",
   objectFit: "cover",
   borderRadius: "6px",

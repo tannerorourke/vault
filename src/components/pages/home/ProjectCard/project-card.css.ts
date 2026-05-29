@@ -44,18 +44,28 @@ globalStyle(`${cardBase}[data-variant="featured"]`, {
     "(min-width: 900px)": {
       padding: "20px 22px",
       gap: "28px",
-      gridTemplateColumns: "45% 1fr",
+      gridTemplateColumns: "40% 1fr",
     },
   },
 });
-globalStyle(`${cardBase}[data-variant="featured"][data-ratio="40-60"]`, {
+globalStyle(`${cardBase}[data-variant="featured"][data-ratio="45-55"]`, {
   "@media": {
-    "(min-width: 900px)": { gridTemplateColumns: "40% 1fr" },
+    "(min-width: 900px)": { gridTemplateColumns: "45% 1fr" },
   },
 });
 globalStyle(`${cardBase}[data-variant="featured"][data-ratio="50-50"]`, {
   "@media": {
     "(min-width: 900px)": { gridTemplateColumns: "1fr 1fr" },
+  },
+});
+globalStyle(`${cardBase}[data-variant="featured"][data-ratio="55-45"]`, {
+  "@media": {
+    "(min-width: 900px)": { gridTemplateColumns: "55% 1fr" },
+  },
+});
+globalStyle(`${cardBase}[data-variant="featured"][data-ratio="60-40"]`, {
+  "@media": {
+    "(min-width: 900px)": { gridTemplateColumns: "60% 1fr" },
   },
 });
 

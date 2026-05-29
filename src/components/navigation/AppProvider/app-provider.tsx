@@ -1,10 +1,12 @@
 "use client";
 
 import {
-  createContext, useContext, useRef, useState, useEffect, useCallback,
+  createContext, useContext, useState, useCallback,
   ReactNode
 } from "react";
 import { usePathname } from "next/navigation";
+
+import { PROJECTS } from "@/lib/content/projects";
 
 
 export type AppContext = {
@@ -26,15 +28,18 @@ export function AppProvider({
   const [hasAppHistory, setHasAppHistory] = useState(false);
   const [viewedProjects, setViewedProjects] = useState<Set<string>>(() => new Set());
   const pathname = usePathname();
-  const isFirstRender = useRef(true);
 
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-    if (!hasAppHistory) setHasAppHistory(true);
-  }, [pathname]);
+  
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
+    // hasAppHistory true on first in-app navigation (pathname change after initial render)
+    if (!hasAppHistory)
+      setHasAppHistory(true);
+    // Once every project is viewed, the next navigation starts a fresh cycle.
+    if (viewedProjects.size >= PROJECTS.length)
+      setViewedProjects(new Set());
+  }
 
   const markProjectViewed = useCallback((pid: string) => {
     setViewedProjects((prev) => {
@@ -50,7 +55,7 @@ export function AppProvider({
       pathname,
       hasAppHistory,
       viewedProjects,
-      markProjectViewed,
+      markProjectViewed
     }}>
       {children}
     </AppContext.Provider>

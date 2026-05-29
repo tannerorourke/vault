@@ -1,5 +1,6 @@
 import { createTheme, createThemeContract } from "@vanilla-extract/css";
-import { stepped } from "./responsive.css"
+import { stepped, vwFromLg } from "./responsive.css";
+
 
 export const theme = createThemeContract({
   color: {
@@ -140,28 +141,24 @@ export const theme = createThemeContract({
 
 });
 
-/** -- LAYOUT DEFINITIONS (SHARED) ----------------------- */
-const fluid = (
-  min: number, max: number, 
-  startVw: number, endVw: number
-) =>
-  `clamp(${min}px, calc(${min}px + ${max - min} * (100vw - ${startVw}px) / ${endVw - startVw}), ${max}px)`;
 
+
+/** -- SHARED DEFINITIONS ----------------------- */
 const typography = {
   fontSize: {
     logo:      'clamp(30px, 1.5rem + 2vw, 52px)',
-    displayLg: fluid(36, 52, 560, 900),
-    display:   fluid(36, 44, 900, 1600),
-    titleLg:   fluid(32, 36, 900, 1600),
-    titleMd:   fluid(28, 32, 900, 1600),
-    titleSm:   fluid(22, 26, 900, 1600),
-    titleXs:   fluid(18, 21, 900, 1600),
-    bodyLg:    '18px', // stepped,
-    body:      '16px', // stepped
-    bodySm:    '14px', // stepped
-    eyebrow:   '12px', // eligibility floor
-    caption:   '12px', // eligibility floor
-    micro:     '10px',
+    displayLg: stepped({ xs: 36, sm: 42, md: 48, lg: vwFromLg(48) }),
+    display:   stepped({ xs: 36, sm: 40, md: 44, lg: vwFromLg(44) }),
+    titleLg:   stepped({ xs: 32, sm: 34, md: 36, lg: vwFromLg(36) }),
+    titleMd:   stepped({ xs: 28, sm: 30, md: 32, lg: vwFromLg(32) }),
+    titleSm:   stepped({ xs: 22, sm: 24, md: 26, lg: vwFromLg(26) }),
+    titleXs:   stepped({ xs: 18, sm: 19, md: 20, lg: vwFromLg(20) }), // equiv. body, different font
+    bodyLg:    stepped({ xs: 18, sm: 19, md: 20, lg: vwFromLg(20) }), // equiv. titleXs, different font
+    body:      stepped({ xs: 16, sm: 17, md: 18, lg: vwFromLg(18) }),
+    bodySm:    stepped({ xs: 14, sm: 15, md: 16, lg: vwFromLg(16) }),
+    eyebrow:   stepped({ xs: 12, sm: 13, md: 14, lg: vwFromLg(14) }),
+    caption:   stepped({ xs: 12, lg: vwFromLg(12) }), // eligibility floor
+    micro:     stepped({ xs: 10, lg: vwFromLg(10) }), // slightly below the floor
   },
   lineHeight: {
     tight: "1.15",

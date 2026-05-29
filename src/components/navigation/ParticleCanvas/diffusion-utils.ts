@@ -188,8 +188,8 @@ export function drawFrame(
         hx += driftAmp * dot.driftCosDir * s;
         hy += driftAmp * dot.driftSinDir * s;
       }
-      let x = hx + (dot.nx * wrldW - hx) * (1 - emergeT);
-      let y = hy + (dot.ny * wrldH - hy) * (1 - emergeT);
+      const x = hx + (dot.nx * wrldW - hx) * (1 - emergeT);
+      const y = hy + (dot.ny * wrldH - hy) * (1 - emergeT);
       return { x, y };
     });
 

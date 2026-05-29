@@ -9,8 +9,6 @@ import Markdown from "@/components/ui/Markdown";
 export type TocSection = { id: string; title: string };
 
 export function ProjectToc({ sections }: { sections: TocSection[] }) {
-  if (sections.length === 0) return null;
-
   const [activeId, setActiveId] = useState<string | null>(sections[0]?.id ?? null);
   const [open, setOpen] = useState(false);
 
@@ -88,6 +86,7 @@ export function ProjectToc({ sections }: { sections: TocSection[] }) {
                 key={s.id}
                 href={`#section-${s.id}`}
                 className={sty.tocLink}
+                aria-current={s.id === activeId ? "location" : undefined}
                 onClick={() => setOpen(false)}
               >
                 <Markdown value={s.title} inline />

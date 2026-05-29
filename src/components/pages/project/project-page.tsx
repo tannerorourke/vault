@@ -1,11 +1,13 @@
 import { ProjectContent, JumpIconButton } from "@/lib/types/project";
 
+import Image from "next/image";
 import Markdown from "@/components/ui/Markdown";
 import Text from "@/components/ui/Text";
 import TextLink from "@/components/ui/TextLink";
 import Eyebrow from "@/components/ui/Eyebrow";
 import TagChip from "@/components/ui/TagChip";
 import Icon, { IconLink } from "@/components/ui/Icon";
+import { getImageSize, isSvg } from "@/lib/content/images";
 import { renderSection } from "./Section";
 
 import TrackedMain from "./TrackedMain";
@@ -26,7 +28,7 @@ export function ProjectPage({ content }: { content: ProjectContent }) {
     .map((s) => ({ id: s.id, title: s.title }));
 
   return (
-    <TrackedMain pid={pid} title={title} className={sty.root}>
+    <TrackedMain pid={pid} className={sty.root}>
 
       <nav aria-label="Breadcrumb" className={sty.crumbsNav}>
         <TextLink 
@@ -35,7 +37,7 @@ export function ProjectPage({ content }: { content: ProjectContent }) {
           nextProps={{ href: "/" }}
         />
         <Eyebrow className={sty.crumbSep} aria-hidden>/</Eyebrow>
-        <Eyebrow className={sty.crumbCurrent}>
+        <Eyebrow className={sty.crumbCurrent} aria-current="page">
           <Markdown value={title} inline />
         </Eyebrow>
       </nav>
@@ -111,11 +113,24 @@ export function ProjectPage({ content }: { content: ProjectContent }) {
       </header>
 
       {!!heroImageObj && (
-        <img
-          src={heroImageObj.src} 
-          alt={heroImageObj.alt ?? ""}
-          className={sty.heroImage}
-        />
+        isSvg(heroImageObj.src) ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={heroImageObj.src}
+            alt={heroImageObj.alt ?? ""}
+            className={sty.heroImage}
+            loading="eager"
+          />
+        ) : (
+          <Image
+            src={heroImageObj.src}
+            alt={heroImageObj.alt ?? ""}
+            className={sty.heroImage}
+            loading="eager"
+            sizes="100vw"
+            {...getImageSize(heroImageObj.src)}
+          />
+        )
       )}
 
       <div className={sty.layout}>

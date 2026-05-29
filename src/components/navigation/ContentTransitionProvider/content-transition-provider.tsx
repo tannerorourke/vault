@@ -30,11 +30,6 @@ export function getDirection(
   toPath: string,
   navKind: NavKind = "push",
 ): Direction {
-  console.log(
-    "from: ", fromPath,
-    "\nto: ", toPath,
-    "\nnavKind: ", navKind
-  )
   if (!fromPath || fromPath === toPath) return "none";
 
   const from = getRouteKind(fromPath);
@@ -97,12 +92,6 @@ export function ContentTransitionProvider({ children }: { children: React.ReactN
       } else if (e.navigationType === "push") {
         navKindRef.current = "push";
       }
-      console.log(
-        "[nav] navigationType:", e.navigationType,
-        "fromIdx:", nav.currentEntry?.index,
-        "toIdx:", e.destination?.index,
-        "→ navKind:", navKindRef.current,
-      );
     };
     nav.addEventListener("navigate", onNavigate);
     return () => nav.removeEventListener("navigate", onNavigate);

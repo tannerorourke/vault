@@ -15,33 +15,36 @@ export function NextProjectFooter({ currentPid }: { currentPid: string }) {
   const { viewedProjects } = useAppContext();
 
   const next = useMemo(() => {
-    const unviewed = PROJECTS.find((p) =>
-      p.pid !== currentPid && !viewedProjects.has(p.pid));
-
-    if (unviewed) return unviewed;
-    return null; // user has viewed all projects 
+    for (const p of PROJECTS) {
+      if (p.pid === currentPid) continue;
+      if (viewedProjects.has(p.pid)) continue;
+      return p;
+    }
+    // All projects viewed. AppProvider resets viewed set on home navigation
+    return null;
   }, [currentPid, viewedProjects]);
 
-  const linkProps = !next 
-    ? { href: "/", title: "Home", ariaLabel: "Return to home" } 
-    : { href: `/${next.pid}`, title: next.title, ariaLabel: `Next project: ${next.title}` }
+  const linkProps = next === null
+    ? { eyebrow: "Thanks for reading! Email me with any questions or feedback :)", 
+        title: "Home", href: "/", ariaLabel: "Return to home", 
+      }
+    : { eyebrow: next.category === "experience" ? "Next" : "Next Project",
+        title: next.title, href: `/${next.pid}`, ariaLabel: `Next project: ${next.title}`
+      }
 
   return (
     <Link href={linkProps.href} className={sty.root} aria-label={linkProps.ariaLabel}>
-      {next && 
-        <Eyebrow 
-          className={[PjSty.eyebrow, sty.eyebrowBox].join(" ")} 
-          aria-hidden
-        >Next Project</Eyebrow>
-      }
-
+      <Eyebrow className={[PjSty.eyebrow, sty.eyebrowBox].join(" ")} aria-hidden>
+        {linkProps.eyebrow}
+      </Eyebrow>
       <Markdown 
         textProps={{ as: 'h3', variant: 'display', className: PjSty.title }}
         value={linkProps.title}
       />
-
-      {next !== null && next?.eyebrow &&
-        <Eyebrow as="span" className={[PjSty.eyebrow, sty.eyebrowGutter].join(" ")}>{next?.eyebrow}</Eyebrow>
+      {next && next?.eyebrow &&
+        <Eyebrow as="span" className={[PjSty.eyebrow, sty.eyebrowGutter].join(" ")}>
+          {next?.eyebrow}
+        </Eyebrow>
       }
     </Link>
   );
