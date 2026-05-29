@@ -55,8 +55,6 @@ export function ProjectToc({ sections }: { sections: TocSection[] }) {
     return () => observer.disconnect();
   }, [sections]);
 
-  if (sections.length === 0) return null;
-
   return (
     <nav aria-label="Sections" className={sty.tocNav}>
       <button
