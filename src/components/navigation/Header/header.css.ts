@@ -17,7 +17,7 @@ export const root = style({
 
   margin: '0 auto',
   padding: `${theme.header.padTop.xs} ${theme.page.gutter.xs} 0`,
-  transition: `margin 400ms ${EASE_CUBIC}, padding 400ms ${EASE_CUBIC}, width 400ms ${EASE_CUBIC}`,
+  transition: `margin 400ms ${EASE_CUBIC}, padding 400ms ${EASE_CUBIC}`,
   [mq.sm]: {
     padding: `${theme.header.padTop.sm} ${theme.page.gutter.sm} 0`,
     maxWidth: theme.page.maxContentWidth.sm,

@@ -1,4 +1,4 @@
-import { createVar, globalStyle } from "@vanilla-extract/css";
+import { createVar, globalStyle, type GlobalStyleRule } from "@vanilla-extract/css";
 
 export const breakpoints = {
   xs: 0, // phones (default)
@@ -7,6 +7,10 @@ export const breakpoints = {
   lg: 1620, // large desktop  start using the extra space
 };
 
+/**
+ * Custom media query utility to easily write responsive styles for 
+ * site-wide breakpoints as `[mq.sm] { ... }`, `[mq.md] { ... }`, etc"
+ */
 type BreakpointKey = keyof typeof breakpoints;
 
 export const mq = (Object.keys(breakpoints)  as BreakpointKey[]).reduce(
@@ -16,7 +20,27 @@ export const mq = (Object.keys(breakpoints)  as BreakpointKey[]).reduce(
   }, {} as Record<BreakpointKey, `@media (min-width: ${number}px)`>
 );
 
-const toCSS = (v: number | string) => 
+/**
+ * Fluid design token. Calculate an exact value on the 
+ * range [min, max] between the given viewport width range [startVw, endVw].
+ */
+export const fluid = (
+  min: number, max: number, 
+  startVw: number, endVw: number
+) =>
+  `clamp(${min}px, calc(${min}px + ${max - min} * (100vw - ${startVw}px) / ${endVw - startVw}), ${max}px)`;
+
+/**
+ * Viewport-relative size that equals `px` at the `lg` breakpoint and keeps
+ * growing with the viewport above it. Use as the top (`lg`) stop of a
+ * `stepped()` token so text scales on very large / zoomed-out screens instead
+ * of staying a fixed size and looking tiny. Seamless by construction: at
+ * `lg` it resolves to exactly `px`, matching the preceding step.
+ */
+export const vwFromLg = (px: number) =>
+  `calc(${px} / ${breakpoints.lg / 100} * 1vw)`;
+
+const toCSS = (v: number | string) =>
   typeof v === 'number' ? `${v}px` : v;
 
 /**
@@ -25,6 +49,7 @@ const toCSS = (v: number | string) =>
  *
  *   stepped({ xs: 15, sm: 16, lg: 17 })
  *   stepped({ xs: 11, sm: 12 })         // md/lg inherit sm
+ *   stepped({ xs: 11, sm: 12 '768': 16 }) // custom breakpoint
  */
 export function stepped(
   stops: Partial<Record<BreakpointKey, number | string>> & { [px: number]: number | string }
@@ -38,16 +63,19 @@ export function stepped(
     ])
     .sort(([a], [b]) => a - b);
   
-  const rule: Record<string, unknown> = {};
+  const rule: GlobalStyleRule = {};
+  const media: Record<string, GlobalStyleRule> = {};
 
   for (const [px, val] of entries) {
     if (px === 0) {
       rule.vars = { [v]: toCSS(val) };
     } else {
-      rule[`@media (min-width: ${px}px)`] = { vars: { [v]: toCSS(val) } };
+      media[`(min-width: ${px}px)`] = { vars: { [v]: toCSS(val) } };
     }
   }
 
-  globalStyle(':root', rule as Parameters<typeof globalStyle>[1]);
+  if (Object.keys(media).length) rule["@media"] = media;
+
+  globalStyle(":root", rule);
   return v;
 }

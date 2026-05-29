@@ -15,12 +15,10 @@ import { EASE_CUBIC } from './utils.css';
 
 export const page = {
   position: "relative",
-  // zIndex: theme.zIndex.content,
   width: "100%",
-  // height: "100%",
   padding: `0 ${theme.page.gutter.xs}`,
   margin: `calc(${theme.header.offset.xs}) auto ${theme.page.marginBottom.xs}`,
-  transition: `margin 400ms ${EASE_CUBIC}, padding 400ms ${EASE_CUBIC}, width 400ms ${EASE_CUBIC}`,
+  transition: `margin 400ms ${EASE_CUBIC}, padding 400ms ${EASE_CUBIC}`,
   [mq.sm]: { 
     padding: `0 ${theme.page.gutter.sm}`,
     margin: `calc(${theme.header.offset.sm}) auto ${theme.page.marginBottom.sm}`,
