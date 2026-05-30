@@ -50,6 +50,7 @@ export const metadata: Metadata = {
   },
   description: "Tanner O\'Rourke | AI/ML engineer and researcher. MS in AI, UT Austin. Work in mechanistic interpretability, time-series modeling, and systems.",
   applicationName: "Tanner O\'Rourke Portfolio",
+  authors: [{ name: "Tanner O\'Rourke", url: SITE_URL }],
   creator: "Tanner O\'Rourke",
   publisher: "Tanner O\'Rourke",
 

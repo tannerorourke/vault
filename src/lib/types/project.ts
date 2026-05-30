@@ -32,9 +32,11 @@ export type ProjectContent = {
   title: string;
   // -- meta ------------
   live: boolean;
-  category: ProjectCategoryId; 
+  category: ProjectCategoryId;
   order?: number;
   isFeature?: boolean;
+  publishedAt?: string; // e.g. "2026-01-15"
+  updatedAt?: string;
   // -- On card ----------
   cardSubtitle: string;
   // -- On project page --
