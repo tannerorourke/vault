@@ -2,6 +2,7 @@ import type { IconName } from "@/components/icons/registry";
 
 
 export type NavLink = {
+  id: string;
   iconName?: IconName;
   text?: string;
   alt?: string;
@@ -13,6 +14,7 @@ export type NavLink = {
 
 export const ACTION_LINKS: NavLink[] = [
   {
+    id: "github",
     iconName: "github", text: "GitHub",
     alt: "GitHub",
     href: "https://github.com/tannerorourke/",
@@ -20,6 +22,7 @@ export const ACTION_LINKS: NavLink[] = [
     tooltipText: "GitHub"
   },
   {
+    id: "linkedin",
     iconName: "linkedin", text: "LinkedIn",
     alt: "LinkedIn",
     href: "https://www.linkedin.com/in/tannerorourke/",
@@ -27,12 +30,14 @@ export const ACTION_LINKS: NavLink[] = [
     tooltipText: "LinkedIn"
   },
   {
+    id: "email",
     iconName: "envelope", text: "tannero@live.com",
     alt: "Email me",
     href: "mailto:tannero@live.com?subject=Reaching%20out",
     tooltipText: "Email me"
   },
   {
+    id: "cv",
     iconName: "file-text", text: "CV (PDF)",
     alt: "Download CV",
     href: "Tanner-ORourke-cv.pdf",
@@ -40,12 +45,14 @@ export const ACTION_LINKS: NavLink[] = [
     tooltipText: "Download CV"
   },
   // {
+  //   id: "medium",
   //   iconName: "medium", alt: "Medium",
   //   href: "https://medium.com/@tannerorourke",
   //   target: "_blank",
   //   tooltipText: "Medium"
   // },
   {
+    id: "scholar",
     iconName: "grad-cap", text: "Google Scholar",
     alt: "Google Scholar",
     href: "https://scholar.google.com/citations?user=RwfFBoEAAAAJ&hl=en",
@@ -53,6 +60,7 @@ export const ACTION_LINKS: NavLink[] = [
     tooltipText: "Google Scholar"
   },
   {
+    id: "source",
     iconName: "arrow-up-right",
     alt: "View Source",
     href: "https://github.com/tannerorourke/vault",
@@ -61,7 +69,14 @@ export const ACTION_LINKS: NavLink[] = [
   }
 ];
 
+const ACTION_LINKS_BY_ID: Record<string, NavLink> =
+  Object.fromEntries(ACTION_LINKS.map((l) => [l.id, l]));
+
+export const getActionLink = (id: string): NavLink | undefined =>
+  ACTION_LINKS_BY_ID[id];
+
 export const REPO_LINK: NavLink = {
+  id: "source",
   iconName: "arrow-up-right",
   alt: "View Source",
   href: "https://github.com/tannerorourke/vault",
@@ -82,3 +97,6 @@ export const NAV_LINKS =
 
 export const ABOUT_LINKS = 
   linkSubset(["Email me", "LinkedIn", "GitHub", "Google Scholar"]);
+
+export const PROJECT_FOOTER =
+  "Hiring or interested in the work?\n\nI'm open for ML engineering and research roles. [Email me](${email}), or find my on [LinkedIn](${linkedin})"
