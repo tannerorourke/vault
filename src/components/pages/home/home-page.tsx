@@ -7,7 +7,7 @@ import { ProjectCategoryId } from "@/lib/types/project";
 import ProjectCard from "@/components/pages/home/ProjectCard";
 import Markdown from "@/components/ui/Markdown";
 
-import { HEADING } from "@/content/home";
+import { ATF_HEADING, ATF_SUBHEADING } from "@/content/home";
 import * as sty from "./home-page.css";
 
 
@@ -24,9 +24,18 @@ export function HomePage({ projects }: HomePageProps) {
   return (
     <main id="main-content" tabIndex={-1} className={sty.root}>
       <Markdown 
-        as="h1" className={sty.heading} 
-        value={HEADING} 
+        textProps={{ as: 'h1', variant: 'bodyLg' }}
+        className={sty.heading} 
+        value={ATF_HEADING} 
       />
+      <div className={sty.subheadingWrapper}>
+        <span className={sty.statusDot} aria-hidden="true" />
+        <Markdown
+          textProps={{ as: 'h2', variant: 'body' }}
+          className={sty.subheading}
+          value={ATF_SUBHEADING}
+        />
+      </div>
 
       <LayoutGroup>
         <div className={sty.gridFeature}>

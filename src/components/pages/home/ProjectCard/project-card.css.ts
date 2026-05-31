@@ -59,7 +59,7 @@ globalStyle(`${cardBase}[data-variant="featured"][data-ratio="60-40"]`, {
   [mq.md]: { gridTemplateColumns: "60% 1fr" }
 });
 
-  export const imageCol = style({
+  export const heroImgWrapper = style({
     position: "relative",
     aspectRatio: "16 / 10",
     borderRadius: "6px",
@@ -73,13 +73,15 @@ globalStyle(`${cardBase}[data-variant="featured"][data-ratio="60-40"]`, {
       display: "block",
     });
 
-    export const heroLabelText = style({
+    export const heroImgLabel = style({
       position: "absolute",
       bottom: "12px", left: "12px",
       fontSize: theme.typography.fontSize.caption,
       fontFamily: theme.typography.fontFamily.mono,
       color: theme.color.text.secondary,
     });
+
+    export const heroImgCaption = style({});
 
 
 export const bodyCol = style({

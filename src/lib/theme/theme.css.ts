@@ -6,6 +6,9 @@ export const theme = createThemeContract({
   color: {
     canvas: null,
 		card: null,
+		status: {
+			available: null,
+		},
 		cardFrosted: null,
 		cardFrostedBorder: null,
     cardFrostedShadow: null,
@@ -239,6 +242,9 @@ const zIndex = {
 /** -- THEME DEFINITIONS --------------------------------- */
 const lightThemeColors = {
   canvas: '#F4F6F5',
+  status: {
+    available: '#2A7A4F',
+  },
   card: '#FFFFFF',
   cardFrosted: 'rgba(244, 246, 245, 0.06)', // sheet.bg w/lower opacity
   cardFrostedBorder: 'rgba(255, 255, 255, 0)',
@@ -290,6 +296,9 @@ const lightThemeColors = {
 
 const darkThemeColors = {
   canvas: '#0e1a18',
+  status: {
+    available: '#4DCF87',
+  },
   card: '#162822',
   cardFrosted: 'rgba(14, 26, 24, 0.30)', // sheet.bg w/lower opacity
   cardFrostedBorder: 'rgba(255, 255, 255, 0.06)',

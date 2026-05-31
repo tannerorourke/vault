@@ -7,15 +7,16 @@
   "order": 1,
   "isFeature": true,
   
-  "cardSubtitle": "A shared-encoder stop-gradient JEPA trained on ~55k MIMIC-IV patient sequences, with a four-layer interpretability pipeline applied to the F-code psychiatric subset. Treats the prediction error P - T as a first-class geometric object, not a scalar loss.",
+  "cardSubtitle": "Opening up a JEPA model trained on MIMIC-IV patient encounter sequences by combining classical LLM and geometric interpretability methods.",
   
   "eyebrow": "In progress - Paper",
-  "subtitle": "Introducing MI techniques to Joint Embedding Predictive Architectures trained on clinical encounter sequences. Targeting ML4H 2026.",
+  "subtitle": "Can we describe and predict patient state from a model's own geometry? A mech-interp study of a JEPA trained on 55k MIMIC-IV patient histories",
   "heroImage": {
     "src": "/content/interpret-jepa/jepa-analysis.png",
-    "alt": "Diagram of the types of analysis done on the stop-gradient JEPA encoder representations.",
+    "alt": "Diagram of the shared-encoder stop-gradient JEPA architecture, with VICReg loss components annotated.",
     "label": "",
-    "caption": "Shared-encoder stop-gradient · VICReg 1.0 / 1.0 / 0.04"
+    "caption": "[1]. The model predicts embedding $k$ from $k-1$ prior encounters, penalized for representations that collapse, correlate, or fail to predict (VicReg loss).",
+    "captionOnHome": false
   },
   "tags": [
     { "label": "Mechanistic Interpretability", "color": "teal" },

@@ -1,4 +1,5 @@
-import { ProjectContent, JumpIconButton } from "@/lib/types/project";
+import { ProjectContent, JumpIconButton, HeroImage } from "@/lib/types/project";
+import { isSvg, getImageSize } from "@/lib/content/images";
 
 import Image from "next/image";
 import Markdown from "@/components/ui/Markdown";
@@ -7,7 +8,6 @@ import TextLink from "@/components/ui/TextLink";
 import Eyebrow from "@/components/ui/Eyebrow";
 import TagChip from "@/components/ui/TagChip";
 import Icon, { IconLink } from "@/components/ui/Icon";
-import { getImageSize, isSvg } from "@/lib/content/images";
 import { renderSection } from "./Section";
 
 import TrackedMain from "./TrackedMain";
@@ -15,6 +15,45 @@ import ProjectToc from "./Toc";
 import Footer from "./Footer";
 
 import * as sty from "./project-page.css";
+
+
+
+function Hero({ src, alt, label, caption }: HeroImage) {
+  return (
+    <figure>
+      <div className={sty.heroImgWrapper}>
+        {isSvg(src) ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={src}
+            alt={alt ?? ""}
+            className={sty.heroImg}
+            loading="eager"
+          />
+        ) : (
+          <Image
+            src={src}
+            alt={alt ?? ""}
+            className={sty.heroImg}
+            loading="eager"
+            sizes="100vw"
+            {...getImageSize(src)}
+          />
+        )}
+        {label && (
+          <Text as="dl" className={sty.heroImgLabel}>
+            <Markdown value={label} inline />
+          </Text>
+        )}
+      </div>
+      {caption && (
+        <Text as="figcaption" variant="caption" className={sty.heroImgCaption}>
+          <Markdown value={caption} inline />
+        </Text>
+      )}
+    </figure>
+  );
+}
 
 
 export function ProjectPage({ content }: { content: ProjectContent }) {
@@ -48,15 +87,15 @@ export function ProjectPage({ content }: { content: ProjectContent }) {
             textProps={{ as: 'h1', variant: 'display', className: sty.title }} 
             value={title} 
           />
-
           {eyebrow &&
-            <Eyebrow as="span" className={sty.eyebrow}>{eyebrow}</Eyebrow>}
-
+            <Eyebrow as="span" className={sty.eyebrow}>{eyebrow}</Eyebrow>
+          }
           {subtitle &&
             <Markdown
               textProps={{ as: 'h2', variant: 'bodyLg', className: sty.subtitle }} 
               value={subtitle}
-            />}
+            />
+          }
 
           {((!!tagsObj && tagsObj.length > 0) || (!!linksObj && linksObj.length > 0)) && (
             <div className={sty.heroFoot}>
@@ -111,26 +150,9 @@ export function ProjectPage({ content }: { content: ProjectContent }) {
           </aside>
         )}
       </header>
-
+      
       {!!heroImageObj && (
-        isSvg(heroImageObj.src) ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={heroImageObj.src}
-            alt={heroImageObj.alt ?? ""}
-            className={sty.heroImage}
-            loading="eager"
-          />
-        ) : (
-          <Image
-            src={heroImageObj.src}
-            alt={heroImageObj.alt ?? ""}
-            className={sty.heroImage}
-            loading="eager"
-            sizes="100vw"
-            {...getImageSize(heroImageObj.src)}
-          />
-        )
+        <Hero {...heroImageObj} />
       )}
 
       <div className={sty.layout}>

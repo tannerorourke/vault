@@ -129,14 +129,33 @@ export const findingCard = style({
     });
 
 /** Hero image */
-export const heroImage = style({
-  width: "100%",
-  height: "auto",
-  display: "block",
-  objectFit: "cover",
+export const heroImgWrapper = style({
+  position: "relative",
+  aspectRatio: "16 / 10",
   borderRadius: "6px",
-  background: theme.color.tint.neutralSoft,
+  overflow: "hidden",
 });
+
+  export const heroImg = style({
+    width: "100%",
+    height: "auto",
+    display: "block",
+    objectFit: "cover",
+    borderRadius: "6px",
+    background: theme.color.tint.neutralSoft,
+  });
+
+    export const heroImgLabel = style({
+      position: "absolute",
+      bottom: "12px", left: "12px",
+      fontSize: theme.typography.fontSize.caption,
+      fontFamily: theme.typography.fontFamily.mono,
+      color: theme.color.text.secondary,
+    });
+
+  export const heroImgCaption = style({
+    marginTop: theme.space._8
+  });
 
 /** Body layout */
 export const layout = style({
