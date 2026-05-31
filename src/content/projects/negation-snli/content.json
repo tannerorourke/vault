@@ -7,10 +7,10 @@
   "order": 4,
   "isFeature": false,
   
-  "cardSubtitle": "Where does negation live in a sentence, and which positions trip up a fine-tuned Electra NLI model?",
+  "cardSubtitle": "Do language models truly understand the concept of negation, or are they just pattern matching?",
   
   "eyebrow": "2025 - paper",
-  "subtitle": "If 'The room is never empty without music', then is 'The room empty with music'? - and a dependency-parser-driven analysis of ELECTRA-small's reliance on negation cue location in SNLI.",
+  "subtitle": "A deep-dive on the semantics of negation in natural language inference, and the obscure problem NLI models face with it.",
   "tags": [
     { "label": "NLP", "color": "teal" },
     { "label": "SNLI", "color": "teal" },
@@ -25,7 +25,7 @@
       "type": "Paragraph",
       "id": "overview",
       "title": "Overview",
-      "body": "State-of-the-art NLI models routinely lean on shallow lexical heuristics - antonyms, bag-of-words overlap, and the presence of a single negation word - to clear benchmarks like SNLI. Dutifully so, negation is a common pitfall for these models, and we found that a fine-tuned ELECTRA-small drastically over-predicts when contradiction is in the premise, among other notable gaps.\n\nThis project asks the narrow question: *where* in a sentence does negation appear, and does that location change how the model behaves?\n\nI fine-tuned a baseline `ELECTRA-small` discriminator on SNLI, then built a dependency-parse-driven analyzer (NPAS) that locates each negation cue inside the sentence's syntactic structure and assigns it to one of seven regions: root, subject, object, locative, attribute, modal, or quantifier. Slicing predictions by region - alongside lexical overlap and label distribution - surfaced a premise-side contradiction shortcut that a two-stage intervention (contrast-set augmentation plus slice-aware loss reweighting) could mitigate, but not remove."
+      "body": "If 'The room is never empty without music', then is 'The room empty with music'?\n\nState-of-the-art NLI models routinely lean on shallow lexical heuristics - antonyms, bag-of-words overlap, and the presence of a single negation word - to clear benchmarks like SNLI. Dutifully so, negation is a common pitfall for these models, and we found that a fine-tuned ELECTRA-small drastically over-predicts when contradiction is in the premise, among other notable gaps.\n\nThis project asks the narrow question: *where* in a sentence does negation appear, and does that location change how the model behaves?\n\nI fine-tuned a baseline `ELECTRA-small` discriminator on SNLI, then built a dependency-parse-driven analyzer (NPAS) that locates each negation cue inside the sentence's syntactic structure and assigns it to one of seven regions: root, subject, object, locative, attribute, modal, or quantifier. Slicing predictions by region - alongside lexical overlap and label distribution - surfaced a premise-side contradiction shortcut that a two-stage intervention (contrast-set augmentation plus slice-aware loss reweighting) could mitigate, but not remove."
     },
     {
       "type": "BulletedList",

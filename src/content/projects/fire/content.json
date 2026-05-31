@@ -4,10 +4,10 @@
 
   "live": true,
   "category": "research",
-  "order": 3,
+  "order": 2,
   "isFeature": false,
 
-  "cardSubtitle": "ConvFormer that forecasts next-day wildfire ignition over Washington from a 24-feature multi-modal stack     ConvFormer that forecasts next-day wildfire ignition over Washington from a 24-feature multi-modal stack",
+  "cardSubtitle": "Collecting 24 data points from satellites, terrain, and meteorology to forecast where wildfires will ignite across Washington a day ahead - about 7x better than chance.",
   
   "eyebrow": "2025 - paper",
   "subtitle": "Forecasting next-day wildfire ignition across Washington from 24 satellite, terrain, and meteorological features through a ConvFormer with physics-aware masking.",

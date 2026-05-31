@@ -27,6 +27,14 @@ export type FindingCard = {
   eyebrow?: string;
 };
 
+export type HeroImage = {
+  src: string;
+  alt?: string;
+  label?: string; // Feature only
+  caption?: string; // Feature only
+  captionOnHome?: boolean; // Feature only
+}
+
 export type ProjectContent = {
   pid: string;
   title: string;
@@ -45,11 +53,6 @@ export type ProjectContent = {
   tags?: ProjectTag[];
   links?: JumpIconButton[];
   finding?: FindingCard;
-  heroImage?: { 
-    src: string; 
-    alt?: string;
-    label?: string;   // Feature only
-    caption?: string; // Feature only
-  };
+  heroImage?: HeroImage;
   sections: ProjectSection[];
 };

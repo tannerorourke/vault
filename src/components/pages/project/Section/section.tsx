@@ -103,46 +103,38 @@ type SectionTwoUpTextImage = {
 
 async function TwoUpTextImage({ s }: { s: SectionTwoUpTextImage }) {
   const body = s.body ? await preHighlightCodeBlocks(s.body) : "";
-
-  // image / side
-  // ?caption
-
-
   const imageSide = s.side ?? "right";
-
   const containerCls = ["top", "bottom"].includes(imageSide)
     ? sty.twoUpStacked
     : [sty.twoUp, imageSide === "left" ? sty.twoUpReverse : ""]
         .filter(Boolean).join(" ");
 
-  const img = isSvg(s.image.src) ? (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      className={sty.inlineImage}
-      src={s.image.src} alt={s.image.alt ?? ""}
-      loading="lazy"
-    />
-  ) : (
-    <Image
-      className={sty.inlineImage}
-      src={s.image.src} alt={s.image.alt ?? ""}
-      sizes="(min-width: 700px) 45vw, 100vw"
-      {...getImageSize(s.image.src)}
-    />
-  )
-
-  const image = s?.caption ? (
-    <div className={sty.inlineImageWrap}>
-      {img}
-      <Markdown 
-        textProps={{ as: "p", 
+  const image = <figure>
+    {isSvg(s.image.src) ? (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        className={sty.inlineImage}
+        src={s.image.src} alt={s.image.alt ?? ""}
+        loading="lazy"
+      />
+    ) : (
+      <Image
+        className={sty.inlineImage}
+        src={s.image.src} alt={s.image.alt ?? ""}
+        sizes="(min-width: 700px) 45vw, 100vw"
+        {...getImageSize(s.image.src)}
+      />
+    )}
+    {s?.caption && (
+      <Markdown
+        textProps={{ as: "figcaption", 
           variant: 'caption', 
           className: [sty.prose, sty.imgCaption].join(" ")
         }}
         value={s.caption}
       />
-    </div>
-  ) : img;
+    )}
+  </figure>
 
   const prose = s?.body ? (
     <Markdown 

@@ -40,31 +40,38 @@ export function ProjectCard({
       data-ratio={isFeatured ? imageRatio : undefined}
     >
       {isFeatured && heroImage?.src && (
-        <div className={sty.imageCol}>
-          {heroImage.src.toLowerCase().endsWith(".svg") ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={heroImage.src}
-              alt={heroImage.alt ?? ""}
-              className={sty.heroImg}
-              loading="eager"
-            />
-          ) : (
-            <Image
-              src={heroImage.src}
-              alt={heroImage.alt ?? ""}
-              className={sty.heroImg}
-              loading="eager"
-              fill
-              sizes="(min-width: 900px) 45vw, 100vw"
-            />
-          )}
-          {heroImage.label && (
-            <Text as="dl" className={sty.heroLabelText}>
-              <Markdown value={heroImage.label} inline />
+        <figure>
+          <div className={sty.heroImgWrapper}>
+            {heroImage.src.toLowerCase().endsWith(".svg") ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={heroImage.src}
+                alt={heroImage.alt ?? ""}
+                className={sty.heroImg}
+                loading="eager"
+              />
+            ) : (
+              <Image
+                src={heroImage.src}
+                alt={heroImage.alt ?? ""}
+                className={sty.heroImg}
+                loading="eager"
+                fill
+                sizes="(min-width: 900px) 45vw, 100vw"
+              />
+            )}
+            {heroImage.label && (
+              <Text as="dl" className={sty.heroImgLabel}>
+                <Markdown value={heroImage.label} inline />
+              </Text>
+            )}
+          </div>
+          {heroImage?.caption && heroImage?.captionOnHome && (
+            <Text as="figcaption" variant="caption" className={sty.heroImgCaption}>
+              <Markdown value={heroImage.caption} inline />
             </Text>
           )}
-        </div>
+        </figure>
       )}
 
       <div className={sty.bodyCol}>
