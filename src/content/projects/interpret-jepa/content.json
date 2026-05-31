@@ -13,8 +13,8 @@
   "subtitle": "Introducing MI techniques to Joint Embedding Predictive Architectures trained on clinical encounter sequences. Targeting ML4H 2026.",
   "heroImage": {
     "src": "/content/interpret-jepa/jepa-analysis.png",
-    "alt": "Diagram of the shared-encoder stop-gradient JEPA architecture, with VICReg loss components annotated.",
-    "label": "jepa_architecture.svg",
+    "alt": "Diagram of the types of analysis done on the stop-gradient JEPA encoder representations.",
+    "label": "",
     "caption": "Shared-encoder stop-gradient · VICReg 1.0 / 1.0 / 0.04"
   },
   "tags": [
