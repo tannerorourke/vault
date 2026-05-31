@@ -43,12 +43,11 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-
   title: {
-    default: "Tanner O\'Rourke",
-    template: "%s - Tanner O",
+    default: "Tanner O\'Rourke — ML Engineer & Interpretability Researcher",
+    template: "%s · Tanner O\'Rourke",
   },
-  description: "Tanner O\'Rourke | AI/ML engineer and researcher. MS in AI, UT Austin. Work in mechanistic interpretability, time-series modeling, and systems.",
+  description: "ML engineer and mechanistic-interpretability researcher in Seattle. MS in AI, UT Austin. Open to ML engineering and research roles.",
   applicationName: "Tanner O\'Rourke Portfolio",
   authors: [{ name: "Tanner O\'Rourke", url: SITE_URL }],
   creator: "Tanner O\'Rourke",
@@ -58,11 +57,11 @@ export const metadata: Metadata = {
   manifest: "/manifest.webmanifest",
 
   openGraph: {
-    title: "Tanner O'Rourke",
-    description: "Tanner O\'Rourke | AI/ML, web and systems engineer.",
-    url: SITE_URL,
+    type: "website",
     siteName: "Tanner O'Rourke",
-    type: "website"
+    title: "Tanner O'Rourke - ML Engineer & Interpretability Researcher",
+    description: "ML engineer and mechanistic-interpretability researcher. MS in AI, UT Austin.",
+    url: SITE_URL,
   },
   verification: {
     google: process.env.NEXT_PUBLIC_GSV
