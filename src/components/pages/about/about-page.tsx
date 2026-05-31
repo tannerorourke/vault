@@ -1,3 +1,5 @@
+import { getImageSize } from "@/lib/content/images";
+
 import Image from "next/image";
 import Text from "@/components/ui/Text";
 import TextLink from "@/components/ui/TextLink";
@@ -16,7 +18,13 @@ export function ProfilePage() {
 
         <aside className={sty.photoCol} aria-label="At a glance">
           <figure className={sty.photoFigure}>
-            <Image src="/me_4-5.png" alt="Tanner O'Rourke, headshot" className={sty.photo} />
+            <Image 
+              src="/me_4-5.png" 
+              alt="Tanner O'Rourke, headshot" 
+              className={sty.photo}
+              loading="eager"
+              {...getImageSize("/me_4-5.png")}
+            />
           </figure>
         </aside>
 

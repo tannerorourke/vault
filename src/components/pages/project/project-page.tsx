@@ -12,7 +12,7 @@ import { renderSection } from "./Section";
 
 import TrackedMain from "./TrackedMain";
 import ProjectToc from "./Toc";
-import NextProjectFooter from "./NextProject";
+import Footer from "./Footer";
 
 import * as sty from "./project-page.css";
 
@@ -143,7 +143,7 @@ export function ProjectPage({ content }: { content: ProjectContent }) {
         </div>
       </div>
 
-      <NextProjectFooter currentPid={pid} />
+      <Footer currentPid={pid} />
     </TrackedMain>
   );
 }

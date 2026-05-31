@@ -8,10 +8,6 @@ export const root = style({
   marginTop: theme.space._96,
   
   textDecoration: "none",
-  color: "inherit",
-  cursor: "pointer",
-  transition: "background 200ms ease",
-  borderRadius: "8px",
   // match page padding w/ neg. margin
   padding: `0 ${theme.page.gutter.xs} 0`,
   margin: `${theme.space._96} calc(-1 * ${theme.page.gutter.xs}) 0`,
@@ -26,16 +22,31 @@ export const root = style({
   [mq.lg]: {
     padding: `0 ${theme.page.gutter.lg} 0`,
     margin: `${theme.space._96} calc(-1 * ${theme.page.gutter.lg}) 0`,
-  },
-  selectors: {
-    "&:hover": {
-      background: theme.color.tint.primaryWeak,
-    },
-    "&:focus-visible": {
-      outline: `2px solid ${theme.color.focus}`,
-      outlineOffset: 2,
-    }
   }
+});
+
+  export const nextProjLink = style({
+    display: "block",
+    borderRadius: "8px",
+    textDecoration: "none",
+    cursor: "pointer",
+    transition: "background 200ms ease",
+    selectors: {
+      "&:hover": {
+        background: theme.color.tint.primaryWeak,
+      },
+      "&:focus-visible": {
+        outline: `2px solid ${theme.color.focus}`,
+        outlineOffset: 2,
+      }
+    }
+  });
+
+export const note = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: theme.space._4,
+  paddingBottom: theme.space._24
 });
 
 export const eyebrowBox = style({

@@ -3,6 +3,8 @@ import { theme } from "@/lib/theme/theme.css";
 import { mq } from "@/lib/theme/responsive.css";
 import { page } from "@/lib/styles/page.css";
 
+export { par } from "@/lib/styles/common.css";
+
 
 export const aboutRoot = style([
   page,
@@ -31,31 +33,35 @@ export const intro = style({
 
 // -- Photo column
 
-export const photoCol = style({
-  display: "flex",
-  flexDirection: "column",
-  gap: theme.space._16,
-  maxWidth: "380px",
-  width: "100%",
-  [mq.md]: {
-    position: "sticky",
-    top: `calc(${theme.header.offset.xs} + ${theme.space._24})`,
-    maxWidth: "none",
-  },
+export const photoFigure = style({
+  margin: 0,
 });
 
-  export const photoFigure = style({
-    margin: 0,
+  export const photoCol = style({
+    display: "flex",
+    flexDirection: "column",
+    gap: theme.space._16,
+    maxWidth: "380px",
+    width: "100%",
+    [mq.md]: {
+      position: "sticky",
+      top: `calc(${theme.header.offset.xs} + ${theme.space._24})`,
+      maxWidth: "none",
+    },
   });
 
     export const photo = style({
       display: "block",
       width: "100%",
+      height: "auto",
       aspectRatio: "4 / 5",
       borderRadius: "4px",
       objectFit: "cover",
       background: theme.color.tint.primaryWeak,
       filter: "saturate(0.95)",
+      [mq.md]: {
+        borderRadius: "8px",
+      }
     });
 
 // -- Prose
@@ -66,35 +72,6 @@ export const proseCol = style({
   gap: theme.space._12,
   maxWidth: "62ch",
 });
-
-  export const par = style({
-    display: "inline-block",
-    opacity: 0.92,
-    textWrap: "pretty",
-    margin: 0,
-    scrollMarginTop: `calc(${theme.header.height.xs} + ${theme.space._24})`,
-    [mq.sm]: {
-      scrollMarginTop: `calc(${theme.header.height.sm} + ${theme.space._24})`,
-    },
-  });
-
-    globalStyle(`${par} a`, {
-      color: theme.color.link.main,
-      textDecoration: "underline",
-      textDecorationColor: theme.color.tint.primaryHoverSoft,
-    });
-
-    globalStyle(`${par} a:hover`, {
-      color: theme.color.link.hover,
-    });
-
-    globalStyle(`${par} strong`, {
-      fontWeight: theme.typography.fontWeight.medium,
-    });
-
-    globalStyle(`${par} em`, {
-      fontStyle: "italic",
-    });
 
 // -- CONTACT
 

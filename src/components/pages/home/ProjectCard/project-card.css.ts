@@ -40,35 +40,24 @@ export const cardBase = style({
 globalStyle(`${cardBase}[data-variant="featured"]`, {
   gap: "18px",
   padding: "18px 20px",
-  "@media": {
-    "(min-width: 900px)": {
-      padding: "20px 22px",
-      gap: "28px",
-      gridTemplateColumns: "40% 1fr",
-    },
-  },
+  [mq.md]: {
+    padding: "20px 22px",
+    gap: "28px",
+    gridTemplateColumns: "40% 1fr",
+  }
 });
 globalStyle(`${cardBase}[data-variant="featured"][data-ratio="45-55"]`, {
-  "@media": {
-    "(min-width: 900px)": { gridTemplateColumns: "45% 1fr" },
-  },
+  [mq.md]: { gridTemplateColumns: "45% 1fr" }
 });
 globalStyle(`${cardBase}[data-variant="featured"][data-ratio="50-50"]`, {
-  "@media": {
-    "(min-width: 900px)": { gridTemplateColumns: "1fr 1fr" },
-  },
+  [mq.md]: { gridTemplateColumns: "1fr 1fr" }
 });
 globalStyle(`${cardBase}[data-variant="featured"][data-ratio="55-45"]`, {
-  "@media": {
-    "(min-width: 900px)": { gridTemplateColumns: "55% 1fr" },
-  },
+  [mq.md]: { gridTemplateColumns: "55% 1fr" }
 });
 globalStyle(`${cardBase}[data-variant="featured"][data-ratio="60-40"]`, {
-  "@media": {
-    "(min-width: 900px)": { gridTemplateColumns: "60% 1fr" },
-  },
+  [mq.md]: { gridTemplateColumns: "60% 1fr" }
 });
-
 
   export const imageCol = style({
     position: "relative",
