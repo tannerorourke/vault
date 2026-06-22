@@ -1,6 +1,7 @@
 import { style, globalStyle } from '@vanilla-extract/css';
 
 import { theme } from '@/lib/theme/theme.css';
+import { mq } from '@/lib/theme/responsive.css';
 
 export const inlineCode = style({
   fontFamily: theme.typography.fontFamily.mono,
@@ -51,4 +52,117 @@ globalStyle('.katex-display', {
   overflowX: 'auto',
   overflowY: 'hidden',
   paddingBottom: '2px',
+});
+
+// --- Block prose ----------------------------------------------------------
+export const md = style({
+  fontFamily: theme.typography.fontFamily.serif,
+});
+  globalStyle(`${md} p`, {
+    margin: `0 0 ${theme.space._12}`,
+  });
+  globalStyle(`${md} ul, ${md} ol`, {
+    margin: `0 0 ${theme.space._12}`,
+  });
+  globalStyle(
+    `${md} h1, ${md} h2, ${md} h3, ${md} h4, ${md} h5, ${md} h6`,
+    { margin: `${theme.space._16} 0 ${theme.space._8}` },
+  );
+  globalStyle(`${md} > :first-child`, { marginTop: 0 });
+  globalStyle(`${md} > :last-child`, { marginBottom: 0 });
+
+  // Inline styling (mirrors the legacy `prose` rules in section.css.ts).
+  globalStyle(`${md} a`, {
+    // color: theme.color.link.main,
+    color: theme.color.primary.hover,
+    textDecoration: 'none',
+    borderRadius: "2px",
+    textDecorationColor: theme.color.tint.primaryHoverSoft,
+    fontWeight: theme.typography.fontWeight.semibold,
+
+    background: "transparent",
+    backgroundImage: "linear-gradient(currentColor, currentColor)",
+    backgroundSize: "0% 2px",
+    backgroundPosition: "bottom left",
+    backgroundRepeat: "no-repeat",
+    transition: "color 150ms ease, background-size 200ms ease",
+  });
+  globalStyle(`${md} a:focus-visible`, {
+    outline: `2px solid ${theme.color.focus}`,
+    outlineOffset: 2,
+  });
+  globalStyle(`${md} a:hover`, {
+    color: theme.color.link.hover,
+    backgroundSize: "100% 2px",
+  });
+  globalStyle(`${md} a:active`, {
+    backgroundSize: "100% 2px",
+  });
+  
+  globalStyle(`${md} strong`, {
+    fontWeight: theme.typography.fontWeight.semibold,
+  });
+  globalStyle(`${md} em`, {
+    fontStyle: 'italic',
+  });
+
+
+export const bulletList = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: "6px",
+  listStyle: 'none',
+  padding: 0,
+  maxWidth: '70ch',
+  [mq.md]: { maxWidth: '88ch' },
+  [mq.lg]: { maxWidth: '90ch' },
+});
+
+  globalStyle(`${bulletList} > li`, {
+    position: 'relative',
+    paddingLeft: '22px',
+  });
+  globalStyle(`${bulletList} > li::before`, {
+    content: "''",
+    position: 'absolute',
+    left: 0,
+    top: '0.78em',
+    width: '8px',
+    height: '1px',
+    background: theme.color.secondary.main,
+    opacity: 0.85,
+  });
+
+export const orderedList = style({
+  listStyle: 'decimal',
+  paddingLeft: theme.space._24,
+  maxWidth: '70ch',
+  [mq.md]: { maxWidth: '88ch' },
+  [mq.lg]: { maxWidth: '90ch' },
+});
+
+  globalStyle(`${orderedList} > li`, {
+    marginBottom: theme.space._12,
+  });
+  globalStyle(`${orderedList} > li:last-child`, {
+    marginBottom: 0,
+  });
+
+// --- Blockquote
+export const blockquote = style({
+  paddingLeft: theme.space._16,
+  borderLeft: `2px solid ${theme.color.secondary.main}`,
+  color: theme.color.text.secondary,
+  fontStyle: 'italic',
+});
+
+  // blockquotes inner paragraph no trailing space.
+  globalStyle(`${blockquote} p:last-child`, { margin: 0 });
+
+// --- Horizontal rule
+export const hr = style({
+  border: 'none',
+  height: '1px',
+  margin: `${theme.space._24} 0`,
+  background: theme.color.divider,
 });

@@ -19,6 +19,13 @@ export const textRecipe = recipe({
     },
 
     variant: {
+      displayLg: {
+        fontFamily: theme.typography.fontFamily.display,
+        fontSize: theme.typography.fontSize.displayLg,
+        lineHeight: theme.typography.lineHeight.tight,
+        fontWeight: theme.typography.fontWeight.bold,
+        letterSpacing: theme.typography.letterSpacing.tighter
+      },
       display: {
         fontFamily: theme.typography.fontFamily.display,
         fontSize: theme.typography.fontSize.display,

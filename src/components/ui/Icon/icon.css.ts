@@ -33,11 +33,10 @@ export const iconButton = recipe({
         width: 25,
       },
       pill: {
-        height: 40,
-        width: 40,
+        height: 42, width: 42,
         borderRadius: "50%",
         background: theme.color.card,
-        boxShadow: `0 4px 20px -2px ${theme.color.shadow}`,
+        boxShadow: `0 4px 20px -6px ${theme.color.shadow}`,
       },
       box: {
         borderRadius: "8px",
@@ -71,14 +70,8 @@ export const iconButton = recipe({
 
 export type IconButtonVariants = RecipeVariants<typeof iconButton>;
 
-// Stable selector for :has() rules in other modules that need to suppress
-// card-level hover while an icon inside is hovered.
-export const iconButtonBase = iconButton.classNames.base;
 
-
-export const iconMuted = style({
-  opacity: 0.7,
-});
+export const iconMuted = style({ opacity: 0.7 });
 
 // -----------------------------------------------------
 // tooltip

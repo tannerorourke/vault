@@ -9,9 +9,9 @@ export type MorphIconProps = {
   active: boolean;
   from: MorphElement;
   to: MorphElement;
-  shownClass?: string;  // default "shown" transition override
-  hiddenClass?: string; // default "hidden" transition override
-  className?: string;   // applied to span
+  shownClass?: string;
+  hiddenClass?: string;
+  className?: string;
 };
 
 export function MorphIcon({

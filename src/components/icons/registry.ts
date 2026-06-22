@@ -1,8 +1,8 @@
 import type { ComponentType } from "react";
 import type { IconProps } from "@/lib/types/icons";
 
-/** Common unused icons explicitly keeping around in case we need them 
- *  If an icon becomes needed, uncomment import and add to registry
+/** Unused icons explicitly kept in case we need them
+ *  but keep bundle small
 */
 
 // import { ArrowCircleDown } from "./arrow-circle-down";
@@ -12,12 +12,13 @@ import { ArrowLeft } from "./arrow-left";
 import { ArrowRight } from "./arrow-right";
 import { ArrowUp } from "./arrow-up";
 import { ArrowUpRight } from "./arrow-up-right";
+import { ArrowsVerticalBold } from "./arrows-vertical-bold";
 import { CaretCircleDown } from "./caret-circle-down";
 // import { CaretCircleUp } from "./caret-circle-up";
 // import { CaretLeft } from "./caret-left";
 // import { CaretRight } from "./caret-right";
 import { CodeBrackets } from "./code-brackets";
-// import { Colab } from "./colab";
+import { Colab } from "./colab";
 // import { CodeFile } from "./code-file";
 // import { Download } from "./download";
 import { Envelope } from "./envelope";
@@ -25,7 +26,9 @@ import { FileText } from "./file-text";
 import { Github } from "./github";
 // import { Globe } from "./globe";
 import { GradCap } from "./grad-cap";
+import { Heart } from "./heart";
 import { Linkedin } from "./linkedin";
+import { List } from "./list";
 // import { Medium } from "./medium";
 import { Moon } from "./moon";
 import { Network } from "./network";
@@ -41,13 +44,17 @@ export const iconRegistry = {
   "arrow-right": ArrowRight,
   "arrow-up": ArrowUp,
   "arrow-up-right": ArrowUpRight,
+  "arrows-vertical-bold": ArrowsVerticalBold,
   "caret-circle-down": CaretCircleDown,
   "code-brackets": CodeBrackets,
+  "colab": Colab,
   "envelope": Envelope,
   "file-text": FileText,
   "github": Github,
+  "heart": Heart,
   "grad-cap": GradCap,
   "linkedin": Linkedin,
+  "list": List,
   "moon": Moon,
   "network": Network,
   "pdf": Pdf,

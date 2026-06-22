@@ -5,10 +5,11 @@ import { stepped, vwFromLg } from "./responsive.css";
 export const theme = createThemeContract({
   color: {
     canvas: null,
+		surfaceAlt: null,
 		card: null,
-		status: {
-			available: null,
-		},
+		// status: {
+		// 	available: null,
+		// },
 		cardFrosted: null,
 		cardFrostedBorder: null,
     cardFrostedShadow: null,
@@ -55,7 +56,6 @@ export const theme = createThemeContract({
   },
 	typography: {
 		fontSize: {
-      logo: null,
       displayLg: null,
 			display: null,
 			titleLg: null,
@@ -96,7 +96,6 @@ export const theme = createThemeContract({
 	},
 	space: {
 		auto: null,
-		_0: null,
 		_4: null,
 		_8: null,
 		_12: null,
@@ -107,24 +106,19 @@ export const theme = createThemeContract({
 		_36: null,
 		_48: null,
 		_56: null,
-    _64: null,
-		_80: null,
+		_76: null,
     _96: null,
     _112: null,
     _144: null,
     _160: null,
     _192: null,
 	},
-  header: {
-    padTop: { xs: null, sm: null, md: null, lg: null },
-    height: { xs: null, sm: null },
-    offset: { xs: null, sm: null, md: null, lg: null },
-  },
   page: {
     marginTop: { xs: null,    sm: null, md: null, lg: null },
     gutter: { xs: null,       sm: null, md: null, lg: null },
-    maxContentWidth: {        sm: null, md: null, lg: null },
+    clearanceTop: { xs: null, sm: null, md: null, lg: null },
     marginBottom: { xs: null, sm: null, md: null, lg: null },
+    maxContentWidth: {        sm: null, md: null, lg: null },
   },
   zIndex: {
     tooltip: null,
@@ -149,8 +143,7 @@ export const theme = createThemeContract({
 /** -- SHARED DEFINITIONS ----------------------- */
 const typography = {
   fontSize: {
-    logo:      'clamp(30px, 1.5rem + 2vw, 52px)',
-    displayLg: stepped({ xs: 36, sm: 42, md: 48, lg: vwFromLg(48) }),
+    displayLg: stepped({ xs: 38, sm: 45, md: 50, lg: vwFromLg(48) }),
     display:   stepped({ xs: 36, sm: 40, md: 44, lg: vwFromLg(44) }),
     titleLg:   stepped({ xs: 32, sm: 34, md: 36, lg: vwFromLg(36) }),
     titleMd:   stepped({ xs: 28, sm: 30, md: 32, lg: vwFromLg(32) }),
@@ -191,7 +184,6 @@ const typography = {
 
 const space = {
     auto: 'auto',
-    _0: '0px',
     _4: '4px',
     _8: '8px',
     _12: '12px',
@@ -202,8 +194,7 @@ const space = {
     _36: '36px',
     _48: '48px',
     _56: '56px',
-    _64: '64px',
-    _80: '80px',
+    _76: '76px',
     _96: '96px',
     _112: '112px',
     _144: '144px',
@@ -211,22 +202,17 @@ const space = {
     _192: '192px',
 }
 
-const header = {
-  padTop: { xs: '16px', sm: '24px', md: '36px', lg: '48px' },
-  height: { xs: '63px', sm: '42px' },
-  // padTop + height + page.marginTop
-  offset: { xs: '103px', sm: '112px', md: '126px', lg: '154px' }
-}
-
 const page = {
-  marginTop: { xs: '24px', sm: '48px', md: '48px', lg: '64px' },
-  gutter: { xs: '20px', sm: '32px', md: '48px', lg: '48px' },
+  gutter: { xs: '16px', sm: '24px', md: '36px', lg: '48px' },
+  marginTop: { xs: '16px', sm: '24px', md: '28px', lg: '36px' },
+  clearanceTop: { xs: '58px', sm: '66px', md: '70px', lg: '78px' },
+  marginBottom: { xs: '64px', sm: '48px', md: '48px', lg: '48px' },
+  
   maxContentWidth: { 
-    sm: '876px', // 900px - gutter diff * 2
-    md: '1240px', // width set to scalar for animation, max-width=100vw to prevent overflow
-    lg: '1500px' 
-  },
-  marginBottom: { xs: '96px', sm: '96px', md: '96px', lg: '96px' },
+    sm: '872px', // 900px - gutter diff * 2
+    md: '900px', // width set to scalar for animation, max-width=100vw to prevent overflow
+    lg: '900px' 
+  }
 };
 
 const zIndex = {
@@ -239,12 +225,10 @@ const zIndex = {
 }
 
 /** ------------------------------------------------------ */
-/** -- THEME DEFINITIONS --------------------------------- */
+/** -- Per-THEME DEFINITIONS --------------------------------- */
 const lightThemeColors = {
   canvas: '#F4F6F5',
-  status: {
-    available: '#2A7A4F',
-  },
+  surfaceAlt: '#E0E7E5',
   card: '#FFFFFF',
   cardFrosted: 'rgba(244, 246, 245, 0.06)', // sheet.bg w/lower opacity
   cardFrostedBorder: 'rgba(255, 255, 255, 0)',
@@ -296,9 +280,7 @@ const lightThemeColors = {
 
 const darkThemeColors = {
   canvas: '#0e1a18',
-  status: {
-    available: '#4DCF87',
-  },
+  surfaceAlt: '#142A27',
   card: '#162822',
   cardFrosted: 'rgba(14, 26, 24, 0.30)', // sheet.bg w/lower opacity
   cardFrostedBorder: 'rgba(255, 255, 255, 0.06)',
@@ -369,7 +351,6 @@ export const lightTheme = createTheme(theme, {
     color: lightThemeColors,
 		typography,
     space,
-		header,
     page,
     zIndex,
 		sheet: lightSheet,
@@ -379,7 +360,6 @@ export const darkTheme = createTheme(theme, {
     color: darkThemeColors,
 		typography,
     space,
-		header,
     page,
     zIndex,
 		sheet: darkSheet,

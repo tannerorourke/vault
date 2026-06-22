@@ -1,19 +1,4 @@
-'use client';
-
-/** Markdown - supports:
- * - `[label](href)` (links route through next/link for internal hrefs)
- * - `[label](${id})` (action-link operator: resolves to the `ACTION_LINKS`
- *   entry with matching `id`, inheriting its href/target/download/rel)
- * - `**bold**`, `*em*`
- * - inline `code`
- * - inline & block math via `$...$` / `$$...$$` (KaTeX)
- * - fenced code blocks are pre-rendered to highlighted HTML server-side
- *   (see `preHighlightCodeBlocks` in `@/lib/markdown/highlight`) and passed
- *   through here as raw HTML.
- * Paragraph breaks via `\n\n`.
-*/
-
-import type { ComponentProps, ElementType, ReactNode } from 'react';
+import type { ComponentProps, ElementType } from 'react';
 
 import { Link as NextLink } from 'next-view-transitions';
 import ReactMarkdown, { type Components } from 'react-markdown';
@@ -22,113 +7,130 @@ import rehypeRaw from 'rehype-raw';
 import remarkMath from 'remark-math';
 
 import Text, { type TextProps } from '@/components/ui/Text';
-import { getActionLink } from '@/content/nav-links';
+import { type TextVariant } from '@/lib/theme/typography.css';
 
 import * as sty from './markdown.css';
+import { preHighlightCodeBlocks } from '@/lib/markdown/highlight';
 
 
 export type MarkdownProps = {
   value: string;
   inline?: boolean;
-  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
   className?: string;
   textProps?: Omit<TextProps<ElementType>, 'children'>;
+  block?: boolean;
 };
 
-// `${id}` action-link operator — resolves to an `ACTION_LINKS` entry by id.
-const ACTION_LINK_RE = /^\$\{([^}]+)\}$/;
-
-type LinkOpts = { target?: string; rel?: string; download?: string };
-
-const renderLink = (href: string, children: ReactNode, opts: LinkOpts = {}) => {
-  // Anchor links to the same page must NOT trigger a view transition.
-  if (href.startsWith('#')) {
-    return <a href={href}>{children}</a>;
-  }
-  // Internal routes transition unless they carry link metadata (download/target).
-  if (href.startsWith('/') && !opts.download && !opts.target) {
-    return <NextLink href={href}>{children}</NextLink>;
-  }
-  return (
-    <a
-      href={href}
-      target={opts.target ?? '_blank'}
-      rel={opts.rel ?? 'noopener noreferrer'}
-      download={opts.download}
-    >
-      {children}
-    </a>
-  );
+type HeadingTag = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+const HEADING_VARIANT: Record<HeadingTag, TextVariant> = {
+  h1: 'titleLg',
+  h2: 'titleMd',
+  h3: 'titleSm',
+  h4: 'titleXs',
+  h5: 'titleXs',
+  h6: 'titleXs',
 };
 
-const SmartLink = ({ href, children }: ComponentProps<'a'>) => {
-  if (!href) return <>{children}</>;
+const Heading = (tag: HeadingTag) =>
+  function node({ children }: ComponentProps<'h1'>) {
+    return <Text as={tag} variant={HEADING_VARIANT[tag]}>{children}</Text>;
+  };
 
-  const action = href.match(ACTION_LINK_RE);
-  if (action) {
-    const link = getActionLink(action[1]);
-    // Unknown id — render the label as plain text rather than a broken link.
-    if (!link?.href) return <>{children}</>;
-    return renderLink(link.href, children, {
-      target: link.target,
-      download: link.download,
-    });
-  }
+// Make links work with Next.js primitives
+const Link = (cls = '') =>
+  function node({ href, children }: ComponentProps<'a'>) {
+    if (!href) 
+      return <>{children}</>;
+    if (href.startsWith('/'))
+      return <NextLink className={cls} href={href}>{children}</NextLink>;
+    if (href.startsWith('#'))
+      return <a className={cls} href={href}>{children}</a>;
+    return (
+      <a className={cls} href={href} target="_blank" rel="noopener noreferrer">
+        {children}
+      </a>
+    );
+  };
 
-  return renderLink(href, children);
-};
+const Code = (cls = '') =>
+  function node({ className, children, ...props }: ComponentProps<'code'>) {
+    const isCodeBlock = /language-/.test(className ?? '');
+    return <code 
+      className={[cls, isCodeBlock ? sty.codeBlock : sty.inlineCode].filter(Boolean).join(' ')} {...props}>
+      {children}</code>;
+  };
 
-const InlineCode = ({ className, children, ...props }: ComponentProps<'code'>) => {
-  // Fenced blocks are pre-rendered upstream; anything react-markdown still
-  // hands us here is inline backticked code.
-  const isBlock = /language-/.test(className ?? '');
-  if (isBlock) {
-    return <code className={className} {...props}>{children}</code>;
-  }
-  return <code className={sty.inlineCode} {...props}>{children}</code>;
-};
+export async function Markdown({ 
+  value, 
+  inline = false, 
+  className, 
+  textProps,
+  block = false
+}: MarkdownProps) {
+  const fullCls = [sty.md, className].filter(Boolean).join(' ');
 
-const baseComponents: Components = { a: SmartLink, code: InlineCode };
-const inlineComponents: Components = {
-  ...baseComponents,
-  p: ({ children }) => <>{children}</>,
-};
-
-const remarkPlugins = [remarkMath];
-const rehypePlugins = [
-  rehypeRaw,
-  [rehypeKatex, { strict: 'ignore', output: 'html' }],
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-] as any;
-
-export function Markdown({ value, inline = false, as, className, textProps }: MarkdownProps) {
   let components: Components;
+
   if (inline) {
-    components = inlineComponents;
-  } else if (textProps) {
     components = {
-      a: SmartLink,
-      code: InlineCode,
-      p: ({ children }) => <Text className={className} {...textProps}>{children}</Text>,
-    };
-  } else if (as) {
-    const Tag = as;
-    components = {
-      a: SmartLink,
-      code: InlineCode,
-      p: ({ children }) => <Tag className={className}>{children}</Tag>,
+      a: Link(fullCls), 
+      code: Code(fullCls),
+      p: ({ children }) => <>{children}</>,
     };
   } else {
-    components = baseComponents;
+    const baseComponents: Components = { 
+      a: Link(sty.md),
+      code: Code(sty.md)
+    };
+
+    if (textProps) {
+      // single purpose text rendering, configured straight from text component
+      components = {
+        ...baseComponents,
+        p: ({ children }) => <Text {...textProps}>{children}</Text>,
+      };
+    } else {
+      // full block rendering (headings, lists, blockquotes, paragraphs)
+      // inject className into block wrapper, not sub-block elements
+      block = true;
+      components = {
+        ...baseComponents,
+        p: ({ children }) => <Text as="p" variant="body">{children}</Text>,
+        h1: Heading('h1'),
+        h2: Heading('h2'),
+        h3: Heading('h3'),
+        h4: Heading('h4'),
+        h5: Heading('h5'),
+        h6: Heading('h6'),
+        ul: ({ children }) => <ul className={sty.bulletList}>{children}</ul>,
+        ol: ({ children }) => <ol className={sty.orderedList}>{children}</ol>,
+        li: ({ children }) => <Text as="li" variant="bodySm">{children}</Text>,
+        blockquote: ({ children }) => <blockquote className={sty.blockquote}>{children}</blockquote>,
+        hr: () => <hr className={sty.hr} />
+      };
+    }
   }
 
-  return (
+  const body = 
+    !value.includes('```') ? value : await preHighlightCodeBlocks(value);
+
+  const rendered = (
     <ReactMarkdown
-      remarkPlugins={remarkPlugins}
-      rehypePlugins={rehypePlugins}
+      remarkPlugins={[remarkMath]}
+      rehypePlugins={[rehypeRaw, [rehypeKatex, { strict: 'ignore', output: 'html' }] ]}
       components={components}
     >
-      {value}
+      {body}
     </ReactMarkdown>
   );
+
+  if (block) {
+    return (
+      <div className={fullCls}>
+        {rendered}
+      </div>
+    );
+  }
+
+  return rendered;
 }

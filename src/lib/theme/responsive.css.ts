@@ -1,15 +1,15 @@
-import { createVar, globalStyle, type GlobalStyleRule } from "@vanilla-extract/css";
+import { createVar, globalStyle, style, type GlobalStyleRule } from "@vanilla-extract/css";
 
 export const breakpoints = {
-  xs: 0, // phones (default)
-  sm: 560, // phone landscape / small tablet portrait  multi-col becomes viable
-  md: 900, // tablet landscape / standard laptop  comfortable two-up
-  lg: 1620, // large desktop  start using the extra space
+  xs: 0,
+  sm: 560,
+  md: 900,
+  lg: 1620,
 };
 
 /**
- * Custom media query utility to easily write responsive styles for 
- * site-wide breakpoints as `[mq.sm] { ... }`, `[mq.md] { ... }`, etc"
+ * Custom media query utility to write material-ui-style 
+ * breakpoints (`[mq.sm] { ... }`, `[mq.md] { ... }`, etc)"
  */
 type BreakpointKey = keyof typeof breakpoints;
 
@@ -20,37 +20,18 @@ export const mq = (Object.keys(breakpoints)  as BreakpointKey[]).reduce(
   }, {} as Record<BreakpointKey, `@media (min-width: ${number}px)`>
 );
 
-/**
- * Fluid design token. Calculate an exact value on the 
- * range [min, max] between the given viewport width range [startVw, endVw].
- */
 export const fluid = (
   min: number, max: number, 
   startVw: number, endVw: number
 ) =>
   `clamp(${min}px, calc(${min}px + ${max - min} * (100vw - ${startVw}px) / ${endVw - startVw}), ${max}px)`;
 
-/**
- * Viewport-relative size that equals `px` at the `lg` breakpoint and keeps
- * growing with the viewport above it. Use as the top (`lg`) stop of a
- * `stepped()` token so text scales on very large / zoomed-out screens instead
- * of staying a fixed size and looking tiny. Seamless by construction: at
- * `lg` it resolves to exactly `px`, matching the preceding step.
- */
 export const vwFromLg = (px: number) =>
   `calc(${px} / ${breakpoints.lg / 100} * 1vw)`;
 
 const toCSS = (v: number | string) =>
   typeof v === 'number' ? `${v}px` : v;
 
-/**
- * Stepped responsive token.
- * Returns a CSS var reference; callers assign it as a theme token value.
- *
- *   stepped({ xs: 15, sm: 16, lg: 17 })
- *   stepped({ xs: 11, sm: 12 })         // md/lg inherit sm
- *   stepped({ xs: 11, sm: 12 '768': 16 }) // custom breakpoint
- */
 export function stepped(
   stops: Partial<Record<BreakpointKey, number | string>> & { [px: number]: number | string }
 ): string {
@@ -79,3 +60,20 @@ export function stepped(
   globalStyle(":root", rule);
   return v;
 }
+
+/** ANIMATION */
+export const srOnly: GlobalStyleRule = {
+  position: 'absolute',
+  width: '1px',
+  height: '1px',
+  padding: '0',
+  margin: '-1px',
+  overflow: 'hidden',
+  clip: 'rect(0, 0, 0, 0)',
+  whiteSpace: 'nowrap',
+  border: 0,
+};
+
+export const srOnlyCls = style(srOnly);
+
+export const EASE_CUBIC = `cubic-bezier(.2,.1,.2,1)`;

@@ -1,8 +1,5 @@
-import { PROJECTS_BY_CTGY } from "@/lib/content/projects";
-
-import HomePage from "@/components/pages/home";
-
+import HomePage from "@/components/pages/Home";
 
 export default async function Index() {
-  return <HomePage projects={PROJECTS_BY_CTGY} />;
+  return <HomePage />;
 }

@@ -1,6 +1,3 @@
-// Server-only: reads image files from disk at build/render time.
-// The `node:fs` import will fail loudly if this module is ever pulled into a
-// client bundle, which is the intended guard.
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { imageSize } from "image-size";

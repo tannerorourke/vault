@@ -5,9 +5,10 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { ViewTransitions } from "next-view-transitions";
 
-import AppProvider from "@/components/navigation/AppProvider";
-import { ThemeProvider } from "@/components/navigation/ThemeProvider";
+import AppProvider from "@/components/providers/AppProvider";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 
+import { content } from "@/lib/content/content";
 import { lightTheme, darkTheme } from "@/lib/theme/theme.css";
 import './global.css';
 import './global.styles.css';
@@ -47,7 +48,7 @@ export const metadata: Metadata = {
     default: "Tanner O\'Rourke — ML Engineer & Interpretability Researcher",
     template: "%s · Tanner O\'Rourke",
   },
-  description: "ML engineer and mechanistic-interpretability researcher in Seattle. MS in AI, UT Austin. Open to ML engineering and research roles.",
+  description: "Tanner O\'Rourke | ML Researcher and Engineer. MS in AI from UT Austin. Work in ML evaluation infrastructure, mechanistic interpretability, manifold analysis, and time-series modeling.",
   applicationName: "Tanner O\'Rourke Portfolio",
   authors: [{ name: "Tanner O\'Rourke", url: SITE_URL }],
   creator: "Tanner O\'Rourke",
@@ -99,7 +100,7 @@ export default async function RootLayout({
       >
         <body>
           <ThemeProvider initialTheme={theme} hasCookie={!!themeCookie}>
-            <AppProvider>
+            <AppProvider numProjects={content.projectMeta.num}>
                 {children}
                 <Analytics />
                 <SpeedInsights />

@@ -65,7 +65,9 @@ const nextConfig: NextConfig = {
   },
 
   webpack: (webpackConfig, { dev }) => {
-    if (dev) webpackConfig.cache = false;
+    if (dev) 
+      webpackConfig.cache = false;
+    webpackConfig.module.rules.push({ test: /\.md$/, type: 'asset/source' })
     return webpackConfig;
   },
 };
