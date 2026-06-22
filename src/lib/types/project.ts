@@ -27,6 +27,14 @@ export type FindingCard = {
   eyebrow?: string;
 };
 
+export type HeroImage = {
+  src: string;
+  alt?: string;
+  label?: string; // Feature only
+  caption?: string; // Feature only
+  captionOnHome?: boolean; // Feature only
+}
+
 export type ProjectContent = {
   // -- meta
   pid: string;

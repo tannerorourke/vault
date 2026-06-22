@@ -7,6 +7,9 @@ export const theme = createThemeContract({
     canvas: null,
 		surfaceAlt: null,
 		card: null,
+		status: {
+			available: null,
+		},
 		cardFrosted: null,
 		cardFrostedBorder: null,
     cardFrostedShadow: null,

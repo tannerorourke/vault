@@ -23,8 +23,9 @@
   "heroImage": {
     "src": "/content/interpret-jepa/jepa-analysis.png",
     "alt": "Diagram of the shared-encoder stop-gradient JEPA architecture, with VICReg loss components annotated.",
-    "label": "jepa_architecture.svg",
-    "caption": "Shared-encoder stop-gradient · VICReg 1.0 / 1.0 / 0.04"
+    "label": "",
+    "caption": "[1]. The model predicts embedding $k$ from $k-1$ prior encounters, penalized for representations that collapse, correlate, or fail to predict (VicReg loss).",
+    "captionOnHome": false
   },
   "chips": [
     { "label": "Mechanistic Interpretability", "color": "teal" },

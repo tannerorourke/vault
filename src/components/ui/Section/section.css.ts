@@ -1,6 +1,7 @@
 import { style, globalStyle } from "@vanilla-extract/css";
 import { theme } from "@/lib/theme/theme.css";
 import { mq } from "@/lib/theme/responsive.css";
+import { markdownInline } from "@/lib/styles/common.css";
 
 const MEDIA_RADIUS = "10px";
 
