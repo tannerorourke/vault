@@ -1,1 +1,1 @@
-export { NextProjectFooter as default } from "./next-project";
+export { NextProjectFooter } from "./next-project";

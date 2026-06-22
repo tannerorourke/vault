@@ -5,7 +5,7 @@ import { ComponentProps, useCallback } from "react";
 import { useAppContext } from "@/components/providers/AppProvider";
 
 
-type ProjectRootProps = ComponentProps<"main"> & {
+type ProjectRootProps = ComponentProps<"div"> & {
   pid: string;
 }
 

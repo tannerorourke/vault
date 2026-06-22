@@ -10,9 +10,9 @@ import { getImageSize, isSvg } from "@/lib/content/images";
 import { content as siteContent } from "@/lib/content/content";
 import sectionByType, { SectionShell, SectionTypes } from "@/components/ui/Section";
 
-import TrackedDiv from "./TrackedDiv";
-import ProjectToc from "./Toc";
-import NextProjectFooter from "./NextProject";
+import { TrackedDiv } from "./TrackedDiv";
+import { ProjectToc } from "./Toc";
+import { NextProjectFooter } from "./NextProject";
 
 import * as sty from "./project-page.css";
 

@@ -1,2 +1,2 @@
-export { ProjectToc as default } from "./toc";
+export { ProjectToc } from "./toc";
 export type { TocSection } from "./toc";

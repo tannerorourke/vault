@@ -1,1 +1,1 @@
-export { TrackedDiv as default } from "./tracked-div";
+export { TrackedDiv } from "./tracked-div";
