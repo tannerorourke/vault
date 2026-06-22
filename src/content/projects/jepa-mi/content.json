@@ -2,6 +2,8 @@
   "pid": "jepa-mi",
   "live": true,
   "order": 1,
+  "publishedAt": "2026-06-14",
+  "updatedAt": "2026-06-21",
   "title": "Mechanistic Interpretability for Clinical JEPAs",
   "indexSubtitle": "Exploring the latent representations of JEPA-class models using classical and novel interpretability techniques.",
   "eyebrow": "Research (ongoing)",

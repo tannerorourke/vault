@@ -2,6 +2,8 @@
   "pid": "gpt4-factuality",
   "live": true,
   "order": 5,
+  "publishedAt": "2026-06-14",
+  "updatedAt": "2026-06-21",
   "title": "Cross-Abstractive Alignment in Fact-Checking",
   "indexSubtitle": "A followup analysis to FActScore (Min et al., 2023)  and analysis of recurring patterns where automated fact-checkers get things wrong (*Cross-Abstractive Alignment*).",
   "eyebrow": "Case Study (2025)",

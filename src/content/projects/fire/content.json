@@ -2,6 +2,8 @@
   "pid": "fire",
   "live": true,
   "order": 3,
+  "publishedAt": "2026-06-14",
+  "updatedAt": "2026-06-21",
   "title": "Multi-modal wildfire ignition modeling",
   "indexSubtitle": "Forecasting next-day wildfire ignition in Washington State with a 24-feature multi-modal stack and a CNN-Transformer Fusion model.",
   "eyebrow": "Research (2025)",

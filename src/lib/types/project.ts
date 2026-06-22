@@ -40,6 +40,8 @@ export type ProjectContent = {
   pid: string;
   live: boolean;
   order?: number;
+  publishedAt?: string;
+  updatedAt?: string;
   // -- (card) description
   title: string;
   indexSubtitle: string;

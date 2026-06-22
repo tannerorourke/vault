@@ -2,6 +2,8 @@
   "pid": "negation-snli",
   "live": true,
   "order": 4,
+  "publishedAt": "2026-06-14",
+  "updatedAt": "2026-06-21",
   "title": "Syntactic Negation Probing",
   "indexSubtitle": "If 'A room is never empty without music', then is 'The room empty with music'? Your model might have a problem with this.",
   "eyebrow": "Case Study (2025)",

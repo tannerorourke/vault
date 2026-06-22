@@ -2,6 +2,8 @@
   "pid": "code-lm",
   "live": true,
   "order": 5,
+  "publishedAt": "2025-06-20",
+  "updatedAt": "2026-06-21",
   "title": "Code LM",
   "indexSubtitle": "A guided demonstration through building a coding-optimized GPT2-style LM and byte-level BPE tokenizer.",
   "eyebrow": "Walkthrough",

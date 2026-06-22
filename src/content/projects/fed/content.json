@@ -2,6 +2,8 @@
   "pid": "jepa-mi",
   "live": false,
   "order": 6,
+  "publishedAt": "2025-06-21",
+  "updatedAt": "2026-06-21",
   "title": "How I built a better Markdown renderer",
   "indexSubtitle": "",
   "eyebrow": "Article (2026)",
