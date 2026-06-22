@@ -88,9 +88,6 @@ export const TextLink: React.FC<TextLinkProps> = ({
   if (nextProps) {
     const { className: nextClassName, href, ...restNextProps } = nextProps;
 
-    // Hash-only hrefs are in-page anchors — render a native <a> so the
-    // browser handles the scroll and we don't kick off a view transition for
-    // a non-route change.
     if (typeof href === "string" && href.startsWith("#")) {
       return (
         <a

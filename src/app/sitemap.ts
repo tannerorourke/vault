@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next';
-import { getAllProjectSlugs } from '@/lib/content/projects';
+import { getAllProjectSlugs } from '@/lib/content/content';
 
 const BASE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ??

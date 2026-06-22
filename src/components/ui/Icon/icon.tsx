@@ -10,10 +10,8 @@ import Text from '../Text';
 import * as sty from "./icon.css";
 
 
-// --- tooltip wiring (used by IconLink + IconButton) ---
-
-export type Side = "top" | "right" | "bottom" | "left";
-
+// --- tooltip wiring used by IconLink + IconButton ---
+type Side = "top" | "right" | "bottom" | "left";
 export type CommonProps = {
   children: ReactNode;
   alt?: string;
@@ -42,13 +40,12 @@ export function withTooltip(node: ReactElement, tooltipText?: string, tooltipSid
   );
 }
 
-// -- Icon wrapper primitive --
-
+// -- Icon wrapper primitives --
 export type IconSize = "sm" | "md" | "lg" | "xl";
 export type IconTone = "default" | "muted";
 
 const SIZE_MAP: Record<IconSize, number> = {
-  sm: 14,
+  sm: 12,
   md: 16,
   lg: 20,
   xl: 24,

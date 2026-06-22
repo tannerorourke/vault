@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 import { theme } from "@/lib/theme/theme.css";
-import { srOnly } from "@/lib/styles/utils.css";
+import { srOnly } from "@/lib/theme/responsive.css";
 
 export const shell = style({
   minHeight: "100vh",
@@ -8,7 +8,12 @@ export const shell = style({
   flexDirection: "column",
   position: "relative",
   overflow: 'hidden',
-})
+});
+
+export const content = style({
+  position: 'fixed',
+  inset: 0,
+});
 
 export const skipLink = style({
   ...srOnly,
@@ -38,7 +43,4 @@ export const skipLink = style({
   },
 });
 
-export const content = style({
-  position: 'fixed',
-  inset: 0,
-});
+

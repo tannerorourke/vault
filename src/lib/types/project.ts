@@ -1,8 +1,8 @@
 import { IconName } from "@/components/icons/registry";
 import { TagChipColor } from "@/components/ui/TagChip";
-import { ProjectSection } from "@/components/pages/project/Section";
+import { SectionTypes } from "@/components/ui/Section";
 
-export type ProjectCategoryId = "research" | "labs" | "experience";
+export type ProjectCategoryId = "publications" | "research" | "case-studies" | "article";
 
 export type ProjectTag = {
   label: string;
@@ -28,26 +28,31 @@ export type FindingCard = {
 };
 
 export type ProjectContent = {
+  // -- meta
   pid: string;
-  title: string;
-  // -- meta ------------
   live: boolean;
-  category: ProjectCategoryId; 
   order?: number;
-  isFeature?: boolean;
-  // -- On card ----------
-  cardSubtitle: string;
-  // -- On project page --
+  // -- (card) description
+  title: string;
+  indexSubtitle: string;
   eyebrow?: string;
+  thumbnail: {
+    src: string;
+    alt?: string;
+  };
+  // canvas descriptors
+  category: ProjectCategoryId; 
+  // -- On project page
   subtitle?: string;
-  tags?: ProjectTag[];
+  chips?: ProjectTag[];
   links?: JumpIconButton[];
   finding?: FindingCard;
+  showToc?: boolean;
   heroImage?: { 
     src: string; 
     alt?: string;
-    label?: string;   // Feature only
-    caption?: string; // Feature only
+    label?: string;
+    caption?: string;
   };
-  sections: ProjectSection[];
+  sections: SectionTypes[];
 };

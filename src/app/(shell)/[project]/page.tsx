@@ -1,14 +1,13 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getAllProjectSlugs, getProjectContent } from "@/lib/content/projects";
+import { getAllProjectSlugs, getProjectContent } from "@/lib/content/content";
 import { PageProps } from "@/lib/types/routes"
 
-import ProjectPage from "@/components/pages/project";
+import ProjectPage from "@/components/pages/Project";
 
 
-// Reject any [project] slug not in generateStaticParams at the routing layer,
-// before the page function runs. Eliminates the layout-shell-then-notFound
-// flash on bad slugs (e.g. bot scans of /wp-admin).
+// -- [FIX] flash on bad slugs (e.g. bot scans of /wp-admin) --
+// Reject any [project] slug not in generateStaticParams at the routing layer, before the page function runs
 export const dynamicParams = false;
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -17,7 +16,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const content = await getProjectContent(project)
   if (!content) return notFound()
 
-  const { title, cardSubtitle: description } = content
+  const { title, indexSubtitle: description } = content
 
   return {
     title,
