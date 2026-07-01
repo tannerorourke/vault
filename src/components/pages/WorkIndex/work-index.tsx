@@ -23,7 +23,7 @@ function IndexCard({ project }: { project: ProjectContent }) {
     <Link
       href={`/${pid}`}
       prefetch
-      className={sty.cardBase}
+      className={sty.card}
     >
       <div className={sty.headRow}>
         {(thumbnail && thumbnail.src) && (

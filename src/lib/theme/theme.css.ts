@@ -5,17 +5,21 @@ import { stepped, vwFromLg } from "./responsive.css";
 export const theme = createThemeContract({
   color: {
     canvas: null,
-		surfaceAlt: null,
-		card: null,
-		// status: {
-		// 	available: null,
-		// },
-		cardFrosted: null,
-		cardFrostedBorder: null,
-    cardFrostedShadow: null,
+		canvasAlt: null,
+    canvasFeature: null,
+		card: {
+			main: null,
+			hover: null,
+			active: null,
+			frosted: null,
+			frostedBorder: null,
+			frostedShadow: null,
+		},
 		text: {
 				primary: null,
-				secondary: null
+				secondary: null,
+        onFeature: null,
+        onFeatureMuted: null
 		},
 		primary: {
 				main: null,
@@ -56,6 +60,7 @@ export const theme = createThemeContract({
   },
 	typography: {
 		fontSize: {
+      headline: null,
       displayLg: null,
 			display: null,
 			titleLg: null,
@@ -135,7 +140,6 @@ export const theme = createThemeContract({
 		radius: null,
 		shadow: null,
 	},
-
 });
 
 
@@ -143,6 +147,7 @@ export const theme = createThemeContract({
 /** -- SHARED DEFINITIONS ----------------------- */
 const typography = {
   fontSize: {
+    headline:  stepped({ xs: 44, sm: 54, md: 60, lg: vwFromLg(74) }),
     displayLg: stepped({ xs: 38, sm: 45, md: 50, lg: vwFromLg(48) }),
     display:   stepped({ xs: 36, sm: 40, md: 44, lg: vwFromLg(44) }),
     titleLg:   stepped({ xs: 32, sm: 34, md: 36, lg: vwFromLg(36) }),
@@ -203,15 +208,15 @@ const space = {
 }
 
 const page = {
-  gutter: { xs: '16px', sm: '24px', md: '36px', lg: '48px' },
+  gutter: { xs: '16px', sm: '48px', md: '36px', lg: '48px' },
   marginTop: { xs: '16px', sm: '24px', md: '28px', lg: '36px' },
   clearanceTop: { xs: '58px', sm: '66px', md: '70px', lg: '78px' },
   marginBottom: { xs: '64px', sm: '48px', md: '48px', lg: '48px' },
   
   maxContentWidth: { 
     sm: '872px', // 900px - gutter diff * 2
-    md: '900px', // width set to scalar for animation, max-width=100vw to prevent overflow
-    lg: '900px' 
+    md: '1000px', // width set to scalar for animation, max-width=100vw to prevent overflow
+    lg: '1000px' 
   }
 };
 
@@ -228,17 +233,24 @@ const zIndex = {
 /** -- Per-THEME DEFINITIONS --------------------------------- */
 const lightThemeColors = {
   canvas: '#F4F6F5',
-  surfaceAlt: '#E0E7E5',
-  card: '#FFFFFF',
-  cardFrosted: 'rgba(244, 246, 245, 0.06)', // sheet.bg w/lower opacity
-  cardFrostedBorder: 'rgba(255, 255, 255, 0)',
-  cardFrostedShadow: `0 8px 32px rgba(31, 38, 135, 0.2),
+  canvasAlt: '#E0E7E5',
+  canvasFeature: '#143431',
+  card: {
+    main: '#FFFFFF',
+    hover: '#F2F5F5',  // tint.primaryWeak (0.06) composited over card.main
+    active: '#DDE5E4', // tint.primary (0.16) composited over card.main
+    frosted: 'rgba(244, 246, 245, 0.06)', // sheet.bg w/lower opacity
+    frostedBorder: 'rgba(255, 255, 255, 0)',
+    frostedShadow: `0 8px 32px rgba(31, 38, 135, 0.2),
                 inset 0 4px 20px rgba(255, 255, 255, 0.3),
                 inset 0 -8px 16px -10px rgba(255, 255, 255, 0.55),
                 inset -10px -10px 16px -12px rgba(255, 255, 255, 0.45)`,
+  },
   text: {
       primary: '#1C2321',
       secondary: '#5D6D68',
+      onFeature: '#EDF1F0',
+      onFeatureMuted: '#9FB4AF'
   },
   primary: {
       main: '#2A5F58',
@@ -280,17 +292,24 @@ const lightThemeColors = {
 
 const darkThemeColors = {
   canvas: '#0e1a18',
-  surfaceAlt: '#142A27',
-  card: '#162822',
-  cardFrosted: 'rgba(14, 26, 24, 0.30)', // sheet.bg w/lower opacity
-  cardFrostedBorder: 'rgba(255, 255, 255, 0.06)',
-  cardFrostedShadow: `0 8px 32px rgba(0, 0, 0, 0.4),
+  canvasAlt: '#142A27',
+  canvasFeature: '#0e1a18', // same as canvas
+  card: {
+    main: '#162822',
+    hover: '#19312A',  // tint.primaryWeak (0.06) composited over card.main
+    active: '#1F3F38', // tint.primary (0.16) composited over card.main
+    frosted: 'rgba(14, 26, 24, 0.30)', // sheet.bg w/lower opacity
+    frostedBorder: 'rgba(255, 255, 255, 0.06)',
+    frostedShadow: `0 8px 32px rgba(0, 0, 0, 0.4),
                 inset 0 4px 20px rgba(255, 255, 255, 0.08),
                 inset 0 -8px 16px -10px rgba(255, 255, 255, 0.10),
                 inset -10px -10px 16px -12px rgba(255, 255, 255, 0.06)`,
+  },
   text: {
       primary: '#E0EDEA',
       secondary: '#7A9E98',
+      onFeature: '#E0EDEA',
+      onFeatureMuted: '#7A9E98'
   },
   primary: {
       main: '#4DB8AC',

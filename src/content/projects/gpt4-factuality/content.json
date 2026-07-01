@@ -50,7 +50,7 @@
       "type": "2upTextImage",
       "id": "results",
       "title": "Results",
-      "body": "The error asymmetry is more interesting than the headline. Every false negative missed by failing the absolute entailment threshold, never by failing the win gap. The model wasn't borderline-uncertain on its misses - it was confidently wrong, often predicting entailment under 0.05 when the gold was S. False positives split roughly in half between high-confidence wrong on detail mismatches (entailment ≥ 0.95) and threshold-skirting calls just above 0.55.",
+      "body": "Every false negative missed by failing the absolute entailment threshold, never by failing the win gap. The model wasn't borderline-uncertain on its misses - it was confidently wrong, often predicting entailment under 0.05 when the gold was S. False positives split roughly in half between high-confidence wrong on detail mismatches (entailment >= 0.95) and threshold-skirting calls just above 0.55.",
       "caption": "92 true positives, 97 true negatives, 12 false positives, 20 false negatives. 85.5% accuracy, balanced F1 (0.852 / 0.858).",
       "side": "right",
       "image": {

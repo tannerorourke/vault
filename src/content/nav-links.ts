@@ -19,7 +19,7 @@ export const LINKS: Record<string, NavLink> = {
     type: "section",
     iconName: "user",
     text: "Hello", alt: "About",
-    href: "/#about",
+    href: "/about",
     tooltipText: "About",
     section: true,
   },
@@ -97,14 +97,8 @@ export const LINKS: Record<string, NavLink> = {
 
 export type SiteLinkKey = keyof typeof LINKS
 
-export const MENU_LINKS: Record<string, (keyof typeof LINKS)[]> = {
-  section: ["about", "mywork", "contact"],
-  // connect: ["email", "linkedin", "github", "repo"],
-  // linkcv: ["cv"]
-}
-
-export const CONTACT_LINKS: (keyof typeof LINKS)[] = 
+export const CONTACT_LINKS: (SiteLinkKey)[] = 
   ["email", "linkedin", "github", "cv"];
 
-export const NAV_LINKS: (keyof typeof LINKS)[] = 
+export const NAV_LINKS: (SiteLinkKey)[] = 
   ["about", "mywork"];

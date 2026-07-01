@@ -17,7 +17,7 @@ export const list = style({
   flexDirection: "column",
 });
 
-export const cardBase = style({
+export const card = style({
   position: "relative",
   display: "flex",
   flexDirection: "column",
@@ -27,8 +27,6 @@ export const cardBase = style({
   marginLeft: "-16px",
 
   background: "transparent",
-  border: "none",
-  borderBottom: `2px solid ${theme.color.divider}`,
   borderRadius: 0,
   boxShadow: "none",
   textDecoration: "none",
@@ -38,6 +36,9 @@ export const cardBase = style({
   transition: `background 200ms ease`,
 
   selectors: {
+    "li:not(:last-child) > &": {
+      borderBottom: `1px solid ${theme.color.divider}`,
+    },
     '&:focus-visible': {
       outline: `2px solid ${theme.color.focus}`,
       outlineOffset: 2
@@ -45,7 +46,7 @@ export const cardBase = style({
     '&:hover': {
       background: theme.color.tint.primaryWeak
     },
-    "&:active": {
+    '&:active': {
       background: theme.color.tint.primary
     }
   },
@@ -80,10 +81,10 @@ export const headRow = style({
     textWrap: "pretty",
     transition: `color 180ms ease`,
     selectors: {
-      [`${cardBase} &`]: {
+      [`${card} &`]: {
         color: theme.color.primary.main,
       },
-      [`${cardBase}:hover &, ${cardBase}:focus-visible &`]: {
+      [`${card}:hover &, ${card}:focus-visible &`]: {
         color: theme.color.primary.hover,
       },
     },

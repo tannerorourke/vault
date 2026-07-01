@@ -41,10 +41,11 @@ export function withTooltip(node: ReactElement, tooltipText?: string, tooltipSid
 }
 
 // -- Icon wrapper primitives --
-export type IconSize = "sm" | "md" | "lg" | "xl";
+export type IconSize = "xs" | "sm" | "md" | "lg" | "xl";
 export type IconTone = "default" | "muted";
 
 const SIZE_MAP: Record<IconSize, number> = {
+  xs: 10,
   sm: 12,
   md: 16,
   lg: 20,

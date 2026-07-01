@@ -2,44 +2,41 @@ import { readFileSync } from 'node:fs';
 import { join } from 'path';
 
 import type { ProjectContent } from "@/lib/types/project";
-import homeMd from "@/content/home.md";
+import { home } from "@/content/home";
 import fire from "@/content/projects/fire/content.json";
 import gpt4Factuality from "@/content/projects/gpt4-factuality/content.json";
 import codeLM from "@/content/projects/code-lm/content.json";
 import interpretJepa from "@/content/projects/jepa-mi/content.json";
 import negationSnli from "@/content/projects/negation-snli/content.json";
+import { SectionTypes } from '@/components/ui/Section';
+import { splitMarkdownSections } from '@/lib/markdown/sections';
 
 
-// Resolve any section whose body is a `[!file](name.md)` marker by reading the
-// markdown from that project's own content directory (src/content/projects/<pid>/).
+// Resolve any section whose body is a `[!file](name.md)` by splitting the
+// referenced file's '## ' headings into one section per heading.
 function resolveProject(p: ProjectContent): ProjectContent {
   if (!p.sections) return p;
   const dir = join(process.cwd(), 'src/content/projects', p.pid);
-  return {
-    ...p,
-    sections: p.sections.map((s) => {
-      if (s?.body && s?.body?.startsWith("[!file]")) {
-        const match = s.body.match(/^\[!file\]\((.+)\)$/);
-        const file = match?.[1];
-        if (!file)
-          throw new Error(`Bad [!file] reference: "${s.body}"`);
-        return {
-          ...s,
-          body: readFileSync(join(dir, file), 'utf-8'),
-        };
-      }
-      return s;
-    }),
-  };
+
+  const sections = p.sections.flatMap((s): SectionTypes[] => {
+    if (!(s?.body && s.body.startsWith("[!file]"))) return [s];
+
+    const match = s.body.match(/^\[!file\]\((.+)\)$/);
+    const fp = match?.[1];
+    if (!fp)
+      throw new Error(`Bad [!file] reference: "${s.body}"`);
+
+    const file = readFileSync(join(dir, fp), 'utf-8');
+    return splitMarkdownSections(file).map((section) => ({
+      ...section,
+      type: "block",
+    }));
+  });
+
+  return { ...p, sections };
 }
 
-// Homepage markdown: the leading `# H1` is the headline, the rest is the body.
-function parseHome(md: string): { headline: string; body: string } {
-  const match = md.match(/^#\s+(.+?)\r?\n([\s\S]*)$/);
-  if (!match)
-    throw new Error("home.md must begin with an '# H1' headline");
-  return { headline: match[1].trim(), body: match[2].trim() };
-}
+
 
 const projectList: ProjectContent[] = ([
   fire,
@@ -66,7 +63,7 @@ const projectMeta = {
 };
 
 export const content = {
-  home: parseHome(homeMd),
+  home,
   projects,
   projectList,
   projectMeta,

@@ -35,7 +35,7 @@ export const iconButton = recipe({
       pill: {
         height: 42, width: 42,
         borderRadius: "50%",
-        background: theme.color.card,
+        background: theme.color.card.main,
         boxShadow: `0 4px 20px -6px ${theme.color.shadow}`,
       },
       box: {
@@ -87,7 +87,7 @@ export const tooltipPopup = style({
   fontWeight: theme.typography.fontWeight.medium,
   lineHeight: theme.typography.lineHeight.normal,
   color: theme.color.text.primary,
-  background: theme.color.card,
+  background: theme.color.card.main,
   padding: "6px 10px",
   borderRadius: "6px",
   boxShadow: `0 4px 20px -2px ${theme.color.shadow}`,

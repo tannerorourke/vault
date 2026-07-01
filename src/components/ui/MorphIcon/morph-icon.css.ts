@@ -10,8 +10,7 @@ export const morphWrap = style({
 export const layer = style({
   position: 'absolute',
   inset: 0,
-  width: "100%",
-  height: "100%",
+  margin: "auto",
   transition: 'opacity 300ms ease, transform 300ms ease',
 
   '@media': {

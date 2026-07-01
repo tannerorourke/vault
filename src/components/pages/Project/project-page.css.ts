@@ -1,37 +1,39 @@
 import { style } from "@vanilla-extract/css";
 import { theme } from "@/lib/theme/theme.css";
-import { EASE_CUBIC, mq } from "@/lib/theme/responsive.css";
-
+import { mq } from "@/lib/theme/responsive.css";
 
 export const main = style({
   display: "flex",
   flexDirection: "column",
-  position: "relative",
+  position: 'relative',
   width: "100%",
   margin: `0 auto`,
 });
+
 
 export const content = style({
   minHeight: "90vh",
   display: "flex",
   flexDirection: "column",
-  gap: theme.space._32,
+  gap: theme.space._16,
+  position: "relative",
 
   margin: `0 auto`,
-  padding: `${theme.page.clearanceTop.xs} ${theme.page.gutter.xs} 0`,
-  transition: `padding 300ms ${EASE_CUBIC}`,
-  [mq.sm]: { 
-    padding: `${theme.page.clearanceTop.sm} ${theme.page.gutter.sm} 0`,
+  // Top padding clears fixed Header (clearanceTop) + spacing
+  padding: `${theme.page.marginTop.xs} ${theme.page.gutter.xs} 0`,
+  // transition: `padding 300ms ${EASE_CUBIC}`,
+  [mq.sm]: {
+    padding: `${theme.page.marginTop.sm} ${theme.page.gutter.sm} 0`,
     maxWidth: theme.page.maxContentWidth.sm,
   },
   [mq.md]: {
-    padding: `${theme.page.clearanceTop.md} ${theme.page.gutter.md} 0`,
+    padding: `${theme.page.marginTop.md} ${theme.page.gutter.md} 0`,
     width: theme.page.maxContentWidth.md,
     maxWidth: '100vw',
     gap: theme.space._48,
   },
   [mq.lg]: {
-    padding: `${theme.page.clearanceTop.lg} ${theme.page.gutter.lg} 0`,
+    padding: `${theme.page.marginTop.lg} ${theme.page.gutter.lg} 0`,
     width: theme.page.maxContentWidth.lg,
     maxWidth: theme.page.maxContentWidth.lg,
   }
@@ -68,7 +70,7 @@ export const header = style({
   // hero foot (chips and links)
   export const heroFoot = style({
     display: "flex",
-    alignItems: "center",
+    alignItems: "baseline",
     gap: theme.space._16,
     flexWrap: "wrap",
     marginTop: theme.space._4,
@@ -98,37 +100,9 @@ export const heroImage = style({
   background: theme.color.tint.neutralSoft,
 });
 
-/** Body layout */
-const layoutGrid = {
-  display: "grid",
-  gridTemplateColumns: "1fr",
-  gap: theme.space._24,
-  alignItems: "start",
-  margin: `0 auto`,
-  [mq.md]: {
-    gridTemplateColumns: "220px 1fr",
-    gap: theme.space._36,
-  },
-  [mq.lg]: {
-    gridTemplateColumns: "240px 1fr",
-    gap: theme.space._56,
-  }
-}
-
-export const layout = style({ margin: `0 auto` });
-export const layoutToc = style([{ margin: `0 auto` }, layoutGrid])
-
-  export const tocWrapSticky = style({
-    display: "inline-flex",
-    [mq.md]: {
-      display: "block",
-      position: "sticky",
-      top: `calc(${theme.page.marginTop.md})`,
-    },
-    [mq.lg]: {
-      top: `calc(${theme.page.marginTop.lg})`,
-    },
-  });
+export const layout = style({ 
+  margin: `0 auto` 
+});
 
   export const sectionsWrap = style({
     display: "flex",
