@@ -34,7 +34,7 @@ export function ProjectPage({ content }: { content: ProjectContent }) {
       pid, 
       <>
         <Markdown
-          key={pid} value={title}
+          key={pid} value={meta?.title}
           textProps={{ as: "h3", variant: "display", className: sty.title }}
         />
         {meta?.eyebrow &&

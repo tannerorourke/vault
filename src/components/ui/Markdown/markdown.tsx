@@ -96,7 +96,7 @@ export async function Markdown({
       h6: Heading('h6'),
       ul: ({ children }) => <ul className={sty.bulletList}>{children}</ul>,
       ol: ({ children }) => <ol className={sty.orderedList}>{children}</ol>,
-      li: ({ children }) => <Text as="li" variant="bodySm">{children}</Text>,
+      li: ({ children }) => <Text as="li" variant="bodySm"><div>{children}</div></Text>,
       blockquote: ({ children }) => <blockquote className={sty.blockquote}>{children}</blockquote>,
       hr: () => <hr className={sty.hr} />
     };
