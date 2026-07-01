@@ -38,11 +38,11 @@ export function useDrawer() {
 
 
 /**
- * Hold state of NavHub and sidebar drawer open/close.
+ * Hold state of open/close for query param aligned popovers and drawers
+ * ('Contact' popover and 'Work' sidebar)
  * - /work and /contact redirect to `/?view=work` and `/?view=contact`
  * - '?view=work' and '?view=contact' QP's opens work/contact drawers
  * - Correct drawer is opened, QP stripped on mount
- * - NavHub opens drawer via context, no URL change.
  */
 export function DrawerProvider({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState<DrawerId | null>(null);
@@ -51,8 +51,8 @@ export function DrawerProvider({ children }: { children: ReactNode }) {
   const openDrawer = useCallback((id: DrawerId) => setOpen(id), []);
   const closeDrawer = useCallback(() => setOpen(null), []);
 
-  // Reflect open state to the document root so layout CSS can push page content
-  // aside for the open drawer (≥ md). Mirrors ContentTransitionProvider's
+  // Reflect open state to document root so layout CSS can push page content
+  // aside for the open drawer (>= md). Mirrors ContentTransitionProvider's
   // data-page-transition convention. contact = left drawer, work = right.
   useLayoutEffect(() => {
     document.documentElement.dataset.drawer = open ?? "";

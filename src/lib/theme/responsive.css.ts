@@ -1,10 +1,10 @@
 import { createVar, globalStyle, style, type GlobalStyleRule } from "@vanilla-extract/css";
 
 export const breakpoints = {
-  xs: 0,
-  sm: 560,
-  md: 900,
-  lg: 1620,
+  xs: 0,    // mobile
+  sm: 680,  // 520, // tablet
+  md: 1100, // 900, // desktop sm
+  lg: 1620, // desktop lg
 };
 
 /**

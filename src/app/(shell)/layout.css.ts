@@ -29,7 +29,7 @@ export const skipLink = style({
       clip: "auto",
       overflow: "visible",
       zIndex: theme.zIndex.tooltip,
-      background: theme.color.card,
+      background: theme.color.card.main,
       color: theme.color.text.primary,
       border: `1px solid ${theme.color.divider}`,
       borderRadius: theme.sheet.radius,

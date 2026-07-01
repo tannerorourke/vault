@@ -6,7 +6,9 @@ export const textRecipe = recipe({
     tone: {
       primary: { color: theme.color.text.primary },
       secondary: { color: theme.color.text.secondary },
-      title: { color: theme.color.primary.main }
+      title: { color: theme.color.secondary.main },
+      onFeature: { color: theme.color.text.onFeature },
+      onFeatureMuted: { color: theme.color.text.onFeatureMuted },
     },
 
     truncate: {

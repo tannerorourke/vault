@@ -33,7 +33,9 @@ const HEADING_VARIANT: Record<HeadingTag, TextVariant> = {
 
 const Heading = (tag: HeadingTag) =>
   function node({ children }: ComponentProps<'h1'>) {
-    return <Text as={tag} variant={HEADING_VARIANT[tag]}>{children}</Text>;
+    const id = (tag === 'h2' && children) ? children.toString().replaceAll(' ','-').toLowerCase() : '';
+    console.log(`Rendering heading: ${tag} with id: ${id}`);
+    return <Text id={`section-${id}`} as={tag} variant={HEADING_VARIANT[tag]}>{children}</Text>;
   };
 
 // Make links work with Next.js primitives
@@ -83,31 +85,26 @@ export async function Markdown({
       code: Code(sty.md)
     };
 
-    if (textProps) {
-      // single purpose text rendering, configured straight from text component
-      components = {
-        ...baseComponents,
-        p: ({ children }) => <Text {...textProps}>{children}</Text>,
-      };
-    } else {
+    components = {
+      ...baseComponents,
+      p: ({ children }) => <Text {...textProps}>{children}</Text>,
+      h1: () => <></>,// Heading('h1'),
+      h2: Heading('h2'),
+      h3: Heading('h3'),
+      h4: Heading('h4'),
+      h5: Heading('h5'),
+      h6: Heading('h6'),
+      ul: ({ children }) => <ul className={sty.bulletList}>{children}</ul>,
+      ol: ({ children }) => <ol className={sty.orderedList}>{children}</ol>,
+      li: ({ children }) => <Text as="li" variant="bodySm"><div>{children}</div></Text>,
+      blockquote: ({ children }) => <blockquote className={sty.blockquote}>{children}</blockquote>,
+      hr: () => <hr className={sty.hr} />
+    };
+    
+    if (!textProps) {
       // full block rendering (headings, lists, blockquotes, paragraphs)
       // inject className into block wrapper, not sub-block elements
       block = true;
-      components = {
-        ...baseComponents,
-        p: ({ children }) => <Text as="p" variant="body">{children}</Text>,
-        h1: Heading('h1'),
-        h2: Heading('h2'),
-        h3: Heading('h3'),
-        h4: Heading('h4'),
-        h5: Heading('h5'),
-        h6: Heading('h6'),
-        ul: ({ children }) => <ul className={sty.bulletList}>{children}</ul>,
-        ol: ({ children }) => <ol className={sty.orderedList}>{children}</ol>,
-        li: ({ children }) => <Text as="li" variant="bodySm">{children}</Text>,
-        blockquote: ({ children }) => <blockquote className={sty.blockquote}>{children}</blockquote>,
-        hr: () => <hr className={sty.hr} />
-      };
     }
   }
 

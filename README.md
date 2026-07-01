@@ -1,6 +1,6 @@
 # My 'Vault'
 
-Personal site, for sharing code, papers, and articles. Built with [Next.js 16](https://nextjs.org) (App Router, React 19) and Vanilla Extract (SSR styling). Deployed on [Vercel](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme).
+Personal site, for sharing code, papers, and articles. Built with [Next.js 16](https://nextjs.org) (App Router, React 19) and [Vanilla Extract](https://vanilla-extract.style/) (SSR styling).
 
 ## Features
 

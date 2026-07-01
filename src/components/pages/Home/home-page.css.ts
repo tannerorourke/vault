@@ -4,101 +4,50 @@ import { EASE_CUBIC, mq } from "@/lib/theme/responsive.css";
 
 
 export const main = style({
-  background: theme.color.surfaceAlt,
   position: "relative",
   width: "100%",
-  paddingBottom: `calc((${theme.page.marginBottom.xs} + ${theme.space._8}))`, // match fixed footer
-  [mq.sm]: {
-    minHeight: 'unset',
-    paddingBottom: 0, // unset
-  },
-  [mq.md]: {
-    paddingBottom: theme.page.marginBottom.md, // space below body canvas bg
-  },
-  [mq.lg]: {
-    paddingBottom: theme.page.marginBottom.lg,
-  },
-
-
+  minHeight: "100vh",
+  display: "flex",
+  flexDirection: "column",
+  // Reserve footer height
+  marginBottom: theme.space._24
 });
 
-export const intro = style({
-  // background: theme.color.surfaceAlt,
-  position: "relative",
-  margin: "0 auto",
+
+export const header = style({
+  background: theme.color.canvasFeature,
+});
+export const headerBox = style({
   display: "flex",
+  alignItems: "center",
+  flexWrap: "wrap",
+  margin: '0 auto',
   padding: 0,
-  transition: `padding 1000ms ${EASE_CUBIC}`,
-  
   [mq.sm]: {
-    maxWidth: '900px',
+    maxWidth: "max(900px, 65vw)", // "900px"
+    transition: `padding 300ms ${EASE_CUBIC}`,
   },
   [mq.md]: {
-    width: '900px',
+    width: "max(900px, 65vw)", // "900px"
     maxWidth: '100%',
-    padding: `${theme.page.clearanceTop.md} 0 ${theme.space._36} ${theme.space._12}`,
+    padding: `${theme.page.clearanceTop.md} 0 ${theme.space._24} ${theme.page.gutter.md}`,
   },
   [mq.lg]: {
-    width: '900px',
-    padding: `${theme.page.clearanceTop.md} 0 ${theme.space._32} 0`,
+    padding: `${theme.page.clearanceTop.md} 0 ${theme.space._36}`,
   }
 });
 
-  export const introFlex = style({
-    display: "flex",
-    flexDirection: "column",
-    margin: '0 auto',
-    
-    [mq.md]: {
-      margin: 0,
-      // left pad from image
-      padding: `0 0 0 ${theme.space._76}`,
-    }
-  });
-
-    export const headline = style({
-      color: theme.color.text.primary,
-      padding: `${theme.space._76} ${theme.space._48} ${theme.space._24} ${theme.space._12}`,
-      [mq.sm]: {
-        // T/B padding only
-        padding: `${theme.space._76} 0 ${theme.space._16}`,
-      }
-    });
-    globalStyle(`${headline} em`, {
-      fontStyle: "normal",
-      color: theme.color.secondary.active,
-      display: 'block'
-    });
-
-    export const cues = style({
-      position: "fixed",
-      left: "50%", bottom: 0, 
-      transform: "translateX(-50%)",
-      zIndex: theme.zIndex.pageSticky,
-      width: "100%",
-
-      // height: theme.page.marginBottom.xs,
-      height: `calc(${theme.page.marginBottom.xs} + ${theme.space._8})`,
-      background: theme.color.surfaceAlt,
-      borderTop: `1px solid ${theme.color.divider}`,
-      [mq.sm]: {
-        position: "static",
-        transform: "none",
-        borderTop: 'none',
-        // T/B padding only
-        padding: `${theme.space._8} 0 ${theme.space._24}`, 
-      }
-    });
-
-  export const photoWrap = style({
+  export const heroWrap = style({
     width: "40vw",
-    transition: `width 200ms ${EASE_CUBIC}`,
     [mq.sm]: {
-      width: "min(50vw, 400px)",
+      width: "min(35vw, 320px)",
+      transition: `width 200ms ${EASE_CUBIC}`,
+    },
+    [mq.md]: {
+      width: "min(40vw, 360px)",
     },
   });
-
-    export const photo = style({
+    export const hero = style({
       display: "block",
       width: "100%",
       height: "auto",
@@ -106,45 +55,111 @@ export const intro = style({
       aspectRatio: "10 / 9",
       objectFit: "cover",
       objectPosition: "center",
-      borderRadius: "0",
-      background: theme.color.surfaceAlt,
+      borderRadius: 0,
+      background: theme.color.canvasFeature,
       [mq.sm]: {
         aspectRatio: "1 / 1",
-        borderRadius: "0 4px 4px 0",
         objectPosition: "center",
-      },
-    });
-
-export const contentCtnr = style({
-  margin: "0 auto",
-  width: '950px',
-  maxWidth: '100%',
-  // background: theme.color.surfaceAlt,
-});
-
-  export const content = style({
-    background: theme.color.canvas,
-    [mq.md]: { margin: "0 12px" },
-    [mq.lg]: { margin: 0 }
-  });
-
-    export const about = style({
-      display: "block !important",
-      margin: '0 auto',
-      textWrap: "pretty",
-      fontSize: theme.typography.fontSize.bodySm,
-      opacity: 0.92,
-      padding: `${theme.space._24} ${theme.page.gutter.xs} ${theme.space._24}`,
-      [mq.sm]: {
-        maxWidth: "900px",
-        padding: `${theme.space._36} ${theme.page.gutter.sm} ${theme.space._24}`,
+        minHeight: "250px",
       },
       [mq.md]: {
-        width: "900px",
-        maxWidth: "100%",
-        padding: `${theme.space._36} ${theme.page.gutter.md} ${theme.space._24}`,
-      },
-      [mq.lg]: {
-        padding: `${theme.space._36} ${theme.page.gutter.lg} ${theme.space._24}`,
-      },
+        borderRadius: "8px",
+      }
+    });
+
+  export const textCol = style({
+    display: "contents",
+    [mq.sm]: {
+      display: "flex",
+      flex: 1,
+      minWidth: 0,
+      flexDirection: "column",
+      justifyContent: "center",
+    },
+  });
+
+  export const headline = style({
+    flex: "1 1 0",
+    minWidth: 0, // no wrap to next line on tight screen
+    lineHeight: theme.typography.lineHeight.tight,
+    display: "inline-flex",
+    flexWrap: "wrap",
+    width: 'fit-content',
+    justifyContent: "flex-start",
+    padding: `${theme.page.clearanceTop.xs} ${theme.space._12} ${theme.space._4} 2vw`,
+    [mq.sm]: {
+      padding: `${theme.page.clearanceTop.sm} ${theme.space._16} 0 3vw`,
+    },
+    [mq.md]: {
+      margin: 0,
+      padding: `0 ${theme.space._16} ${theme.space._8} 4vw`,
+    }
+  });
+    export const greeting = style({
+      display: "contents",
+      lineHeight: theme.typography.lineHeight.tight,
+      whiteSpace: "pre",
+      fontSize: `min(${theme.typography.fontSize.headline}, 15vw) !important`,
+      [mq.sm]: { fontSize: theme.typography.fontSize.headline },
+    });
+    globalStyle(`${greeting} span span`, { color: `${theme.color.secondary.main} !important` });
+
+  export const subheadline = style({
+    flexBasis: "100%",
+    width: "100%",
+    padding: `${theme.space._24} ${theme.page.gutter.xs} ${theme.space._24}`,
+    [mq.sm]: {
+      flexBasis: "auto",
+      width: "auto",
+      padding: `0 ${theme.space._16} 0 5vw`,
+    },
+    // align left edge under the title
+    [mq.md]: { padding: `0 ${theme.space._12} 0 6vw` }
+  });
+
+export const content = style({
+  flex: 1,
+  display: 'flex',
+  flexDirection: 'column',
+  margin: "0 auto",
+  padding: 0,
+  [mq.sm]: { padding: `${theme.space._12} 0` },
+  [mq.md]: { padding: `${theme.space._24} 0` },
+  [mq.lg]: { padding: `${theme.space._36} 0` }
+});
+export const contentBox = style({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+  gap: theme.space._8,
+  flex: 1, // stretch to bottom of page
+  maxHeight: "500px", // but not too much
+  background: theme.color.canvas,
+
+  margin: '0 auto',
+  padding: `${theme.space._24} ${theme.page.gutter.xs} ${theme.space._24}`,
+  [mq.sm]: {
+    maxWidth: "max(900px, 65vw)", // "900px"
+    padding: `${theme.space._36} ${theme.page.gutter.sm} ${theme.space._24}`,
+    transition: `padding 300ms ${EASE_CUBIC}`,
+  },
+  [mq.md]: {
+    width: "max(900px, 65vw)", // "900px"
+    maxWidth: "100%",
+    padding: `${theme.space._32} ${theme.page.gutter.md} ${theme.space._24}`,
+    margin: "0 12px" 
+  },
+  [mq.lg]: {
+    padding: `${theme.space._36} ${theme.page.gutter.lg} ${theme.space._24}`,
+    margin: 0 
+  }
+});
+    export const body = style({
+      display: "block !important",
+      textWrap: "pretty",
+      opacity: 0.92,
+    });
+
+    export const footer = style({
+      paddingTop: theme.space._24
     });

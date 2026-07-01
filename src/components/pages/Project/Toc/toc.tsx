@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import Eyebrow from "@/components/ui/Eyebrow";
 import Icon from "@/components/ui/Icon";
 import * as sty from "./toc.css";
@@ -11,6 +11,23 @@ export type TocSection = { id: string; title: ReactNode };
 export function ProjectToc({ sections }: { sections: TocSection[] }) {
   const [activeId, setActiveId] = useState<string | null>(sections[0]?.id ?? null);
   const [open, setOpen] = useState(false);
+  const navRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const onPointerDown = (e: PointerEvent) => {
+      if (!navRef.current?.contains(e.target as Node)) setOpen(false);
+    };
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("pointerdown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("pointerdown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open]);
 
   useEffect(() => {
     if (sections.length === 0) return;
@@ -56,45 +73,47 @@ export function ProjectToc({ sections }: { sections: TocSection[] }) {
   }, [sections]);
 
   return (
-    <nav aria-label="Sections" className={sty.nav}>
-      <button
-        type="button"
-        className={sty.triggerMb}
-        aria-expanded={open}
-        aria-controls="project-toc-list"
-        onClick={() => setOpen((o) => !o)}
-      >
-        <div className={sty.triggerLeftMb}>
-          <Eyebrow as="span">Contents</Eyebrow>
-          <span className={sty.sectionCountMb}>{sections.length} sections</span>
-        </div>
-        <Icon name="caret-circle-down" size="lg" className={sty.triggerIconMb} />
-      </button>
-      <div
-        id="project-toc-list"
-        className={sty.body}
-        data-open={open ? "true" : "false"}
-      >
-        <ul className={sty.list}>
-          {sections.map((s) => (
-            <li 
-              key={s.id} 
-              className={sty.item} 
-              data-active={s.id === activeId ? "true" : "false"}
-            >
-              <a
-                key={s.id}
-                href={`#section-${s.id}`}
-                className={sty.link}
-                aria-current={s.id === activeId ? "location" : undefined}
-                onClick={() => setOpen(false)}
+    <div className={sty.tocPos}>
+      <nav ref={navRef} aria-label="Sections" className={sty.nav}>
+        <button
+          type="button"
+          className={sty.trigger}
+          aria-expanded={open}
+          aria-controls="project-toc-list"
+          onClick={() => setOpen((o) => !o)}
+        >
+          <div className={sty.triggerLeft}>
+            <Eyebrow as="span" className={sty.contents}>Contents</Eyebrow>
+            <span className={sty.sectionCount}>{sections.length} sections</span>
+          </div>
+          <Icon name="caret-circle-down" size="lg" className={sty.triggerIcon} />
+        </button>
+        <div
+          id="project-toc-list"
+          className={sty.body}
+          data-open={open ? "true" : "false"}
+        >
+          <ul className={sty.list}>
+            {sections.map((s) => (
+              <li 
+                key={s.id} 
+                className={sty.item} 
+                data-active={s.id === activeId ? "true" : "false"}
               >
-                {s.title}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </nav>
+                <a
+                  key={s.id}
+                  href={`#section-${s.id}`}
+                  className={sty.link}
+                  aria-current={s.id === activeId ? "location" : undefined}
+                  onClick={() => setOpen(false)}
+                >
+                  {s.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </nav>
+    </div>
   );
 }

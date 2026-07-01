@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     default: "Tanner O\'Rourke — ML Engineer & Interpretability Researcher",
     template: "%s · Tanner O\'Rourke",
   },
-  description: "Tanner O\'Rourke | ML Researcher and Engineer. MS in AI from UT Austin. Work in ML evaluation infrastructure, mechanistic interpretability, manifold analysis, and time-series modeling.",
+  description: "Tanner O\'Rourke | ML Engineer & Researcher, Evaluation & Interpretability | MS in AI from UT Austin. Work in evaluation infrastructure, mechanistic interpretability, manifold analysis, and time-series modeling.",
   applicationName: "Tanner O\'Rourke Portfolio",
   authors: [{ name: "Tanner O\'Rourke", url: SITE_URL }],
   creator: "Tanner O\'Rourke",

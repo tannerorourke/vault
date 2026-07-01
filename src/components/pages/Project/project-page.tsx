@@ -34,7 +34,7 @@ export function ProjectPage({ content }: { content: ProjectContent }) {
       pid, 
       <>
         <Markdown
-          key={pid} value={title}
+          key={pid} value={meta?.title}
           textProps={{ as: "h3", variant: "display", className: sty.title }}
         />
         {meta?.eyebrow &&
@@ -49,6 +49,9 @@ export function ProjectPage({ content }: { content: ProjectContent }) {
   return (
     <main id="main-content" tabIndex={-1} className={sty.main}>
       <TrackedDiv pid={pid} className={sty.content}>
+        {showToc && (
+          <ProjectToc sections={tocSections} />
+        )}
         <header className={sty.header}>
           <Markdown 
             textProps={{ as: 'h1', variant: 'display', className: sty.title }} 
@@ -120,12 +123,7 @@ export function ProjectPage({ content }: { content: ProjectContent }) {
           )
         )}
 
-        <div className={showToc ? sty.layoutToc : sty.layout}>
-          {showToc && (
-            <div className={sty.tocWrapSticky}>
-              <ProjectToc sections={tocSections} />
-            </div>
-          )}
+        <div className={sty.layout}>
           <div className={sty.sectionsWrap}>
             {sections.map((s: SectionTypes, ix: number) => (
               <SectionShell 

@@ -1,23 +1,27 @@
-import { EASE_CUBIC, mq } from "@/lib/theme/responsive.css";
-import { theme } from "@/lib/theme/theme.css";
 import { globalStyle, style } from "@vanilla-extract/css";
+import { theme } from "@/lib/theme/theme.css";
+import { mq, EASE_CUBIC, breakpoints } from "@/lib/theme/responsive.css";
 
+
+export const drawerWidth = {
+  xs: "100vw",
+  sm: `max(50vw, ${breakpoints.sm}px)`,
+  // matches SIDEBAR_W in content-transition-provider.css.ts so the pushed
+  // content fills exactly the space this drawer doesn't take
+  md: `max(35vw, ${breakpoints.sm}px)`
+};
 
 export const drawer = style({
   position: "fixed",
-  width: "clamp(320px, 80vw, 460px)",
-  [mq.sm]: { width: "360px" },
-  [mq.md]: {
-    // matches SIDEBAR_W in content-transition-provider.css.ts so pushed
-    // content fills exactly the space this drawer doesn't take
-    width: "min(35vw, 400px)",
-  },
-  insetBlock: 0,
+  width: drawerWidth.xs,
+  [mq.sm]: { width: drawerWidth.sm },
+  [mq.md]: { width: drawerWidth.md },
+  top: 0,
+  bottom: 0,
   zIndex: theme.zIndex.sidebar,
-  background: theme.color.card,
+  background: theme.color.card.main,
   overflowY: "auto",
   overflowX: "hidden",
-  // The close-gesture overscrolls past the drawer's edge; don't chain it.
   overscrollBehavior: "contain",
   scrollbarWidth: "none",
   msOverflowStyle: "none",
@@ -26,8 +30,7 @@ export const drawer = style({
   willChange: "transform",
 
   selectors: {
-    // higher specificity than the side variants' resting transform
-    '&[data-open="true"]': { transform: "translateX(0)" },
+    '&[data-drawer-open="true"]': { transform: "translateX(0)" },
   },
   "@media": {
     "(prefers-reduced-motion: reduce)": { transition: "none" },
@@ -36,21 +39,18 @@ export const drawer = style({
 
 globalStyle(`.${drawer}::-webkit-scrollbar`, { display: "none" });
 
-// Contact panel slide in from the left edge.
 export const left = style({
   left: 0,
   transform: "translateX(-100%)",
   borderRight: `1px solid ${theme.color.divider}`,
-  // distinct name per panel
-  viewTransitionName: "sidebar-left",
+  viewTransitionName: "drawer-side-left",
 });
 
-// Work panel slide in from right edge
 export const right = style({
   right: 0,
   transform: "translateX(100%)",
   borderLeft: `1px solid ${theme.color.divider}`,
-  viewTransitionName: "sidebar-right",
+  viewTransitionName: "drawer-side",
 });
 
 export const inner = style({
@@ -63,11 +63,12 @@ export const inner = style({
     padding: `${theme.page.marginTop.sm} ${theme.space._24} ${theme.space._32}`,
   },
 });
-    export const top = style({
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-    });
+
+export const top = style({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+});
 
 export const title = style({
   margin: 0,

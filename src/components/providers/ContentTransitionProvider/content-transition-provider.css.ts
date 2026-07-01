@@ -1,14 +1,16 @@
 import { theme } from "@/lib/theme/theme.css";
-import { EASE_CUBIC, breakpoints } from "@/lib/theme/responsive.css";
+import { EASE_CUBIC, 
+  // breakpoints 
+} from "@/lib/theme/responsive.css";
 import { globalStyle, keyframes, style } from "@vanilla-extract/css";
-
+// import { drawerWidth } from "@/components/navigation/SideDrawer/side-drawer.css";
 
 // Both scroll container and animated content on route change
 export const scrollContainer = style({
   position: "absolute",
   inset: 0,
   overflow: "auto",
-  background: theme.color.surfaceAlt,
+  background: theme.color.canvasAlt,
   overscrollBehavior: "contain",
   display: "flex",
   flexDirection: "column",
@@ -24,16 +26,11 @@ export const scrollContainer = style({
 
 globalStyle(`.${scrollContainer}::-webkit-scrollbar`, { display: "none" });
 
-// [FIX]: When a drawer is open (> md), pull container's edge in by 
-// drawer width so drawer + content fill the viewport
-// Computed width = min(35vw,400px) = max(65vw, 100vw − 400px).
-const SIDEBAR_W = "min(35vw, 400px)";
-globalStyle(`html[data-drawer="contact"] .${scrollContainer}`, {
-  "@media": { [`(min-width: ${breakpoints.md}px)`]: { left: SIDEBAR_W } },
-});
-globalStyle(`html[data-drawer="work"] .${scrollContainer}`, {
-  "@media": { [`(min-width: ${breakpoints.md}px)`]: { right: SIDEBAR_W } },
-});
+// When the Work drawer is open (> md), pull container's edge in by
+// drawer width so drawer + content fill the viewport.
+// globalStyle(`html[data-drawer="work"] .${scrollContainer}`, {
+//   "@media": { [`(min-width: ${breakpoints.md}px)`]: { right: drawerWidth.md } },
+// });
 
 
 // --- View Transitions API animations -----------------------------------
@@ -99,7 +96,16 @@ globalStyle("::view-transition-group(page-content)", {
 globalStyle("::view-transition-group(sidebar-left), ::view-transition-group(sidebar-right)", {
   zIndex: theme.zIndex.sidebar,
 });
+// drawers sit  above page-content
+globalStyle("::view-transition-group(drawer-side), ::view-transition-group(drawer-bottom)", {
+  zIndex: theme.zIndex.sidebar,
+});
+// header sits above page-content, below sidebar
+globalStyle("::view-transition-group(site-header)", {
+  zIndex: theme.zIndex.header,
+});
 
+// --- DIRECTIONAL ANIMATIONS -------------------------------------------
 // Direction = "left"
 globalStyle(
   `html[data-page-transition="left"]::view-transition-old(page-content)`,

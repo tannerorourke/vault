@@ -1,4 +1,4 @@
-import { style, globalStyle } from '@vanilla-extract/css';
+import { style, globalStyle, ComplexStyleRule } from '@vanilla-extract/css';
 
 import { theme } from '@/lib/theme/theme.css';
 import { mq } from '@/lib/theme/responsive.css';
@@ -58,18 +58,15 @@ globalStyle('.katex-display', {
 export const md = style({
   fontFamily: theme.typography.fontFamily.serif,
 });
-  globalStyle(`${md} p`, {
-    margin: `0 0 ${theme.space._12}`,
+  globalStyle(`${md} > *`, {
+    marginBottom: theme.space._12,
   });
-  globalStyle(`${md} ul, ${md} ol`, {
-    margin: `0 0 ${theme.space._12}`,
-  });
+  globalStyle(`${md} > :first-child`, { marginTop: 0 });
+  globalStyle(`${md} > :last-child`, { marginBottom: 0 });
   globalStyle(
     `${md} h1, ${md} h2, ${md} h3, ${md} h4, ${md} h5, ${md} h6`,
     { margin: `${theme.space._16} 0 ${theme.space._8}` },
   );
-  globalStyle(`${md} > :first-child`, { marginTop: 0 });
-  globalStyle(`${md} > :last-child`, { marginBottom: 0 });
 
   // Inline styling (mirrors the legacy `prose` rules in section.css.ts).
   globalStyle(`${md} a`, {
@@ -107,7 +104,7 @@ export const md = style({
   });
 
 
-export const bulletList = style({
+const bulletListStyle = {
   display: 'flex',
   flexDirection: 'column',
   gap: "6px",
@@ -116,7 +113,11 @@ export const bulletList = style({
   maxWidth: '70ch',
   [mq.md]: { maxWidth: '88ch' },
   [mq.lg]: { maxWidth: '90ch' },
-});
+} satisfies ComplexStyleRule;
+
+export const bulletList = style(bulletListStyle);
+
+  globalStyle(`${md} li`, bulletListStyle);
 
   globalStyle(`${bulletList} > li`, {
     position: 'relative',
@@ -133,13 +134,17 @@ export const bulletList = style({
     opacity: 0.85,
   });
 
-export const orderedList = style({
+const orderedListStyle = {
   listStyle: 'decimal',
   paddingLeft: theme.space._24,
   maxWidth: '70ch',
   [mq.md]: { maxWidth: '88ch' },
   [mq.lg]: { maxWidth: '90ch' },
-});
+} satisfies ComplexStyleRule;
+
+export const orderedList = style(orderedListStyle);
+
+  globalStyle(`${md} ol`, orderedListStyle);
 
   globalStyle(`${orderedList} > li`, {
     marginBottom: theme.space._12,
@@ -148,21 +153,28 @@ export const orderedList = style({
     marginBottom: 0,
   });
 
-// --- Blockquote
-export const blockquote = style({
+
+const blockquoteStyle = {
   paddingLeft: theme.space._16,
   borderLeft: `2px solid ${theme.color.secondary.main}`,
   color: theme.color.text.secondary,
-  fontStyle: 'italic',
-});
+  fontStyle: 'italic'
+} satisfies ComplexStyleRule;
 
-  // blockquotes inner paragraph no trailing space.
+export const blockquote = style(blockquoteStyle);
+
+  globalStyle(`${md} blockquote`, blockquoteStyle);
+
   globalStyle(`${blockquote} p:last-child`, { margin: 0 });
 
-// --- Horizontal rule
-export const hr = style({
+
+const hrStyle = {
   border: 'none',
   height: '1px',
   margin: `${theme.space._24} 0`,
   background: theme.color.divider,
-});
+} satisfies ComplexStyleRule;
+
+export const hr = style(hrStyle);
+
+  globalStyle(`${md} hr`, hrStyle);
